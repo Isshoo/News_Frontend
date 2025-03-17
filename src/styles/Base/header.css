@@ -7,11 +7,11 @@
   --nav-border: #212631;
   --nav-bg-hover: #0a0e15;
   --nav-bg-act: #4e576a;
-  --nav-active-bg: #212631;
+  --nav-active-bg: #0a0e15;
   --logout-text: #000;
   --logout-text-hover: #1a44ff;
-  --nav-shadow: rgba(0, 0, 0, 0.2);
-  --navigation-bg: rgba(255, 255, 255, 0.51);
+  --nav-shadow: rgba(69, 69, 69, 0.2);
+  --navigation-bg: #13161c;
 }
 
 [data-theme="light"] {

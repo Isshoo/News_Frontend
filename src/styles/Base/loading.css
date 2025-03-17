@@ -14,23 +14,18 @@
 }
 
 .pageload {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
   background-color: transparent;
   backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 .pageCenter {
-  position: relative;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   background: transparent;
   box-shadow: 0 4px 0 var(--spin-line);
   animation: animate 1s linear infinite;
@@ -45,6 +40,14 @@
   top: 0;
   left: 0;
   animation: spin 1s linear infinite;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.5s;
+  cursor: not-allowed;
+
 }
 
 @keyframes animate {

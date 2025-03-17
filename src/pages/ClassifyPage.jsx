@@ -3,14 +3,17 @@ import LocaleContext from '../contexts/LocaleContext';
 import Pages from '../components/styled/Pages';
 import { predict } from '../utils/api/classifier';
 import useInput from '../hooks/useInput';
+import Loading from '../components/Base/LoadingBar';
 
-function HomePage() {
+function ClassifyPage() {
   const { locale } = useContext(LocaleContext);
   const [text, onTextChange] = useInput('');
   const [hybridPredict, setHybridPredict] = useState('');
   const [deepseekPredict, setDeepseekPredict] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function predictNews() {
+    setLoading(true);
     const response = await predict({ text });
 
     if (response.error) {
@@ -19,6 +22,7 @@ function HomePage() {
     }
     setHybridPredict(response.hybrid_prediction);
     setDeepseekPredict(response.deepseek_prediction);
+    setLoading(false);
   }
 
   return (
@@ -43,17 +47,27 @@ function HomePage() {
             {titleMaxLength - title.length}
           </p> */}
         </div>
-        <button type='button' id='threadsSubmit' onClick={() => predictNews()}>
+        <br />
+        <button
+          className={loading ? 'disabled' : ''}
+          type='button'
+          id='threadsSubmit'
+          onClick={() => predictNews()}
+        >
           {locale === 'EN' ? 'Classify' : 'Klasifikasi'}
         </button>
       </form>
       <br />
-      <div>
-        {hybridPredict && <p>Prediksi Hybrid C5.0-KNN : {hybridPredict}</p>}
-        {deepseekPredict && <p>Prediksi Deepseek : {deepseekPredict}</p>}
-      </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className='result-text'>
+          {hybridPredict && <p>Prediksi Hybrid C5.0-KNN : {hybridPredict}</p>}
+          {deepseekPredict && <p>Prediksi Deepseek : {deepseekPredict}</p>}
+        </div>
+      )}
     </Pages>
   );
 }
 
-export default HomePage;
+export default ClassifyPage;
