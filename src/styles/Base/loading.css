@@ -1,0 +1,65 @@
+:root {
+  --spin-line: rgb(255, 255, 255);
+  --spin-shadow: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] {
+  --spin-line: rgb(0, 0, 0);
+  --spin-shadow: rgba(255, 255, 255, 0.2);
+}
+
+.loading {
+  position: sticky;
+  top: 0;
+}
+
+.pageload {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pageCenter {
+  position: relative;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background: transparent;
+  box-shadow: 0 4px 0 var(--spin-line);
+  animation: animate 1s linear infinite;
+}
+.pageRing {
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 4px 8px var(--spin-shadow);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

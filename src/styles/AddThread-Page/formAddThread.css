@@ -1,0 +1,134 @@
+/* form new threads */
+
+:root {
+  --form-background: #0a0e15;
+  --form-border: #212631;
+  --form-shadow: rgba(255, 255, 255, 0.2);
+  --form-title: #ffffff;
+  --form-label: #ffffff;
+  --input-background: #e0e4eb;
+  --input-text-thread: #212631;
+  --input-placeholder-thread: #2126319a;
+  --input-focus: #93a7ff;
+  --submit-text: #ffffff;
+  --submit-bg: #212631;
+  --submit-bg-hover: #373f4e;
+  --submit-bg-act: #f0f1f5;
+  --question-text: #e0e4eb;
+  --link-text: #ffffff;
+  --validation: #93a7ff;
+}
+
+[data-theme="light"] {
+  --form-background: #ffffff;
+  --form-border: #212631;
+  --form-shadow: rgba(0, 0, 0, 0.662);
+  --form-title: #000000;
+  --form-label: #0a0e15;
+  --input-background: #21263180;
+  --input-text-thread: #ffffff;
+  --input-placeholder-thread: #e0e4eb;
+  --input-focus: #93a7ff;
+  --submit-text: #ffffff;
+  --submit-bg: #212631;
+  --submit-bg-hover: #000000;
+  --submit-bg-act: #f0f1f5;
+  --question-text: #212631;
+  --link-text: #0a0e15;
+  --validation: #375bfc;
+}
+
+#formNewThreads {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 1.5rem 2rem 2rem;
+  background-color: var(--form-background);
+  border-radius: 16px;
+  box-shadow: -2px 2px 10px 3px var(--form-shadow);
+  align-self: center;
+}
+
+#threadForm {
+  display: flex;
+  flex-direction: column;
+}
+#threadForm div label {
+  color: var(--form-label);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+#title,
+#category,
+#description {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  overflow: auto;
+  color: var(--input-text-thread);
+  border: 1px solid transparent;
+}
+
+#category,
+#description {
+  margin-bottom: 1rem;
+}
+
+#category::placeholder,
+#title::placeholder {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--input-placeholder-thread);
+  pointer-events: none;
+}
+
+#description[data-placeholder]:empty::before {
+  content: attr(data-placeholder);
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--input-placeholder-thread);
+  pointer-events: none;
+}
+
+#description b,
+#description strong,
+#description i {
+  color: var(--input-text-thread);
+}
+
+#titleValidation {
+  color: var(--validation);
+  margin-block: 0.5rem;
+  text-align: start;
+  font-weight: 500;
+}
+
+#title:focus,
+#category:focus,
+#description:focus {
+  border: 1px solid var(--input-focus);
+}
+
+#threadsSubmit {
+  min-width: 145.2px;
+  align-self: flex-end;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--submit-bg);
+  font-size: 1rem;
+  color: var(--submit-text);
+}
+#threadsSubmit:hover {
+  background-color: var(--submit-bg-hover);
+}
+#threadsSubmit:active {
+  background-color: var(--submit-bg-act);
+}

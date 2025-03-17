@@ -1,0 +1,153 @@
+:root {
+  --leadearboard-item-border: #2126319d;
+  --leadearboard-item-shadow: rgba(0, 0, 0, 0.2);
+  --leadearboard-item-bg: #212631;
+  --leadearboard-item-bg-hover: #ffffff;
+  --leadearboard-item-title: #ffffff;
+  --leadearboard-item-category: #739bff;
+  --leadearboard-item-des: #0a0e15;
+  --leadearboard-item-email: #ffffffd5;
+  --leadearboard-item-dislike: #ff0000;
+  --leadearboard-item-score: #ffffff;
+}
+
+[data-theme="light"] {
+  --leadearboard-item-border: #2126319d;
+  --leadearboard-item-shadow: rgba(0, 0, 0, 0.2);
+  --leadearboard-item-bg: #ffffff;
+  --leadearboard-item-bg-hover: #f4f4f4;
+  --leadearboard-item-title: #000;
+  --leadearboard-item-category: #3065eb;
+  --leadearboard-item-des: #0a0e15;
+  --leadearboard-item-email: #212631cd;
+  --leadearboard-item-dislike: #ff0000;
+  --leadearboard-item-score: #000;
+}
+
+.leaderboard-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  width: 100%;
+  margin-left: 1rem;
+}
+
+.leaderboard-list {
+  padding-block: 1.1rem 3rem;
+  padding-inline: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 1.25rem;
+  background-color: transparent;
+}
+
+.leaderboard-item {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2rem;
+  border-bottom: 1px solid var(--leadearboard-item-shadow);
+  gap: 1rem;
+  background-color: var(--leadearboard-item-bg);
+  box-shadow: -2px 2px 5px 2px var(--leadearboard-item-shadow);
+}
+
+.leaderboard-user {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.leaderboard-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaderboard-info {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+.leaderboard-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--leadearboard-item-title);
+}
+.leaderboard-name.isUser {
+  font-weight: 700;
+  color: var(--leadearboard-item-category);
+}
+
+.leaderboard-email {
+  color: var(--leadearboard-item-email);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.leaderboard-score {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+.leaderboard-score p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--leadearboard-item-score);
+}
+.leaderboard-score span {
+  color: var(--leadearboard-item-score);
+}
+
+@media screen and (max-width: 500px) {
+  .leaderboard-title {
+    margin-left: 0.5rem;
+  }
+  .leaderboard-list {
+    padding-inline: 0.25rem;
+    padding-block: 1rem 3rem;
+  }
+  .leaderboard-item {
+    padding: 1rem 0.75rem;
+  }
+  .leaderboard-user {
+    gap: 0.75rem;
+  }
+  .leaderboard-name {
+    font-size: 1rem;
+  }
+  .leaderboard-email {
+    font-size: 0.8rem;
+  }
+  .leaderboard-score p {
+    font-size: 0.9rem;
+  }
+  .leaderboard-score span {
+    font-size: 0.9rem;
+  }
+}
+@media screen and (max-width: 368px) {
+  .leaderboard-title {
+    font-size: 1.3rem;
+  }
+  .leaderboard-list {
+    padding-inline: 0rem;
+  }
+  .leaderboard-item {
+    gap: 0.5rem;
+  }
+  .leaderboard-user {
+    gap: 0.5rem;
+  }
+  .leaderboard-name {
+    font-size: 0.9rem;
+  }
+  .leaderboard-email {
+    font-size: 0.7rem;
+  }
+  .leaderboard-score p {
+    font-size: 0.9rem;
+  }
+}

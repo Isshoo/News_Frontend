@@ -1,0 +1,21 @@
+:root {
+  --threads-list-contaner: #212631;
+  --blank-text: #ffffff;
+}
+
+[data-theme="light"] {
+  --threads-list-contaner: #e0e4eb;
+  --blank-text: #212631;
+}
+
+.threads-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 1.25rem;
+  background-color: transparent;
+}
+
+.blankList {
+  color: var(--blank-text);
+}

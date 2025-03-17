@@ -1,0 +1,92 @@
+:root {
+  --add-btn-bg: #ffffff;
+  --add-btn-bg-hover: #101217;
+  --add-btn-shadow: rgba(125, 125, 125, 0.305);
+  --add-icon: #101217;
+  --add-icon-hover: #ffffff;
+  --content: "New Thread";
+}
+
+[data-theme="light"] {
+  --add-btn-bg: #101217;
+  --add-btn-bg-hover: #ffffff;
+  --add-btn-shadow: rgba(0, 0, 0, 0.305);
+  --add-icon: #ffffff;
+  --add-icon-hover: #101217;
+}
+
+[data-lang="ID"] {
+  --content: "Thread Baru";
+}
+
+#addThreadBtn {
+  flex: 1;
+  margin-block: 1.75rem 1rem;
+  bottom: 32px;
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  position: sticky;
+  align-self: self-end;
+}
+
+#addThreadBtn a {
+  background-color: var(--add-btn-bg);
+  border-radius: 100%;
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
+  position: relative;
+}
+#addThreadBtn a:hover {
+  background-color: var(--add-icon);
+  box-shadow: -2px 2px 5px 5px var(--add-btn-shadow);
+
+  svg path {
+    color: var(--add-btn-bg);
+  }
+}
+
+#addThreadBtn a svg {
+  font-size: 1.5rem;
+}
+#addThreadBtn a svg path {
+  color: var(--add-icon);
+}
+
+#addThreadBtn a::after {
+  content: var(--content);
+  position: absolute;
+  top: -0.75rem;
+  left: -0.5rem;
+  transform: translateX(-50%);
+  background-color: var(--add-btn-bg);
+  color: var(--add-icon);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  z-index: 1000;
+}
+
+#addThreadBtn a:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-1.3rem);
+}
+
+@media screen and (max-width: 500px) {
+  #addThreadBtn a {
+    padding: 14px;
+  }
+  #addThreadBtn a svg {
+    font-size: 1.25rem;
+  }
+}

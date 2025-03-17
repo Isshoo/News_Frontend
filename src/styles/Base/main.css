@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --primary-text: #212631;
+  --secondary-text: #ffffff;
+  --background: #0a0e15;
+  --main-bg: #f4f4f5;
+  --input-background: #e0e4eb;
+  --input-text: #212631;
+  --notfound-text: #000;
+}
+
+[data-theme="light"] {
+  --primary-text: #212631;
+  --secondary-text: #ffffff;
+  --background: #f4f4f5;
+  --main-bg: #ffffff;
+  --input-background: #e0e4eb;
+  --input-text: #212631;
+  --notfound-text: #212631;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  font-size: 95%;
+}
+
+a {
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+li {
+  transition: background-color 0.3s ease;
+  list-style: none;
+}
+
+input,
+button,
+#description {
+  border: none;
+  outline: none;
+  transition: background-color 0.3s ease;
+  background-color: var(--input-background);
+  color: var(--input-text);
+}
+
+#description {
+  height: 8rem;
+}
+
+i {
+  transition: color 0.3s ease;
+  color: var(--primary-text);
+}
+
+label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.container {
+  background-color: var(--background);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container.unAuth {
+  background-color: var(--background);
+}
+
+.container.unAuth main {
+  background-color: var(--background);
+  padding-block: 0 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container.unAuth main .pages-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  max-width: 900px;
+  width: 100%;
+  padding-inline: 3%;
+  padding-block: 10.85rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  background-color: var(--main-bg);
+}
+.pages-section {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* not found page */
+.notFound-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+.notFound-container h1,
+.notFound-container p,
+.blank-thread {
+  color: var(--notfound-text);
+}
+
+/* media query */
+
+@media screen and (max-width: 900px) {
+  main {
+    padding-inline: 32px;
+  }
+}
+@media screen and (max-width: 500px) {
+  main {
+    padding-block: 10.75rem 1rem;
+  }
+}
+@media screen and (max-width: 368px) {
+  main {
+    padding-block: 11.75rem 1rem;
+  }
+}
