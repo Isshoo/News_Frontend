@@ -23,6 +23,7 @@ class ClassifyPage extends Component {
 
   predictNews = async () => {
     this.setState({ loading: true });
+    console.log('predicting...');
     const response = await predict({ text: this.state.text });
     if (!response.deepseek_prediction) {
       this.predictNews();

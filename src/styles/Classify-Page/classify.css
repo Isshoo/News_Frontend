@@ -25,7 +25,7 @@
   --form-shadow: rgba(0, 0, 0, 0.662);
   --form-title: #000000;
   --form-label: #0a0e15;
-  --input-background: #21263180;
+  --input-background: #212631ce;
   --input-text-thread: #ffffff;
   --input-placeholder-thread: #e0e4eb;
   --input-focus: #93a7ff;
@@ -131,4 +131,9 @@
 }
 #threadsSubmit:active {
   background-color: var(--submit-bg-act);
+}
+
+
+.result-text {
+  color: var(--results-text);
 }

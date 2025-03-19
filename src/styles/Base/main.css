@@ -118,10 +118,6 @@ main {
   flex-direction: column;
 }
 
-.result-text {
-  color: var(--results-text);
-}
-
 /* not found page */
 .notFound-container {
   display: flex;
