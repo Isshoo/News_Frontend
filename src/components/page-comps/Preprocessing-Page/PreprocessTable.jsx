@@ -22,25 +22,25 @@ const PreprocessTable = ({
         </tr>
       </thead>
       <tbody>
-        {dataset.map((item, index) => (
-          <tr key={index}>
+        {dataset.map((item) => (
+          <tr key={item.index}>
             <td>{item.index + 1}</td>
             <td>{item.contentSnippet}</td>
             <td>{item.preprocessedContent}</td>
             <td>
-              {editingIndex === index ? (
+              {editingIndex === item.index ? (
                 <input type='text' value={newLabel} onChange={(e) => setNewLabel(e.target.value)} />
               ) : (
                 item.topik
               )}
             </td>
             <td>
-              {editingIndex === index ? (
-                <button onClick={() => handleSave(index)}>Save</button>
+              {editingIndex === item.index ? (
+                <button onClick={() => handleSave(item.index)}>Save</button>
               ) : (
-                <button onClick={() => handleEdit(index, item.topik)}>Edit</button>
+                <button onClick={() => handleEdit(item.index, item.topik)}>Edit</button>
               )}
-              <button onClick={() => handleDelete(index)}>Delete</button>
+              <button onClick={() => handleDelete(item.index)}>Delete</button>
             </td>
           </tr>
         ))}
