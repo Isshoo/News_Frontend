@@ -10,7 +10,12 @@ function ClassifyPage() {
   const [preprocessedText, setPreprocessedText] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function predictNews(text) {
+  async function predictNews(text, retryCount = 4) {
+    if (retryCount <= 0) {
+      console.warn('DeepSeek prediction failed after multiple retries.');
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     const response = await predict({ text });
 
@@ -20,8 +25,9 @@ function ClassifyPage() {
     }
 
     if (!response.DeepSeek) {
-      console.log('DeepSeek prediction...');
-      predictNews();
+      console.log(`DeepSeek prediction missing. Retrying... (${4 - retryCount} attempt)`);
+      setTimeout(() => predictNews(text, retryCount - 1), 1000); // Tunggu 1 detik sebelum retry
+      return;
     }
 
     setHybridPredict(response.Hybrid_C5_KNN);
