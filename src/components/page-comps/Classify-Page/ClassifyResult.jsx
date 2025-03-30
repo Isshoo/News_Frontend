@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loading from '../Base/LoadingBar';
+import Loading from '../../Base/LoadingBar';
 
 function ClassifyResult({ preprocessedText, hybridPredict, deepseekPredict, loading }) {
   if (loading) {

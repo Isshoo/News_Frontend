@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import useInput from '../../hooks/useInput';
-import LocaleContext from '../../contexts/LocaleContext';
+import useInput from '../../../hooks/useInput';
+import LocaleContext from '../../../contexts/LocaleContext';
 import PropTypes from 'prop-types';
 
 function ClassifyInput({ predictNews, loading }) {

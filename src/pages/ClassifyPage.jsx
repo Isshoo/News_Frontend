@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Pages from '../components/styled/Pages';
 import { predict } from '../utils/api/classifier';
-import ClassifyInput from '../components/Classify-Page/ClassifyInput';
-import ClassifyResult from '../components/Classify-Page/ClassifyResult';
+import ClassifyInput from '../components/page-comps/Classify-Page/ClassifyInput';
+import ClassifyResult from '../components/page-comps/Classify-Page/ClassifyResult';
 
 function ClassifyPage() {
   const [hybridPredict, setHybridPredict] = useState('');
