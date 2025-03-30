@@ -4,6 +4,7 @@ import { LocaleProvider } from './contexts/LocaleContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ClassifyPage from './pages/ClassifyPage';
 import DataCollectingPage from './pages/DataCollectingPage';
+import PreprocessingPage from './pages/PreprocessingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import useLocale from './hooks/useLocale';
 import useTheme from './hooks/useTheme';
@@ -38,6 +39,7 @@ function App() {
                 <Route path='/' element={<ClassifyPage />} />
                 <Route path='/train-model' element={<DataCollectingPage />} />
                 <Route path='/train-model/data-collecting' element={<DataCollectingPage />} />
+                <Route path='/train-model/preprocessing' element={<PreprocessingPage />} />
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>
             </main>

@@ -3,6 +3,7 @@ import Pages from '../components/styled/Pages';
 import DatasetUpload from '../components/page-comps/DataCollecting-Page/DatasetUpload';
 import DatasetTable from '../components/page-comps/DataCollecting-Page/DatasetTable';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
+import Pagination from '../components/Base/Pagination';
 import { fetchDataset, fetchDatasetInfo, uploadDataset } from '../utils/api/dataset';
 
 function DataCollectingPage() {
@@ -77,13 +78,11 @@ function DataCollectingPage() {
         <br />
         <DatasetInfo totalData={totalData} topicCounts={topicCounts} />
         <br />
-        <DatasetTable
-          data={dataset}
-          limit={limit}
+        <DatasetTable data={dataset} loading={loading} />
+        <Pagination
           currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          loading={loading}
           totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
         />
       </Pages>
     );
