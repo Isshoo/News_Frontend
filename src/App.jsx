@@ -12,10 +12,12 @@ import FooterBar from './components/Base/FooterBar';
 import NavigationBar from './components/Base/NavigationBar';
 import SideBar from './components/Base/SideBar';
 import ScrollToTop from './components/Base/ScrollToTop';
+import { useLocation } from 'react-router-dom';
 
 function App() {
   const [theme, themeContextValue] = useTheme();
   const [locale, localeContextValue] = useLocale();
+  const location = useLocation();
   return (
     <LocaleProvider value={localeContextValue}>
       <ThemeProvider value={themeContextValue}>
@@ -31,9 +33,11 @@ function App() {
             <SideBar />
             <main>
               <ScrollToTop />
+              {location.pathname.startsWith('/train-model') ? <NavigationBar /> : ''}
               <Routes>
                 <Route path='/' element={<ClassifyPage />} />
-                <Route path='/data-collecting' element={<DataCollectingPage />} />
+                <Route path='/train-model' element={<DataCollectingPage />} />
+                <Route path='/train-model/data-collecting' element={<DataCollectingPage />} />
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>
             </main>

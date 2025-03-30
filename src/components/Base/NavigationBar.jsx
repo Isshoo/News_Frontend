@@ -1,12 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
-import { FiLogOut } from 'react-icons/fi';
-import { MdOutlineLeaderboard } from 'react-icons/md';
-import { GoHome } from 'react-icons/go';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
 
-function NavigationBar({ logout, username }) {
+function NavigationBar() {
   const location = useLocation();
 
   return (
@@ -17,38 +13,45 @@ function NavigationBar({ logout, username }) {
             <ul className='navigation'>
               <li>
                 <Link
-                  id='allThreadsBtn'
-                  className={`nav-button ${location.pathname === '/' ? 'active' : ''}`}
-                  to='/'
+                  className={`nav-button ${location.pathname === '/train-model/data-collecting' || location.pathname === '/train-model' ? 'active' : ''}`}
+                  to='/train-model/data-collecting'
                 >
-                  <GoHome className='nav-icon' />
-                  <p>{locale === 'EN' ? 'Home' : 'Beranda'}</p>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  id='archivedListBtn'
-                  className={`nav-button ${location.pathname === '/data-collecting' ? 'active' : ''}`}
-                  to='/data-collecting'
-                >
-                  <MdOutlineLeaderboard className='nav-icon' />
                   <p>{locale === 'EN' ? 'Collect Data' : 'Kumpul Data'}</p>
                 </Link>
               </li>
+              <li>&gt;</li>
+              <li>
+                <Link
+                  className={`nav-button ${location.pathname === '/train-model/preprocessing' ? 'active' : ''}`}
+                  to='/train-model/preprocessing'
+                >
+                  <p>{locale === 'EN' ? 'Preprocessing' : 'Prapemrosesan'}</p>
+                </Link>
+              </li>
+              <li>&gt;</li>
+              <li>
+                <Link
+                  className={`nav-button ${location.pathname === '/train-model/processing' ? 'active' : ''}`}
+                  to='/train-model/processing'
+                >
+                  <p>{locale === 'EN' ? 'Processing' : 'Pemrosesan'}</p>
+                </Link>
+              </li>
+              <li>&gt;</li>
+              <li>
+                <Link
+                  className={`nav-button ${location.pathname === '/train-model/evaluation' ? 'active' : ''}`}
+                  to='/train-model/evaluation'
+                >
+                  <p>{locale === 'EN' ? 'Evaluation' : 'Evaluasi'}</p>
+                </Link>
+              </li>
             </ul>
-            {/* <button className="logout" onClick={logout}>
-              <p>{username}</p> <FiLogOut />
-            </button> */}
           </nav>
         );
       }}
     </LocaleConsumer>
   );
 }
-
-NavigationBar.propTypes = {
-  logout: PropTypes.func,
-  username: PropTypes.string,
-};
 
 export default NavigationBar;

@@ -21,8 +21,8 @@ function SideBar() {
               </li>
               <li>
                 <Link
-                  className={`side-button ${location.pathname === '/data-collecting' ? 'active' : ''}`}
-                  to='/data-collecting'
+                  className={`side-button ${location.pathname.startsWith('/train-model') ? 'active' : ''}`}
+                  to='/train-model'
                 >
                   <MdOutlineLeaderboard className='side-icon' />
                   <p>{locale === 'EN' ? 'Train Model' : 'Latih Model'}</p>

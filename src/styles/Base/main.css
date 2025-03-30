@@ -94,13 +94,13 @@ label {
 
 main {
   width: 100%;
-  padding-inline: 3%;
+  padding-inline: 32px;
   padding-block: 6.85rem 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  gap: 1.5rem;
   background-color: var(--main-bg);
 }
 

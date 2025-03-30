@@ -33,7 +33,7 @@
     flex: 0.175;
     background-color: var(--sidebar-bg);
     transition: transform 0.3s ease;
-    padding-inline: 2rem;
+    padding-inline: 32px;
     padding-block: 6.85rem 1rem;
 }
 

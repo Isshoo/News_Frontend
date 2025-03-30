@@ -18,7 +18,7 @@
   --header-background: #212631;
   --header-text: #f0f1f5;
   --navbar-bg: #ffffff;
-  --nav-text: #ffffff;
+  --nav-text: #000;
   --nav-bg: #212631;
   --nav-border: #212631;
   --nav-bg-hover: #0a0e15;
@@ -72,17 +72,14 @@ header {
 }
 
 .navigation-bar {
-  max-width: 900px;
   width: 100%;
-  padding-block: 1.25rem;
-  padding-inline: 3%;
+  padding-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   background-color: var(--navigation-bg);
   backdrop-filter: blur(10px);
-  box-shadow: 0px 2px 2px 0px var(--nav-shadow);
-  height: 81px;
+  box-shadow: 0px 2px 0px 0px var(--nav-shadow);
 }
 .navigation {
   width: 100%;
@@ -91,108 +88,38 @@ header {
   gap: 1rem;
 }
 
+.navigation li {
+  display: flex;
+  align-items: center;
+}
+
 .nav-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  min-width: 160px;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  background-color: var(--nav-bg);
   color: var(--nav-text);
   cursor: pointer;
-  opacity: 0.9;
-  border: 1px solid var(--nav-border);
-  min-height: 41px;
+  opacity: 0.7;
+  font-size: 0.9rem;
 }
 .nav-button:hover {
-  background-color: var(--nav-bg-hover);
-}
-.nav-button:active {
-  background-color: var(--nav-bg-act);
-}
-.nav-button.active {
-  background-color: var(--nav-active-bg);
   opacity: 1;
 }
-.nav-icon {
-  font-size: 1rem;
-}
-
-.logout {
-  cursor: pointer;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.logout p {
-  color: var(--logout-text);
-  font-size: 1.2rem;
+.nav-button.active {
   font-weight: 500;
-}
-.logout svg {
-  font-size: 1.35rem;
-  font-weight: 500;
-  path,
-  polyline,
-  line {
-    color: var(--logout-text);
-  }
+  opacity: 1;
 }
 
-.logout:hover {
-  p,
-  svg polyline,
-  svg line {
-    color: var(--logout-text-hover);
-  }
-}
+
 
 @media screen and (max-width: 900px) {
-  .navigation-bar {
-    padding-inline: 32px;
-  }
 }
 
 @media screen and (max-width: 500px) {
   .nav-title {
     font-size: 1.25rem;
   }
-  .navigation-bar {
-    padding-block: 1.5rem;
-  }
-
-  .nav-button {
-    min-width: 90px;
-    padding: 0.25rem 1rem;
-    min-height: 35px;
-  }
-  .nav-button p {
-    display: none;
-  }
-  .nav-icon {
-    font-size: 1.1rem;
-  }
-  .logout {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  .logout p {
-    font-size: 1.1rem;
-  }
-  .logout svg {
-    font-size: 1.25rem;
-  }
 }
 
 @media screen and (max-width: 368px) {
-  .navigation {
-    gap: 0.5rem;
-  }
-  .nav-button {
-    min-width: 65px;
-  }
 }
