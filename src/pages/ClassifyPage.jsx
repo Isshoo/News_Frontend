@@ -1,90 +1,47 @@
-import React, { Component } from 'react';
-import LocaleContext from '../contexts/LocaleContext';
+import React, { useState } from 'react';
 import Pages from '../components/styled/Pages';
 import { predict } from '../utils/api/classifier';
-import Loading from '../components/Base/LoadingBar';
+import ClassifyInput from '../components/Classify-Page/ClassifyInput';
+import ClassifyResult from '../components/Classify-Page/ClassifyResult';
 
-class ClassifyPage extends Component {
-  static contextType = LocaleContext;
+function ClassifyPage() {
+  const [hybridPredict, setHybridPredict] = useState('');
+  const [deepseekPredict, setDeepseekPredict] = useState('');
+  const [preprocessedText, setPreprocessedText] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: '',
-      hybridPredict: '',
-      deepseekPredict: '',
-      loading: false,
-    };
-  }
-
-  handleChange = (event) => {
-    this.setState({ text: event.target.value });
-  };
-
-  predictNews = async () => {
-    this.setState({ loading: true });
-    console.log('predicting...');
-    const response = await predict({ text: this.state.text });
-    if (!response.deepseek_prediction) {
-      this.predictNews();
-    }
+  async function predictNews(text) {
+    setLoading(true);
+    const response = await predict({ text });
 
     if (response.error) {
       alert(response.error);
-      this.setState({ loading: false });
       return;
     }
-    this.setState({
-      hybridPredict: response.hybrid_prediction,
-      deepseekPredict: response.deepseek_prediction,
-      loading: false,
-    });
-  };
 
-  render() {
-    const { locale } = this.context;
-    const { text, hybridPredict, deepseekPredict, loading } = this.state;
+    if (!response.DeepSeek) {
+      console.log('DeepSeek prediction...');
+      predictNews();
+    }
 
-    return (
-      <Pages>
-        <form id='threadForm' autoComplete='off'>
-          <div>
-            <label htmlFor='title'>
-              {locale === 'EN' ? 'Input News Text' : 'Masukan Teks Berita'}
-            </label>
-            <input
-              type='text'
-              id='title'
-              name='title'
-              required
-              placeholder={locale === 'EN' ? 'Text' : 'Teks'}
-              aria-describedby='titleValidation'
-              value={text}
-              onChange={this.handleChange}
-            />
-          </div>
-          <br />
-          <button
-            className={loading ? 'disabled' : ''}
-            type='button'
-            id='threadsSubmit'
-            onClick={this.predictNews}
-          >
-            {locale === 'EN' ? 'Classify' : 'Klasifikasi'}
-          </button>
-        </form>
-        <br />
-        {loading ? (
-          <Loading />
-        ) : (
-          <div className='result-text'>
-            {hybridPredict && <p>Prediksi Hybrid C5.0-KNN : {hybridPredict}</p>}
-            {deepseekPredict && <p>Prediksi Deepseek : {deepseekPredict}</p>}
-          </div>
-        )}
-      </Pages>
-    );
+    setHybridPredict(response.Hybrid_C5_KNN);
+    setDeepseekPredict(response.DeepSeek);
+    setPreprocessedText(response.Preprocessed_Text);
+    setLoading(false);
   }
+
+  return (
+    <Pages>
+      <ClassifyInput predictNews={predictNews} loading={loading} />
+      <br />
+      <ClassifyResult
+        preprocessedText={preprocessedText}
+        hybridPredict={hybridPredict}
+        deepseekPredict={deepseekPredict}
+        loading={loading}
+      />
+    </Pages>
+  );
 }
 
 export default ClassifyPage;
