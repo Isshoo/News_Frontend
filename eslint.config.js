@@ -35,6 +35,7 @@ export default [
       ...reactHooks.configs.recommended.rules,
       'no-unused-vars': 'off',
       'linebreak-style': 'off',
+      'camelcase': 'off',
       'react-refresh/only-export-components': [
         'off',
         { allowConstantExport: true },
