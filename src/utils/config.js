@@ -1,6 +1,6 @@
 const BASE_URL = 'http://127.0.0.1:8000';
 
-async function _fetchWithAuth(url, options = {}) {
+const _fetchWithAuth = async (url, options = {}) => {
   return fetch(url, {
     ...options,
     headers: {
@@ -8,15 +8,15 @@ async function _fetchWithAuth(url, options = {}) {
       Authorization: `Bearer ${getAccessToken()}`,
     },
   });
-}
+};
 
-function putAccessToken(token) {
+const putAccessToken = (token) => {
   localStorage.setItem('accessToken', token);
-}
+};
 
-function getAccessToken() {
+const getAccessToken = () => {
   return localStorage.getItem('accessToken');
-}
+};
 
 export {
   BASE_URL,

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function DatasetInfo({ totalData, topicCounts }) {
+const DatasetInfo = ({ totalData, topicCounts }) => {
   return (
     <div>
       <h2>Dataset Information</h2>
@@ -16,7 +16,7 @@ function DatasetInfo({ totalData, topicCounts }) {
       </ul>
     </div>
   );
-}
+};
 
 DatasetInfo.propTypes = {
   totalData: PropTypes.number.isRequired,

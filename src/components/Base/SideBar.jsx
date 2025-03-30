@@ -4,7 +4,7 @@ import { MdOutlineLeaderboard } from 'react-icons/md';
 import { GoHome } from 'react-icons/go';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
 
-function SideBar() {
+const SideBar = () => {
   const location = useLocation();
 
   return (
@@ -34,6 +34,6 @@ function SideBar() {
       }}
     </LocaleConsumer>
   );
-}
+};
 
 export default SideBar;

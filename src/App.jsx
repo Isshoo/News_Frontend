@@ -15,7 +15,7 @@ import SideBar from './components/Base/SideBar';
 import ScrollToTop from './components/Base/ScrollToTop';
 import { useLocation } from 'react-router-dom';
 
-function App() {
+const App = () => {
   const [theme, themeContextValue] = useTheme();
   const [locale, localeContextValue] = useLocale();
   const location = useLocation();
@@ -51,6 +51,6 @@ function App() {
       </ThemeProvider>
     </LocaleProvider>
   );
-}
+};
 
 export default App;

@@ -3,7 +3,7 @@ import useInput from '../../../hooks/useInput';
 import LocaleContext from '../../../contexts/LocaleContext';
 import PropTypes from 'prop-types';
 
-function ClassifyInput({ predictNews, loading }) {
+const ClassifyInput = ({ predictNews, loading }) => {
   const [text, onTextChange] = useInput('');
   const { locale } = useContext(LocaleContext);
 
@@ -37,7 +37,7 @@ function ClassifyInput({ predictNews, loading }) {
       </button>
     </form>
   );
-}
+};
 
 ClassifyInput.propTypes = {
   predictNews: PropTypes.func.isRequired,

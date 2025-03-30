@@ -1,7 +1,7 @@
 import React from 'react';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
 
-function FooterBar() {
+const FooterBar = () => {
   return (
     <LocaleConsumer>
       {({ locale }) => {
@@ -18,6 +18,6 @@ function FooterBar() {
       }}
     </LocaleConsumer>
   );
-}
+};
 
 export default FooterBar;

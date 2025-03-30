@@ -3,7 +3,7 @@ import { MdOutlineWbSunny, MdSunny } from 'react-icons/md';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
 import { ThemeConsumer } from '../../contexts/ThemeContext';
 
-function HeaderBar() {
+const HeaderBar = () => {
   return (
     <LocaleConsumer>
       {({ locale, toggleLocale }) => {
@@ -39,6 +39,6 @@ function HeaderBar() {
       }}
     </LocaleConsumer>
   );
-}
+};
 
 export default HeaderBar;

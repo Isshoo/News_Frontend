@@ -1,6 +1,6 @@
 import { BASE_URL } from '../config';
 
-export async function splitDataset(test_size) {
+export const splitDataset = async (test_size) =>{
   try {
     const response = await fetch(`${BASE_URL}/dataset/split`, {
       method: 'POST',
@@ -14,9 +14,9 @@ export async function splitDataset(test_size) {
     return { error: 'Failed to split dataset.' };
   }
 
-}
+};
 
-export async function trainModel(test_size, n_neighbors) {
+export const trainModel = async (test_size, n_neighbors) => {
   try {
     const response = await fetch(`${BASE_URL}/process/train`, {
       method: 'POST',
@@ -29,4 +29,4 @@ export async function trainModel(test_size, n_neighbors) {
   } catch (error) {
     return { error: 'Failed to train model.' };
   }
-}
+};

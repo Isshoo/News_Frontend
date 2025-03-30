@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 
-function useLocale(initialLocale = 'EN') {
+const useLocale = (initialLocale = 'EN') => {
   const [locale, setLocale] = useState(() => localStorage.getItem('locale') || initialLocale);
 
   useEffect(() => {
@@ -19,6 +19,6 @@ function useLocale(initialLocale = 'EN') {
   }, [locale, toggleLocale]);
 
   return [locale, localeContextValue];
-}
+};
 
 export default useLocale;

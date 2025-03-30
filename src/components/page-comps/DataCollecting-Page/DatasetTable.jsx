@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
 
-function DatasetTable({ data, loading }) {
+const DatasetTable = ({ data, loading }) => {
   return (
     <div>
       <h2>Dataset</h2>
@@ -38,7 +38,7 @@ function DatasetTable({ data, loading }) {
       )}
     </div>
   );
-}
+};
 
 DatasetTable.propTypes = {
   data: PropTypes.array.isRequired,

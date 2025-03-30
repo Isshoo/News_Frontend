@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function useEditable(defaultValue = '') {
+const useEditable = (defaultValue = '') => {
   const [value, setValue] = useState(defaultValue);
 
   const onValueChangeHandler = (event) => {
@@ -8,6 +8,6 @@ function useEditable(defaultValue = '') {
   };
 
   return [value, onValueChangeHandler];
-}
+};
 
 export default useEditable;

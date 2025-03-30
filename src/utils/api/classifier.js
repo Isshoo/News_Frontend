@@ -1,6 +1,6 @@
 import { BASE_URL } from '../config';
 
-async function predict({ text }) {
+const predict = async ({ text }) => {
   const response = await fetch(`${BASE_URL}/predict`, {
     method: 'POST',
     headers: {
@@ -17,6 +17,6 @@ async function predict({ text }) {
   const responseJson = await response.json();
 
   return responseJson;
-}
+};
 
 export { predict };

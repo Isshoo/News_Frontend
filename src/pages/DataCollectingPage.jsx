@@ -6,7 +6,7 @@ import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInf
 import Pagination from '../components/Base/Pagination';
 import { fetchDataset, fetchDatasetInfo, uploadDataset } from '../utils/api/dataset';
 
-function DataCollectingPage() {
+const DataCollectingPage = () => {
   const [dataset, setDataset] = useState([]);
   const [totalData, setTotalData] = useState(0);
   const [topicCounts, setTopicCounts] = useState({});
@@ -48,7 +48,7 @@ function DataCollectingPage() {
     loadDataset();
   }, [currentPage, limit]); // Hanya dijalankan saat paginasi berubah
 
-  async function handleUpload(file) {
+  const handleUpload = async (file) => {
     setUploading(true);
     const response = await uploadDataset(file);
 
@@ -69,7 +69,7 @@ function DataCollectingPage() {
       setTotalPages(datasetResponse.totalPages);
     }
     setUploading(false);
-  }
+  };
 
   if (dataset && totalData && topicCounts && totalPages) {
     return (
@@ -93,6 +93,6 @@ function DataCollectingPage() {
       <DatasetUpload onUpload={handleUpload} uploading={uploading} />
     </Pages>
   );
-}
+};
 
 export default DataCollectingPage;

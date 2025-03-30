@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
 
-function ClassifyResult({ preprocessedText, hybridPredict, deepseekPredict, loading }) {
+const ClassifyResult = ({ preprocessedText, hybridPredict, deepseekPredict, loading }) => {
   if (loading) {
     return <Loading />;
   }
@@ -13,7 +13,7 @@ function ClassifyResult({ preprocessedText, hybridPredict, deepseekPredict, load
       {deepseekPredict && <p>Prediksi Deepseek : {deepseekPredict}</p>}
     </div>
   );
-}
+};
 
 ClassifyResult.propTypes = {
   preprocessedText: PropTypes.string,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
 
-function NavigationBar() {
+const NavigationBar = () => {
   const location = useLocation();
 
   return (
@@ -52,6 +52,6 @@ function NavigationBar() {
       }}
     </LocaleConsumer>
   );
-}
+};
 
 export default NavigationBar;

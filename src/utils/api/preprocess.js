@@ -1,6 +1,6 @@
 import { BASE_URL } from '../config';
 
-export async function fetchPreprocessedDataset(page, limit) {
+export const fetchPreprocessedDataset = async (page, limit) => {
   try {
     const response = await fetch(`${BASE_URL}/dataset/preprocessed/data?page=${page}&limit=${limit}`);
     const responseJson =  await response.json();
@@ -11,9 +11,9 @@ export async function fetchPreprocessedDataset(page, limit) {
   } catch (error) {
     return { error: 'Failed to fetch dataset.' };
   }
-}
+};
 
-export async function fetchPreprocessedDatasetInfo() {
+export const fetchPreprocessedDatasetInfo = async () =>  {
   try {
     const response = await fetch(`${BASE_URL}/dataset/preprocessed/data`);
     const responseJson = await response.json();
@@ -24,9 +24,9 @@ export async function fetchPreprocessedDatasetInfo() {
   } catch (error) {
     return { error: 'Failed to fetch dataset.' };
   }
-}
+};
 
-export async function preprocessDataset() {
+export const preprocessDataset = async () =>  {
   try {
     const response = await fetch(`${BASE_URL}/dataset/preprocess`, {
       method: 'POST',
@@ -35,9 +35,9 @@ export async function preprocessDataset() {
   } catch (error) {
     return { error: 'Failed to preprocess dataset.' };
   }
-}
+};
 
-export async function updateLabel(index, newLabel) {
+export const updateLabel = async (index, newLabel) =>{
   try {
     const response = await fetch(`${BASE_URL}/dataset/preprocessed/update`, {
       method: 'PUT',
@@ -50,9 +50,9 @@ export async function updateLabel(index, newLabel) {
   } catch (error) {
     return { error: 'Failed to update label.' };
   }
-}
+};
 
-export async function deleteData(index) {
+export const deleteData = async (index) =>{
   try {
     const response = await fetch(`${BASE_URL}/dataset/preprocessed/delete`, {
       method: 'DELETE',
@@ -65,9 +65,9 @@ export async function deleteData(index) {
   } catch (error) {
     return { error: 'Failed to delete data.' };
   }
-}
+};
 
-export async function addData(contentSnippet, topik) {
+export const addData = async (contentSnippet, topik) => {
   try {
     const response = await fetch(`${BASE_URL}/dataset/preprocessed/add`, {
       method: 'POST',
@@ -81,4 +81,4 @@ export async function addData(contentSnippet, topik) {
     return { error: 'Failed to add data.' };
   }
 
-}
+};

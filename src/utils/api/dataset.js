@@ -1,6 +1,6 @@
 import { BASE_URL } from '../config';
 
-export async function fetchDataset(page, limit) {
+export const fetchDataset = async (page, limit) => {
   try {
     const response = await fetch(`${BASE_URL}/dataset/data?page=${page}&limit=${limit}`);
     const responseJson =  await response.json();
@@ -11,9 +11,9 @@ export async function fetchDataset(page, limit) {
   } catch (error) {
     return { error: 'Failed to fetch dataset.' };
   }
-}
+};
 
-export async function fetchDatasetInfo() {
+export const fetchDatasetInfo = async () => {
   try {
     const response = await fetch(`${BASE_URL}/dataset/data`);
     const responseJson = await response.json();
@@ -24,9 +24,9 @@ export async function fetchDatasetInfo() {
   } catch (error) {
     return { error: 'Failed to fetch dataset.' };
   }
-}
+};
 
-export async function uploadDataset(file) {
+export const uploadDataset = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
 
@@ -39,4 +39,4 @@ export async function uploadDataset(file) {
   } catch (error) {
     return { error: 'Failed to upload dataset.' };
   }
-}
+};

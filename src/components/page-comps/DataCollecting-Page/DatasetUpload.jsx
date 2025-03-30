@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function DatasetUpload({ onUpload, uploading }) {
+const DatasetUpload = ({ onUpload, uploading }) => {
   const [file, setFile] = useState(null);
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     setFile(event.target.files[0]);
-  }
+  };
 
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
     if (file) {
       onUpload(file);
@@ -16,7 +16,7 @@ function DatasetUpload({ onUpload, uploading }) {
     } else {
       alert('Please select a file to upload.');
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -26,7 +26,7 @@ function DatasetUpload({ onUpload, uploading }) {
       </button>
     </form>
   );
-}
+};
 
 DatasetUpload.propTypes = {
   onUpload: PropTypes.func.isRequired,

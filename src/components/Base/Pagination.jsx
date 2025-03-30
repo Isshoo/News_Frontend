@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Pagination({ currentPage, totalPages, setCurrentPage }) {
+const Pagination = ({ currentPage, totalPages, setCurrentPage }) => {
   return (
     <div>
       <button disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
@@ -24,7 +24,7 @@ function Pagination({ currentPage, totalPages, setCurrentPage }) {
       </button>
     </div>
   );
-}
+};
 
 Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,

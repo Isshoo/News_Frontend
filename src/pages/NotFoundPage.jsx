@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import LocaleContext from '../contexts/LocaleContext';
 
-function NotFoundPage() {
+const NotFoundPage = () => {
   const { locale } = useContext(LocaleContext);
   return (
     <>
@@ -11,6 +11,6 @@ function NotFoundPage() {
       </div>
     </>
   );
-}
+};
 
 export default NotFoundPage;

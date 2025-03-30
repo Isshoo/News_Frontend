@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function useVisibility(defaultValue = false) {
+const useVisibility = (defaultValue = false) => {
   const [visbility, setVisibility] = useState(defaultValue);
 
   function onSetVisibility() {
@@ -8,6 +8,6 @@ function useVisibility(defaultValue = false) {
   }
 
   return [visbility, onSetVisibility];
-}
+};
 
 export default useVisibility;

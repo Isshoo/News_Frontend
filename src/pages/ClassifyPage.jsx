@@ -4,13 +4,13 @@ import { predict } from '../utils/api/classifier';
 import ClassifyInput from '../components/page-comps/Classify-Page/ClassifyInput';
 import ClassifyResult from '../components/page-comps/Classify-Page/ClassifyResult';
 
-function ClassifyPage() {
+const ClassifyPage = () => {
   const [hybridPredict, setHybridPredict] = useState('');
   const [deepseekPredict, setDeepseekPredict] = useState('');
   const [preprocessedText, setPreprocessedText] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function predictNews(text, retryCount = 4) {
+  const predictNews = async (text, retryCount = 4) => {
     if (retryCount <= 0) {
       console.warn('DeepSeek prediction failed after multiple retries.');
       setLoading(false);
@@ -34,7 +34,7 @@ function ClassifyPage() {
     setDeepseekPredict(response.DeepSeek);
     setPreprocessedText(response.Preprocessed_Text);
     setLoading(false);
-  }
+  };
 
   return (
     <Pages>
@@ -50,6 +50,6 @@ function ClassifyPage() {
       </div>
     </Pages>
   );
-}
+};
 
 export default ClassifyPage;

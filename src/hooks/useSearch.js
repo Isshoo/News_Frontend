@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-function useSearch(initialKeyword = '') {
+const useSearch = (initialKeyword = '') => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [keyword, setKeyword] = useState(() => {
     return searchParams.get('keyword') || initialKeyword;
@@ -13,6 +13,6 @@ function useSearch(initialKeyword = '') {
   };
 
   return [keyword, onKeywordChangeHandler];
-}
+};
 
 export default useSearch;
