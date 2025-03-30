@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AddDataPopup = ({
+function AddDataPopup({
   newContent,
   setNewContent,
   newTopic,
   setNewTopic,
   handleAddData,
   setShowAddPopup,
-}) => {
+}) {
   return (
     <div className='popup'>
       <h3>Add New Data</h3>
@@ -28,7 +28,7 @@ const AddDataPopup = ({
       <button onClick={() => setShowAddPopup(false)}>Cancel</button>
     </div>
   );
-};
+}
 
 AddDataPopup.propTypes = {
   newContent: PropTypes.string.isRequired,

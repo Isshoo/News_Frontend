@@ -10,7 +10,7 @@ import PreprocessTable from '../components/page-comps/Preprocessing-Page/Preproc
 import Pagination from '../components/Base/Pagination';
 import AddDataPopup from '../components/page-comps/Preprocessing-Page/AddDataPopup';
 
-const PreprocessingPage = () => {
+function PreprocessingPage() {
   const [dataset, setDataset] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,6 +86,6 @@ const PreprocessingPage = () => {
       )}
     </Pages>
   );
-};
+}
 
 export default PreprocessingPage;

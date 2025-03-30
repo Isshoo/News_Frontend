@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PreprocessTable = ({
+function PreprocessTable({
   dataset,
   editingIndex,
   newLabel,
@@ -9,7 +9,7 @@ const PreprocessTable = ({
   handleEdit,
   handleSave,
   handleDelete,
-}) => {
+}) {
   return (
     <table>
       <thead>
@@ -47,7 +47,7 @@ const PreprocessTable = ({
       </tbody>
     </table>
   );
-};
+}
 
 PreprocessTable.propTypes = {
   dataset: PropTypes.array.isRequired,
