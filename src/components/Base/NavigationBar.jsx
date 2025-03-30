@@ -28,11 +28,11 @@ function NavigationBar({ logout, username }) {
               <li>
                 <Link
                   id='archivedListBtn'
-                  className={`nav-button ${location.pathname === '/training' ? 'active' : ''}`}
-                  to='/training'
+                  className={`nav-button ${location.pathname === '/data-collecting' ? 'active' : ''}`}
+                  to='/data-collecting'
                 >
                   <MdOutlineLeaderboard className='nav-icon' />
-                  <p>{locale === 'EN' ? 'Training' : 'Latih'}</p>
+                  <p>{locale === 'EN' ? 'Collect Data' : 'Kumpul Data'}</p>
                 </Link>
               </li>
             </ul>

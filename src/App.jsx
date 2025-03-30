@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import ClassifyPage from './pages/ClassifyPage';
-import NotFoundPage from './pages/NotFoundPage';
 import { LocaleProvider } from './contexts/LocaleContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import ClassifyPage from './pages/ClassifyPage';
+import DataCollectingPage from './pages/DataCollectingPage';
+import NotFoundPage from './pages/NotFoundPage';
 import useLocale from './hooks/useLocale';
 import useTheme from './hooks/useTheme';
 import HeaderBar from './components/Base/HeaderBar';
@@ -30,6 +31,7 @@ function App() {
             <ScrollToTop />
             <Routes>
               <Route path='/' element={<ClassifyPage />} />
+              <Route path='/data-collecting' element={<DataCollectingPage />} />
               <Route path='*' element={<NotFoundPage />} />
             </Routes>
           </main>
