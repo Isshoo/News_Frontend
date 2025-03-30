@@ -38,18 +38,15 @@
   --validation: #375bfc;
 }
 
-#formNewThreads {
+.small-page {
+  position: absolute;
+  max-width: 750px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1rem;
-  padding: 1.5rem 2rem 2rem;
-  background-color: var(--form-background);
-  border-radius: 16px;
-  box-shadow: -2px 2px 10px 3px var(--form-shadow);
-  align-self: center;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
 
 #threadForm {
   display: flex;
@@ -61,9 +58,7 @@
   font-weight: 500;
 }
 
-#title,
-#category,
-#description {
+#title {
   width: 100%;
   font-size: 1rem;
   padding: 0.5rem 1rem;
@@ -73,31 +68,11 @@
   border: 1px solid transparent;
 }
 
-#category,
-#description {
-  margin-bottom: 1rem;
-}
-
-#category::placeholder,
 #title::placeholder {
   font-size: 1rem;
   font-weight: 400;
   color: var(--input-placeholder-thread);
   pointer-events: none;
-}
-
-#description[data-placeholder]:empty::before {
-  content: attr(data-placeholder);
-  font-weight: 400;
-  font-size: 1rem;
-  color: var(--input-placeholder-thread);
-  pointer-events: none;
-}
-
-#description b,
-#description strong,
-#description i {
-  color: var(--input-text-thread);
 }
 
 #titleValidation {
@@ -107,9 +82,7 @@
   font-weight: 500;
 }
 
-#title:focus,
-#category:focus,
-#description:focus {
+#title:focus {
   border: 1px solid var(--input-focus);
 }
 

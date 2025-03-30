@@ -38,14 +38,16 @@ function ClassifyPage() {
 
   return (
     <Pages>
-      <ClassifyInput predictNews={predictNews} loading={loading} />
-      <br />
-      <ClassifyResult
-        preprocessedText={preprocessedText}
-        hybridPredict={hybridPredict}
-        deepseekPredict={deepseekPredict}
-        loading={loading}
-      />
+      <div className='small-page'>
+        <ClassifyInput predictNews={predictNews} loading={loading} />
+        <br />
+        <ClassifyResult
+          preprocessedText={preprocessedText}
+          hybridPredict={hybridPredict}
+          deepseekPredict={deepseekPredict}
+          loading={loading}
+        />
+      </div>
     </Pages>
   );
 }

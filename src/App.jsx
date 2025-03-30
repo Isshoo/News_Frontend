@@ -10,6 +10,7 @@ import useTheme from './hooks/useTheme';
 import HeaderBar from './components/Base/HeaderBar';
 import FooterBar from './components/Base/FooterBar';
 import NavigationBar from './components/Base/NavigationBar';
+import SideBar from './components/Base/SideBar';
 import ScrollToTop from './components/Base/ScrollToTop';
 
 function App() {
@@ -25,16 +26,18 @@ function App() {
         >
           <header>
             <HeaderBar />
-            <NavigationBar />
           </header>
-          <main>
-            <ScrollToTop />
-            <Routes>
-              <Route path='/' element={<ClassifyPage />} />
-              <Route path='/data-collecting' element={<DataCollectingPage />} />
-              <Route path='*' element={<NotFoundPage />} />
-            </Routes>
-          </main>
+          <div className='main'>
+            <SideBar />
+            <main>
+              <ScrollToTop />
+              <Routes>
+                <Route path='/' element={<ClassifyPage />} />
+                <Route path='/data-collecting' element={<DataCollectingPage />} />
+                <Route path='*' element={<NotFoundPage />} />
+              </Routes>
+            </main>
+          </div>
           <footer>
             <FooterBar />
           </footer>

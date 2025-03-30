@@ -84,38 +84,24 @@ label {
   background-color: var(--background);
 }
 
-.container.unAuth main {
-  background-color: var(--background);
-  padding-block: 0 0;
-  height: 100%;
+
+.main {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.container.unAuth main .pages-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  flex: 1;
+  width: 100%;
 }
 
 main {
-  max-width: 900px;
   width: 100%;
   padding-inline: 3%;
-  padding-block: 10.85rem 1rem;
+  padding-block: 6.85rem 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3rem;
   background-color: var(--main-bg);
-}
-.pages-section {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 /* not found page */
@@ -140,12 +126,6 @@ main {
   }
 }
 @media screen and (max-width: 500px) {
-  main {
-    padding-block: 10.75rem 1rem;
-  }
 }
 @media screen and (max-width: 368px) {
-  main {
-    padding-block: 11.75rem 1rem;
-  }
 }

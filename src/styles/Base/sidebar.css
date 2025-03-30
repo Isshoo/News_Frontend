@@ -1,0 +1,109 @@
+:root {
+  --header-background: #212631;
+  --header-text: #f0f1f5;
+  --sidebar-bg: #101319;
+  --side-text: #ffffff;
+  --side-bg: #212631;
+  --side-border: #212631;
+  --side-bg-hover: #0a0e15;
+  --side-bg-act: #4e576a;
+  --side-active-bg: #0a0e15;
+  --logout-text: #000;
+  --logout-text-hover: #1a44ff;
+  --side-shadow: rgba(69, 69, 69, 0.2);
+}
+
+[data-theme="light"] {
+  --header-background: #212631;
+  --header-text: #f0f1f5;
+  --sidebar-bg: #e6e6e6;
+  --side-text: #ffffff;
+  --side-bg: #212631;
+  --side-border: #212631;
+  --side-bg-hover: #0a0e15;
+  --side-bg-act: #4e576a;
+  --side-active-bg: #212631;
+  --logout-text: #000;
+  --logout-text-hover: #3b5efa;
+  --side-shadow: rgba(0, 0, 0, 0.2);
+}
+
+.side-bar {
+    width: 100%;
+    flex: 0.175;
+    background-color: var(--sidebar-bg);
+    transition: transform 0.3s ease;
+    padding-inline: 2rem;
+    padding-block: 6.85rem 1rem;
+}
+
+.side {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.side li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--side-bg);
+  color: var(--side-text);
+  cursor: pointer;
+  opacity: 0.9;
+  border: 1px solid var(--side-border);
+  min-height: 41px;
+}
+.side-button:hover {
+  background-color: var(--side-bg-hover);
+}
+.side-button:active {
+  background-color: var(--side-bg-act);
+}
+.side-button.active {
+  background-color: var(--side-active-bg);
+  opacity: 1;
+}
+
+.side-button p {
+    text-align: center;
+}
+.side-icon {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 860px) {
+    .side-icon {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .side-bar {
+        flex: 0.15;
+        padding-inline: 1rem;
+    }
+    .side-icon {
+        display: block;
+    }
+    .side-button p {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 368px) {
+
+}
