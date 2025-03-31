@@ -9,9 +9,9 @@ export const fetchDatasets = async () => {
   }
 };
 
-export const fetchDataset = async (datasetId, page, limit) => {
+export const fetchDataset = async (dataset_id, page = 1, limit = 10) => {
   try {
-    const response = await fetch(`${BASE_URL}/dataset/${datasetId}?page=${page}&limit=${limit}`);
+    const response = await fetch(`${BASE_URL}/dataset/${dataset_id}?page=${page}&limit=${limit}`);
     return await response.json();
   } catch (error) {
     return { error: 'Failed to fetch dataset.' };

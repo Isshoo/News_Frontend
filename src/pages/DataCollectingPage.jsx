@@ -19,6 +19,7 @@ const DataCollectingPage = () => {
   const [limit, setLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   // Load daftar dataset saat pertama kali halaman dimuat
@@ -40,8 +41,7 @@ const DataCollectingPage = () => {
     const loadDataset = async () => {
       setLoading(true);
       try {
-        const response = await fetchDataset(selectedDataset, currentPage, limit);
-        setDataset(response.data);
+        const response = await fetchDataset(selectedDataset);
         setTotalData(response.total_data);
         setTopicCounts(response.topic_counts);
         setTotalPages(response.total_pages);
@@ -49,6 +49,21 @@ const DataCollectingPage = () => {
         console.error('Error fetching dataset:', error);
       }
       setLoading(false);
+    };
+    loadDataset();
+  }, [selectedDataset]);
+
+  useEffect(() => {
+    if (!selectedDataset) return;
+    const loadDataset = async () => {
+      setDataLoading(true);
+      try {
+        const response = await fetchDataset(selectedDataset, currentPage, limit);
+        setDataset(response.data);
+      } catch (error) {
+        console.error('Error fetching dataset:', error);
+      }
+      setDataLoading(false);
     };
     loadDataset();
   }, [selectedDataset, currentPage, limit]);
@@ -64,6 +79,7 @@ const DataCollectingPage = () => {
       const datasets = await fetchDatasets();
       setDatasets(datasets);
       setSelectedDataset(response.dataset.id);
+      setCurrentPage(1);
       localStorage.setItem('selectedDataset', response.dataset.id);
     }
     setUploading(false);
@@ -72,6 +88,7 @@ const DataCollectingPage = () => {
   const handleDatasetSelection = (event) => {
     const selectedId = event.target.value;
     setSelectedDataset(selectedId);
+    setCurrentPage(1);
     localStorage.setItem('selectedDataset', selectedId);
   };
 
@@ -98,7 +115,7 @@ const DataCollectingPage = () => {
             loading={loading}
           />
           <br />
-          <DatasetTable data={dataset || []} loading={loading} />
+          <DatasetTable data={dataset || []} loading={dataLoading} />
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages || 1}
