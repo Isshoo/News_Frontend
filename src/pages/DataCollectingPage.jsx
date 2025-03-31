@@ -8,6 +8,7 @@ import { fetchDatasets, fetchDataset, uploadDataset } from '../utils/api/dataset
 
 const DataCollectingPage = () => {
   const firstRun = useRef(true);
+  const firstFetch = useRef(true);
   const [datasets, setDatasets] = useState([]);
   const [selectedDataset, setSelectedDataset] = useState(
     localStorage.getItem('selectedDataset') || null
@@ -22,51 +23,37 @@ const DataCollectingPage = () => {
   const [dataLoading, setDataLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  // Load daftar dataset saat pertama kali halaman dimuat
-  useEffect(() => {
-    if (firstRun.current) {
-      const loadDatasets = async () => {
-        const response = await fetchDatasets();
-        setDatasets(response);
-      };
-      loadDatasets();
-      firstRun.current = false;
+  const loadDatasets = async () => {
+    const response = await fetchDatasets();
+    setDatasets(response);
+  };
+
+  const loadDataset = async (selectedDataset, currentPage, limit) => {
+    setLoading(true);
+    setDataLoading(true);
+    try {
+      const response = await fetchDataset(selectedDataset, currentPage, limit);
+      setDataset(response.data);
+      setTotalData(response.total_data);
+      setTopicCounts(response.topic_counts);
+      setTotalPages(response.total_pages);
+    } catch (error) {
+      console.error('Error fetching dataset:', error);
     }
-  }, []);
+    setLoading(false);
+    setDataLoading(false);
+  };
 
-  // Load dataset yang dipilih dengan paginasi
-  useEffect(() => {
-    if (!selectedDataset) return;
-    localStorage.setItem('selectedDataset', selectedDataset);
-    const loadDataset = async () => {
-      setLoading(true);
-      try {
-        const response = await fetchDataset(selectedDataset);
-        setTotalData(response.total_data);
-        setTopicCounts(response.topic_counts);
-        setTotalPages(response.total_pages);
-      } catch (error) {
-        console.error('Error fetching dataset:', error);
-      }
-      setLoading(false);
-    };
-    loadDataset();
-  }, [selectedDataset]);
-
-  useEffect(() => {
-    if (!selectedDataset) return;
-    const loadDataset = async () => {
-      setDataLoading(true);
-      try {
-        const response = await fetchDataset(selectedDataset, currentPage, limit);
-        setDataset(response.data);
-      } catch (error) {
-        console.error('Error fetching dataset:', error);
-      }
-      setDataLoading(false);
-    };
-    loadDataset();
-  }, [selectedDataset, currentPage, limit]);
+  const loadDatasetData = async (selectedDataset, currentPage, limit) => {
+    setDataLoading(true);
+    try {
+      const response = await fetchDataset(selectedDataset, currentPage, limit);
+      setDataset(response.data);
+    } catch (error) {
+      console.error('Error fetching dataset:', error);
+    }
+    setDataLoading(false);
+  };
 
   const handleUpload = async (file) => {
     setUploading(true);
@@ -76,21 +63,41 @@ const DataCollectingPage = () => {
       alert(response.error);
     } else {
       alert('Dataset uploaded successfully!');
-      const datasets = await fetchDatasets();
-      setDatasets(datasets);
+      await loadDatasets();
       setSelectedDataset(response.dataset.id);
       setCurrentPage(1);
+      await loadDataset(selectedDataset, 1, limit);
       localStorage.setItem('selectedDataset', response.dataset.id);
     }
     setUploading(false);
   };
 
-  const handleDatasetSelection = (event) => {
+  const handleDatasetSelection = async (event) => {
     const selectedId = event.target.value;
     setSelectedDataset(selectedId);
     setCurrentPage(1);
+    await loadDataset(selectedDataset, currentPage, limit);
     localStorage.setItem('selectedDataset', selectedId);
   };
+
+  const handleSetPage = async (page) => {
+    setCurrentPage(page);
+    await loadDatasetData(selectedDataset, page, limit);
+  };
+
+  useEffect(() => {
+    if (firstRun.current) {
+      loadDatasets();
+      firstRun.current = false;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!selectedDataset || !firstFetch.current) return;
+    firstFetch.current = false;
+    localStorage.setItem('selectedDataset', selectedDataset);
+    loadDataset(selectedDataset, currentPage, limit);
+  }, [selectedDataset, currentPage, limit]);
 
   return (
     <Pages>
@@ -119,7 +126,7 @@ const DataCollectingPage = () => {
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages || 1}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetPage}
           />
         </>
       )}
