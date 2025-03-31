@@ -1,34 +1,8 @@
 import { BASE_URL } from '../config';
 
-export const fetchPreprocessedDataset = async (page, limit) => {
+export const preprocessDataset = async (raw_dataset_id) =>  {
   try {
-    const response = await fetch(`${BASE_URL}/dataset/preprocessed/data?page=${page}&limit=${limit}`);
-    const responseJson =  await response.json();
-    return {
-      data: responseJson.data,
-      totalPages: responseJson.total_pages,
-    };
-  } catch (error) {
-    return { error: 'Failed to fetch dataset.' };
-  }
-};
-
-export const fetchPreprocessedDatasetInfo = async () =>  {
-  try {
-    const response = await fetch(`${BASE_URL}/dataset/preprocessed/data`);
-    const responseJson = await response.json();
-    return {
-      totalData: responseJson.total_data,
-      topicCounts: responseJson.topic_counts,
-    };
-  } catch (error) {
-    return { error: 'Failed to fetch dataset.' };
-  }
-};
-
-export const preprocessDataset = async () =>  {
-  try {
-    const response = await fetch(`${BASE_URL}/dataset/preprocess`, {
+    const response = await fetch(`${BASE_URL}/dataset/${raw_dataset_id}/preprocess`, {
       method: 'POST',
     });
     return await response.json();
@@ -37,9 +11,51 @@ export const preprocessDataset = async () =>  {
   }
 };
 
-export const updateLabel = async (index, newLabel) =>{
+export const createPreprocessedCopy = async (raw_dataset_id, name) => {
   try {
-    const response = await fetch(`${BASE_URL}/dataset/preprocessed/update`, {
+    const response = await fetch(`${BASE_URL}/dataset/${raw_dataset_id}/preprocessed/copy`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: name }),
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to create copy.' };
+  }
+};
+
+export const fetchPreprocessedDatasets = async (raw_dataset_id) =>  {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/${raw_dataset_id}/preprocessed/list`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to fetch dataset.' };
+  }
+};
+
+export const fetchPreprocessedDataset = async (dataset_id, page, limit) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}?page=${page}&limit=${limit}`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to fetch dataset.' };
+  }
+};
+
+export const deletePreprocessedDataset = async (dataset_id) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to delete dataset.' };
+  }
+};
+
+export const updateLabel = async (dataset_id, index, newLabel) =>{
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}/label`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -52,9 +68,9 @@ export const updateLabel = async (index, newLabel) =>{
   }
 };
 
-export const deleteData = async (index) =>{
+export const deleteData = async (dataset_id, index) =>{
   try {
-    const response = await fetch(`${BASE_URL}/dataset/preprocessed/delete`, {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}/data`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -67,9 +83,9 @@ export const deleteData = async (index) =>{
   }
 };
 
-export const addData = async (contentSnippet, topik) => {
+export const addData = async (dataset_id, contentSnippet, topik) => {
   try {
-    const response = await fetch(`${BASE_URL}/dataset/preprocessed/add`, {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}/data`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
