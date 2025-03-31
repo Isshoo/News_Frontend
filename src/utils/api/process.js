@@ -30,3 +30,12 @@ export const trainModel = async (splitSize, n_neighbors) => {
     return { error: 'Failed to train model.' };
   }
 };
+
+export const getEvaluation = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/process/evaluation`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to get evaluation.' };
+  }
+};

@@ -8,10 +8,10 @@ const DatasetUpload = ({ onUpload, uploading }) => {
     setFile(event.target.files[0]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (file) {
-      onUpload(file);
+      await onUpload(file);
       setFile(null);
     } else {
       alert('Please select a file to upload.');

@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Pages from '../components/styled/Pages';
 import DatasetUpload from '../components/page-comps/DataCollecting-Page/DatasetUpload';
 import DatasetTable from '../components/page-comps/DataCollecting-Page/DatasetTable';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
 import Pagination from '../components/Base/Pagination';
-import { fetchDataset, fetchDatasetInfo, uploadDataset } from '../utils/api/dataset';
+import { fetchDatasets, fetchDataset, uploadDataset } from '../utils/api/dataset';
 
 const DataCollectingPage = () => {
+  const firstRun = useRef(true);
+  const [datasets, setDatasets] = useState([]);
+  const [selectedDataset, setSelectedDataset] = useState(
+    localStorage.getItem('selectedDataset') || null
+  );
   const [dataset, setDataset] = useState([]);
   const [totalData, setTotalData] = useState(0);
   const [topicCounts, setTopicCounts] = useState({});
@@ -16,37 +21,37 @@ const DataCollectingPage = () => {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  // Load total data dan distribusi topik hanya saat pertama kali halaman dimuat atau setelah upload dataset
+  // Load daftar dataset saat pertama kali halaman dimuat
   useEffect(() => {
-    const loadDatasetInfo = async () => {
-      try {
-        const response = await fetchDatasetInfo();
-        setTotalData(response.totalData);
-        setTopicCounts(response.topicCounts);
-      } catch (error) {
-        console.error('Error fetching dataset info:', error);
-      }
-    };
+    if (firstRun.current) {
+      const loadDatasets = async () => {
+        const response = await fetchDatasets();
+        setDatasets(response);
+      };
+      loadDatasets();
+      firstRun.current = false;
+    }
+  }, []);
 
-    loadDatasetInfo();
-  }, []); // Hanya dijalankan sekali saat pertama kali halaman dimuat
-
-  // Load dataset dengan paginasi setiap kali currentPage atau limit berubah
+  // Load dataset yang dipilih dengan paginasi
   useEffect(() => {
+    if (!selectedDataset) return;
+    localStorage.setItem('selectedDataset', selectedDataset);
     const loadDataset = async () => {
       setLoading(true);
       try {
-        const response = await fetchDataset(currentPage, limit);
+        const response = await fetchDataset(selectedDataset, currentPage, limit);
         setDataset(response.data);
-        setTotalPages(response.totalPages);
+        setTotalData(response.total_data);
+        setTopicCounts(response.topic_counts);
+        setTotalPages(response.total_pages);
       } catch (error) {
         console.error('Error fetching dataset:', error);
       }
       setLoading(false);
     };
-
     loadDataset();
-  }, [currentPage, limit]); // Hanya dijalankan saat paginasi berubah
+  }, [selectedDataset, currentPage, limit]);
 
   const handleUpload = async (file) => {
     setUploading(true);
@@ -56,41 +61,51 @@ const DataCollectingPage = () => {
       alert(response.error);
     } else {
       alert('Dataset uploaded successfully!');
-
-      // Ambil ulang informasi dataset setelah upload
-      const datasetInfo = await fetchDatasetInfo();
-      setTotalData(datasetInfo.totalData);
-      setTopicCounts(datasetInfo.topicCounts);
-
-      // Set currentPage ke 1 dan langsung ambil dataset baru
-      setCurrentPage(1);
-      const datasetResponse = await fetchDataset(1, limit);
-      setDataset(datasetResponse.data);
-      setTotalPages(datasetResponse.totalPages);
+      const datasets = await fetchDatasets();
+      setDatasets(datasets);
+      setSelectedDataset(response.dataset.id);
+      localStorage.setItem('selectedDataset', response.dataset.id);
     }
     setUploading(false);
   };
 
-  if (dataset && totalData && topicCounts && totalPages) {
-    return (
-      <Pages>
-        <DatasetUpload onUpload={handleUpload} uploading={uploading} />
-        <br />
-        <DatasetInfo totalData={totalData} topicCounts={topicCounts} />
-        <br />
-        <DatasetTable data={dataset} loading={loading} />
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
-      </Pages>
-    );
-  }
+  const handleDatasetSelection = (event) => {
+    const selectedId = event.target.value;
+    setSelectedDataset(selectedId);
+    localStorage.setItem('selectedDataset', selectedId);
+  };
 
   return (
     <Pages>
       <DatasetUpload onUpload={handleUpload} uploading={uploading} />
+      <br />
+      <select onChange={handleDatasetSelection} value={selectedDataset || ''}>
+        <option value='' disabled>
+          Select a dataset
+        </option>
+        {datasets.map((dataset) => (
+          <option key={dataset.id} value={dataset.id}>
+            {dataset.name}
+          </option>
+        ))}
+      </select>
+      <br />
+      {selectedDataset && (
+        <>
+          <DatasetInfo
+            totalData={totalData || 0}
+            topicCounts={topicCounts || {}}
+            loading={loading}
+          />
+          <br />
+          <DatasetTable data={dataset || []} loading={loading} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages || 1}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      )}
     </Pages>
   );
 };

@@ -1,26 +1,18 @@
 import { BASE_URL } from '../config';
 
-export const fetchDataset = async (page, limit) => {
+export const fetchDatasets = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/dataset/data?page=${page}&limit=${limit}`);
-    const responseJson =  await response.json();
-    return {
-      data: responseJson.data,
-      totalPages: responseJson.total_pages,
-    };
+    const response = await fetch(`${BASE_URL}/dataset/list`);
+    return await response.json();
   } catch (error) {
-    return { error: 'Failed to fetch dataset.' };
+    return { error: 'Failed to fetch datasets.' };
   }
 };
 
-export const fetchDatasetInfo = async () => {
+export const fetchDataset = async (datasetId, page, limit) => {
   try {
-    const response = await fetch(`${BASE_URL}/dataset/data`);
-    const responseJson = await response.json();
-    return {
-      totalData: responseJson.total_data,
-      topicCounts: responseJson.topic_counts,
-    };
+    const response = await fetch(`${BASE_URL}/dataset/${datasetId}?page=${page}&limit=${limit}`);
+    return await response.json();
   } catch (error) {
     return { error: 'Failed to fetch dataset.' };
   }
@@ -38,5 +30,16 @@ export const uploadDataset = async (file) => {
     return await response.json();
   } catch (error) {
     return { error: 'Failed to upload dataset.' };
+  }
+};
+
+export const deleteDataset = async (datasetId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/${datasetId}`, {
+      method: 'DELETE',
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to delete dataset.' };
   }
 };
