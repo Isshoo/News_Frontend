@@ -1,13 +1,13 @@
 import { BASE_URL } from '../config';
 
-export const splitDataset = async (test_size) =>{
+export const splitDataset = async (splitSize) =>{
   try {
-    const response = await fetch(`${BASE_URL}/dataset/split`, {
+    const response = await fetch(`${BASE_URL}/process/split`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ test_size: test_size }),
+      body: JSON.stringify({ test_size: splitSize }),
     });
     return await response.json();
   } catch (error) {
@@ -16,14 +16,14 @@ export const splitDataset = async (test_size) =>{
 
 };
 
-export const trainModel = async (test_size, n_neighbors) => {
+export const trainModel = async (splitSize, n_neighbors) => {
   try {
     const response = await fetch(`${BASE_URL}/process/train`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ test_size: test_size, n_neighbors: n_neighbors }),
+      body: JSON.stringify({ test_size: splitSize, n_neighbors: n_neighbors }),
     });
     return await response.json();
   } catch (error) {
