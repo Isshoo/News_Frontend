@@ -6,6 +6,7 @@ import ClassifyPage from './pages/ClassifyPage';
 import DataCollectingPage from './pages/DataCollectingPage';
 import PreprocessingPage from './pages/PreprocessingPage';
 import ProcessingPage from './pages/ProcessingPage';
+import EvaluationPage from './pages/EvaluationPage';
 import NotFoundPage from './pages/NotFoundPage';
 import useLocale from './hooks/useLocale';
 import useTheme from './hooks/useTheme';
@@ -38,10 +39,12 @@ const App = () => {
               {location.pathname.startsWith('/train-model') ? <NavigationBar /> : ''}
               <Routes>
                 <Route path='/' element={<ClassifyPage />} />
+                <Route path='/classifier' element={<ClassifyPage />} />
                 <Route path='/train-model' element={<DataCollectingPage />} />
                 <Route path='/train-model/data-collecting' element={<DataCollectingPage />} />
                 <Route path='/train-model/preprocessing' element={<PreprocessingPage />} />
                 <Route path='/train-model/processing' element={<ProcessingPage />} />
+                <Route path='/train-model/evaluation' element={<EvaluationPage />} />
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>
             </main>

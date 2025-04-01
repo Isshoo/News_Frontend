@@ -19,7 +19,7 @@ const PreprocessingPage = () => {
   const [dataset, setDataset] = useState([]);
   const [preprocessedDatasets, setPreprocessedDatasets] = useState([]);
   const [preprocessedDatasetId, setPreprocessedDatasetId] = useState(
-    localStorage.getItem('preprocessed_dataset_id') || rawDatasetId
+    localStorage.getItem('preprocessed_dataset_id') || ''
   );
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,6 +57,7 @@ const PreprocessingPage = () => {
     const response = await preprocessDataset(rawDatasetId);
     if (!response.error) {
       localStorage.setItem('preprocessed_dataset_id', rawDatasetId);
+      localStorage.removeItem('modelId');
       setPreprocessedDatasetId(rawDatasetId);
       loadDataset(rawDatasetId, 1);
     }
@@ -75,6 +76,7 @@ const PreprocessingPage = () => {
 
       if (newDatasetId) {
         localStorage.setItem('preprocessed_dataset_id', newDatasetId);
+        localStorage.removeItem('modelId');
         setPreprocessedDatasetId(newDatasetId);
         loadDataset(newDatasetId, 1);
       }
@@ -107,6 +109,7 @@ const PreprocessingPage = () => {
 
   const handleDatasetSelection = (datasetId) => {
     localStorage.setItem('preprocessed_dataset_id', datasetId);
+    localStorage.removeItem('modelId');
     setPreprocessedDatasetId(datasetId);
   };
 
@@ -123,6 +126,7 @@ const PreprocessingPage = () => {
         const firstDataset = updatedDatasets.data?.[0] || { id: rawDatasetId };
         setPreprocessedDatasetId(firstDataset.id);
         localStorage.setItem('preprocessed_dataset_id', firstDataset.id);
+        localStorage.removeItem('modelId');
         loadDataset(firstDataset.id, 1);
       }
     } else {

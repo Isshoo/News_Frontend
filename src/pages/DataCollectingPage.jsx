@@ -68,6 +68,8 @@ const DataCollectingPage = () => {
       setCurrentPage(1);
       await loadDataset(selectedDataset, 1, limit);
       localStorage.setItem('selectedDataset', response.dataset.id);
+      localStorage.removeItem('preprocessed_dataset_id');
+      localStorage.removeItem('modelId');
     }
     setUploading(false);
   };
@@ -78,6 +80,8 @@ const DataCollectingPage = () => {
     setCurrentPage(1);
     await loadDataset(selectedDataset, currentPage, limit);
     localStorage.setItem('selectedDataset', selectedId);
+    localStorage.removeItem('preprocessed_dataset_id');
+    localStorage.removeItem('modelId');
   };
 
   const handleSetPage = async (page) => {

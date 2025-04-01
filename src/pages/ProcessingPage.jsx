@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { splitDataset, trainModel } from '../utils/api/process';
 import { fetchPreprocessedDataset } from '../utils/api/preprocess';
+import { getModel } from '../utils/api/process';
 import Pages from '../components/styled/Pages';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
 import ParameterSelection from '../components/page-comps/Processing-Page/ParameterSelection';
 import TrainButton from '../components/page-comps/Processing-Page/TrainButton';
 
 const ProcessingPage = () => {
+  const rawDatasetId = localStorage.getItem('selectedDataset');
+  const preprocessedDatasetId = localStorage.getItem('preprocessed_dataset_id');
+  const modelId = localStorage.getItem('modelId') || ''; // Store modelId after training
+
   const firstRun = useRef(true);
   const [name, setName] = useState('');
   const [totalData, setTotalData] = useState(0);
@@ -19,19 +24,36 @@ const ProcessingPage = () => {
   const [testPerTopic, setTestPerTopic] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const rawDatasetId = localStorage.getItem('selectedDataset');
-  const preprocessedDatasetId = localStorage.getItem('preprocessed_dataset_id');
-  const modelId = localStorage.getItem('modelId') || ''; // Store modelId after training
-
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false;
       return;
     }
+    if (modelId) {
+      fetchModelInfo(modelId);
+    }
     if (preprocessedDatasetId) {
       fetchDatasetInfo(preprocessedDatasetId);
     }
-  }, [preprocessedDatasetId]);
+  }, [modelId, preprocessedDatasetId]);
+
+  const fetchModelInfo = async (modelId) => {
+    try {
+      const response = await getModel(modelId);
+      setName(response.name);
+      setNNeighbors(response.n_neighbors);
+      setSplitSize(response.split_size);
+      setTotalData(response.total_data);
+      setTopicCounts(response.topic_counts);
+      setTrainSize(response.train_size);
+      setTestSize(response.test_size);
+      setTrainPerTopic(response.train_per_topic);
+      setTestPerTopic(response.test_per_topic);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching model info:', error);
+    }
+  };
 
   const fetchDatasetInfo = async (preprocessedDatasetId) => {
     try {
