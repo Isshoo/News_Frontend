@@ -28,6 +28,24 @@ const SideBar = () => {
                   <p>{locale === 'EN' ? 'Train Model' : 'Latih Model'}</p>
                 </Link>
               </li>
+              <li>
+                <Link
+                  className={`side-button ${location.pathname.startsWith('/datasets') ? 'active' : ''}`}
+                  to='/datasets'
+                >
+                  <MdOutlineLeaderboard className='side-icon' />
+                  <p>{locale === 'EN' ? 'Dataset' : 'Kumpulan Data'}</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`side-button ${location.pathname.startsWith('/models') ? 'active' : ''}`}
+                  to='/models'
+                >
+                  <MdOutlineLeaderboard className='side-icon' />
+                  <p>{locale === 'EN' ? 'Models' : 'Model'}</p>
+                </Link>
+              </li>
             </ul>
           </nav>
         );

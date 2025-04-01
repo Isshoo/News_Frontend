@@ -27,4 +27,17 @@ const showFormattedDate = (date, locale = '') => {
   return `${years}yr ago`;
 };
 
-export { showFormattedDate };
+// format iso date
+const formatISODate = (date) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Intl.DateTimeFormat('id-ID', options).format(new Date(date));
+};
+
+// format unix timestamp
+const formatUnixTimestamp = (timestamp) => {
+  const date = new Date(timestamp * 1000);
+  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+  return new Intl.DateTimeFormat('id-ID', options).format(date);
+};
+
+export { showFormattedDate, formatISODate, formatUnixTimestamp };

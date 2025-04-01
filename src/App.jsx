@@ -7,6 +7,7 @@ import DataCollectingPage from './pages/DataCollectingPage';
 import PreprocessingPage from './pages/PreprocessingPage';
 import ProcessingPage from './pages/ProcessingPage';
 import EvaluationPage from './pages/EvaluationPage';
+import DatasetsPage from './pages/DatasetsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import useLocale from './hooks/useLocale';
 import useTheme from './hooks/useTheme';
@@ -45,6 +46,7 @@ const App = () => {
                 <Route path='/train-model/preprocessing' element={<PreprocessingPage />} />
                 <Route path='/train-model/processing' element={<ProcessingPage />} />
                 <Route path='/train-model/evaluation' element={<EvaluationPage />} />
+                <Route path='/datasets' element={<DatasetsPage />} />
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>
             </main>
