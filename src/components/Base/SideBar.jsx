@@ -34,7 +34,7 @@ const SideBar = () => {
                   to='/datasets'
                 >
                   <MdOutlineLeaderboard className='side-icon' />
-                  <p>{locale === 'EN' ? 'Dataset' : 'Kumpulan Data'}</p>
+                  <p>{locale === 'EN' ? 'Datasets' : 'Kumpulan Data'}</p>
                 </Link>
               </li>
               <li>
