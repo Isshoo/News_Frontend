@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { LocaleProvider } from './contexts/LocaleContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ClassifyPage from './pages/ClassifyPage';
+import CsvClassifierPage from './pages/CsvClassifierPage';
 import DataCollectingPage from './pages/DataCollectingPage';
 import PreprocessingPage from './pages/PreprocessingPage';
 import ProcessingPage from './pages/ProcessingPage';
@@ -39,9 +40,12 @@ const App = () => {
             <main>
               <ScrollToTop />
               {location.pathname.startsWith('/train-model') ? <NavigationBar /> : ''}
+              {location.pathname.startsWith('/classifier') ? <NavigationBar /> : ''}
+              {location.pathname === '/' ? <NavigationBar /> : ''}
               <Routes>
                 <Route path='/' element={<ClassifyPage />} />
                 <Route path='/classifier' element={<ClassifyPage />} />
+                <Route path='/classifier/csv' element={<CsvClassifierPage />} />
                 <Route path='/train-model' element={<DataCollectingPage />} />
                 <Route path='/train-model/data-collecting' element={<DataCollectingPage />} />
                 <Route path='/train-model/preprocessing' element={<PreprocessingPage />} />

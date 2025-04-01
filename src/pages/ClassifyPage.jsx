@@ -37,7 +37,7 @@ const ClassifyPage = () => {
       }
     };
     loadModels();
-  }, []);
+  }, [selectedModelId]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;
