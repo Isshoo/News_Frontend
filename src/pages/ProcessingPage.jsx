@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { splitDataset, trainModel } from '../utils/api/process';
-import { fetchPreprocessedDatasetInfo } from '../utils/api/preprocess';
+import { fetchPreprocessedDataset } from '../utils/api/preprocess';
 import Pages from '../components/styled/Pages';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
 import ParameterSelection from '../components/page-comps/Processing-Page/ParameterSelection';
@@ -23,7 +23,7 @@ const ProcessingPage = () => {
 
   const fetchDatasetInfo = async () => {
     try {
-      const response = await fetchPreprocessedDatasetInfo();
+      const response = await fetchPreprocessedDataset();
       setTotalData(response.totalData);
       setTopicCounts(response.topicCounts);
     } catch (error) {

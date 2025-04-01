@@ -46,7 +46,9 @@ export const fetchPreprocessedDataset = async (dataset_id, page, limit) => {
 
 export const deletePreprocessedDataset = async (dataset_id) => {
   try {
-    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}`);
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}`, {
+      method: 'DELETE',
+    });
     return await response.json();
   } catch (error) {
     return { error: 'Failed to delete dataset.' };

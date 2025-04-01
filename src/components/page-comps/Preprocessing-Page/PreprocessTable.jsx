@@ -9,6 +9,8 @@ const PreprocessTable = ({
   handleEdit,
   handleSave,
   handleDelete,
+  preprocessedDatasetId,
+  rawDatasetId,
 }) => {
   return (
     <table>
@@ -18,7 +20,7 @@ const PreprocessTable = ({
           <th>Original Content</th>
           <th>Processed Content</th>
           <th>Topic</th>
-          <th>Actions</th>
+          {preprocessedDatasetId === rawDatasetId ? '' : <th>Actions</th>}
         </tr>
       </thead>
       <tbody>
@@ -34,14 +36,18 @@ const PreprocessTable = ({
                 item.topik
               )}
             </td>
-            <td>
-              {editingIndex === item.index ? (
-                <button onClick={() => handleSave(item.index)}>Save</button>
-              ) : (
-                <button onClick={() => handleEdit(item.index, item.topik)}>Edit</button>
-              )}
-              <button onClick={() => handleDelete(item.index)}>Delete</button>
-            </td>
+            {preprocessedDatasetId === rawDatasetId ? (
+              ''
+            ) : (
+              <td>
+                {editingIndex === item.index ? (
+                  <button onClick={() => handleSave(item.index)}>Save</button>
+                ) : (
+                  <button onClick={() => handleEdit(item.index, item.topik)}>Edit</button>
+                )}
+                <button onClick={() => handleDelete(item.index)}>Delete</button>
+              </td>
+            )}
           </tr>
         ))}
       </tbody>
@@ -57,6 +63,8 @@ PreprocessTable.propTypes = {
   handleEdit: PropTypes.func,
   handleSave: PropTypes.func,
   handleDelete: PropTypes.func,
+  preprocessedDatasetId: PropTypes.string,
+  rawDatasetId: PropTypes.string,
 };
 
 export default PreprocessTable;
