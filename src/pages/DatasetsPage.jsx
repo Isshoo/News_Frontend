@@ -28,14 +28,12 @@ const DatasetsPage = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this dataset?')) {
-      try {
-        await deleteDataset(id);
-        setDatasets(datasets.filter((dataset) => dataset.raw_dataset_id !== id));
-      } catch (error) {
-        console.error('Error deleting dataset:', error);
-      }
+  const handleDeleteDataset = async (id) => {
+    try {
+      await deleteDataset(id); // Panggil API delete
+      setDatasets((prevDatasets) => prevDatasets.filter((dataset) => dataset.id !== id));
+    } catch (error) {
+      console.error('Error deleting dataset:', error);
     }
   };
 
@@ -47,7 +45,7 @@ const DatasetsPage = () => {
       ) : datasets.length > 0 ? (
         <div>
           {datasets.map((dataset) => (
-            <DatasetItem key={dataset.id} dataset={dataset} onDelete={handleDelete} />
+            <DatasetItem key={dataset.id} dataset={dataset} onDelete={handleDeleteDataset} />
           ))}
         </div>
       ) : (
