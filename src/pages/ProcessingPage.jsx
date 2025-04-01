@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { splitDataset, trainModel } from '../utils/api/process';
 import { fetchPreprocessedDataset } from '../utils/api/preprocess';
 import Pages from '../components/styled/Pages';
@@ -7,6 +7,8 @@ import ParameterSelection from '../components/page-comps/Processing-Page/Paramet
 import TrainButton from '../components/page-comps/Processing-Page/TrainButton';
 
 const ProcessingPage = () => {
+  const firstRun = useRef(true);
+  const [name, setName] = useState('');
   const [totalData, setTotalData] = useState(0);
   const [topicCounts, setTopicCounts] = useState({});
   const [nNeighbors, setNNeighbors] = useState(0);
@@ -17,15 +19,25 @@ const ProcessingPage = () => {
   const [testPerTopic, setTestPerTopic] = useState({});
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchDatasetInfo();
-  }, []);
+  const rawDatasetId = localStorage.getItem('selectedDataset');
+  const preprocessedDatasetId = localStorage.getItem('preprocessed_dataset_id');
+  const modelId = localStorage.getItem('modelId') || ''; // Store modelId after training
 
-  const fetchDatasetInfo = async () => {
+  useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+    if (preprocessedDatasetId) {
+      fetchDatasetInfo(preprocessedDatasetId);
+    }
+  }, [preprocessedDatasetId]);
+
+  const fetchDatasetInfo = async (preprocessedDatasetId) => {
     try {
-      const response = await fetchPreprocessedDataset();
-      setTotalData(response.totalData);
-      setTopicCounts(response.topicCounts);
+      const response = await fetchPreprocessedDataset(preprocessedDatasetId, 1, 10);
+      setTotalData(response.total_data);
+      setTopicCounts(response.topic_counts);
     } catch (error) {
       console.error('Error fetching dataset info:', error);
     }
@@ -38,7 +50,7 @@ const ProcessingPage = () => {
     setTestSize(0);
     setTrainPerTopic({});
     setTestPerTopic({});
-    const response = await splitDataset(newSplitSize);
+    const response = await splitDataset(rawDatasetId, preprocessedDatasetId, newSplitSize);
     if (!response.error) {
       const { train_size, test_size } = response;
       setTrainSize(train_size);
@@ -51,8 +63,15 @@ const ProcessingPage = () => {
   };
 
   const handleTrain = async () => {
-    const response = await trainModel(splitSize, nNeighbors);
+    const response = await trainModel(
+      rawDatasetId,
+      preprocessedDatasetId,
+      name,
+      splitSize,
+      nNeighbors
+    );
     if (!response.error) {
+      localStorage.setItem('modelId', response.id); // Save modelId after training
       alert('Training completed successfully!');
       return response;
     }
@@ -63,18 +82,22 @@ const ProcessingPage = () => {
   return (
     <Pages>
       <h2>Processing</h2>
-      <DatasetInfo totalData={totalData} topicCounts={topicCounts} />
+      <DatasetInfo totalData={totalData || 0} topicCounts={topicCounts || {}} loading={loading} />
       <ParameterSelection
         splitSize={splitSize}
         handleSplitChange={handleSplitChange}
-        trainSize={trainSize}
-        testSize={testSize}
-        trainPerTopic={trainPerTopic}
-        testPerTopic={testPerTopic}
+        trainSize={trainSize || 0}
+        testSize={testSize || 0}
+        trainPerTopic={trainPerTopic || {}}
+        testPerTopic={testPerTopic || {}}
         nNeighbors={nNeighbors}
         setNNeighbors={setNNeighbors}
         loading={loading}
       />
+      <label>
+        Nama Model:
+        <input type='text' value={name || ''} onChange={(e) => setName(e.target.value)} />
+      </label>
       <TrainButton handleTrain={handleTrain} />
     </Pages>
   );
