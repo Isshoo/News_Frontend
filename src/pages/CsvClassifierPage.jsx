@@ -120,7 +120,7 @@ const CsvClassifierPage = () => {
         <select value={selectedModelId} onChange={handleModelChange}>
           <option value=''>-- Select Model --</option>
           {models.map((model) => (
-            <option key={model.id} value={model.model_path}>
+            <option key={model.id} value={model.id}>
               {model.name} (Created: {new Date(model.created_at).toLocaleString()})
             </option>
           ))}
