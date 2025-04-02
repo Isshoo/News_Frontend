@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Pages from '../components/styled/Pages';
-import { predictCsv } from '../utils/api/classifier';
+import { predictCsv, predict } from '../utils/api/classifier';
 import { getModels } from '../utils/api/process';
 import Papa from 'papaparse';
 
@@ -65,8 +65,8 @@ const CsvClassifierPage = () => {
     setLoading(true);
 
     try {
-      const csvContent = csvData.map((row) => `${row.topik};${row.contentSnippet}`).join('\n');
-      const csvBlob = new Blob([`topik;contentSnippet\n${csvContent}`], { type: 'text/csv' });
+      const csvContent = csvData.map((row) => `${row.contentSnippet};${row.topik}`).join('\n');
+      const csvBlob = new Blob([`contentSnippet;topik\n${csvContent}`], { type: 'text/csv' });
       const csvFile = new File([csvBlob], 'dataset.csv', { type: 'text/csv' });
 
       const response = await predictCsv(csvFile, selectedModel);
@@ -77,6 +77,18 @@ const CsvClassifierPage = () => {
     }
 
     setLoading(false);
+  };
+
+  const classifySingleRow = async (index, contentSnippet) => {
+    try {
+      const response = await predict({ text: contentSnippet, model_path: selectedModel });
+      const updatedResults = [...classificationResult];
+      updatedResults[index].DeepSeek = response?.DeepSeek || '-';
+      setClassificationResult(updatedResults);
+    } catch (error) {
+      console.error('Error classifying single row:', error);
+      alert('Terjadi kesalahan saat mengklasifikasikan data.');
+    }
   };
 
   return (
@@ -160,6 +172,7 @@ const CsvClassifierPage = () => {
                 <th>Topik</th>
                 <th>Hybrid Predicted</th>
                 <th>DeepSeek Predicted</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -169,6 +182,13 @@ const CsvClassifierPage = () => {
                   <td>{row.topik}</td>
                   <td>{row.Hybrid_C5_KNN || '-'}</td>
                   <td>{row.DeepSeek || '-'}</td>
+                  <td>
+                    {(!row.DeepSeek || row.DeepSeek === '-') && (
+                      <button onClick={() => classifySingleRow(index, row.contentSnippet)}>
+                        Classify DeepSeek
+                      </button>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
