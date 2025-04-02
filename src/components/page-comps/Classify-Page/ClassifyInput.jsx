@@ -7,8 +7,13 @@ const ClassifyInput = ({ predictNews, loading }) => {
   const [text, onTextChange] = useInput('');
   const { locale } = useContext(LocaleContext);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    predictNews(text);
+  };
+
   return (
-    <form id='threadForm' autoComplete='off'>
+    <form id='threadForm' autoComplete='off' onSubmit={handleSubmit}>
       <div>
         <label htmlFor='title'>{locale === 'EN' ? 'Input News Text' : 'Masukan Teks Berita'}</label>
         <input
@@ -21,17 +26,13 @@ const ClassifyInput = ({ predictNews, loading }) => {
           value={text}
           onChange={onTextChange}
         />
-        {/* <p id='titleValidation' className='validation-message' aria-live='polite'>
-            {locale === 'EN' ? 'Numbers of characters left :' : 'Jumlah karakter tersisa :'}{' '}
-            {titleMaxLength - title.length}
-          </p> */}
       </div>
       <br />
       <button
         className={loading ? 'disabled' : ''}
-        type='button'
+        type='submit'
         id='threadsSubmit'
-        onClick={() => predictNews(text)}
+        disabled={loading} // Disable tombol jika loading
       >
         {locale === 'EN' ? 'Classify' : 'Klasifikasi'}
       </button>

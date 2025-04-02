@@ -1,6 +1,6 @@
 import { BASE_URL } from '../config';
 
-const predict = async ({ text, model_path }) => {
+const predict = async ({ text, model_path = '' }) => {
   const response = await fetch(`${BASE_URL}/predict`, {
     method: 'POST',
     headers: {
@@ -17,7 +17,7 @@ const predict = async ({ text, model_path }) => {
   return response.json();
 };
 
-const predictCsv = async (file, model_path) => {
+const predictCsv = async (file, model_path = '') => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('model_path', model_path);

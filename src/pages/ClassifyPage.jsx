@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Pages from '../components/styled/Pages';
 import { predict } from '../utils/api/classifier';
 import { getModels } from '../utils/api/process';
@@ -6,6 +6,7 @@ import ClassifyInput from '../components/page-comps/Classify-Page/ClassifyInput'
 import ClassifyResult from '../components/page-comps/Classify-Page/ClassifyResult';
 
 const ClassifyPage = () => {
+  const firstRun = useRef(true);
   const [models, setModels] = useState([]);
   const [selectedModelId, setSelectedModelId] = useState(
     localStorage.getItem('classifierModel') || ''
@@ -17,6 +18,10 @@ const ClassifyPage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
     const loadModels = async () => {
       try {
         const response = await getModels();
@@ -49,11 +54,6 @@ const ClassifyPage = () => {
   };
 
   const predictNews = async (text, retryCount = 4) => {
-    if (!selectedModelPath) {
-      alert('Please select a model first.');
-      return;
-    }
-
     if (retryCount <= 0) {
       console.warn('DeepSeek prediction failed after multiple retries.');
       setLoading(false);

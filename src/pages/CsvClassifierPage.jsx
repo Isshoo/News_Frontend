@@ -1,34 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Pages from '../components/styled/Pages';
 import { predictCsv, predict } from '../utils/api/classifier';
 import { getModels } from '../utils/api/process';
 import Papa from 'papaparse';
 
 const CsvClassifierPage = () => {
+  const firstRun = useRef(true);
   const [models, setModels] = useState([]);
-  const [selectedModel, setSelectedModel] = useState(localStorage.getItem('selectedModel') || '');
+  const [selectedModelId, setSelectedModelId] = useState(
+    localStorage.getItem('classifierModel') || ''
+  );
+  const [selectedModelPath, setSelectedModelPath] = useState('');
   const [csvData, setCsvData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [classificationResult, setClassificationResult] = useState([]);
 
   useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
     const loadModels = async () => {
       try {
         const response = await getModels();
         setModels(response);
+
+        if (selectedModelId) {
+          const foundModel = response.find((model) => model.id === selectedModelId);
+          if (foundModel) {
+            setSelectedModelPath(foundModel.model_path);
+          } else {
+            localStorage.removeItem('classifierModel'); // Hapus jika tidak valid
+            setSelectedModelId('');
+          }
+        }
       } catch (error) {
         console.error('Error fetching models:', error);
       }
     };
     loadModels();
-  }, []);
+  }, [selectedModelId]);
+
+  const handleModelChange = (e) => {
+    const modelId = e.target.value;
+    setSelectedModelId(modelId);
+    localStorage.setItem('classifierModel', modelId);
+
+    const foundModel = models.find((model) => model.id === modelId);
+    setSelectedModelPath(foundModel ? foundModel.model_path : '');
+  };
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
     Papa.parse(file, {
-      delimiter: ';',
+      delimiter: ',',
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
@@ -52,11 +79,6 @@ const CsvClassifierPage = () => {
   };
 
   const classifyAllCsv = async () => {
-    if (!selectedModel) {
-      alert('Pilih model terlebih dahulu!');
-      return;
-    }
-
     if (csvData.length === 0) {
       alert('Tambahkan data terlebih dahulu!');
       return;
@@ -65,11 +87,11 @@ const CsvClassifierPage = () => {
     setLoading(true);
 
     try {
-      const csvContent = csvData.map((row) => `${row.contentSnippet};${row.topik}`).join('\n');
-      const csvBlob = new Blob([`contentSnippet;topik\n${csvContent}`], { type: 'text/csv' });
-      const csvFile = new File([csvBlob], 'dataset.csv', { type: 'text/csv' });
+      const csvContent = csvData.map((row) => `"${row.contentSnippet}","${row.topik}"`).join('\n');
+      const csvBlob = new Blob([`"contentSnippet","topik"\n${csvContent}`], { type: 'text/csv' });
+      const csvFile = new File([csvBlob], 'classification-result.csv', { type: 'text/csv' });
 
-      const response = await predictCsv(csvFile, selectedModel);
+      const response = await predictCsv(csvFile, selectedModelPath);
       setClassificationResult(response);
     } catch (error) {
       console.error('Error classifying CSV:', error);
@@ -81,7 +103,7 @@ const CsvClassifierPage = () => {
 
   const classifySingleRow = async (index, contentSnippet) => {
     try {
-      const response = await predict({ text: contentSnippet, model_path: selectedModel });
+      const response = await predict({ text: contentSnippet, model_path: selectedModelPath });
       const updatedResults = [...classificationResult];
       updatedResults[index].DeepSeek = response?.DeepSeek || '-';
       setClassificationResult(updatedResults);
@@ -95,13 +117,7 @@ const CsvClassifierPage = () => {
     <Pages>
       <div>
         <h2>CSV Classifier</h2>
-        <select
-          value={selectedModel}
-          onChange={(e) => {
-            setSelectedModel(e.target.value);
-            localStorage.setItem('selectedModel', e.target.value);
-          }}
-        >
+        <select value={selectedModelId} onChange={handleModelChange}>
           <option value=''>-- Select Model --</option>
           {models.map((model) => (
             <option key={model.id} value={model.model_path}>
