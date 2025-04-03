@@ -35,9 +35,13 @@ const DatasetItem = ({ dataset, onDelete }) => {
       <button onClick={handleTrain} className='train-btn'>
         Train
       </button>
-      <button onClick={() => onDelete(id)} className='delete-btn'>
-        Delete
-      </button>
+      {id != 'default-stemming' ? (
+        <button onClick={() => onDelete(id)} className='delete-btn'>
+          Delete
+        </button>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

@@ -45,18 +45,25 @@ const ModelItem = ({ model, onDelete, onRename }) => {
 
   return (
     <div className='model-item'>
-      {isEditing ? (
-        <input
-          type='text'
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
-          onBlur={handleEdit}
-          onKeyDown={(e) => e.key === 'Enter' && handleEdit()}
-          autoFocus
-        />
+      {id != 'default-stemmed' ? (
+        <>
+          {isEditing ? (
+            <input
+              type='text'
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              onBlur={handleEdit}
+              onKeyDown={(e) => e.key === 'Enter' && handleEdit()}
+              autoFocus
+            />
+          ) : (
+            <h3 onClick={() => setIsEditing(true)}>{name}</h3>
+          )}
+        </>
       ) : (
-        <h3 onClick={() => setIsEditing(true)}>{name}</h3>
+        <h3>{name}</h3>
       )}
+
       <p>
         <strong>Preprocessed Dataset:</strong> {preprocessed_dataset_id}
       </p>
@@ -87,9 +94,13 @@ const ModelItem = ({ model, onDelete, onRename }) => {
       <button onClick={handleClassify} className='classify-btn'>
         Use for Classification
       </button>
-      <button onClick={() => onDelete(id)} className='delete-btn'>
-        Delete
-      </button>
+      {id != 'default-stemmed' ? (
+        <button onClick={() => onDelete(id)} className='delete-btn'>
+          Delete
+        </button>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

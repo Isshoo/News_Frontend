@@ -85,7 +85,9 @@ const ClassifyPage = () => {
       <div className='small-page'>
         <h2>Select Model</h2>
         <select onChange={handleModelChange} value={selectedModelId}>
-          <option value=''>-- Select Model --</option>
+          <option value='default-stemmed' disabled>
+            -- Select Model --
+          </option>
           {models.map((model) => (
             <option key={model.id} value={model.id}>
               {model.name} (Created: {new Date(model.created_at).toLocaleString()})
