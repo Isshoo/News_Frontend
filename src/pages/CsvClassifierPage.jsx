@@ -118,7 +118,9 @@ const CsvClassifierPage = () => {
       <div>
         <h2>CSV Classifier</h2>
         <select value={selectedModelId} onChange={handleModelChange}>
-          <option value=''>-- Select Model --</option>
+          <option value='default-stemmed' disabled>
+            -- Select Model --
+          </option>
           {models.map((model) => (
             <option key={model.id} value={model.id}>
               {model.name} (Created: {new Date(model.created_at).toLocaleString()})
@@ -188,7 +190,6 @@ const CsvClassifierPage = () => {
                 <th>Topik</th>
                 <th>Hybrid Predicted</th>
                 <th>DeepSeek Predicted</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -197,12 +198,13 @@ const CsvClassifierPage = () => {
                   <td>{row.contentSnippet}</td>
                   <td>{row.topik}</td>
                   <td>{row.Hybrid_C5_KNN || '-'}</td>
-                  <td>{row.DeepSeek || '-'}</td>
                   <td>
-                    {(!row.DeepSeek || row.DeepSeek === '-') && (
+                    {!row.DeepSeek || row.DeepSeek === '-' ? (
                       <button onClick={() => classifySingleRow(index, row.contentSnippet)}>
-                        Classify DeepSeek
+                        Classify Again
                       </button>
+                    ) : (
+                      <>{row.DeepSeek}</>
                     )}
                   </td>
                 </tr>
