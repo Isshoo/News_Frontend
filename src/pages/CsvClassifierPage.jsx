@@ -24,6 +24,13 @@ const CsvClassifierPage = () => {
     const loadModels = async () => {
       try {
         const response = await getModels();
+        if (response.error) {
+          setModels([]); // Set models to empty array on error
+          setSelectedModelId(''); // Reset selected model ID
+          localStorage.removeItem('classifierModel'); // Clear local storage
+          setSelectedModelPath(''); // Reset selected model path
+          return;
+        }
         setModels(response);
 
         if (selectedModelId) {
@@ -131,7 +138,6 @@ const CsvClassifierPage = () => {
             </>
           )}
         </select>
-
         <br />
         <br />
 
