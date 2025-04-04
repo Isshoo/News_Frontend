@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Pages from '../components/styled/Pages';
 import { predict } from '../utils/api/classifier';
 import { getModels } from '../utils/api/process';
+import { showFormattedDate } from '../utils/helper';
 import ClassifyInput from '../components/page-comps/Classify-Page/ClassifyInput';
 import ClassifyResult from '../components/page-comps/Classify-Page/ClassifyResult';
 
@@ -84,15 +85,18 @@ const ClassifyPage = () => {
     <Pages>
       <div className='small-page'>
         <h2>Select Model</h2>
-        <select onChange={handleModelChange} value={selectedModelId}>
-          <option value='default-stemmed' disabled>
-            -- Select Model --
-          </option>
-          {models.map((model) => (
-            <option key={model.id} value={model.id}>
-              {model.name} (Created: {new Date(model.created_at).toLocaleString()})
-            </option>
-          ))}
+        <select value={selectedModelId} onChange={handleModelChange}>
+          {models.length == 0 ? (
+            <option value='default-stemming'>Default</option>
+          ) : (
+            <>
+              {models.map((model) => (
+                <option key={model.id} value={model.id}>
+                  {model.name} (Created: {showFormattedDate(model.created_at)})
+                </option>
+              ))}
+            </>
+          )}
         </select>
         <br />
         <br />

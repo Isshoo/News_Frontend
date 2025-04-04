@@ -86,7 +86,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
         <strong>Updated At:</strong> {new Date(updated_at).toLocaleString()}
       </p>
       <p>
-        <strong>Accuracy:</strong> {evaluation.accuracy.toFixed(2)}%
+        <strong>Accuracy:</strong> {evaluation.accuracy.toFixed(2) * 100}%
       </p>
       <button onClick={handleDetail} className='detail-btn'>
         Details
