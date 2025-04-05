@@ -1,59 +1,22 @@
-// src/states/datasets/action.js
-import {
-  fetchDatasets,
-  deleteDataset as apiDeleteDataset,
-} from '../../utils/api/dataset';
+// /src/states/datasets/action.js
 
-const ActionType = {
-  SET_DATASETS: 'SET_DATASETS',
-  SET_LOADING: 'SET_LOADING',
-};
+// Action Types
+export const SET_DATASETS = 'SET_DATASETS';
+export const SET_DATASETS_LOADING = 'SET_DATASETS_LOADING';
+export const SET_SELECTED_DATASET = 'SET_SELECTED_DATASET';
 
-function setDatasets(datasets) {
-  return {
-    type: ActionType.SET_DATASETS,
-    payload: datasets,
-  };
-}
+// Action Creators
+export const setDatasets = (datasets) => ({
+  type: SET_DATASETS,
+  payload: datasets,
+});
 
-function setLoading(loading) {
-  return {
-    type: ActionType.SET_LOADING,
-    payload: loading,
-  };
-}
+export const setDatasetsLoading = (isLoading) => ({
+  type: SET_DATASETS_LOADING,
+  payload: isLoading,
+});
 
-function asyncFetchDatasets() {
-  return async (dispatch) => {
-    dispatch(setLoading(true));
-    try {
-      const data = await fetchDatasets();
-      dispatch(setDatasets(data));
-    } catch (error) {
-      console.error(error);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-}
-
-function asyncDeleteDataset(id) {
-  return async (dispatch, getState) => {
-    try {
-      await apiDeleteDataset(id);
-      const { datasets } = getState().datasets;
-      const updated = datasets.filter((ds) => ds.id !== id);
-      dispatch(setDatasets(updated));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-}
-
-export {
-  ActionType,
-  setDatasets,
-  setLoading,
-  asyncFetchDatasets,
-  asyncDeleteDataset,
-};
+export const setSelectedDataset = (datasetId) => ({
+  type: SET_SELECTED_DATASET,
+  payload: datasetId,
+});

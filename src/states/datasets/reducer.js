@@ -1,24 +1,37 @@
-// src/states/datasets/reducer.js
-import { ActionType } from './action';
+// /src/states/datasets/reducer.js
+
+import {
+  SET_DATASETS,
+  SET_DATASETS_LOADING,
+  SET_SELECTED_DATASET,
+} from './action';
 
 const initialState = {
   datasets: [],
+  selectedDataset: localStorage.getItem('selectedDataset') || null,
   isLoading: false,
 };
 
-export default function datasetsReducer(state = initialState, action = {}) {
+const datasetsReducer = (state = initialState, action) => {
   switch (action.type) {
-  case ActionType.SET_DATASETS:
+  case SET_DATASETS:
     return {
       ...state,
       datasets: action.payload,
     };
-  case ActionType.SET_LOADING:
+  case SET_DATASETS_LOADING:
     return {
       ...state,
       isLoading: action.payload,
     };
+  case SET_SELECTED_DATASET:
+    return {
+      ...state,
+      selectedDataset: action.payload,
+    };
   default:
     return state;
   }
-}
+};
+
+export default datasetsReducer;
