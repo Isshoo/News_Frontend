@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getModel } from '../utils/api/process';
+import { getModel } from '../utils/api/model';
 import Pages from '../components/styled/Pages';
 import ModelInfo from '../components/page-comps/Evaluation-Page/ModelInfo';
 import ConfusionMatrix from '../components/page-comps/Evaluation-Page/ConfusionMatrix';

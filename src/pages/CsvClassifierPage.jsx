@@ -1,62 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
 import { ModelSelect } from '../components/Base/Select';
 import { showFormattedDate } from '../utils/helper';
-import { predictCsv, predict } from '../utils/api/classifier';
-import { getModels } from '../utils/api/process';
 import Papa from 'papaparse';
+import { fetchModels, classifyCsvThunk, classifyRowThunk } from '../states/classifier/thunk';
+import {
+  setSelectedModel,
+  setCsvData,
+  editCsvRow,
+  addCsvRow,
+  deleteCsvRow,
+} from '../states/classifier/action';
 
 const CsvClassifierPage = () => {
+  const dispatch = useDispatch();
   const firstRun = useRef(true);
-  const [models, setModels] = useState([]);
-  const [selectedModelId, setSelectedModelId] = useState(
-    localStorage.getItem('classifierModel') || ''
+
+  const { models, selectedModelId, csvData, classificationResult, loading } = useSelector(
+    (state) => state.classifier
   );
-  const [selectedModelPath, setSelectedModelPath] = useState('');
-  const [csvData, setCsvData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [classificationResult, setClassificationResult] = useState([]);
 
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false;
       return;
     }
-    const loadModels = async () => {
-      try {
-        const response = await getModels();
-        if (response.error) {
-          setModels([]); // Set models to empty array on error
-          setSelectedModelId(''); // Reset selected model ID
-          localStorage.removeItem('classifierModel'); // Clear local storage
-          setSelectedModelPath(''); // Reset selected model path
-          return;
-        }
-        setModels(response);
-
-        if (selectedModelId) {
-          const foundModel = response.find((model) => model.id === selectedModelId);
-          if (foundModel) {
-            setSelectedModelPath(foundModel.model_path);
-          } else {
-            localStorage.removeItem('classifierModel'); // Hapus jika tidak valid
-            setSelectedModelId('');
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching models:', error);
-      }
-    };
-    loadModels();
-  }, [selectedModelId]);
+    dispatch(fetchModels());
+  }, [dispatch, selectedModelId]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;
-    setSelectedModelId(modelId);
     localStorage.setItem('classifierModel', modelId);
 
     const foundModel = models.find((model) => model.id === modelId);
-    setSelectedModelPath(foundModel ? foundModel.model_path : '');
+    dispatch(setSelectedModel(modelId, foundModel?.model_path || ''));
   };
 
   const handleFileUpload = (event) => {
@@ -68,58 +46,33 @@ const CsvClassifierPage = () => {
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
-        setCsvData(result.data);
+        dispatch(setCsvData(result.data));
       },
     });
   };
 
   const handleEditCell = (index, field, value) => {
-    const updatedData = [...csvData];
-    updatedData[index][field] = value;
-    setCsvData(updatedData);
+    dispatch(editCsvRow(index, field, value));
   };
 
   const handleAddRow = () => {
-    setCsvData([...csvData, { contentSnippet: '', topik: '' }]);
+    dispatch(addCsvRow());
   };
 
   const handleDeleteRow = (index) => {
-    setCsvData(csvData.filter((_, i) => i !== index));
+    dispatch(deleteCsvRow(index));
   };
 
-  const classifyAllCsv = async () => {
+  const classifyAllCsv = () => {
     if (csvData.length === 0) {
       alert('Tambahkan data terlebih dahulu!');
       return;
     }
-
-    setLoading(true);
-
-    try {
-      const csvContent = csvData.map((row) => `"${row.contentSnippet}","${row.topik}"`).join('\n');
-      const csvBlob = new Blob([`"contentSnippet","topik"\n${csvContent}`], { type: 'text/csv' });
-      const csvFile = new File([csvBlob], 'classification-result.csv', { type: 'text/csv' });
-
-      const response = await predictCsv(csvFile, selectedModelPath);
-      setClassificationResult(response);
-    } catch (error) {
-      console.error('Error classifying CSV:', error);
-      alert('Terjadi kesalahan saat memproses file CSV.');
-    }
-
-    setLoading(false);
+    dispatch(classifyCsvThunk());
   };
 
-  const classifySingleRow = async (index, contentSnippet) => {
-    try {
-      const response = await predict({ text: contentSnippet, model_path: selectedModelPath });
-      const updatedResults = [...classificationResult];
-      updatedResults[index].DeepSeek = response?.DeepSeek || '-';
-      setClassificationResult(updatedResults);
-    } catch (error) {
-      console.error('Error classifying single row:', error);
-      alert('Terjadi kesalahan saat mengklasifikasikan data.');
-    }
+  const classifySingleRow = (index, contentSnippet) => {
+    dispatch(classifyRowThunk(index, contentSnippet));
   };
 
   return (
@@ -127,15 +80,15 @@ const CsvClassifierPage = () => {
       <div>
         <h2>CSV Classifier</h2>
         <h3>Select Model</h3>
+        <br />
         <ModelSelect
-          models={models}
-          selectedModelId={selectedModelId}
+          models={models || []}
+          selectedModelId={selectedModelId || ''}
           handleModelChange={handleModelChange}
           showFormattedDate={showFormattedDate}
         />
         <br />
         <br />
-
         <input type='file' accept='.csv' onChange={handleFileUpload} />
         <br />
         <br />
@@ -209,7 +162,7 @@ const CsvClassifierPage = () => {
                         Classify Again
                       </button>
                     ) : (
-                      <>{row.DeepSeek}</>
+                      row.DeepSeek
                     )}
                   </td>
                 </tr>

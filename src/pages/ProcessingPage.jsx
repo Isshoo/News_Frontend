@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { splitDataset, trainModel } from '../utils/api/process';
 import { fetchPreprocessedDataset } from '../utils/api/preprocess';
-import { getModel } from '../utils/api/process';
+import { getModel } from '../utils/api/model';
 import Pages from '../components/styled/Pages';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
 import ParameterSelection from '../components/page-comps/Processing-Page/ParameterSelection';

@@ -1,93 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
-import { predict } from '../utils/api/classifier';
-import { getModels } from '../utils/api/process';
-import { showFormattedDate } from '../utils/helper';
 import ClassifyInput from '../components/page-comps/Classify-Page/ClassifyInput';
 import ClassifyResult from '../components/page-comps/Classify-Page/ClassifyResult';
 import { ModelSelect } from '../components/Base/Select';
+import { showFormattedDate } from '../utils/helper';
+import { fetchModels, classifyNews } from '../states/classifier/thunk';
+import { setSelectedModel } from '../states/classifier/action';
 
 const ClassifyPage = () => {
+  const dispatch = useDispatch();
   const firstRun = useRef(true);
-  const [models, setModels] = useState([]);
-  const [selectedModelId, setSelectedModelId] = useState(
-    localStorage.getItem('classifierModel') || ''
-  );
-  const [selectedModelPath, setSelectedModelPath] = useState('');
-  const [hybridPredict, setHybridPredict] = useState('');
-  const [deepseekPredict, setDeepseekPredict] = useState('');
-  const [preprocessedText, setPreprocessedText] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  const { models, selectedModelId, hybridPredict, deepseekPredict, preprocessedText, loading } =
+    useSelector((state) => state.classifier);
 
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false;
       return;
     }
-    const loadModels = async () => {
-      try {
-        const response = await getModels();
-
-        if (response.error) {
-          setModels([]); // Set models to empty array on error
-          setSelectedModelId(''); // Reset selected model ID
-          localStorage.removeItem('classifierModel'); // Clear local storage
-          setSelectedModelPath(''); // Reset selected model path
-          return;
-        }
-        setModels(response);
-
-        // Cek apakah model yang dipilih sebelumnya masih ada dalam daftar models
-        if (selectedModelId) {
-          const foundModel = response.find((model) => model.id === selectedModelId);
-          if (foundModel) {
-            setSelectedModelPath(foundModel.model_path);
-          } else {
-            localStorage.removeItem('classifierModel'); // Hapus jika tidak valid
-            setSelectedModelId('');
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching models:', error);
-      }
-    };
-    loadModels();
-  }, [selectedModelId]);
+    dispatch(fetchModels());
+  }, [dispatch, selectedModelId]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;
-    setSelectedModelId(modelId);
     localStorage.setItem('classifierModel', modelId);
 
     const foundModel = models.find((model) => model.id === modelId);
-    setSelectedModelPath(foundModel ? foundModel.model_path : '');
+    dispatch(setSelectedModel(modelId, foundModel?.model_path || ''));
   };
 
-  const predictNews = async (text, retryCount = 4) => {
-    if (retryCount <= 0) {
-      console.warn('DeepSeek prediction failed after multiple retries.');
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    const response = await predict({ text, model_path: selectedModelPath });
-
-    if (response.error) {
-      alert(response.error);
-      return;
-    }
-
-    if (!response.DeepSeek) {
-      console.log(`DeepSeek prediction missing. Retrying... (${4 - retryCount} attempt)`);
-      setTimeout(() => predictNews(text, retryCount - 1), 1000);
-      return;
-    }
-
-    setHybridPredict(response.Hybrid_C5_KNN);
-    setDeepseekPredict(response.DeepSeek);
-    setPreprocessedText(response.Preprocessed_Text);
-    setLoading(false);
+  const predictNews = (text) => {
+    dispatch(classifyNews(text));
   };
 
   return (

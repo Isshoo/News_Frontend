@@ -1,6 +1,6 @@
 // redux/evaluation/thunk.js
 import { setEvaluation } from './action';
-import { getModel } from '../../utils/api/process';
+import { getModel } from '../../utils/api/model';
 
 export const fetchEvaluation = (modelId) => async (dispatch) => {
   try {

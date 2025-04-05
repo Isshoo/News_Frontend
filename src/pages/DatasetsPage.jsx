@@ -1,7 +1,7 @@
 // src/pages/DatasetsPage.jsx
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { asyncFetchDatasets, asyncDeleteDataset } from '../states/datasets/action';
+import { asyncFetchDatasets, asyncDeleteDataset } from '../states/datasets/thunk';
 
 import Pages from '../components/styled/Pages';
 import DatasetItem from '../components/page-comps/Datasets-Page/DatasetItem';

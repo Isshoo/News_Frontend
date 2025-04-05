@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getModels, deleteModel, editModelName } from '../utils/api/process';
+import { getModels, deleteModel, editModelName } from '../utils/api/model';
 import Pages from '../components/styled/Pages';
 import ModelItem from '../components/page-comps/Models-Page/ModelItem';
 

@@ -3,6 +3,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 
+import classifierReducer from './classifier/reducer';
 import datasetsReducer from './datasets/reducer';
 import datasetDetailReducer from './datasetDetail/reducer';
 import preprocessedDatasetsReducer from './preprocessedDatasets/reducer';
@@ -14,6 +15,7 @@ import evaluationReducer from './evaluation/reducer';
 
 const store = configureStore({
   reducer: {
+    classifier: classifierReducer,
     datasets: datasetsReducer,
     datasetDetail: datasetDetailReducer,
     preprocessedDatasets: preprocessedDatasetsReducer,
