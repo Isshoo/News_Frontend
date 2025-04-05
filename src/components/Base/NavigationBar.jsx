@@ -63,7 +63,7 @@ const NavigationBar = () => {
               <li>
                 <Link
                   className={`nav-button ${location.pathname === '/' || location.pathname === '/classifier' ? 'active' : ''}`}
-                  to='/'
+                  to='/classifier'
                 >
                   <p>{locale === 'EN' ? 'Text Classification' : 'Klasifikasi Teks'}</p>
                 </Link>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Dropdown = styled.div`
-  display: flex;
+  display: inline;
   align-items: center;
   border: 1px solid #2126319d;
   padding: 0.25rem 0.75rem;

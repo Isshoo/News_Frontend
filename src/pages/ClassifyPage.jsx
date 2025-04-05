@@ -5,6 +5,7 @@ import { getModels } from '../utils/api/process';
 import { showFormattedDate } from '../utils/helper';
 import ClassifyInput from '../components/page-comps/Classify-Page/ClassifyInput';
 import ClassifyResult from '../components/page-comps/Classify-Page/ClassifyResult';
+import { ModelSelect } from '../components/Base/Select';
 
 const ClassifyPage = () => {
   const firstRun = useRef(true);
@@ -93,19 +94,12 @@ const ClassifyPage = () => {
     <Pages>
       <div className='small-page'>
         <h2>Select Model</h2>
-        <select value={selectedModelId} onChange={handleModelChange}>
-          {models.length == 0 ? (
-            <option value='default-stemming'>Default</option>
-          ) : (
-            <>
-              {models.map((model) => (
-                <option key={model.id} value={model.id}>
-                  {model.name} (Created: {showFormattedDate(model.created_at)})
-                </option>
-              ))}
-            </>
-          )}
-        </select>
+        <ModelSelect
+          models={models}
+          selectedModelId={selectedModelId}
+          handleModelChange={handleModelChange}
+          showFormattedDate={showFormattedDate}
+        />
         <br />
         <br />
         <ClassifyInput predictNews={predictNews} loading={loading} />

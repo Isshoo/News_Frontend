@@ -10,8 +10,9 @@ import {
   addData,
 } from '../utils/api/preprocess';
 import Pages from '../components/styled/Pages';
-import PreprocessTable from '../components/page-comps/Preprocessing-Page/PreprocessTable';
 import Pagination from '../components/Base/Pagination';
+import { ListDataset } from '../components/Base/Select';
+import PreprocessTable from '../components/page-comps/Preprocessing-Page/PreprocessTable';
 import AddDataPopup from '../components/page-comps/Preprocessing-Page/AddDataPopup';
 
 const PreprocessingPage = () => {
@@ -142,16 +143,12 @@ const PreprocessingPage = () => {
       ) : (
         <>
           <h3>Select Preprocessed Dataset:</h3>
-          <ul>
-            {preprocessedDatasets.map((ds) => (
-              <li key={ds.id}>
-                <button onClick={() => handleDatasetSelection(ds.id)}>{ds.name}</button>
-                {ds.id !== rawDatasetId && (
-                  <button onClick={() => handleDeleteDataset(ds.id)}>Delete</button>
-                )}
-              </li>
-            ))}
-          </ul>
+          <ListDataset
+            preprocessedDatasets={preprocessedDatasets}
+            rawDatasetId={rawDatasetId}
+            handleDatasetSelection={handleDatasetSelection}
+            handleDeleteDataset={handleDeleteDataset}
+          />
           {preprocessedDatasetId === rawDatasetId ? (
             <button onClick={handleCopyDataset}>Copy Dataset to Edit</button>
           ) : (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Pages from '../components/styled/Pages';
+import { ModelSelect } from '../components/Base/Select';
 import { showFormattedDate } from '../utils/helper';
 import { predictCsv, predict } from '../utils/api/classifier';
 import { getModels } from '../utils/api/process';
@@ -125,19 +126,13 @@ const CsvClassifierPage = () => {
     <Pages>
       <div>
         <h2>CSV Classifier</h2>
-        <select value={selectedModelId} onChange={handleModelChange}>
-          {models.length == 0 ? (
-            <option value='default-stemming'>Default</option>
-          ) : (
-            <>
-              {models.map((model) => (
-                <option key={model.id} value={model.id}>
-                  {model.name} (Created: {showFormattedDate(model.created_at)})
-                </option>
-              ))}
-            </>
-          )}
-        </select>
+        <h3>Select Model</h3>
+        <ModelSelect
+          models={models}
+          selectedModelId={selectedModelId}
+          handleModelChange={handleModelChange}
+          showFormattedDate={showFormattedDate}
+        />
         <br />
         <br />
 

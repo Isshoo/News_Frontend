@@ -4,6 +4,7 @@ import DatasetUpload from '../components/page-comps/DataCollecting-Page/DatasetU
 import DatasetTable from '../components/page-comps/DataCollecting-Page/DatasetTable';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
 import Pagination from '../components/Base/Pagination';
+import { DatasetSelect } from '../components/Base/Select';
 import { fetchDatasets, fetchDataset, uploadDataset } from '../utils/api/dataset';
 
 const DataCollectingPage = () => {
@@ -25,6 +26,10 @@ const DataCollectingPage = () => {
 
   const loadDatasets = async () => {
     const response = await fetchDatasets();
+    if (response.error) {
+      setDatasets([]);
+      return;
+    }
     setDatasets(response);
   };
 
@@ -107,16 +112,14 @@ const DataCollectingPage = () => {
     <Pages>
       <DatasetUpload onUpload={handleUpload} uploading={uploading} />
       <br />
-      <select onChange={handleDatasetSelection} value={selectedDataset || ''}>
-        <option value='' disabled>
-          Select a dataset
-        </option>
-        {datasets.map((dataset) => (
-          <option key={dataset.id} value={dataset.id}>
-            {dataset.name}
-          </option>
-        ))}
-      </select>
+      <h3>Select Dataset</h3>
+      <div>
+        <DatasetSelect
+          datasets={datasets}
+          selectedDataset={selectedDataset}
+          handleDatasetSelection={handleDatasetSelection}
+        />
+      </div>
       <br />
       {selectedDataset && (
         <>

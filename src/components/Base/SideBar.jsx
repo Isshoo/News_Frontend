@@ -14,7 +14,10 @@ const SideBar = () => {
           <nav className='side-bar'>
             <ul className='side'>
               <li>
-                <Link className={`side-button ${location.pathname === '/' ? 'active' : ''}`} to='/'>
+                <Link
+                  className={`side-button ${location.pathname === '/' || location.pathname.startsWith('/classifier') ? 'active' : ''}`}
+                  to='/'
+                >
                   <GoHome className='side-icon' />
                   <p>{locale === 'EN' ? 'Classifier' : 'Klasifikasi'}</p>
                 </Link>
