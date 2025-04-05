@@ -1,138 +1,77 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
 import DatasetUpload from '../components/page-comps/DataCollecting-Page/DatasetUpload';
 import DatasetTable from '../components/page-comps/DataCollecting-Page/DatasetTable';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
 import Pagination from '../components/Base/Pagination';
 import { DatasetSelect } from '../components/Base/Select';
-import { fetchDatasets, fetchDataset, uploadDataset } from '../utils/api/dataset';
+import { asyncFetchDatasetDetail } from '../states/datasetDetail/thunk';
+import { resetDatasetDetail } from '../states/datasetDetail/action';
+import { fetchDatasets, uploadDataset } from '../states/datasets/thunk';
+import { setSelectedDataset } from '../states/datasets/action';
 
 const DataCollectingPage = () => {
-  const firstRun = useRef(true);
-  const firstFetch = useRef(true);
-  const [datasets, setDatasets] = useState([]);
-  const [selectedDataset, setSelectedDataset] = useState(
-    localStorage.getItem('selectedDataset') || null
+  const dispatch = useDispatch();
+  const { datasets, selectedDataset, isUploading } = useSelector((state) => state.datasets);
+  const { data, total_data, topic_counts, total_pages, currentPage, limit, loading } = useSelector(
+    (state) => state.datasetDetail
   );
-  const [dataset, setDataset] = useState([]);
-  const [totalData, setTotalData] = useState(0);
-  const [topicCounts, setTopicCounts] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-  const [totalPages, setTotalPages] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [dataLoading, setDataLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
 
-  const loadDatasets = async () => {
-    const response = await fetchDatasets();
-    if (response.error) {
-      setDatasets([]);
-      return;
-    }
-    setDatasets(response);
-  };
+  useEffect(() => {
+    dispatch(fetchDatasets());
+  }, [dispatch]);
 
-  const loadDataset = async (selectedDataset, currentPage, limit) => {
-    setLoading(true);
-    setDataLoading(true);
-    try {
-      const response = await fetchDataset(selectedDataset, currentPage, limit);
-      setDataset(response.data);
-      setTotalData(response.total_data);
-      setTopicCounts(response.topic_counts);
-      setTotalPages(response.total_pages);
-    } catch (error) {
-      console.error('Error fetching dataset:', error);
+  useEffect(() => {
+    if (selectedDataset) {
+      dispatch(asyncFetchDatasetDetail(selectedDataset));
     }
-    setLoading(false);
-    setDataLoading(false);
-  };
-
-  const loadDatasetData = async (selectedDataset, currentPage, limit) => {
-    setDataLoading(true);
-    try {
-      const response = await fetchDataset(selectedDataset, currentPage, limit);
-      setDataset(response.data);
-    } catch (error) {
-      console.error('Error fetching dataset:', error);
-    }
-    setDataLoading(false);
-  };
+  }, [dispatch, selectedDataset]);
 
   const handleUpload = async (file) => {
-    setUploading(true);
-    const response = await uploadDataset(file);
+    const result = await dispatch(uploadDataset(file));
 
-    if (response.error) {
-      alert(response.error);
-    } else {
-      alert('Dataset uploaded successfully!');
-      await loadDatasets();
-      setSelectedDataset(response.dataset.id);
-      setCurrentPage(1);
-      await loadDataset(selectedDataset, 1, limit);
-      localStorage.setItem('selectedDataset', response.dataset.id);
-      localStorage.removeItem('preprocessed_dataset_id');
-      localStorage.removeItem('modelId');
+    if (result?.payload?.dataset?.id) {
+      const newId = result.payload.dataset.id;
+      dispatch(asyncFetchDatasetDetail(newId, 1, 10));
     }
-    setUploading(false);
   };
 
-  const handleDatasetSelection = async (event) => {
+  const handleDatasetSelection = (event) => {
     const selectedId = event.target.value;
-    setSelectedDataset(selectedId);
-    setCurrentPage(1);
-    await loadDataset(selectedDataset, currentPage, limit);
-    localStorage.setItem('selectedDataset', selectedId);
-    localStorage.removeItem('preprocessed_dataset_id');
-    localStorage.removeItem('modelId');
+    if (selectedId === selectedDataset) return;
+    dispatch(resetDatasetDetail());
+    dispatch(setSelectedDataset(selectedId));
+    dispatch(asyncFetchDatasetDetail(selectedId, 1, 10));
   };
 
-  const handleSetPage = async (page) => {
-    setCurrentPage(page);
-    await loadDatasetData(selectedDataset, page, limit);
+  const handleSetPage = (page) => {
+    dispatch(asyncFetchDatasetDetail(selectedDataset, page, limit));
   };
-
-  useEffect(() => {
-    if (firstRun.current) {
-      loadDatasets();
-      firstRun.current = false;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!selectedDataset || !firstFetch.current) return;
-    firstFetch.current = false;
-    localStorage.setItem('selectedDataset', selectedDataset);
-    loadDataset(selectedDataset, currentPage, limit);
-  }, [selectedDataset, currentPage, limit]);
 
   return (
     <Pages>
-      <DatasetUpload onUpload={handleUpload} uploading={uploading} />
+      <DatasetUpload onUpload={handleUpload} uploading={isUploading} />
       <br />
       <h3>Select Dataset</h3>
-      <div>
-        <DatasetSelect
-          datasets={datasets}
-          selectedDataset={selectedDataset}
-          handleDatasetSelection={handleDatasetSelection}
-        />
-      </div>
+      <DatasetSelect
+        datasets={datasets}
+        selectedDataset={selectedDataset}
+        handleDatasetSelection={handleDatasetSelection}
+      />
       <br />
       {selectedDataset && (
         <>
           <DatasetInfo
-            totalData={totalData || 0}
-            topicCounts={topicCounts || {}}
+            totalData={total_data || 0}
+            topicCounts={topic_counts || {}}
             loading={loading}
           />
           <br />
-          <DatasetTable data={dataset || []} loading={dataLoading} />
+          <DatasetTable data={data || []} loading={loading} />
           <Pagination
             currentPage={currentPage}
-            totalPages={totalPages || 1}
+            totalPages={total_pages || 1}
             setCurrentPage={handleSetPage}
           />
         </>

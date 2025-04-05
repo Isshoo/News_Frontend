@@ -1,24 +1,10 @@
 import {
-  setModels,
   setLoading,
   setClassificationResult,
   setPrediction,
   updateClassificationRow,
 } from './action';
 import { predictCsv, predict } from '../../utils/api/classifier';
-import { getModels } from '../../utils/api/model';
-
-export const fetchModels = () => async (dispatch) => {
-  try {
-    const response = await getModels();
-    if (response.error) {
-      throw new Error('Failed to fetch models');
-    }
-    dispatch(setModels(response));
-  } catch (error) {
-    console.error('Failed to fetch models:', error);
-  }
-};
 
 export const classifyNews = (text, retryCount = 4) => async (dispatch, getState) => {
   if (retryCount <= 0) {
@@ -28,7 +14,7 @@ export const classifyNews = (text, retryCount = 4) => async (dispatch, getState)
   }
 
   dispatch(setLoading(true));
-  const { selectedModelPath } = getState().classifier;
+  const { selectedModelPath } = getState().models;
   const response = await predict({ text, model_path: selectedModelPath });
 
   if (response.error) {
@@ -48,8 +34,8 @@ export const classifyNews = (text, retryCount = 4) => async (dispatch, getState)
 };
 
 export const classifyCsvThunk = () => async (dispatch, getState) => {
-  const { classifier } = getState();
-  const { csvData, selectedModelPath } = classifier;
+  const { selectedModelPath } = getState().models;
+  const { csvData } = getState().classifier;
 
   dispatch(setLoading(true));
   try {
@@ -70,8 +56,7 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
 };
 
 export const classifyRowThunk = (index, contentSnippet) => async (dispatch, getState) => {
-  const { classifier } = getState();
-  const { selectedModelPath } = classifier;
+  const { selectedModelPath } = getState().models;
   try {
     const response = await predict({ text: contentSnippet, model_path: selectedModelPath });
     if (response.error) {

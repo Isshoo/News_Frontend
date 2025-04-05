@@ -1,37 +1,17 @@
 const initialState = {
-  models: [],
-  selectedModelId: localStorage.getItem('classifierModel') || 'default-stemmed',
-  selectedModelPath: 'src/storage/models/base/hybrid_model.joblib',
 
-  hybridPredict: '',
-  deepseekPredict: '',
-  preprocessedText: '',
-
+  predictionResult: {},
   csvData: [],
   classificationResult: [],
-
   loading: false,
+
 };
 
 const classifierReducer = (state = initialState, action) => {
   switch (action.type) {
-  case 'SET_MODELS':
-    return { ...state, models: action.payload };
-
-  case 'SET_SELECTED_MODEL':
-    return {
-      ...state,
-      selectedModelId: action.payload.id,
-      selectedModelPath: action.payload.path,
-    };
 
   case 'SET_PREDICTION':
-    return {
-      ...state,
-      hybridPredict: action.payload.hybrid,
-      deepseekPredict: action.payload.deepseek,
-      preprocessedText: action.payload.preprocessed,
-    };
+    return { ...state, predictionResult: action.payload };
 
   case 'SET_CSV_DATA':
     return { ...state, csvData: action.payload };

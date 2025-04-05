@@ -5,27 +5,27 @@ import ClassifyInput from '../components/page-comps/Classify-Page/ClassifyInput'
 import ClassifyResult from '../components/page-comps/Classify-Page/ClassifyResult';
 import { ModelSelect } from '../components/Base/Select';
 import { showFormattedDate } from '../utils/helper';
-import { fetchModels, classifyNews } from '../states/classifier/thunk';
-import { setSelectedModel } from '../states/classifier/action';
+import { classifyNews } from '../states/classifier/thunk';
+import { asyncFetchModels } from '../states/models/thunk';
+import { setSelectedModel } from '../states/models/action';
 
 const ClassifyPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
 
-  const { models, selectedModelId, hybridPredict, deepseekPredict, preprocessedText, loading } =
-    useSelector((state) => state.classifier);
+  const { predictionResult, loading } = useSelector((state) => state.classifier);
+  const { models, selectedModelId } = useSelector((state) => state.models);
 
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false;
       return;
     }
-    dispatch(fetchModels());
+    dispatch(asyncFetchModels());
   }, [dispatch, selectedModelId]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;
-    localStorage.setItem('classifierModel', modelId);
 
     const foundModel = models.find((model) => model.id === modelId);
     dispatch(setSelectedModel(modelId, foundModel?.model_path || ''));
@@ -50,9 +50,9 @@ const ClassifyPage = () => {
         <ClassifyInput predictNews={predictNews} loading={loading} />
         <br />
         <ClassifyResult
-          preprocessedText={preprocessedText}
-          hybridPredict={hybridPredict}
-          deepseekPredict={deepseekPredict}
+          preprocessedText={predictionResult.preprocessed}
+          hybridPredict={predictionResult.hybrid}
+          deepseekPredict={predictionResult.deepseek}
           loading={loading}
         />
       </div>

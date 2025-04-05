@@ -4,34 +4,28 @@ import Pages from '../components/styled/Pages';
 import { ModelSelect } from '../components/Base/Select';
 import { showFormattedDate } from '../utils/helper';
 import Papa from 'papaparse';
-import { fetchModels, classifyCsvThunk, classifyRowThunk } from '../states/classifier/thunk';
-import {
-  setSelectedModel,
-  setCsvData,
-  editCsvRow,
-  addCsvRow,
-  deleteCsvRow,
-} from '../states/classifier/action';
+import { classifyCsvThunk, classifyRowThunk } from '../states/classifier/thunk';
+import { setCsvData, editCsvRow, addCsvRow, deleteCsvRow } from '../states/classifier/action';
+import { asyncFetchModels } from '../states/models/thunk';
+import { setSelectedModel } from '../states/models/action';
 
 const CsvClassifierPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
 
-  const { models, selectedModelId, csvData, classificationResult, loading } = useSelector(
-    (state) => state.classifier
-  );
+  const { csvData, classificationResult, loading } = useSelector((state) => state.classifier);
+  const { models, selectedModelId } = useSelector((state) => state.models);
 
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false;
       return;
     }
-    dispatch(fetchModels());
+    dispatch(asyncFetchModels());
   }, [dispatch, selectedModelId]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;
-    localStorage.setItem('classifierModel', modelId);
 
     const foundModel = models.find((model) => model.id === modelId);
     dispatch(setSelectedModel(modelId, foundModel?.model_path || ''));

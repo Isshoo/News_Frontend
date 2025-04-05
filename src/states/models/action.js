@@ -8,6 +8,11 @@ export const setModels = (models) => ({
   payload: models,
 });
 
+export const setSelectedModel = (id, path) => ({
+  type: 'SET_SELECTED_MODEL',
+  payload: { id, path },
+});
+
 export const deleteModel = (modelId) => ({
   type: DELETE_MODEL,
   payload: modelId,

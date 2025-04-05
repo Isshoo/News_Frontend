@@ -1,12 +1,4 @@
-export const setModels = (models) => ({
-  type: 'SET_MODELS',
-  payload: models,
-});
 
-export const setSelectedModel = (id, path) => ({
-  type: 'SET_SELECTED_MODEL',
-  payload: { id, path },
-});
 
 export const setPrediction = (hybrid, deepseek, preprocessed) => ({
   type: 'SET_PREDICTION',

@@ -3,6 +3,8 @@
 import {
   setDatasets,
   setDatasetsLoading,
+  setSelectedDataset,
+  setDatasetsUploading,
 } from './action';
 
 import {
@@ -23,14 +25,17 @@ export const asyncFetchDatasets = () => async (dispatch) => {
 
 // Thunk: Upload a dataset
 export const asyncUploadDataset = (file) => async (dispatch) => {
-  dispatch(setDatasetsLoading(true));
+  dispatch(setDatasetsUploading(true));
   const result = await uploadDataset(file);
   if (!result.error) {
     // refresh list
     const newList = await fetchDatasets();
     if (!newList.error) dispatch(setDatasets(newList));
+    // set selected dataset
+    const newId = result.dataset.id;
+    dispatch(setSelectedDataset(newId));
   }
-  dispatch(setDatasetsLoading(false));
+  dispatch(setDatasetsUploading(false));
   return result;
 };
 

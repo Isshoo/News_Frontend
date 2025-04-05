@@ -4,6 +4,7 @@ import {
   setDatasetDetail,
   setDatasetDetailLoading,
   setDatasetPage,
+  setDatasetLimit,
 } from './action';
 
 import { fetchDataset } from '../../utils/api/dataset';
@@ -20,6 +21,7 @@ export const asyncFetchDatasetDetail = (datasetId, page = 1, limit = 10) => asyn
       totalPages: result.total_pages,
     }));
     dispatch(setDatasetPage(page));
+    dispatch(setDatasetLimit(limit));
   }
   dispatch(setDatasetDetailLoading(false));
 };

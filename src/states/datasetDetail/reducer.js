@@ -2,8 +2,10 @@
 
 import {
   SET_DATASET_DETAIL,
+  RESET_DATASET_DETAIL,
   SET_DATASET_DETAIL_LOADING,
   SET_DATASET_PAGE,
+  SET_DATASET_LIMIT,
 } from './action';
 
 const initialState = {
@@ -11,7 +13,8 @@ const initialState = {
   totalData: 0,
   topicCounts: {},
   totalPages: 0,
-  page: 1,
+  currentPage: 1,
+  limit: 10,
   isLoading: false,
 };
 
@@ -25,6 +28,8 @@ const datasetDetailReducer = (state = initialState, action) => {
       topicCounts: action.payload.topicCounts,
       totalPages: action.payload.totalPages,
     };
+  case RESET_DATASET_DETAIL:
+    return { ...initialState };
   case SET_DATASET_DETAIL_LOADING:
     return {
       ...state,
@@ -33,7 +38,12 @@ const datasetDetailReducer = (state = initialState, action) => {
   case SET_DATASET_PAGE:
     return {
       ...state,
-      page: action.payload,
+      currentPage: action.payload,
+    };
+  case SET_DATASET_LIMIT:
+    return {
+      ...state,
+      limit: action.payload,
     };
   default:
     return state;
