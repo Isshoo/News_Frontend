@@ -2,6 +2,8 @@
 
 import {
   setDatasets,
+  addDataset,
+  deleteDatasetById,
   setDatasetsLoading,
   setSelectedDataset,
   setDatasetsUploading,
@@ -21,6 +23,7 @@ export const asyncFetchDatasets = () => async (dispatch) => {
     dispatch(setDatasets(result));
   }
   dispatch(setDatasetsLoading(false));
+  return result;
 };
 
 // Thunk: Upload a dataset
@@ -28,12 +31,7 @@ export const asyncUploadDataset = (file) => async (dispatch) => {
   dispatch(setDatasetsUploading(true));
   const result = await uploadDataset(file);
   if (!result.error) {
-    // refresh list
-    const newList = await fetchDatasets();
-    if (!newList.error) dispatch(setDatasets(newList));
-    // set selected dataset
-    const newId = result.dataset.id;
-    dispatch(setSelectedDataset(newId));
+    dispatch(addDataset(result));
   }
   dispatch(setDatasetsUploading(false));
   return result;
@@ -44,9 +42,7 @@ export const asyncDeleteDataset = (datasetId) => async (dispatch) => {
   dispatch(setDatasetsLoading(true));
   const result = await deleteDataset(datasetId);
   if (!result.error) {
-    // refresh list
-    const newList = await fetchDatasets();
-    if (!newList.error) dispatch(setDatasets(newList));
+    dispatch(deleteDatasetById(datasetId));
   }
   dispatch(setDatasetsLoading(false));
   return result;

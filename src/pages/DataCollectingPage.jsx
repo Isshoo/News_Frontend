@@ -17,7 +17,7 @@ const DataCollectingPage = () => {
   const { datasets, selectedDataset, isUploading, isLoading } = useSelector(
     (state) => state.datasets
   );
-  const { data, total_data, topic_counts, total_pages, currentPage, limit, loadingDetail } =
+  const { data, totalData, topicCounts, totalPages, currentPage, limit, loadingDetail } =
     useSelector((state) => state.datasetDetail);
 
   useEffect(() => {
@@ -58,25 +58,27 @@ const DataCollectingPage = () => {
       <DatasetUpload onUpload={handleUpload} uploading={isUploading} />
       <br />
       <h3>Select Dataset</h3>
-      <DatasetSelect
-        datasets={datasets}
-        selectedDataset={selectedDataset}
-        handleDatasetSelection={handleDatasetSelection}
-        loading={isLoading}
-      />
+      <div>
+        <DatasetSelect
+          datasets={datasets}
+          selectedDataset={selectedDataset}
+          handleDatasetSelection={handleDatasetSelection}
+          loading={isLoading}
+        />
+      </div>
       <br />
       {selectedDataset && (
         <>
           <DatasetInfo
-            totalData={total_data || 0}
-            topicCounts={topic_counts || {}}
-            loading={isLoading}
+            totalData={totalData || 0}
+            topicCounts={topicCounts || {}}
+            loading={loadingInfo}
           />
           <br />
           <DatasetTable data={data || []} loading={loadingDetail} />
           <Pagination
             currentPage={currentPage}
-            totalPages={total_pages || 1}
+            totalPages={totalPages || 1}
             setCurrentPage={handleSetPage}
           />
         </>

@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  preprocessDataset,
-  createPreprocessedCopy,
-  fetchPreprocessedDatasets,
-  fetchPreprocessedDataset,
-  deletePreprocessedDataset,
-  updateLabel,
-  deleteData,
-  addData,
-} from '../utils/api/preprocess';
+  asyncFetchPreprocessedDatasets,
+  asyncPreprocessRawDataset,
+  asyncCreatePreprocessedCopy,
+  deletePreprocessedDatasetById,
+} from '../states/preprocessedDatasets/thunk';
+import {
+  asyncFetchPreprocessedDatasetDetail,
+  asyncUpdatePreprocessedDataLabel,
+  asyncDeletePreprocessedData,
+  asyncAddPreprocessedData,
+} from '../states/preprocessedDatasetDetail/thunk';
+import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
+import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
+
 import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
 import { ListDataset } from '../components/Base/Select';
@@ -16,14 +22,17 @@ import PreprocessTable from '../components/page-comps/Preprocessing-Page/Preproc
 import AddDataPopup from '../components/page-comps/Preprocessing-Page/AddDataPopup';
 
 const PreprocessingPage = () => {
-  const rawDatasetId = localStorage.getItem('selectedDataset');
-  const [dataset, setDataset] = useState([]);
-  const [preprocessedDatasets, setPreprocessedDatasets] = useState([]);
-  const [preprocessedDatasetId, setPreprocessedDatasetId] = useState(
-    localStorage.getItem('preprocessed_dataset_id') || ''
+  const dispatch = useDispatch();
+
+  const { selectedDataset } = useSelector((state) => state.datasets);
+  const { selectedPreprocessedDataset, preprocessedDatasets } = useSelector(
+    (state) => state.preprocessedDatasets
   );
-  const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, totalPages, currentPage, limit, loadingDetail } = useSelector(
+    (state) => state.preprocessedDataset
+  );
+
   const [editingIndex, setEditingIndex] = useState(null);
   const [newLabel, setNewLabel] = useState('');
   const [showAddPopup, setShowAddPopup] = useState(false);
@@ -31,57 +40,28 @@ const PreprocessingPage = () => {
   const [newTopic, setNewTopic] = useState('');
 
   useEffect(() => {
-    if (rawDatasetId) {
-      fetchPreprocessedDatasets(rawDatasetId).then((response) => {
-        if (!response.error) {
-          setPreprocessedDatasets(response);
-        }
-      });
-    }
-  }, [rawDatasetId]);
+    if (selectedDataset) dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+  }, [dispatch, selectedDataset]);
 
   useEffect(() => {
-    if (preprocessedDatasetId) {
-      loadDataset(preprocessedDatasetId, currentPage);
+    if (selectedPreprocessedDataset) {
+      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
     }
-  }, [preprocessedDatasetId, currentPage]);
+  }, [dispatch, selectedPreprocessedDataset]);
 
-  const loadDataset = async (datasetId, page) => {
-    const response = await fetchPreprocessedDataset(datasetId, page, 10);
-    if (!response.error) {
-      setDataset(response.data);
-      setTotalPages(response.total_pages);
-    }
-  };
+  const handlePreprocess = () => {
+    const result = dispatch(asyncPreprocessRawDataset(selectedDataset));
 
-  const handlePreprocess = async () => {
-    const response = await preprocessDataset(rawDatasetId);
-    if (!response.error) {
-      localStorage.setItem('preprocessed_dataset_id', rawDatasetId);
-      localStorage.removeItem('modelId');
-      setPreprocessedDatasetId(rawDatasetId);
-      loadDataset(rawDatasetId, 1);
+    if (result?.data?.id) {
+      const id = result.data.id;
+      dispatch(asyncFetchPreprocessedDatasetDetail(id, 1, 10));
     }
   };
 
-  const handleCopyDataset = async () => {
+  const handleCopyDataset = () => {
     const name = prompt('Enter name for new dataset copy:');
     if (!name) return;
-
-    const response = await createPreprocessedCopy(rawDatasetId, name);
-
-    if (!response.error && response.data) {
-      setPreprocessedDatasets((prevDatasets) => [...prevDatasets, response.data]);
-
-      const newDatasetId = response.data.id;
-
-      if (newDatasetId) {
-        localStorage.setItem('preprocessed_dataset_id', newDatasetId);
-        localStorage.removeItem('modelId');
-        setPreprocessedDatasetId(newDatasetId);
-        loadDataset(newDatasetId, 1);
-      }
-    }
+    dispatch(asyncCreatePreprocessedCopy(selectedDataset, name));
   };
 
   const handleEdit = (index, currentTopic) => {
@@ -89,50 +69,38 @@ const PreprocessingPage = () => {
     setNewLabel(currentTopic);
   };
 
-  const handleSave = async (index) => {
-    await updateLabel(preprocessedDatasetId, index, newLabel);
+  const handleSave = (index) => {
+    dispatch(asyncUpdatePreprocessedDataLabel(selectedPreprocessedDataset, index, newLabel));
     setEditingIndex(null);
-    loadDataset(preprocessedDatasetId, currentPage);
   };
 
-  const handleDelete = async (index) => {
-    await deleteData(preprocessedDatasetId, index);
-    loadDataset(preprocessedDatasetId, currentPage);
+  const handleDelete = (index) => {
+    dispatch(asyncDeletePreprocessedData(selectedPreprocessedDataset, index));
   };
 
-  const handleAddData = async () => {
-    await addData(preprocessedDatasetId, newContent, newTopic);
+  const handleAddData = () => {
+    dispatch(asyncAddPreprocessedData(selectedPreprocessedDataset, newContent, newTopic));
     setShowAddPopup(false);
     setNewContent('');
     setNewTopic('');
-    loadDataset(preprocessedDatasetId, currentPage);
   };
 
   const handleDatasetSelection = (datasetId) => {
-    localStorage.setItem('preprocessed_dataset_id', datasetId);
-    localStorage.removeItem('modelId');
-    setPreprocessedDatasetId(datasetId);
+    if (datasetId === selectedPreprocessedDataset) return;
+    dispatch(resetPreprocessedDatasetDetail());
+    dispatch(setSelectedPreprocessedDataset(datasetId));
+    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, 10));
   };
 
-  const handleDeleteDataset = async (datasetId) => {
-    if (datasetId === rawDatasetId) return;
-
-    const response = await deletePreprocessedDataset(datasetId);
-
-    if (!response.error) {
-      const updatedDatasets = await fetchPreprocessedDatasets(rawDatasetId);
-      setPreprocessedDatasets(updatedDatasets || []);
-
-      if (preprocessedDatasetId === datasetId) {
-        const firstDataset = updatedDatasets.data?.[0] || { id: rawDatasetId };
-        setPreprocessedDatasetId(firstDataset.id);
-        localStorage.setItem('preprocessed_dataset_id', firstDataset.id);
-        localStorage.removeItem('modelId');
-        loadDataset(firstDataset.id, 1);
-      }
-    } else {
-      console.error('Failed to delete dataset:', response.error);
+  const handleDeleteDataset = (datasetId) => {
+    if (datasetId === selectedPreprocessedDataset) {
+      dispatch(resetPreprocessedDatasetDetail());
     }
+    dispatch(deletePreprocessedDatasetById(datasetId));
+  };
+
+  const handleSetPage = (page) => {
+    dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset, page, limit));
   };
 
   return (
@@ -145,33 +113,32 @@ const PreprocessingPage = () => {
           <h3>Select Preprocessed Dataset:</h3>
           <ListDataset
             preprocessedDatasets={preprocessedDatasets}
-            rawDatasetId={rawDatasetId}
+            rawDatasetId={selectedDataset}
             handleDatasetSelection={handleDatasetSelection}
             handleDeleteDataset={handleDeleteDataset}
           />
-          {preprocessedDatasetId === rawDatasetId ? (
+          {selectedPreprocessedDataset === selectedDataset ? (
             <button onClick={handleCopyDataset}>Copy Dataset to Edit</button>
           ) : (
             <button onClick={() => setShowAddPopup(true)}>Add Data</button>
           )}
-          <>
-            <PreprocessTable
-              dataset={dataset}
-              editingIndex={editingIndex}
-              newLabel={newLabel}
-              setNewLabel={setNewLabel}
-              handleEdit={handleEdit}
-              handleSave={handleSave}
-              handleDelete={handleDelete}
-              preprocessedDatasetId={preprocessedDatasetId}
-              rawDatasetId={rawDatasetId}
-            />
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-            />
-          </>
+          <PreprocessTable
+            dataset={data}
+            editingIndex={editingIndex}
+            newLabel={newLabel}
+            setNewLabel={setNewLabel}
+            handleEdit={handleEdit}
+            handleSave={handleSave}
+            handleDelete={handleDelete}
+            preprocessedDatasetId={selectedPreprocessedDataset}
+            rawDatasetId={selectedDataset}
+            loading={loadingDetail}
+          />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={handleSetPage}
+          />
         </>
       )}
       {showAddPopup && (

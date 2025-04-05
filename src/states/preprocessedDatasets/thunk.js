@@ -17,6 +17,14 @@ export const asyncFetchPreprocessedDatasets = (rawDatasetId) => async (dispatch)
   }
 };
 
+export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
+  const response = await apiFetchPreprocessedDatasets(rawDatasetId);
+  if (!response.error) {
+    dispatch(addPreprocessedDataset(response.data));
+  }
+  return response;
+};
+
 export const asyncCreatePreprocessedCopy = (rawDatasetId, name) => async (dispatch) => {
   const response = await apiCreatePreprocessedCopy(rawDatasetId, name);
   if (!response.error && response.data) {
@@ -26,11 +34,10 @@ export const asyncCreatePreprocessedCopy = (rawDatasetId, name) => async (dispat
   return null;
 };
 
-export const asyncDeletePreprocessedDataset = (datasetId, rawDatasetId) => async (dispatch) => {
+export const asyncDeletePreprocessedDataset = (datasetId) => async (dispatch) => {
   const response = await apiDeletePreprocessedDataset(datasetId);
   if (!response.error) {
     dispatch(deletePreprocessedDatasetById(datasetId));
-    // Optional: refresh full list
-    dispatch(asyncFetchPreprocessedDatasets(rawDatasetId));
   }
+  return response;
 };

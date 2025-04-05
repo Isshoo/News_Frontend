@@ -1,41 +1,48 @@
 import {
   setPreprocessedDatasetDetail,
-  updatePreprocessedDataRow,
+  updatePreprocessedDataRowLabel,
   deletePreprocessedDataRow,
   addPreprocessedDataRow,
+  setPreprocessedDatasetDetailLoading,
+  setPreprocessedDatasetPage,
+  setPreprocessedDatasetLimit,
 } from './action';
 
 import {
-  fetchPreprocessedDatasetDetail,
-  updatePreprocessedData,
-  deletePreprocessedData,
-  addPreprocessedData,
+  fetchPreprocessedDataset,
+  updateLabel,
+  deleteData,
+  addData,
 } from '../../utils/api/preprocess';
 
-export const asyncFetchPreprocessedDatasetDetail = (datasetId) => async (dispatch) => {
-  const response = await fetchPreprocessedDatasetDetail(datasetId);
+export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit = 10) => async (dispatch) => {
+  dispatch(setPreprocessedDatasetDetailLoading(true));
+  const response = await fetchPreprocessedDataset(datasetId, page, limit);
   if (!response.error) {
-    dispatch(setPreprocessedDatasetDetail(response.data));
+    dispatch(setPreprocessedDatasetDetail(response));
+    dispatch(setPreprocessedDatasetPage(page));
+    dispatch(setPreprocessedDatasetLimit(limit));
+  }
+  dispatch(setPreprocessedDatasetDetailLoading(false));
+};
+
+export const asyncUpdatePreprocessedDataLabel = (datasetId, index, newLabel) => async (dispatch) => {
+  const response = await updateLabel(datasetId, index, newLabel);
+  if (!response.error) {
+    dispatch(updatePreprocessedDataRowLabel(index, newLabel));
   }
 };
 
-export const asyncUpdatePreprocessedData = (datasetId, rowId, newData) => async (dispatch) => {
-  const response = await updatePreprocessedData(datasetId, rowId, newData);
+export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch) => {
+  const response = await deleteData(datasetId, index);
   if (!response.error) {
-    dispatch(updatePreprocessedDataRow(response.data));
+    dispatch(deletePreprocessedDataRow(index));
   }
 };
 
-export const asyncDeletePreprocessedData = (datasetId, rowId) => async (dispatch) => {
-  const response = await deletePreprocessedData(datasetId, rowId);
+export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => async (dispatch) => {
+  const response = await addData(datasetId, contentSnippet, topik);
   if (!response.error) {
-    dispatch(deletePreprocessedDataRow(rowId));
-  }
-};
-
-export const asyncAddPreprocessedData = (datasetId, data) => async (dispatch) => {
-  const response = await addPreprocessedData(datasetId, data);
-  if (!response.error) {
-    dispatch(addPreprocessedDataRow(response.data));
+    dispatch(addPreprocessedDataRow(contentSnippet, topik));
   }
 };

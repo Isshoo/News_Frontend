@@ -8,6 +8,7 @@ export const asyncFetchModels = () => async (dispatch) => {
     dispatch(setModels(response));
   }
   dispatch(setLoading(false));
+  return response;
 };
 
 export const asyncDeleteModel = (modelId) => async (dispatch) => {
@@ -15,6 +16,7 @@ export const asyncDeleteModel = (modelId) => async (dispatch) => {
   if (!response.error) {
     dispatch(deleteModel(modelId));
   }
+  return response;
 };
 
 export const asyncUpdateModelName = (modelId, newName) => async (dispatch) => {
@@ -22,4 +24,5 @@ export const asyncUpdateModelName = (modelId, newName) => async (dispatch) => {
   if (!response.error) {
     dispatch(updateModelName(modelId, newName));
   }
+  return response;
 };
