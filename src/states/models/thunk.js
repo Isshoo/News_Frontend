@@ -1,11 +1,13 @@
-import { setModels, deleteModel, updateModelName } from './action';
+import { setModels, setLoading, deleteModel, updateModelName } from './action';
 import { getModels, deleteModel as deleteModelAPI, editModelName } from '../../utils/api/model';
 
-export const asyncFetchModels = (preprocessedDatasetId) => async (dispatch) => {
-  const response = await getModels(preprocessedDatasetId);
+export const asyncFetchModels = () => async (dispatch) => {
+  dispatch(setLoading(true));
+  const response = await getModels();
   if (!response.error) {
-    dispatch(setModels(response.data));
+    dispatch(setModels(response));
   }
+  dispatch(setLoading(false));
 };
 
 export const asyncDeleteModel = (modelId) => async (dispatch) => {

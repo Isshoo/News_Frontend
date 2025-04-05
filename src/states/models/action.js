@@ -1,6 +1,7 @@
 export const SET_MODELS = 'SET_MODELS';
 export const DELETE_MODEL = 'DELETE_MODEL';
 export const UPDATE_MODEL_NAME = 'UPDATE_MODEL_NAME';
+export const SET_LOADING = 'SET_LOADING';
 
 export const setModels = (models) => ({
   type: SET_MODELS,
@@ -16,3 +17,9 @@ export const updateModelName = (modelId, newName) => ({
   type: UPDATE_MODEL_NAME,
   payload: { modelId, newName },
 });
+
+export const setLoading = (loading) => ({
+  type: SET_LOADING,
+  payload: loading,
+});
+

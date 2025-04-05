@@ -1,53 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { getModels, deleteModel, editModelName } from '../utils/api/model';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
 import ModelItem from '../components/page-comps/Models-Page/ModelItem';
+import {
+  asyncFetchModels as fetchModels,
+  asyncDeleteModel as deleteModelThunk,
+  asyncUpdateModelName as editModelNameThunk,
+} from '../states/models/thunk';
 
 const ModelsPage = () => {
-  const firstRun = useRef(true);
-  const [models, setModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { models, loading } = useSelector((state) => state.models);
 
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-    } else {
-      fetchAllModels();
-    }
-  }, []);
+    dispatch(fetchModels());
+  }, [dispatch]);
 
-  const fetchAllModels = async () => {
-    setLoading(true);
-    try {
-      const data = await getModels();
-      setModels(data);
-    } catch (error) {
-      console.error('Error fetching models:', error);
-    } finally {
-      setLoading(false);
-    }
+  const handleDelete = (id) => {
+    dispatch(deleteModelThunk(id));
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteModel(id); // Panggil API delete
-      setModels((prevModels) => prevModels.filter((model) => model.id !== id));
-    } catch (error) {
-      console.error('Error deleting model:', error);
-    }
-  };
-
-  const handleRename = async (id, newName) => {
-    try {
-      await editModelName(id, newName);
-
-      // Update state dengan cara yang benar agar React mendeteksi perubahan
-      setModels((prevModels) => {
-        return prevModels.map((model) => (model.id === id ? { ...model, name: newName } : model));
-      });
-    } catch (error) {
-      console.error('Error updating model name:', error);
-    }
+  const handleRename = (id, newName) => {
+    dispatch(editModelNameThunk(id, newName));
   };
 
   return (

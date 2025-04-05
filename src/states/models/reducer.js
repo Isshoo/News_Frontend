@@ -1,11 +1,17 @@
-import { SET_MODELS, DELETE_MODEL, UPDATE_MODEL_NAME } from './action';
+import { SET_MODELS, DELETE_MODEL, UPDATE_MODEL_NAME, SET_LOADING } from './action';
 
-const initialState = [];
+const initialState = {
+  models: [],
+  loading: false,
+};
 
 const modelsReducer = (state = initialState, action) => {
   switch (action.type) {
   case SET_MODELS:
-    return action.payload;
+    return {
+      ...state,
+      models: action.payload,
+    };
   case DELETE_MODEL:
     return state.filter((model) => model.id !== action.payload);
   case UPDATE_MODEL_NAME:
@@ -14,6 +20,11 @@ const modelsReducer = (state = initialState, action) => {
         ? { ...model, name: action.payload.newName }
         : model
     );
+  case SET_LOADING:
+    return {
+      ...state,
+      loading: action.payload,
+    };
   default:
     return state;
   }
