@@ -25,9 +25,11 @@ const preprocessedDatasetDetailReducer = (state = initialState, action) => {
     return {
       ...state,
       data: action.payload.data,
-      totalData: action.payload.totalData,
-      topicCounts: action.payload.topicCounts,
-      totalPages: action.payload.totalPages,
+      totalData: action.payload.total_data,
+      topicCounts: action.payload.topic_counts,
+      totalPages: action.payload.total_pages,
+      currentPage: action.payload.current_page,
+      limit: action.payload.limit,
     };
   case RESET_PREPROCESSED_DATASET_DETAIL:
     return { ...initialState };

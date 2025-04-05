@@ -2,7 +2,6 @@ import {
   setPreprocessedDatasetDetail,
   updatePreprocessedDataRowLabel,
   deletePreprocessedDataRow,
-  addPreprocessedDataRow,
   setPreprocessedDatasetDetailLoading,
   setPreprocessedDatasetPage,
   setPreprocessedDatasetLimit,
@@ -26,23 +25,33 @@ export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit =
   dispatch(setPreprocessedDatasetDetailLoading(false));
 };
 
-export const asyncUpdatePreprocessedDataLabel = (datasetId, index, newLabel) => async (dispatch) => {
-  const response = await updateLabel(datasetId, index, newLabel);
-  if (!response.error) {
-    dispatch(updatePreprocessedDataRowLabel(index, newLabel));
+export const asyncUpdatePreprocessedDataLabel = (datasetId, index, newLabel) => async (dispatch, getState) => {
+  try {
+    await updateLabel(datasetId, index, newLabel); // API call
+    const { limit, currentPage } = getState().preprocessedDatasetDetail;
+    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+  } catch (err) {
+    console.error(err);
   }
 };
 
-export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch) => {
-  const response = await deleteData(datasetId, index);
-  if (!response.error) {
-    dispatch(deletePreprocessedDataRow(index));
+export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch, getState) => {
+  try {
+    await deleteData(datasetId, index); // API call
+    const { limit, currentPage } = getState().preprocessedDatasetDetail;
+    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+  } catch (err) {
+    console.error(err);
   }
 };
 
-export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => async (dispatch) => {
-  const response = await addData(datasetId, contentSnippet, topik);
-  if (!response.error) {
-    dispatch(addPreprocessedDataRow(contentSnippet, topik));
+export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => async (dispatch, getState) => {
+  try {
+    await addData(datasetId, contentSnippet, topik); // API call
+    const { limit, totalPages } = getState().preprocessedDatasetDetail;
+    const currentPage = totalPages > 0 ? totalPages : 1;
+    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+  } catch (err) {
+    console.error(err);
   }
 };

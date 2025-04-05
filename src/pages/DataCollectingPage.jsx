@@ -30,11 +30,11 @@ const DataCollectingPage = () => {
     }
   }, [dispatch, selectedDataset]);
 
-  const handleUpload = (file) => {
-    const result = dispatch(asyncUploadDataset(file));
+  const handleUpload = async (file) => {
+    const result = await dispatch(asyncUploadDataset(file));
 
-    if (result?.payload?.dataset?.id) {
-      const newId = result.payload.dataset.id;
+    if (!result.error) {
+      const newId = result.dataset.id;
       dispatch(asyncFetchDatasetDetail(newId, 1, 10));
     }
   };

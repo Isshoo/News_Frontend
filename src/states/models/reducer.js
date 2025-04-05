@@ -4,7 +4,7 @@ const initialState = {
   models: [],
   selectedModelId: localStorage.getItem('model_id') || 'default-stemmed',
   selectedModelPath: 'src/storage/models/base/hybrid_model.joblib',
-  loading: false,
+  modelsLoading: false,
 };
 
 const modelsReducer = (state = initialState, action) => {

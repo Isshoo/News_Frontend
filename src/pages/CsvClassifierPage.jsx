@@ -22,7 +22,7 @@ const CsvClassifierPage = () => {
       return;
     }
     dispatch(asyncFetchModels());
-  }, [dispatch, selectedModelId]);
+  }, [dispatch]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
+import Loading from '../components/Base/LoadingBar';
 import ModelItem from '../components/page-comps/Models-Page/ModelItem';
 import {
   asyncFetchModels as fetchModels,
@@ -10,10 +11,20 @@ import {
 
 const ModelsPage = () => {
   const dispatch = useDispatch();
-  const { models, loading } = useSelector((state) => state.models);
+  const firstRun = useRef(true);
+  const { models } = useSelector((state) => state.models);
+  const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
-    dispatch(fetchModels());
+    if (firstRun.current) {
+      dispatch(fetchModels());
+      // delaying the loading state
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      firstRun.current = false;
+      return;
+    }
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -24,12 +35,15 @@ const ModelsPage = () => {
     dispatch(editModelNameThunk(id, newName));
   };
 
+  if (models === undefined) return null;
   return (
     <Pages>
       <h2>Saved Models</h2>
       {loading ? (
-        <p>Loading models...</p>
-      ) : models.length > 0 ? (
+        <Loading />
+      ) : models.length == 0 ? (
+        <p>No models available.</p>
+      ) : (
         <div>
           {models.map((model) => (
             <ModelItem
@@ -40,8 +54,6 @@ const ModelsPage = () => {
             />
           ))}
         </div>
-      ) : (
-        <p>No models available.</p>
       )}
     </Pages>
   );

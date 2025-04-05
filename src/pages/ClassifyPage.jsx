@@ -22,7 +22,7 @@ const ClassifyPage = () => {
       return;
     }
     dispatch(asyncFetchModels());
-  }, [dispatch, selectedModelId]);
+  }, [dispatch]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;
@@ -49,12 +49,14 @@ const ClassifyPage = () => {
         <br />
         <ClassifyInput predictNews={predictNews} loading={loading} />
         <br />
-        <ClassifyResult
-          preprocessedText={predictionResult.preprocessed}
-          hybridPredict={predictionResult.hybrid}
-          deepseekPredict={predictionResult.deepseek}
-          loading={loading}
-        />
+        {predictionResult?.preprocessed && (
+          <ClassifyResult
+            preprocessedText={predictionResult.preprocessed}
+            hybridPredict={predictionResult.hybrid}
+            deepseekPredict={predictionResult.deepseek}
+            loading={loading}
+          />
+        )}
       </div>
     </Pages>
   );

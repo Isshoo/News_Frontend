@@ -8,17 +8,18 @@ import {
   fetchPreprocessedDatasets as apiFetchPreprocessedDatasets,
   createPreprocessedCopy as apiCreatePreprocessedCopy,
   deletePreprocessedDataset as apiDeletePreprocessedDataset,
+  preprocessDataset as apiPreprocessDataset,
 } from '../../utils/api/preprocess';
 
 export const asyncFetchPreprocessedDatasets = (rawDatasetId) => async (dispatch) => {
   const response = await apiFetchPreprocessedDatasets(rawDatasetId);
   if (!response.error) {
-    dispatch(setPreprocessedDatasets(response.data || []));
+    dispatch(setPreprocessedDatasets(response));
   }
 };
 
 export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
-  const response = await apiFetchPreprocessedDatasets(rawDatasetId);
+  const response = await apiPreprocessDataset(rawDatasetId);
   if (!response.error) {
     dispatch(addPreprocessedDataset(response.data));
   }

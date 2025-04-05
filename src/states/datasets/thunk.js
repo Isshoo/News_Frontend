@@ -31,7 +31,7 @@ export const asyncUploadDataset = (file) => async (dispatch) => {
   dispatch(setDatasetsUploading(true));
   const result = await uploadDataset(file);
   if (!result.error) {
-    dispatch(addDataset(result));
+    dispatch(addDataset(result.dataset));
   }
   dispatch(setDatasetsUploading(false));
   return result;

@@ -35,7 +35,7 @@ export const fetchPreprocessedDatasets = async (raw_dataset_id) =>  {
   }
 };
 
-export const fetchPreprocessedDataset = async (dataset_id, page, limit) => {
+export const fetchPreprocessedDataset = async (dataset_id, page = 1, limit = 10) => {
   try {
     const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}?page=${page}&limit=${limit}`);
     return await response.json();

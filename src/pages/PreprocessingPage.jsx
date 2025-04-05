@@ -4,7 +4,7 @@ import {
   asyncFetchPreprocessedDatasets,
   asyncPreprocessRawDataset,
   asyncCreatePreprocessedCopy,
-  deletePreprocessedDatasetById,
+  asyncDeletePreprocessedDataset,
 } from '../states/preprocessedDatasets/thunk';
 import {
   asyncFetchPreprocessedDatasetDetail,
@@ -30,7 +30,7 @@ const PreprocessingPage = () => {
   );
 
   const { data, totalPages, currentPage, limit, loadingDetail } = useSelector(
-    (state) => state.preprocessedDataset
+    (state) => state.preprocessedDatasetDetail
   );
 
   const [editingIndex, setEditingIndex] = useState(null);
@@ -49,8 +49,8 @@ const PreprocessingPage = () => {
     }
   }, [dispatch, selectedPreprocessedDataset]);
 
-  const handlePreprocess = () => {
-    const result = dispatch(asyncPreprocessRawDataset(selectedDataset));
+  const handlePreprocess = async () => {
+    const result = await dispatch(asyncPreprocessRawDataset(selectedDataset));
 
     if (result?.data?.id) {
       const id = result.data.id;
@@ -79,24 +79,27 @@ const PreprocessingPage = () => {
   };
 
   const handleAddData = () => {
-    dispatch(asyncAddPreprocessedData(selectedPreprocessedDataset, newContent, newTopic));
+    if (!newContent || !newTopic) {
+      alert('Please fill in all fields.');
+      return;
+    }
+    dispatch(
+      asyncAddPreprocessedData(selectedPreprocessedDataset, newContent, newTopic, totalPages, limit)
+    );
     setShowAddPopup(false);
-    setNewContent('');
-    setNewTopic('');
   };
 
   const handleDatasetSelection = (datasetId) => {
     if (datasetId === selectedPreprocessedDataset) return;
     dispatch(resetPreprocessedDatasetDetail());
     dispatch(setSelectedPreprocessedDataset(datasetId));
-    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, 10));
   };
 
   const handleDeleteDataset = (datasetId) => {
     if (datasetId === selectedPreprocessedDataset) {
       dispatch(resetPreprocessedDatasetDetail());
     }
-    dispatch(deletePreprocessedDatasetById(datasetId));
+    dispatch(asyncDeletePreprocessedDataset(datasetId));
   };
 
   const handleSetPage = (page) => {
@@ -123,7 +126,7 @@ const PreprocessingPage = () => {
             <button onClick={() => setShowAddPopup(true)}>Add Data</button>
           )}
           <PreprocessTable
-            dataset={data}
+            dataset={data || []}
             editingIndex={editingIndex}
             newLabel={newLabel}
             setNewLabel={setNewLabel}
@@ -135,8 +138,8 @@ const PreprocessingPage = () => {
             loading={loadingDetail}
           />
           <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
+            currentPage={currentPage || 1}
+            totalPages={totalPages || 1}
             setCurrentPage={handleSetPage}
           />
         </>
