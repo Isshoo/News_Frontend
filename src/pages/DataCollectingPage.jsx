@@ -8,18 +8,20 @@ import Pagination from '../components/Base/Pagination';
 import { DatasetSelect } from '../components/Base/Select';
 import { asyncFetchDatasetDetail } from '../states/datasetDetail/thunk';
 import { resetDatasetDetail } from '../states/datasetDetail/action';
-import { fetchDatasets, uploadDataset } from '../states/datasets/thunk';
+import { asyncFetchDatasets, asyncUploadDataset } from '../states/datasets/thunk';
 import { setSelectedDataset } from '../states/datasets/action';
 
 const DataCollectingPage = () => {
   const dispatch = useDispatch();
-  const { datasets, selectedDataset, isUploading } = useSelector((state) => state.datasets);
-  const { data, total_data, topic_counts, total_pages, currentPage, limit, loading } = useSelector(
-    (state) => state.datasetDetail
+  const [loadingInfo, setLoadingInfo] = React.useState(false);
+  const { datasets, selectedDataset, isUploading, isLoading } = useSelector(
+    (state) => state.datasets
   );
+  const { data, total_data, topic_counts, total_pages, currentPage, limit, loadingDetail } =
+    useSelector((state) => state.datasetDetail);
 
   useEffect(() => {
-    dispatch(fetchDatasets());
+    dispatch(asyncFetchDatasets());
   }, [dispatch]);
 
   useEffect(() => {
@@ -28,8 +30,8 @@ const DataCollectingPage = () => {
     }
   }, [dispatch, selectedDataset]);
 
-  const handleUpload = async (file) => {
-    const result = await dispatch(uploadDataset(file));
+  const handleUpload = (file) => {
+    const result = dispatch(asyncUploadDataset(file));
 
     if (result?.payload?.dataset?.id) {
       const newId = result.payload.dataset.id;
@@ -40,9 +42,11 @@ const DataCollectingPage = () => {
   const handleDatasetSelection = (event) => {
     const selectedId = event.target.value;
     if (selectedId === selectedDataset) return;
+    setLoadingInfo(true);
     dispatch(resetDatasetDetail());
     dispatch(setSelectedDataset(selectedId));
     dispatch(asyncFetchDatasetDetail(selectedId, 1, 10));
+    setLoadingInfo(false);
   };
 
   const handleSetPage = (page) => {
@@ -58,6 +62,7 @@ const DataCollectingPage = () => {
         datasets={datasets}
         selectedDataset={selectedDataset}
         handleDatasetSelection={handleDatasetSelection}
+        loading={isLoading}
       />
       <br />
       {selectedDataset && (
@@ -65,10 +70,10 @@ const DataCollectingPage = () => {
           <DatasetInfo
             totalData={total_data || 0}
             topicCounts={topic_counts || {}}
-            loading={loading}
+            loading={isLoading}
           />
           <br />
-          <DatasetTable data={data || []} loading={loading} />
+          <DatasetTable data={data || []} loading={loadingDetail} />
           <Pagination
             currentPage={currentPage}
             totalPages={total_pages || 1}

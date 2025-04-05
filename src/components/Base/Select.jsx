@@ -27,7 +27,7 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
   );
 };
 
-const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection }) => {
+const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, loading }) => {
   return (
     <Dropdown>
       <StyledSelect
@@ -35,18 +35,26 @@ const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection }) =>
         value={selectedDataset || ''}
         disabled={datasets.length === 0}
       >
-        {datasets.length === 0 ? (
-          <option value=''>No datasets available</option>
+        {loading ? (
+          <option value='' disabled>
+            Loading datasets...
+          </option>
         ) : (
           <>
-            <option value='' disabled>
-              Select a dataset
-            </option>
-            {datasets.map((dataset) => (
-              <option key={dataset.id} value={dataset.id}>
-                {dataset.name}
-              </option>
-            ))}
+            {datasets.length === 0 ? (
+              <option value=''>No datasets available</option>
+            ) : (
+              <>
+                <option value='' disabled>
+                  Select a dataset
+                </option>
+                {datasets.map((dataset) => (
+                  <option key={dataset.id} value={dataset.id}>
+                    {dataset.name}
+                  </option>
+                ))}
+              </>
+            )}
           </>
         )}
       </StyledSelect>
@@ -88,6 +96,7 @@ DatasetSelect.propTypes = {
   datasets: PropTypes.array.isRequired,
   selectedDataset: PropTypes.string,
   handleDatasetSelection: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 ListDataset.propTypes = {
   preprocessedDatasets: PropTypes.array.isRequired,

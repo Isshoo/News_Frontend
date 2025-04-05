@@ -15,7 +15,7 @@ const initialState = {
   totalPages: 0,
   currentPage: 1,
   limit: 10,
-  isLoading: false,
+  loadingDetail: false,
 };
 
 const datasetDetailReducer = (state = initialState, action) => {
