@@ -1,46 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { fetchDatasets, deleteDataset } from '../utils/api/dataset';
+// src/pages/DatasetsPage.jsx
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncFetchDatasets, asyncDeleteDataset } from '../states/datasets/action';
+
 import Pages from '../components/styled/Pages';
 import DatasetItem from '../components/page-comps/Datasets-Page/DatasetItem';
 
 const DatasetsPage = () => {
-  const firstRun = useRef(true);
-  const [datasets, setDatasets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { datasets, isLoading } = useSelector((state) => state.datasets);
 
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-    } else {
-      fetchAllDatasets();
-    }
-  }, []);
+    dispatch(asyncFetchDatasets());
+  }, [dispatch]);
 
-  const fetchAllDatasets = async () => {
-    setLoading(true);
-    try {
-      const data = await fetchDatasets();
-      setDatasets(data);
-    } catch (error) {
-      console.error('Error fetching datasets:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDeleteDataset = async (id) => {
-    try {
-      await deleteDataset(id); // Panggil API delete
-      setDatasets((prevDatasets) => prevDatasets.filter((dataset) => dataset.id !== id));
-    } catch (error) {
-      console.error('Error deleting dataset:', error);
-    }
+  const handleDeleteDataset = (id) => {
+    dispatch(asyncDeleteDataset(id));
   };
 
   return (
     <Pages>
       <h2>Uploaded Datasets</h2>
-      {loading ? (
+      {isLoading ? (
         <p>Loading datasets...</p>
       ) : datasets.length > 0 ? (
         <div>
