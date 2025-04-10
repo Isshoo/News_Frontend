@@ -1,12 +1,10 @@
 // redux/parameter/reducer.js
-import { SET_PARAMETER } from './action';
+import { SET_PARAMETER, RESET_PARAMETER } from './action';
 
 const initialState = {
-  name: '',
+  modelId: '',
   nNeighbors: 0,
   splitSize: 0,
-  totalData: 0,
-  topicCounts: {},
   trainSize: 0,
   testSize: 0,
   trainPerTopic: {},
@@ -18,7 +16,17 @@ const parameterReducer = (state = initialState, action) => {
   case SET_PARAMETER:
     return {
       ...state,
-      ...action.payload,
+      modelId: action.payload.modelId,
+      nNeighbors: action.payload.n_neighbors,
+      splitSize: action.payload.split_size,
+      trainSize: action.payload.train_size,
+      testSize: action.payload.test_size,
+      trainPerTopic: action.payload.train_per_topic,
+      testPerTopic: action.payload.test_per_topic,
+    };
+  case RESET_PARAMETER:
+    return {
+      ...initialState,
     };
   default:
     return state;
