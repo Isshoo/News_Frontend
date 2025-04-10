@@ -1,10 +1,13 @@
 // redux/vectorized/reducer.js
-import { SET_VECTORIZED } from './action';
+import { SET_VECTORIZED, RESET_VECTORIZED } from './action';
 
 const initialState = {
   modelId: null,
-  vectorStatus: false, // bisa ganti dengan "loading", "success", "failed" jika ingin lebih detail
-  vectorData: null,     // bisa diisi hasil tf-idf jika perlu
+  data: [],
+  currentPage: 1,
+  totalPages: 0,
+  totalData: 0,
+  limit: 10,
 };
 
 const vectorizedReducer = (state = initialState, action) => {
@@ -12,7 +15,16 @@ const vectorizedReducer = (state = initialState, action) => {
   case SET_VECTORIZED:
     return {
       ...state,
-      ...action.payload,
+      modelId: action.payload.modelId,
+      data: action.payload.data,
+      currentPage: action.payload.pagination.currentPage,
+      totalPages: action.payload.pagination.totalPages,
+      totalData: action.payload.pagination.totalData,
+      limit: action.payload.pagination.limit,
+    };
+  case RESET_VECTORIZED:
+    return {
+      ...initialState,
     };
   default:
     return state;
