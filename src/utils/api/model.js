@@ -44,3 +44,49 @@ export const deleteModel = async (modelId) => {
     return { error: 'Failed to delete model.' };
   }
 };
+
+export const getModelParameters = async (modelId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/process/model/${modelId}/parameters`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to get model parameters.' };
+  }
+};
+
+export const getModelEvaluation = async (modelId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/process/model/${modelId}/evaluation`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to get model evaluation.' };
+  }
+};
+
+export const getWordStats = async (modelId, page = 1, limit = 10) => {
+  try {
+    const response = await fetch(`${BASE_URL}/process/model/${modelId}/word-stats?page=${page}&limit=${limit}`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to get word stats.' };
+  }
+};
+
+export const getTfidfStats = async (modelId, page = 1, limit = 10) => {
+  try {
+    const response = await fetch(`${BASE_URL}/process/model/${modelId}/tfidf-stats?page=${page}&limit=${limit}`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to get TF-IDF stats.' };
+  }
+};
+
+export const getNeighbors = async (modelId, page = 1, limit = 10) => {
+  try {
+    const response = await fetch(`${BASE_URL}/process/model/${modelId}/neighbors?page=${page}&limit=${limit}`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to get nearest neighbors.' };
+  }
+};
+

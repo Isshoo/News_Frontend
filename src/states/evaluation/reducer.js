@@ -1,8 +1,9 @@
 // redux/evaluation/reducer.js
-import { SET_EVALUATION } from './action';
+import { SET_EVALUATION, RESET_EVALUATION } from './action';
 
 const initialState = {
   modelId: null,
+  accuracy: 0,
   confusionMatrix: [],
   classificationReport: {},
 };
@@ -12,7 +13,14 @@ const evaluationReducer = (state = initialState, action) => {
   case SET_EVALUATION:
     return {
       ...state,
-      ...action.payload,
+      modelId: action.payload.modelId,
+      accuracy: action.payload.accuracy,
+      confusionMatrix: action.payload.confusionMatrix,
+      classificationReport: action.payload.classificationReport,
+    };
+  case RESET_EVALUATION:
+    return {
+      ...initialState,
     };
   default:
     return state;

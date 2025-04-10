@@ -1,15 +1,16 @@
 // redux/evaluation/thunk.js
 import { setEvaluation } from './action';
-import { getModel } from '../../utils/api/model';
+import { getModelEvaluation } from '../../utils/api/model';
 
 export const fetchEvaluation = (modelId) => async (dispatch) => {
   try {
-    const response = await getModel(modelId);
-    if (response?.evaluation) {
+    const response = await getModelEvaluation(modelId);
+    if (response?.confusion_matrix && response?.classification_report && response?.accuracy) {
       dispatch(setEvaluation({
         modelId,
-        confusionMatrix: response.evaluation.confusion_matrix,
-        classificationReport: response.evaluation.classification_report,
+        accuracy: response.accuracy,
+        confusionMatrix: response.confusion_matrix,
+        classificationReport: response.classification_report,
       }));
     }
   } catch (error) {
