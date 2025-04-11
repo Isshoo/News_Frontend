@@ -1,0 +1,15 @@
+/* Result ala ChatGPT bubble */
+.result-text {
+  background-color: var(--form-background);
+  border: 1px solid var(--form-border);
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: var(--form-label);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.result-text p {
+  margin-bottom: 1rem;
+}

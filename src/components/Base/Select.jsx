@@ -18,7 +18,7 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
           <>
             {models.map((model) => (
               <option key={model.id} value={model.id}>
-                {model.name}
+                {model.name} (Created: {showFormattedDate(model.created_at)})
               </option>
             ))}
           </>

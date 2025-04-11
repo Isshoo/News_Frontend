@@ -1,0 +1,113 @@
+:root {
+  --form-background: #0a0e15;
+  --form-border: #212631;
+  --form-title: #ffffff;
+  --form-label: #ffffff;
+  --input-background: #e0e4eb;
+  --input-text-thread: #fff;
+  --input-placeholder-thread: #e0e4eb;
+  --input-focus: #93a7ff;
+  --submit-text: #ffffff;
+  --submit-bg: #212631;
+  --submit-bg-hover: #373f4e;
+  --submit-bg-act: #f0f1f5;
+}
+
+[data-theme="light"] {
+  --form-background: #ffffff;
+  --form-border: #21263107;
+  --form-title: #000000;
+  --form-label: #0a0e15;
+  --input-background: #212631ce;
+  --input-text-thread: #212631;
+  --input-placeholder-thread: #2126319a;
+  --input-focus: #93a7ff;
+  --submit-text: #ffffff;
+  --submit-bg: #212631;
+  --submit-bg-hover: #000000;
+  --submit-bg-act: #f0f1f5;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.input-section h2{
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Form container ala chat bubble*/
+#threadForm {
+  background-color: var(--form-background);
+  padding: 1.25rem 1.5rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid var(--form-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  /* Shadow ala ChatGPT */
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.04),     /* bayangan kecil, dekat elemen */
+    0 8px 10px rgba(0, 0, 0, 0.06),    /* bayangan menyebar ke bawah */
+    0 12px 20px -6px rgba(0, 0, 0, 0.08); /* layer tajam di bawah */
+
+  /* Optional: efek halus saat muncul/berubah */
+  transition: box-shadow 0.3s ease-in-out;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+}
+
+/* Input ala ChatGPT */
+#title {
+  width: 100%;
+  padding: 0 0.25rem;
+  background-color: transparent;
+  color: var(--input-text-thread);
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+#title::placeholder {
+  color: var(--input-placeholder-thread);
+}
+
+.action-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Tombol kirim */
+#threadsSubmit {
+  padding: 0.40rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 2rem;
+  background-color: var(--submit-bg);
+  color: var(--submit-text);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+#threadsSubmit:hover {
+  background-color: var(--submit-bg-hover);
+}
+
+#threadsSubmit:active {
+  background-color: var(--submit-bg-act);
+}
+
+#threadsSubmit.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}

@@ -6,7 +6,7 @@
 }
 
 [data-theme="light"] {
-  --select-model-background: #f3f4f6;
+  --select-model-background: #fff;
   --select-model-text: #212631;
   --select-model-border: #cbd5e1;
   --select-model-hover: #e5e7eb;
@@ -15,18 +15,17 @@
 .model-select-container {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
 }
 
 .modelDropdown {
   display: flex;
   align-items: center;
   border: 1px solid var(--select-model-border);
-  padding: 0.4rem 1rem;
-  border-radius: 0.5rem;
+  padding: 0.40rem 1rem;
+  border-radius: 2rem;
   background-color: var(--select-model-background);
   transition: background-color 0.2s ease-in-out;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .modelDropdown:hover {
@@ -40,10 +39,8 @@
   box-shadow: none;
   cursor: pointer;
   color: var(--select-model-text);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  padding: 0.25rem 0;
-  transition: color 0.2s ease;
 
   /* Remove arrow default styling for consistency across browsers */
   appearance: none;
