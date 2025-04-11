@@ -7,6 +7,7 @@ import CsvClassifierPage from './pages/CsvClassifierPage';
 import DataCollectingPage from './pages/DataCollectingPage';
 import PreprocessingPage from './pages/PreprocessingPage';
 import ParametersPage from './pages/ParametersPage';
+import TfidfPage from './pages/TfidfPage';
 import EvaluationPage from './pages/EvaluationPage';
 import DatasetsPage from './pages/DatasetsPage';
 import ModelsPage from './pages/ModelsPage';
@@ -50,6 +51,7 @@ const App = () => {
                 <Route path='/train-model/data-collecting' element={<DataCollectingPage />} />
                 <Route path='/train-model/preprocessing' element={<PreprocessingPage />} />
                 <Route path='/train-model/parameters' element={<ParametersPage />} />
+                <Route path='/train-model/tfidf' element={<TfidfPage />} />
                 <Route path='/train-model/evaluation' element={<EvaluationPage />} />
                 <Route path='/datasets' element={<DatasetsPage />} />
                 <Route path='/models' element={<ModelsPage />} />

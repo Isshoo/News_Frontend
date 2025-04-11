@@ -41,6 +41,15 @@ const NavigationBar = () => {
                 <li>&gt;</li>
                 <li>
                   <Link
+                    className={`nav-button ${location.pathname === '/train-model/tfidf' ? 'active' : ''}`}
+                    to='/train-model/tfidf'
+                  >
+                    <p>{locale === 'EN' ? 'TF-IDF' : 'TF-IDF'}</p>
+                  </Link>
+                </li>
+                <li>&gt;</li>
+                <li>
+                  <Link
                     className={`nav-button ${location.pathname === '/train-model/evaluation' ? 'active' : ''}`}
                     to='/train-model/evaluation'
                   >
