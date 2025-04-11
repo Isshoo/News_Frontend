@@ -12,6 +12,9 @@ export const asyncFetchModelDetail = (modelId) => async (dispatch) => {
       total_data: response.total_data,
       created_at: response.created_at,
       updated_at: response.updated_at,
+      accuracy: response.accuracy,
+      n_neighbors: response.n_neighbors,
+      split_size: response.split_size,
     }));
   }
   return response;

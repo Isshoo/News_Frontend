@@ -8,6 +8,9 @@ const initialState = {
   total_data: 0,
   created_at: '',
   updated_at: '',
+  accuracy: 0,
+  n_neighbors: 0,
+  split_size: 0,
 };
 
 const modelDetailReducer = (state = initialState, action) => {
@@ -22,6 +25,9 @@ const modelDetailReducer = (state = initialState, action) => {
       total_data: action.payload.total_data,
       created_at: action.payload.created_at,
       updated_at: action.payload.updated_at,
+      accuracy: action.payload.accuracy,
+      n_neighbors: action.payload.n_neighbors,
+      split_size: action.payload.split_size,
     };
   case RESET_MODEL_DETAIL: {
     return {

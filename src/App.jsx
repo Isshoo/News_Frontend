@@ -9,6 +9,7 @@ import PreprocessingPage from './pages/PreprocessingPage';
 import ParametersPage from './pages/ParametersPage';
 import TfidfPage from './pages/TfidfPage';
 import C5Page from './pages/C5Page';
+import KNNPage from './pages/KNNPage';
 import EvaluationPage from './pages/EvaluationPage';
 import DatasetsPage from './pages/DatasetsPage';
 import ModelsPage from './pages/ModelsPage';
@@ -54,6 +55,7 @@ const App = () => {
                 <Route path='/train-model/parameters' element={<ParametersPage />} />
                 <Route path='/train-model/tfidf' element={<TfidfPage />} />
                 <Route path='/train-model/c5' element={<C5Page />} />
+                <Route path='/train-model/knn' element={<KNNPage />} />
                 <Route path='/train-model/evaluation' element={<EvaluationPage />} />
                 <Route path='/datasets' element={<DatasetsPage />} />
                 <Route path='/models' element={<ModelsPage />} />
