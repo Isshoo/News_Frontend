@@ -23,12 +23,12 @@ const ParametersPage = () => {
   const { selectedModelId } = useSelector((state) => state.models);
   const { name } = useSelector((state) => state.modelDetail);
   const {
-    n_neighbors = 0,
-    split_size = 0,
-    train_size = 0,
-    test_size = 0,
-    train_per_topic = {},
-    test_per_topic = {},
+    nNeighbors = 0,
+    splitSize = 0,
+    trainSize = 0,
+    testSize = 0,
+    trainPerTopic = {},
+    testPerTopic = {},
   } = useSelector((state) => state.parameter);
 
   const [loading, setLoading] = React.useState(false);
@@ -67,7 +67,7 @@ const ParametersPage = () => {
   const handleTrain = async () => {
     setLoading(true);
     const response = await dispatch(
-      asyncTrainModel(selectedDataset, selectedPreprocessedDataset, name, split_size, n_neighbors)
+      asyncTrainModel(selectedDataset, selectedPreprocessedDataset, name, splitSize, nNeighbors)
     );
     setLoading(false);
     return response;
@@ -88,14 +88,14 @@ const ParametersPage = () => {
       <h2>Processing</h2>
       <DatasetInfo totalData={totalData || 0} topicCounts={topicCounts || {}} loading={loading} />
       <ParameterSelection
-        splitSize={split_size}
-        nNeighbors={n_neighbors}
+        nNeighbors={nNeighbors}
+        splitSize={splitSize}
+        trainSize={trainSize}
+        testSize={testSize}
+        trainPerTopic={trainPerTopic}
+        testPerTopic={testPerTopic}
         handleSplitChange={handleSplitChange}
         handleNNeighborsChange={handleNNeighborsChange}
-        trainSize={train_size}
-        testSize={test_size}
-        trainPerTopic={train_per_topic}
-        testPerTopic={test_per_topic}
         loading={loading}
       />
       <label>
