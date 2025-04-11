@@ -1,9 +1,6 @@
-/* form new threads */
-
 :root {
   --form-background: #0a0e15;
   --form-border: #212631;
-  --form-shadow: rgba(255, 255, 255, 0.2);
   --form-title: #ffffff;
   --form-label: #ffffff;
   --input-background: #e0e4eb;
@@ -14,15 +11,11 @@
   --submit-bg: #212631;
   --submit-bg-hover: #373f4e;
   --submit-bg-act: #f0f1f5;
-  --question-text: #e0e4eb;
-  --link-text: #ffffff;
-  --validation: #93a7ff;
 }
 
 [data-theme="light"] {
   --form-background: #ffffff;
   --form-border: #212631;
-  --form-shadow: rgba(0, 0, 0, 0.662);
   --form-title: #000000;
   --form-label: #0a0e15;
   --input-background: #212631ce;
@@ -33,9 +26,12 @@
   --submit-bg: #212631;
   --submit-bg-hover: #000000;
   --submit-bg-act: #f0f1f5;
-  --question-text: #212631;
-  --link-text: #0a0e15;
-  --validation: #375bfc;
+}
+
+.classify-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .small-page {
@@ -47,11 +43,11 @@
   transform: translate(-50%, -50%);
 }
 
-
 #threadForm {
   display: flex;
   flex-direction: column;
 }
+
 #threadForm div label {
   color: var(--form-label);
   font-size: 1rem;
@@ -75,13 +71,6 @@
   pointer-events: none;
 }
 
-#titleValidation {
-  color: var(--validation);
-  margin-block: 0.5rem;
-  text-align: start;
-  font-weight: 500;
-}
-
 #title:focus {
   border: 1px solid var(--input-focus);
 }
@@ -99,14 +88,11 @@
   font-size: 1rem;
   color: var(--submit-text);
 }
+
 #threadsSubmit:hover {
   background-color: var(--submit-bg-hover);
 }
+
 #threadsSubmit:active {
   background-color: var(--submit-bg-act);
-}
-
-
-.result-text {
-  color: var(--results-text);
 }

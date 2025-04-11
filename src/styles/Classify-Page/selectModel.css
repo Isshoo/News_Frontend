@@ -1,0 +1,59 @@
+:root {
+  --select-model-background: #212631;
+  --select-model-text: #f0f1f5;
+  --select-model-border: #374151;
+  --select-model-hover: #2a2f3c;
+}
+
+[data-theme="light"] {
+  --select-model-background: #f3f4f6;
+  --select-model-text: #212631;
+  --select-model-border: #cbd5e1;
+  --select-model-hover: #e5e7eb;
+}
+
+.model-select-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.modelDropdown {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--select-model-border);
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--select-model-background);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.modelDropdown:hover {
+  background-color: var(--select-model-hover);
+}
+
+.modelSelect {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+  color: var(--select-model-text);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.25rem 0;
+  transition: color 0.2s ease;
+
+  /* Remove arrow default styling for consistency across browsers */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.modelSelect option {
+  background-color: var(--select-model-background);
+  color: var(--select-model-text);
+  font-size: 1rem;
+  padding: 0.5rem;
+}

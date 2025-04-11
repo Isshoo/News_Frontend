@@ -37,26 +37,28 @@ const ClassifyPage = () => {
 
   return (
     <Pages>
-      <div className='small-page'>
-        <h2>Select Model</h2>
-        <ModelSelect
-          models={models}
-          selectedModelId={selectedModelId}
-          handleModelChange={handleModelChange}
-          showFormattedDate={showFormattedDate}
-        />
-        <br />
-        <br />
-        <ClassifyInput predictNews={predictNews} loading={loading} />
-        <br />
-        {predictionResult?.preprocessed && (
-          <ClassifyResult
-            preprocessedText={predictionResult.preprocessed}
-            hybridPredict={predictionResult.hybrid}
-            deepseekPredict={predictionResult.deepseek}
-            loading={loading}
+      <div className='classify-page'>
+        <div className='model-select-container'>
+          <ModelSelect
+            models={models}
+            selectedModelId={selectedModelId}
+            handleModelChange={handleModelChange}
+            showFormattedDate={showFormattedDate}
           />
-        )}
+        </div>
+        <div>
+          <ClassifyInput predictNews={predictNews} loading={loading} />
+        </div>
+        <div>
+          {predictionResult?.preprocessed && (
+            <ClassifyResult
+              preprocessedText={predictionResult.preprocessed}
+              hybridPredict={predictionResult.hybrid}
+              deepseekPredict={predictionResult.deepseek}
+              loading={loading}
+            />
+          )}
+        </div>
       </div>
     </Pages>
   );

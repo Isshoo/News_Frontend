@@ -1,9 +1,4 @@
-// import style
-import './Base/main.css';
-import './Base/sidebar.css';
-import './Base/header.css';
-import './Base/footer.css';
-import './Base/loading.css';
-import './Classify-Page/classify.css';
-import './Datasets-Page/datasets.css';
-import './Models-Page/models.css';
+// src/styles/import-all-css.js
+
+// Import semua file .css dari subfolder styles
+const cssModules = import.meta.glob('./**/*.css', { eager: true });

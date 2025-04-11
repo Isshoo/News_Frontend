@@ -5,8 +5,9 @@ import { Dropdown, Select as StyledSelect } from '../styled/Dropdown'; // pastik
 
 const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormattedDate }) => {
   return (
-    <Dropdown>
+    <Dropdown className='modelDropdown'>
       <StyledSelect
+        className='modelSelect'
         value={selectedModelId || ''}
         onChange={handleModelChange}
         disabled={models.length === 0}
@@ -17,7 +18,7 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
           <>
             {models.map((model) => (
               <option key={model.id} value={model.id}>
-                {model.name} (Created: {showFormattedDate(model.created_at)})
+                {model.name}
               </option>
             ))}
           </>
