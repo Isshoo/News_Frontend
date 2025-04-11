@@ -14,11 +14,19 @@ import { setSelectedDataset } from '../states/datasets/action';
 const DataCollectingPage = () => {
   const dispatch = useDispatch();
   const [loadingInfo, setLoadingInfo] = React.useState(false);
+
   const { datasets, selectedDataset, isUploading, isLoading } = useSelector(
     (state) => state.datasets
   );
-  const { data, totalData, topicCounts, totalPages, currentPage, limit, loadingDetail } =
-    useSelector((state) => state.datasetDetail);
+  const {
+    data = [],
+    totalData = 0,
+    topicCounts = {},
+    totalPages = 1,
+    currentPage = 1,
+    limit = 10,
+    loadingDetail,
+  } = useSelector((state) => state.datasetDetail);
 
   useEffect(() => {
     dispatch(asyncFetchDatasets());
@@ -32,9 +40,9 @@ const DataCollectingPage = () => {
 
   const handleUpload = async (file) => {
     const result = await dispatch(asyncUploadDataset(file));
-
     if (!result.error) {
       const newId = result.dataset.id;
+      dispatch(setSelectedDataset(newId));
       dispatch(asyncFetchDatasetDetail(newId, 1, 10));
     }
   };
@@ -42,6 +50,7 @@ const DataCollectingPage = () => {
   const handleDatasetSelection = (event) => {
     const selectedId = event.target.value;
     if (selectedId === selectedDataset) return;
+
     setLoadingInfo(true);
     dispatch(resetDatasetDetail());
     dispatch(setSelectedDataset(selectedId));
@@ -50,7 +59,9 @@ const DataCollectingPage = () => {
   };
 
   const handleSetPage = (page) => {
-    dispatch(asyncFetchDatasetDetail(selectedDataset, page, limit));
+    if (selectedDataset) {
+      dispatch(asyncFetchDatasetDetail(selectedDataset, page, limit));
+    }
   };
 
   return (
@@ -67,21 +78,21 @@ const DataCollectingPage = () => {
         />
       </div>
       <br />
-      {selectedDataset && (
+      {selectedDataset ? (
         <>
-          <DatasetInfo
-            totalData={totalData || 0}
-            topicCounts={topicCounts || {}}
-            loading={loadingInfo}
-          />
+          <DatasetInfo totalData={totalData} topicCounts={topicCounts} loading={loadingInfo} />
           <br />
-          <DatasetTable data={data || []} loading={loadingDetail} />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages || 1}
-            setCurrentPage={handleSetPage}
-          />
+          <DatasetTable data={data} loading={loadingDetail} />
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={handleSetPage}
+            />
+          )}
         </>
+      ) : (
+        <p>Silakan pilih dataset untuk melihat detail.</p>
       )}
     </Pages>
   );

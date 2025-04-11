@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   asyncFetchPreprocessedDatasets,
@@ -29,9 +29,13 @@ const PreprocessingPage = () => {
     (state) => state.preprocessedDatasets
   );
 
-  const { data, totalPages, currentPage, limit, loadingDetail } = useSelector(
-    (state) => state.preprocessedDatasetDetail
-  );
+  const {
+    data = [],
+    totalPages = 1,
+    currentPage = 1,
+    limit = 10,
+    loadingDetail,
+  } = useSelector((state) => state.preprocessedDatasetDetail);
 
   const [editingIndex, setEditingIndex] = useState(null);
   const [newLabel, setNewLabel] = useState('');
@@ -40,7 +44,9 @@ const PreprocessingPage = () => {
   const [newTopic, setNewTopic] = useState('');
 
   useEffect(() => {
-    if (selectedDataset) dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+    if (selectedDataset) {
+      dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+    }
   }, [dispatch, selectedDataset]);
 
   useEffect(() => {
@@ -51,7 +57,6 @@ const PreprocessingPage = () => {
 
   const handlePreprocess = async () => {
     const result = await dispatch(asyncPreprocessRawDataset(selectedDataset));
-
     if (result?.data?.id) {
       const id = result.data.id;
       dispatch(asyncFetchPreprocessedDatasetDetail(id, 1, 10));
@@ -103,13 +108,17 @@ const PreprocessingPage = () => {
   };
 
   const handleSetPage = (page) => {
-    dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset, page, limit));
+    if (selectedPreprocessedDataset) {
+      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset, page, limit));
+    }
   };
 
   return (
     <Pages>
       <h2>Preprocessed Dataset</h2>
-      {preprocessedDatasets.length === 0 ? (
+      {!selectedDataset ? (
+        <p>Silakan pilih dataset mentah terlebih dahulu.</p>
+      ) : preprocessedDatasets.length === 0 ? (
         <button onClick={handlePreprocess}>Preprocess Raw Dataset</button>
       ) : (
         <>
@@ -120,30 +129,42 @@ const PreprocessingPage = () => {
             handleDatasetSelection={handleDatasetSelection}
             handleDeleteDataset={handleDeleteDataset}
           />
-          {selectedPreprocessedDataset === selectedDataset ? (
-            <button onClick={handleCopyDataset}>Copy Dataset to Edit</button>
+
+          {selectedPreprocessedDataset ? (
+            <>
+              {selectedPreprocessedDataset === selectedDataset ? (
+                <button onClick={handleCopyDataset}>Copy Dataset to Edit</button>
+              ) : (
+                <button onClick={() => setShowAddPopup(true)}>Add Data</button>
+              )}
+
+              <PreprocessTable
+                dataset={data}
+                editingIndex={editingIndex}
+                newLabel={newLabel}
+                setNewLabel={setNewLabel}
+                handleEdit={handleEdit}
+                handleSave={handleSave}
+                handleDelete={handleDelete}
+                preprocessedDatasetId={selectedPreprocessedDataset}
+                rawDatasetId={selectedDataset}
+                loading={loadingDetail}
+              />
+
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  setCurrentPage={handleSetPage}
+                />
+              )}
+            </>
           ) : (
-            <button onClick={() => setShowAddPopup(true)}>Add Data</button>
+            <p>Silakan pilih salah satu preprocessed dataset.</p>
           )}
-          <PreprocessTable
-            dataset={data || []}
-            editingIndex={editingIndex}
-            newLabel={newLabel}
-            setNewLabel={setNewLabel}
-            handleEdit={handleEdit}
-            handleSave={handleSave}
-            handleDelete={handleDelete}
-            preprocessedDatasetId={selectedPreprocessedDataset}
-            rawDatasetId={selectedDataset}
-            loading={loadingDetail}
-          />
-          <Pagination
-            currentPage={currentPage || 1}
-            totalPages={totalPages || 1}
-            setCurrentPage={handleSetPage}
-          />
         </>
       )}
+
       {showAddPopup && (
         <AddDataPopup
           newContent={newContent}
