@@ -7,7 +7,6 @@ export const fetchEvaluation = (modelId) => async (dispatch) => {
     const response = await getModelEvaluation(modelId);
     if (response?.confusion_matrix && response?.classification_report && response?.accuracy) {
       dispatch(setEvaluation({
-        modelId,
         accuracy: response.accuracy,
         confusionMatrix: response.confusion_matrix,
         classificationReport: response.classification_report,

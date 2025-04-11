@@ -4,9 +4,9 @@ export const RESET_EVALUATION = 'RESET_EVALUATION';
 
 
 // set evaluation
-export const setEvaluation = ({ modelId, accuracy, confusionMatrix, classificationReport }) => ({
+export const setEvaluation = ({ accuracy, confusionMatrix, classificationReport }) => ({
   type: SET_EVALUATION,
-  payload: { modelId, accuracy, confusionMatrix, classificationReport },
+  payload: { accuracy, confusionMatrix, classificationReport },
 });
 
 // reset evaluation

@@ -2,9 +2,9 @@
 export const SET_VECTORIZED = 'SET_VECTORIZED';
 export const RESET_VECTORIZED = 'RESET_VECTORIZED';
 
-export const setVectorized = ({ modelId, data, pagination }) => ({
+export const setVectorized = ({ data, pagination }) => ({
   type: SET_VECTORIZED,
-  payload: { modelId, data, pagination },
+  payload: { data, pagination },
 });
 
 export const resetVectorized = () => ({

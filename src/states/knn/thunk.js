@@ -7,7 +7,6 @@ export const fetchNeighbors = (modelId, page = 1, limit = 10) => async (dispatch
     const response = await getNeighbors(modelId, page, limit);
     if (response?.data) {
       dispatch(setNeighbors({
-        modelId,
         data: response.data,
         pagination: {
           currentPage: response.current_page,

@@ -2,7 +2,6 @@
 import { SET_VECTORIZED, RESET_VECTORIZED } from './action';
 
 const initialState = {
-  modelId: null,
   data: [],
   currentPage: 1,
   totalPages: 0,
@@ -15,7 +14,6 @@ const vectorizedReducer = (state = initialState, action) => {
   case SET_VECTORIZED:
     return {
       ...state,
-      modelId: action.payload.modelId,
       data: action.payload.data,
       currentPage: action.payload.pagination.currentPage,
       totalPages: action.payload.pagination.totalPages,

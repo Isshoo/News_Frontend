@@ -7,7 +7,6 @@ export const fetchTfidfStats = (modelId, page = 1, limit = 10) => async (dispatc
     const response = await getTfidfStats(modelId, page, limit);
     if (response?.data) {
       dispatch(setTfidfStats({
-        modelId,
         data: response.data,
         pagination: {
           currentPage: response.current_page,

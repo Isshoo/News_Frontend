@@ -2,7 +2,6 @@
 import { SET_EVALUATION, RESET_EVALUATION } from './action';
 
 const initialState = {
-  modelId: null,
   accuracy: 0,
   confusionMatrix: [],
   classificationReport: {},
@@ -13,7 +12,6 @@ const evaluationReducer = (state = initialState, action) => {
   case SET_EVALUATION:
     return {
       ...state,
-      modelId: action.payload.modelId,
       accuracy: action.payload.accuracy,
       confusionMatrix: action.payload.confusionMatrix,
       classificationReport: action.payload.classificationReport,

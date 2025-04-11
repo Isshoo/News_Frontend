@@ -2,7 +2,6 @@
 import { SET_KNN, RESET_KNN } from './action';
 
 const initialState = {
-  modelId: null,
   data: [],
   currentPage: 1,
   totalPages: 0,
@@ -15,7 +14,6 @@ const knnReducer = (state = initialState, action) => {
   case SET_KNN:
     return {
       ...state,
-      modelId: action.payload.modelId,
       data: action.payload.data,
       currentPage: action.payload.pagination.currentPage,
       totalPages: action.payload.pagination.totalPages,

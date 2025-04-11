@@ -2,7 +2,6 @@
 import { SET_C5, RESET_C5 } from './action';
 
 const initialState = {
-  modelId: null,
   data: [],
   currentPage: 1,
   totalPages: 0,
@@ -15,7 +14,6 @@ const c5Reducer = (state = initialState, action) => {
   case SET_C5:
     return {
       ...state,
-      modelId: action.payload.modelId,
       data: action.payload.data,
       currentPage: action.payload.pagination.currentPage,
       totalPages: action.payload.pagination.totalPages,

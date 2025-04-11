@@ -7,7 +7,6 @@ export const fetchWordStats = (modelId, page = 1, limit = 10) => async (dispatch
     const response = await getWordStats(modelId, page, limit);
     if (response?.data) {
       dispatch(setC5Stats({
-        modelId,
         data: response.data,
         pagination: {
           currentPage: response.current_page,

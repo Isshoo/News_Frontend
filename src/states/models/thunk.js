@@ -1,5 +1,6 @@
-import { setModels, setLoading, deleteModel, updateModelName } from './action';
+import { setModels, setSelectedModel, setLoading, deleteModel, updateModelName } from './action';
 import { getModels, deleteModel as deleteModelAPI, editModelName } from '../../utils/api/model';
+import { trainModel } from '../../utils/api/process';
 
 export const asyncFetchModels = () => async (dispatch) => {
   dispatch(setLoading(true));
@@ -8,6 +9,15 @@ export const asyncFetchModels = () => async (dispatch) => {
     dispatch(setModels(response));
   }
   dispatch(setLoading(false));
+  return response;
+};
+
+export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split_size, n_neighbors) => async (dispatch) => {
+  const response = await trainModel(rawDatasetId, preprocessedDatasetId, name, split_size, n_neighbors);
+  if (!response.error) {
+    dispatch(asyncFetchModels());
+    dispatch(setSelectedModel({ id: response.id, path: response.model_path }));
+  }
   return response;
 };
 

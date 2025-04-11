@@ -9,6 +9,7 @@ import datasetDetailReducer from './datasetDetail/reducer';
 import preprocessedDatasetsReducer from './preprocessedDatasets/reducer';
 import preprocessedDatasetDetailReducer from './preprocessedDatasetDetail/reducer';
 import modelsReducer from './models/reducer';
+import modelDetailReducer from './modelDetail/reducer';
 import parameterReducer from './parameter/reducer';
 import vectorizedReducer from './vectorized/reducer';
 import c5Reducer from './c5/reducer';
@@ -23,6 +24,7 @@ const store = configureStore({
     preprocessedDatasets: preprocessedDatasetsReducer,
     preprocessedDatasetDetail: preprocessedDatasetDetailReducer,
     models: modelsReducer,
+    modelDetail: modelDetailReducer,
     parameter: parameterReducer,
     vectorized: vectorizedReducer,
     c5: c5Reducer,
