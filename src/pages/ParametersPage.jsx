@@ -10,8 +10,8 @@ import { updateNNeighbors } from '../states/parameter/action';
 
 import Pages from '../components/styled/Pages';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
-import ParameterSelection from '../components/page-comps/Processing-Page/ParameterSelection';
-import TrainButton from '../components/page-comps/Processing-Page/TrainButton';
+import ParameterSelection from '../components/page-comps/Parameters-Page/ParameterSelection';
+import TrainButton from '../components/page-comps/Parameters-Page/TrainButton';
 
 const ParametersPage = () => {
   const dispatch = useDispatch();

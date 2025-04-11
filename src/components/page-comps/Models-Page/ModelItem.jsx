@@ -14,7 +14,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
     split_size,
     created_at,
     updated_at,
-    evaluation,
+    accuracy,
   } = model;
 
   const [newName, setNewName] = useState(name);
@@ -86,7 +86,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
         <strong>Updated At:</strong> {new Date(updated_at).toLocaleString()}
       </p>
       <p>
-        <strong>Accuracy:</strong> {evaluation.accuracy.toFixed(2) * 100}%
+        <strong>Accuracy:</strong> {accuracy.toFixed(2) * 100}%
       </p>
       <button onClick={handleDetail} className='detail-btn'>
         Details

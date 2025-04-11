@@ -9,7 +9,7 @@ const ParameterSelection = ({
   trainPerTopic,
   testPerTopic,
   nNeighbors,
-  setNNeighbors,
+  handleNNeighborsChange,
   loading,
 }) => {
   return (
@@ -57,7 +57,7 @@ const ParameterSelection = ({
       <input
         type='number'
         value={nNeighbors}
-        onChange={(e) => setNNeighbors(Number(e.target.value))}
+        onChange={(e) => handleNNeighborsChange(Number(e.target.value))}
         min='1'
       />
     </div>
@@ -72,7 +72,7 @@ ParameterSelection.propTypes = {
   trainPerTopic: PropTypes.object.isRequired,
   testPerTopic: PropTypes.object.isRequired,
   nNeighbors: PropTypes.number.isRequired,
-  setNNeighbors: PropTypes.func.isRequired,
+  handleNNeighborsChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 
