@@ -69,7 +69,7 @@ const ClassifyPage = () => {
                   initial={{ opacity: 0, y: 0 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0 }}
                 >
                   <h2>Any news to classify?</h2>
                   <ClassifyInput
@@ -84,45 +84,47 @@ const ClassifyPage = () => {
                   />
                 </motion.div>
                 <p></p>
+                <p></p>
               </>
             )}
           </AnimatePresence>
 
-          {/* Chat Section */}
-          <div className='chat-section' ref={chatRef}>
-            {predictionResults.map((result, idx) => (
-              <ClassifyResult
-                key={idx}
-                preprocessedText={result.text}
-                hybridPredict={result.hybrid}
-                deepseekPredict={result.deepseek}
-                loading={loading}
-                idx={idx}
-              />
-            ))}
-          </div>
-
           {/* Input Section di Bawah */}
           <AnimatePresence>
             {inputAtBottom && (
-              <motion.div
-                className='input-section'
-                key='bottom-input'
-                initial={{ opacity: 0, y: 0 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ClassifyInput
-                  predictNews={predictNews}
-                  loading={loading}
-                  models={models}
-                  selectedModelId={selectedModelId}
-                  handleModelChange={handleModelChange}
-                  showFormattedDate={showFormattedDate}
-                  inputAtBottom={inputAtBottom}
-                />
-              </motion.div>
+              <>
+                {/* Chat Section */}
+                <div className='chat-section' ref={chatRef}>
+                  {predictionResults.map((result, idx) => (
+                    <ClassifyResult
+                      key={idx}
+                      preprocessedText={result.text}
+                      hybridPredict={result.hybrid}
+                      deepseekPredict={result.deepseek}
+                      loading={loading}
+                      idx={idx}
+                    />
+                  ))}
+                </div>
+                <motion.div
+                  className='input-section'
+                  key='bottom-input'
+                  initial={{ opacity: 0, y: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 0 }}
+                  transition={{ duration: 0 }}
+                >
+                  <ClassifyInput
+                    predictNews={predictNews}
+                    loading={loading}
+                    models={models}
+                    selectedModelId={selectedModelId}
+                    handleModelChange={handleModelChange}
+                    showFormattedDate={showFormattedDate}
+                    inputAtBottom={inputAtBottom}
+                  />
+                </motion.div>
+              </>
             )}
           </AnimatePresence>
         </div>
