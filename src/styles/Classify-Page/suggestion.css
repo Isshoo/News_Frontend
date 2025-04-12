@@ -1,0 +1,41 @@
+.suggestion-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  padding-bottom: 0.2rem;
+}
+
+.suggestion-item {
+  display: inline-block;
+  max-width: 120px; /* atur agar tetap kecil */
+  padding: 0.40rem 0.7rem;
+  border-radius: 2rem;
+  background-color: var(--select-model-background);
+  font-size: 0.75rem;
+  border: 1px solid var(--select-model-border);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  opacity: 0.7;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-item:hover {
+    opacity: 1;
+}
+
+/* Optional: biar scroll bar tipis */
+.suggestion-box::-webkit-scrollbar {
+  height: 6px;
+}
+.suggestion-box::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 9999px;
+}

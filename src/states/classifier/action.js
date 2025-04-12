@@ -1,9 +1,31 @@
+// action
+
+// action.js
+export const addPredictionEntry = (entry) => ({
+  type: 'ADD_PREDICTION_ENTRY',
+  payload: entry,
+});
+
+export const updateLastPrediction = (result) => ({
+  type: 'UPDATE_LAST_PREDICTION',
+  payload: result,
+});
 
 
 export const setPrediction = (hybrid, deepseek, preprocessed) => ({
   type: 'SET_PREDICTION',
   payload: { hybrid, deepseek, preprocessed },
 });
+
+export const addPrediction = (text, hybrid, deepseek, preprocessed) => ({
+  type: 'ADD_PREDICTION',
+  payload: { text, hybrid, deepseek, preprocessed },
+});
+
+export const clearPredictions = () => ({
+  type: 'CLEAR_PREDICTIONS',
+});
+
 
 export const setCsvData = (data) => ({
   type: 'SET_CSV_DATA',

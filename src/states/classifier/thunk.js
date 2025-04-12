@@ -1,7 +1,11 @@
+// thunk
+
 import {
   setLoading,
   setClassificationResult,
-  setPrediction,
+  addPrediction,
+  addPredictionEntry,
+  updateLastPrediction,
   updateClassificationRow,
 } from './action';
 import { predictCsv, predict } from '../../utils/api/classifier';
@@ -13,7 +17,16 @@ export const classifyNews = (text, retryCount = 4) => async (dispatch, getState)
     return;
   }
 
+  // Masukkan dulu ke state agar UI langsung muncul
+  dispatch(addPredictionEntry({
+    text: text, // anggap preprocessed = input awal
+    preprocessed: null, // anggap preprocessed = input awal
+    hybrid: null,
+    deepseek: null,
+  }));
+
   dispatch(setLoading(true));
+
   const { selectedModelPath } = getState().models;
   const response = await predict({ text, model_path: selectedModelPath });
 
@@ -29,9 +42,15 @@ export const classifyNews = (text, retryCount = 4) => async (dispatch, getState)
     return;
   }
 
-  dispatch(setPrediction(response.Hybrid_C5_KNN, response.DeepSeek, response.Preprocessed_Text));
+  dispatch(updateLastPrediction({
+    preprocessed: response.Preprocessed_Text,
+    hybrid: response.Hybrid_C5_KNN,
+    deepseek: response.DeepSeek,
+  }));
+
   dispatch(setLoading(false));
 };
+
 
 export const classifyCsvThunk = () => async (dispatch, getState) => {
   const { selectedModelPath } = getState().models;

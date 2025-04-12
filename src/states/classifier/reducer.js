@@ -1,5 +1,8 @@
+// reducer
+
 const initialState = {
 
+  predictionResults: [],
   predictionResult: {},
   csvData: [],
   classificationResult: [],
@@ -12,6 +15,40 @@ const classifierReducer = (state = initialState, action) => {
 
   case 'SET_PREDICTION':
     return { ...state, predictionResult: action.payload };
+
+  case 'ADD_PREDICTION':
+    return {
+      ...state,
+      predictionResults: [...state.predictionResults, action.payload],
+    };
+  case 'CLEAR_PREDICTIONS':
+    return {
+      ...state,
+      predictionResults: [],
+    };
+
+    // reducer.js
+
+  case 'ADD_PREDICTION_ENTRY':
+    return {
+      ...state,
+      predictionResults: [...(state.predictionResults || []), action.payload],
+    };
+
+  case 'UPDATE_LAST_PREDICTION': {
+    const updated = [...state.predictionResults];
+    const lastIndex = updated.length - 1;
+    if (lastIndex >= 0) {
+      updated[lastIndex] = {
+        ...updated[lastIndex],
+        hybrid: action.payload.hybrid,
+        deepseek: action.payload.deepseek,
+      };
+    }
+    return { ...state, predictionResults: updated };
+  }
+
+
 
   case 'SET_CSV_DATA':
     return { ...state, csvData: action.payload };

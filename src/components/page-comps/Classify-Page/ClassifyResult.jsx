@@ -1,17 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
+import { motion } from 'framer-motion';
+import { h4 } from 'framer-motion/client';
 
-const ClassifyResult = ({ preprocessedText, hybridPredict, deepseekPredict, loading }) => {
-  if (loading) {
-    return <Loading />;
-  }
+const ClassifyResult = ({ preprocessedText, hybridPredict, deepseekPredict, loading, idx }) => {
   return (
-    <div className='result-text'>
-      {preprocessedText && <p>Teks berita setelah dipreproses : &quot;{preprocessedText}&quot;</p>}
-      {hybridPredict && <p>Prediksi Hybrid C5.0-KNN : {hybridPredict}</p>}
-      {deepseekPredict && <p>Prediksi Deepseek : {deepseekPredict}</p>}
-    </div>
+    <motion.div
+      className='chat-container'
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+    >
+      <div className='chat-bubble user-msg'>
+        <p>{preprocessedText}</p>
+      </div>
+      <div className='chat-bubble ai-msg'>
+        {!hybridPredict || !deepseekPredict ? (
+          <h4>...</h4>
+        ) : (
+          <>
+            <p>
+              <strong>Hybrid:</strong> {hybridPredict}
+            </p>
+            <p>
+              <strong>Deepseek:</strong> {deepseekPredict}
+            </p>
+          </>
+        )}
+      </div>
+    </motion.div>
   );
 };
 
@@ -20,6 +38,7 @@ ClassifyResult.propTypes = {
   hybridPredict: PropTypes.string,
   deepseekPredict: PropTypes.string,
   loading: PropTypes.bool,
+  idx: PropTypes.number,
 };
 
 export default ClassifyResult;
