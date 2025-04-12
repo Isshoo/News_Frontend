@@ -7,10 +7,10 @@
   --input-text-thread: #fff;
   --input-placeholder-thread: #e0e4eb;
   --input-focus: #93a7ff;
-  --submit-text: #ffffff;
-  --submit-bg: #212631;
-  --submit-bg-hover: #373f4e;
-  --submit-bg-act: #f0f1f5;
+  --submit-text: #212631;
+  --submit-bg: #f0f1f5f1;
+  --submit-bg-hover: #ffffff;
+  --submit-bg-act: #ffffff;
 }
 
 [data-theme="light"] {
@@ -38,6 +38,7 @@
 .input-section h2{
     text-align: center;
     font-weight: 600;
+    color: var(--form-title);
 }
 
 /* Form container ala chat bubble*/

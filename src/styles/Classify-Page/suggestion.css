@@ -21,6 +21,7 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   opacity: 0.7;
+  color: var(--input-text-thread);
 
   white-space: nowrap;
   overflow: hidden;

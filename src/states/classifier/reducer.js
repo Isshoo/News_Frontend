@@ -7,7 +7,7 @@ const initialState = {
   csvData: [],
   classificationResult: [],
   loading: false,
-
+  isPopupOpen: true,
 };
 
 const classifierReducer = (state = initialState, action) => {
@@ -25,6 +25,12 @@ const classifierReducer = (state = initialState, action) => {
     return {
       ...state,
       predictionResults: [],
+    };
+
+  case 'SET_POPUP_OPEN':
+    return {
+      ...state,
+      isPopupOpen: action.payload,
     };
 
     // reducer.js

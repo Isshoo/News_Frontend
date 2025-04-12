@@ -11,6 +11,11 @@ export const updateLastPrediction = (result) => ({
   payload: result,
 });
 
+export const setPopupOpen = (isOpen) => ({
+  type: 'SET_POPUP_OPEN',
+  payload: isOpen,
+});
+
 
 export const setPrediction = (hybrid, deepseek, preprocessed) => ({
   type: 'SET_PREDICTION',

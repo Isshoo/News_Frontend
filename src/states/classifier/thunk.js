@@ -58,8 +58,8 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
 
   dispatch(setLoading(true));
   try {
-    const csvContent = csvData.map((row) => `"${row.contentSnippet}","${row.topik}"`).join('\n');
-    const csvBlob = new Blob([`"contentSnippet","topik"\n${csvContent}`], { type: 'text/csv' });
+    const csvContent = csvData.map((row) => `"${row.contentSnippet}"`).join('\n');
+    const csvBlob = new Blob([`"contentSnippet"\n${csvContent}`], { type: 'text/csv' });
     const csvFile = new File([csvBlob], 'classification-result.csv', { type: 'text/csv' });
 
     const response = await predictCsv(csvFile, selectedModelPath);
@@ -67,6 +67,8 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
       throw new Error('Failed to classify CSV');
     }
     dispatch(setClassificationResult(response));
+
+    return response;
   } catch (err) {
     alert('Gagal mengklasifikasikan CSV');
     console.error(err);
@@ -81,7 +83,7 @@ export const classifyRowThunk = (index, contentSnippet) => async (dispatch, getS
     if (response.error) {
       throw new Error('Failed to classify row');
     }
-    dispatch(updateClassificationRow(index, 'DeepSeek', response?.DeepSeek || '-'));
+    dispatch(updateClassificationRow(index, 'DeepSeek', response?.DeepSeek || 'Unknown'));
   } catch (err) {
     alert('Gagal mengklasifikasikan baris.');
     console.error(err);
