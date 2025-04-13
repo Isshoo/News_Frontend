@@ -15,6 +15,11 @@ const TfidfPage = () => {
   const { data, totalPages, currentPage, limit } = useSelector((state) => state.vectorized);
 
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+
     dispatch(resetTfidfStats());
 
     if (modelId) {

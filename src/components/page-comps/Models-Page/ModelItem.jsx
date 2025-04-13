@@ -31,14 +31,14 @@ const ModelItem = ({ model, onDelete, onRename }) => {
   }, [name]);
 
   const handleDetail = () => {
-    dispatch(setSelectedModel({ id, path: model_path }));
+    dispatch(setSelectedModel(id, model_path));
     dispatch(setSelectedDataset(raw_dataset_id));
     dispatch(setSelectedPreprocessedDataset(preprocessed_dataset_id));
     navigate('/train-model/evaluation');
   };
 
   const handleClassify = () => {
-    dispatch(setSelectedModel({ id, path: model_path }));
+    dispatch(setSelectedModel(id, model_path));
     dispatch(setSelectedDataset(raw_dataset_id));
     dispatch(setSelectedPreprocessedDataset(preprocessed_dataset_id));
     navigate('/');
@@ -47,7 +47,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
   const handleEdit = async () => {
     if (newName.trim() && newName !== name) {
       await onRename(id, newName);
-      dispatch(setSelectedModel({ id, path: model_path }));
+      dispatch(setSelectedModel(id, model_path));
       dispatch(setSelectedDataset(raw_dataset_id));
       dispatch(setSelectedPreprocessedDataset(preprocessed_dataset_id));
     }

@@ -4,6 +4,7 @@ import { getModelParameters } from '../../utils/api/model';
 import { splitDataset } from '../../utils/api/process';
 
 export const fetchParameters = (modelId) => async (dispatch) => {
+  console.log(modelId);
   try {
     const response = await getModelParameters(modelId);
     if (response) {

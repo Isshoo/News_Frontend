@@ -14,6 +14,11 @@ const C5Page = () => {
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+
     dispatch(resetC5Stats());
     if (modelId) dispatch(fetchWordStats(modelId, currentPage, limit));
 

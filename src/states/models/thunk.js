@@ -16,7 +16,7 @@ export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split
   const response = await trainModel(rawDatasetId, preprocessedDatasetId, name, split_size, n_neighbors);
   if (!response.error) {
     dispatch(asyncFetchModels());
-    dispatch(setSelectedModel({ id: response.id, path: response.model_path }));
+    dispatch(setSelectedModel(response.id,  response.model_path));
   }
   return response;
 };
@@ -32,7 +32,7 @@ export const asyncDeleteModel = (modelId) => async (dispatch) => {
 export const asyncUpdateModelName = (modelId, newName) => async (dispatch) => {
   const response = await editModelName(modelId, newName);
   if (!response.error) {
-    dispatch(updateModelName(modelId, newName));
+    dispatch(asyncFetchModels());
   }
   return response;
 };

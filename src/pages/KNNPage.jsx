@@ -19,6 +19,11 @@ const KNNPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+
     dispatch(resetNeighbors());
     dispatch(resetModelDetail());
 

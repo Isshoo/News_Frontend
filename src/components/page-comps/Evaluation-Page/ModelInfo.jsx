@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 const ModelInfo = ({ evaluationData }) => {
   const { name, total_data } = evaluationData;
+  console.log(name);
+  console.log(total_data);
 
   return (
     <div>

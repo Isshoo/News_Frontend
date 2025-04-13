@@ -37,6 +37,11 @@ const ParametersPage = () => {
   const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+
     dispatch(resetPreprocessedDatasetDetail());
     dispatch(resetModelDetail());
     dispatch(resetParameter());
@@ -52,20 +57,17 @@ const ParametersPage = () => {
   }, [selectedModelId, selectedPreprocessedDataset, dispatch]);
 
   const handleSplitChange = async (newSplitSize) => {
-    dispatch(setSelectedModel('', ''));
     if (selectedDataset && selectedPreprocessedDataset) {
       dispatch(updateParameter(selectedDataset, selectedPreprocessedDataset, newSplitSize));
     }
   };
 
   const handleNNeighborsChange = (newNNeighbors) => {
-    dispatch(setSelectedModel('', ''));
     dispatch(updateNNeighbors(newNNeighbors));
   };
 
   const handleNameChange = (e) => {
     const newName = e.target.value;
-    dispatch(setSelectedModel('', ''));
     dispatch(updateModelName(newName));
   };
 
@@ -74,6 +76,7 @@ const ParametersPage = () => {
     const response = await dispatch(
       asyncTrainModel(selectedDataset, selectedPreprocessedDataset, name, splitSize, nNeighbors)
     );
+    console.log(response);
     dispatch(setSelectedModel(response.id, response.model_path));
     setLoading(false);
     return response;

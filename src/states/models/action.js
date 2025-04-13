@@ -9,7 +9,7 @@ export const setModels = (models) => ({
   payload: models,
 });
 
-export const setSelectedModel = ({ id, path }) => ({
+export const setSelectedModel = (id, path) => ({
   type: SET_SELECTED_MODEL,
   payload: { id, path },
 });

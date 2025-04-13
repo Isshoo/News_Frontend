@@ -18,6 +18,11 @@ const EvaluationPage = () => {
   const { confusionMatrix, classificationReport } = useSelector((state) => state.evaluation);
 
   useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+
     dispatch(resetModelDetail());
     dispatch(resetEvaluation());
 
