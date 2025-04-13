@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWordStats } from '../states/c5/thunk';
+import { resetC5Stats } from '../states/c5/action';
 import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
 import C5Table from '../components/page-comps/C5-Page/C5Table';
@@ -13,10 +14,7 @@ const C5Page = () => {
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
+    dispatch(resetC5Stats());
     if (modelId) dispatch(fetchWordStats(modelId, currentPage, limit));
 
     setLoading(false);

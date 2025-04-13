@@ -13,7 +13,7 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
         disabled={models.length === 0}
       >
         {models.length === 0 ? (
-          <option value='default-stemmed'>Default</option>
+          <option value=''>Default</option>
         ) : (
           <>
             {models.map((model) => (

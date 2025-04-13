@@ -14,6 +14,8 @@ import {
 } from '../states/classifier/action';
 import { asyncFetchModels } from '../states/models/thunk';
 import { setSelectedModel } from '../states/models/action';
+import { setSelectedDataset } from '../states/datasets/action';
+import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
 
 const CsvClassifierPage = () => {
   const dispatch = useDispatch();
@@ -42,6 +44,8 @@ const CsvClassifierPage = () => {
     const modelId = e.target.value;
     const foundModel = models.find((model) => model.id === modelId);
     dispatch(setSelectedModel(modelId, foundModel?.model_path || ''));
+    dispatch(setSelectedDataset(foundModel?.dataset_id || ''));
+    dispatch(setSelectedPreprocessedDataset(foundModel?.preprocessed_dataset_id || ''));
   };
 
   const handleFileUpload = (event) => {

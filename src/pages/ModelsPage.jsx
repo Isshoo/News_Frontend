@@ -9,6 +9,10 @@ import {
   asyncUpdateModelName as editModelNameThunk,
 } from '../states/models/thunk';
 
+import { setSelectedDataset } from '../states/datasets/action';
+import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
+import { setSelectedModel } from '../states/models/action';
+
 const ModelsPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
@@ -29,10 +33,14 @@ const ModelsPage = () => {
 
   const handleDelete = (id) => {
     dispatch(deleteModelThunk(id));
+    dispatch(setSelectedDataset(''));
+    dispatch(setSelectedPreprocessedDataset(''));
+    dispatch(setSelectedModel('', ''));
   };
 
-  const handleRename = (id, newName) => {
-    dispatch(editModelNameThunk(id, newName));
+  const handleRename = async (id, newName) => {
+    await dispatch(editModelNameThunk(id, newName));
+    dispatch(fetchModels());
   };
 
   if (models === undefined) return null;

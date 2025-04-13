@@ -5,7 +5,9 @@ import ModelInfo from '../components/page-comps/Evaluation-Page/ModelInfo';
 import ConfusionMatrix from '../components/page-comps/Evaluation-Page/ConfusionMatrix';
 import ClassificationReport from '../components/page-comps/Evaluation-Page/ClassificationReport';
 import { asyncFetchModelDetail } from '../states/modelDetail/thunk';
+import { resetModelDetail } from '../states/modelDetail/action';
 import { fetchEvaluation } from '../states/evaluation/thunk';
+import { resetEvaluation } from '../states/evaluation/action';
 
 const EvaluationPage = () => {
   const dispatch = useDispatch();
@@ -16,10 +18,9 @@ const EvaluationPage = () => {
   const { confusionMatrix, classificationReport } = useSelector((state) => state.evaluation);
 
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-      return;
-    }
+    dispatch(resetModelDetail());
+    dispatch(resetEvaluation());
+
     if (selectedModelId) {
       dispatch(asyncFetchModelDetail(selectedModelId));
       dispatch(fetchEvaluation(selectedModelId));

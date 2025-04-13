@@ -10,7 +10,8 @@ import { classifyNews } from '../states/classifier/thunk';
 import { asyncFetchModels } from '../states/models/thunk';
 import { setSelectedModel } from '../states/models/action';
 import { showFormattedDate } from '../utils/helper';
-import { div } from 'framer-motion/client';
+import { setSelectedDataset } from '../states/datasets/action';
+import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
 
 const ClassifyPage = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,8 @@ const ClassifyPage = () => {
     const modelId = e.target.value;
     const foundModel = models.find((model) => model.id === modelId);
     dispatch(setSelectedModel(modelId, foundModel?.model_path || ''));
+    dispatch(setSelectedDataset(foundModel?.raw_dataset_id));
+    dispatch(setSelectedPreprocessedDataset(foundModel?.preprocessed_dataset_id));
   };
 
   const predictNews = (text) => {

@@ -4,6 +4,7 @@ import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
 import TfidfTable from '../components/page-comps/Tfidf-Page/TfidfTable';
 import { fetchTfidfStats } from '../states/vectorized/thunk';
+import { resetTfidfStats } from '../states/vectorized/action';
 
 const TfidfPage = () => {
   const dispatch = useDispatch();
@@ -14,10 +15,7 @@ const TfidfPage = () => {
   const { data, totalPages, currentPage, limit } = useSelector((state) => state.vectorized);
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
+    dispatch(resetTfidfStats());
 
     if (modelId) {
       dispatch(fetchTfidfStats(modelId, currentPage, limit));

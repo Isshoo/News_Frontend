@@ -3,6 +3,10 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncFetchDatasets, asyncDeleteDataset } from '../states/datasets/thunk';
 
+import { setSelectedDataset } from '../states/datasets/action';
+import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
+import { setSelectedModel } from '../states/models/action';
+
 import Pages from '../components/styled/Pages';
 import Loading from '../components/Base/LoadingBar';
 import DatasetItem from '../components/page-comps/Datasets-Page/DatasetItem';
@@ -27,6 +31,9 @@ const DatasetsPage = () => {
 
   const handleDeleteDataset = (id) => {
     dispatch(asyncDeleteDataset(id));
+    dispatch(setSelectedDataset(''));
+    dispatch(setSelectedPreprocessedDataset(''));
+    dispatch(setSelectedModel('', ''));
   };
 
   if (datasets === undefined) return null;

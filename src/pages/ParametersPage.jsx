@@ -2,11 +2,14 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncFetchPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/thunk';
+import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
 import { asyncFetchModelDetail } from '../states/modelDetail/thunk';
 import { asyncTrainModel } from '../states/models/thunk';
-import { updateModelName } from '../states/modelDetail/action';
+import { updateModelName, resetModelDetail } from '../states/modelDetail/action';
 import { fetchParameters, updateParameter } from '../states/parameter/thunk';
-import { updateNNeighbors } from '../states/parameter/action';
+import { updateNNeighbors, resetParameter } from '../states/parameter/action';
+
+import { setSelectedModel } from '../states/models/action';
 
 import Pages from '../components/styled/Pages';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
@@ -34,10 +37,9 @@ const ParametersPage = () => {
   const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-      return;
-    }
+    dispatch(resetPreprocessedDatasetDetail());
+    dispatch(resetModelDetail());
+    dispatch(resetParameter());
 
     if (selectedModelId) {
       dispatch(asyncFetchModelDetail(selectedModelId));
@@ -50,17 +52,20 @@ const ParametersPage = () => {
   }, [selectedModelId, selectedPreprocessedDataset, dispatch]);
 
   const handleSplitChange = async (newSplitSize) => {
+    dispatch(setSelectedModel('', ''));
     if (selectedDataset && selectedPreprocessedDataset) {
       dispatch(updateParameter(selectedDataset, selectedPreprocessedDataset, newSplitSize));
     }
   };
 
   const handleNNeighborsChange = (newNNeighbors) => {
+    dispatch(setSelectedModel('', ''));
     dispatch(updateNNeighbors(newNNeighbors));
   };
 
   const handleNameChange = (e) => {
     const newName = e.target.value;
+    dispatch(setSelectedModel('', ''));
     dispatch(updateModelName(newName));
   };
 
@@ -69,6 +74,7 @@ const ParametersPage = () => {
     const response = await dispatch(
       asyncTrainModel(selectedDataset, selectedPreprocessedDataset, name, splitSize, nNeighbors)
     );
+    dispatch(setSelectedModel(response.id, response.model_path));
     setLoading(false);
     return response;
   };

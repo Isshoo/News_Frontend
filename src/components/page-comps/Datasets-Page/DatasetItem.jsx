@@ -1,15 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setSelectedModel } from '../../../states/models/action';
+import { setSelectedDataset } from '../../../states/datasets/action';
+import { setSelectedPreprocessedDataset } from '../../../states/preprocessedDatasets/action';
 
 const DatasetItem = ({ dataset, onDelete }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id, name, total_data, topic_counts, upload_at } = dataset;
 
   const handleTrain = () => {
-    localStorage.setItem('selectedDataset', id);
-    localStorage.removeItem('preprocessed_dataset_id');
-    localStorage.removeItem('modelId');
+    dispatch(setSelectedDataset(id));
+    dispatch(setSelectedPreprocessedDataset(''));
+    dispatch(setSelectedModel('', ''));
     navigate('/train-model/preprocessing');
   };
 

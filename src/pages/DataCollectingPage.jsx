@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
 import DatasetUpload from '../components/page-comps/DataCollecting-Page/DatasetUpload';
@@ -10,8 +10,12 @@ import { asyncFetchDatasetDetail } from '../states/datasetDetail/thunk';
 import { resetDatasetDetail } from '../states/datasetDetail/action';
 import { asyncFetchDatasets, asyncUploadDataset } from '../states/datasets/thunk';
 import { setSelectedDataset } from '../states/datasets/action';
+import { setSelectedModel } from '../states/models/action';
+import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
 
 const DataCollectingPage = () => {
+  const firstRun = useRef(true);
+  const firstRun2 = useRef(true);
   const dispatch = useDispatch();
   const [loadingInfo, setLoadingInfo] = React.useState(false);
 
@@ -29,10 +33,19 @@ const DataCollectingPage = () => {
   } = useSelector((state) => state.datasetDetail);
 
   useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
     dispatch(asyncFetchDatasets());
   }, [dispatch]);
 
   useEffect(() => {
+    if (firstRun2.current) {
+      firstRun2.current = false;
+      return;
+    }
+    dispatch(resetDatasetDetail());
     if (selectedDataset) {
       dispatch(asyncFetchDatasetDetail(selectedDataset));
     }
@@ -43,6 +56,8 @@ const DataCollectingPage = () => {
     if (!result.error) {
       const newId = result.dataset.id;
       dispatch(setSelectedDataset(newId));
+      dispatch(setSelectedPreprocessedDataset(''));
+      dispatch(setSelectedModel('', ''));
       dispatch(asyncFetchDatasetDetail(newId, 1, 10));
     }
   };
@@ -54,6 +69,8 @@ const DataCollectingPage = () => {
     setLoadingInfo(true);
     dispatch(resetDatasetDetail());
     dispatch(setSelectedDataset(selectedId));
+    dispatch(setSelectedPreprocessedDataset(''));
+    dispatch(setSelectedModel('', ''));
     dispatch(asyncFetchDatasetDetail(selectedId, 1, 10));
     setLoadingInfo(false);
   };

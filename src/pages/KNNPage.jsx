@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNeighbors } from '../states/knn/thunk';
+import { resetNeighbors } from '../states/knn/action';
 import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
 import KNNGroup from '../components/page-comps/KNN-Page/KNNGroup';
 import { asyncFetchModelDetail } from '../states/modelDetail/thunk';
+import { resetModelDetail } from '../states/modelDetail/action';
 
 const KNNPage = () => {
   const dispatch = useDispatch();
@@ -17,10 +19,8 @@ const KNNPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
+    dispatch(resetNeighbors());
+    dispatch(resetModelDetail());
 
     const fetchData = async () => {
       setLoading(true);
