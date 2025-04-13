@@ -74,7 +74,7 @@ const ParametersPage = () => {
   };
 
   // Conditional rendering to prevent undefined props usage
-  if (!selectedDataset || !selectedPreprocessedDataset || !selectedModelId) {
+  if (!selectedDataset || !selectedPreprocessedDataset) {
     return (
       <Pages>
         <h2>Processing</h2>

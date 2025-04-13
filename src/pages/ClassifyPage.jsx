@@ -76,7 +76,7 @@ const ClassifyPage = () => {
                     predictNews={predictNews}
                     loading={loading}
                     models={models}
-                    selectedModelId={selectedModelId}
+                    selectedModelId={selectedModelId || ''}
                     handleModelChange={handleModelChange}
                     showFormattedDate={showFormattedDate}
                     suggestions={suggestions}
@@ -118,7 +118,7 @@ const ClassifyPage = () => {
                     predictNews={predictNews}
                     loading={loading}
                     models={models}
-                    selectedModelId={selectedModelId}
+                    selectedModelId={selectedModelId || ''}
                     handleModelChange={handleModelChange}
                     showFormattedDate={showFormattedDate}
                     inputAtBottom={inputAtBottom}

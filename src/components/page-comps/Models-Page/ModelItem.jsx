@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setSelectedModel } from '../../../states/models/action';
+import { setSelectedDataset } from '../../../states/datasets/action';
+import { setSelectedPreprocessedDataset } from '../../../states/preprocessedDatasets/action';
 
 const ModelItem = ({ model, onDelete, onRename }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     id,
     name,
+    model_path,
     preprocessed_dataset_id,
     raw_dataset_id,
     total_data,
@@ -25,14 +31,16 @@ const ModelItem = ({ model, onDelete, onRename }) => {
   }, [name]);
 
   const handleDetail = () => {
-    localStorage.setItem('modelId', id);
-    localStorage.setItem('selectedDataset', raw_dataset_id);
-    localStorage.setItem('preprocessed_dataset_id', preprocessed_dataset_id);
+    dispatch(setSelectedModel({ id, path: model_path }));
+    dispatch(setSelectedDataset(raw_dataset_id));
+    dispatch(setSelectedPreprocessedDataset(preprocessed_dataset_id));
     navigate('/train-model/evaluation');
   };
 
   const handleClassify = () => {
-    localStorage.setItem('classifierModel', id);
+    dispatch(setSelectedModel({ id, path: model_path }));
+    dispatch(setSelectedDataset(raw_dataset_id));
+    dispatch(setSelectedPreprocessedDataset(preprocessed_dataset_id));
     navigate('/');
   };
 
@@ -45,21 +53,19 @@ const ModelItem = ({ model, onDelete, onRename }) => {
 
   return (
     <div className='model-item'>
-      {id != 'default-stemmed' ? (
-        <>
-          {isEditing ? (
-            <input
-              type='text'
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              onBlur={handleEdit}
-              onKeyDown={(e) => e.key === 'Enter' && handleEdit()}
-              autoFocus
-            />
-          ) : (
-            <h3 onClick={() => setIsEditing(true)}>{name}</h3>
-          )}
-        </>
+      {id !== 'default-stemmed' ? (
+        isEditing ? (
+          <input
+            type='text'
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            onBlur={handleEdit}
+            onKeyDown={(e) => e.key === 'Enter' && handleEdit()}
+            autoFocus
+          />
+        ) : (
+          <h3 onClick={() => setIsEditing(true)}>{name}</h3>
+        )
       ) : (
         <h3>{name}</h3>
       )}
@@ -86,20 +92,19 @@ const ModelItem = ({ model, onDelete, onRename }) => {
         <strong>Updated At:</strong> {new Date(updated_at).toLocaleString()}
       </p>
       <p>
-        <strong>Accuracy:</strong> {accuracy.toFixed(2) * 100}%
+        <strong>Accuracy:</strong> {(accuracy * 100).toFixed(2)}%
       </p>
-      <button onClick={handleDetail} className='detail-btn'>
+
+      <button onClick={handleDetail} className='detail-btn' disabled={isEditing}>
         Details
       </button>
-      <button onClick={handleClassify} className='classify-btn'>
+      <button onClick={handleClassify} className='classify-btn' disabled={isEditing}>
         Use for Classification
       </button>
-      {id != 'default-stemmed' ? (
+      {id !== 'default-stemmed' && (
         <button onClick={() => onDelete(id)} className='delete-btn'>
           Delete
         </button>
-      ) : (
-        ''
       )}
     </div>
   );

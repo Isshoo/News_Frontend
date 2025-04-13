@@ -98,7 +98,7 @@ const CsvClassifierPage = () => {
         {isPopupOpen && (
           <CsvPopup
             models={models}
-            selectedModelId={selectedModelId}
+            selectedModelId={selectedModelId || ''}
             handleModelChange={handleModelChange}
             handleFileUpload={handleFileUpload}
             handleAddRow={handleAddRow}

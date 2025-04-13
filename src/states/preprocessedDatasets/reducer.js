@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   preprocessedDatasets: [],
-  selectedPreprocessedDataset: localStorage.getItem('preprocessed_dataset_id') || localStorage.getItem('raw_dataset_id'),
+  selectedPreprocessedDataset: '',
   isLoading: false,
 };
 
@@ -18,31 +18,36 @@ const preprocessedDatasetsReducer = (state = initialState, action) => {
       ...state,
       preprocessedDatasets: action.payload,
     };
+
   case SET_SELECTED_PREPROCESSED_DATASET:
-    localStorage.setItem('preprocessed_dataset_id', action.payload);
-    localStorage.removeItem('model_id');
     return {
       ...state,
       selectedPreprocessedDataset: action.payload,
     };
+
   case ADD_PREPROCESSED_DATASET:
-    localStorage.setItem('preprocessed_dataset_id', action.payload.id);
-    localStorage.removeItem('model_id');
     return {
       ...state,
       preprocessedDatasets: [...state.preprocessedDatasets, action.payload],
       selectedPreprocessedDataset: action.payload.id,
     };
-  case DELETE_PREPROCESSED_DATASET:
-    localStorage.removeItem('preprocessed_dataset_id');
-    localStorage.removeItem('model_id');
+
+  case DELETE_PREPROCESSED_DATASET: {
+    const updatedDatasets = state.preprocessedDatasets.filter(
+      (dataset) => dataset.id !== action.payload
+    );
+    const isDeleted = state.selectedPreprocessedDataset === action.payload;
+    const nextSelected = isDeleted
+      ? (updatedDatasets[0]?.id || null)
+      : state.selectedPreprocessedDataset;
+
     return {
       ...state,
-      preprocessedDatasets: state.preprocessedDatasets.filter((dataset) => dataset.id !== action.payload),
-      selectedPreprocessedDataset:
-        state.selectedPreprocessedDataset == action.payload
-          ? state.preprocessedDatasets[0].id || localStorage.getItem('raw_dataset_id') : state.selectedPreprocessedDataset,
+      preprocessedDatasets: updatedDatasets,
+      selectedPreprocessedDataset: nextSelected,
     };
+  }
+
   default:
     return state;
   }
