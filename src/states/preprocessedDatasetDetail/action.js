@@ -7,9 +7,9 @@ export const SET_PREPROCESSED_DATASET_DETAIL_LOADING = 'SET_PREPROCESSED_DATASET
 export const SET_PREPROCESSED_DATASET_PAGE = 'SET_PREPROCESSED_DATASET_PAGE';
 export const SET_PREPROCESSED_DATASET_LIMIT = 'SET_PREPROCESSED_DATASET_LIMIT';
 
-export const setPreprocessedDatasetDetail = (detail) => ({
+export const setPreprocessedDatasetDetail = ({ data, totalData, topicCounts, totalPages }) => ({
   type: SET_PREPROCESSED_DATASET_DETAIL,
-  payload: detail,
+  payload: { data, totalData, topicCounts, totalPages },
 });
 
 export const resetPreprocessedDatasetDetail = () => ({

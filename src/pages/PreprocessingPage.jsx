@@ -47,6 +47,7 @@ const PreprocessingPage = () => {
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [newContent, setNewContent] = useState('');
   const [newTopic, setNewTopic] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (firstRun.current) {
@@ -175,7 +176,7 @@ const PreprocessingPage = () => {
                 handleDelete={handleDelete}
                 preprocessedDatasetId={selectedPreprocessedDataset}
                 rawDatasetId={selectedDataset}
-                loading={loadingDetail}
+                loading={loading}
               />
 
               {totalPages > 1 && (

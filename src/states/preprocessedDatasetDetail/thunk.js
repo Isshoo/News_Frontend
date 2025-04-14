@@ -16,9 +16,14 @@ import {
 
 export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit = 10) => async (dispatch) => {
   dispatch(setPreprocessedDatasetDetailLoading(true));
-  const response = await fetchPreprocessedDataset(datasetId, page, limit);
-  if (!response.error) {
-    dispatch(setPreprocessedDatasetDetail(response));
+  const result = await fetchPreprocessedDataset(datasetId, page, limit);
+  if (!result.error) {
+    dispatch(setPreprocessedDatasetDetail({
+      data: result.data,
+      totalData: result.total_data,
+      topicCounts: result.topic_counts,
+      totalPages: result.total_pages,
+    }));
     dispatch(setPreprocessedDatasetPage(page));
     dispatch(setPreprocessedDatasetLimit(limit));
   }

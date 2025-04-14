@@ -32,36 +32,42 @@ const PreprocessTable = ({
               </tr>
             </thead>
             <tbody>
-              {dataset.map((item) => (
-                <tr key={item.index}>
-                  <td>{item.index + 1}</td>
-                  <td>{item.contentSnippet}</td>
-                  <td>{item.preprocessedContent}</td>
-                  <td>
-                    {editingIndex === item.index ? (
-                      <input
-                        type='text'
-                        value={newLabel}
-                        onChange={(e) => setNewLabel(e.target.value)}
-                      />
-                    ) : (
-                      item.topik
-                    )}
-                  </td>
-                  {preprocessedDatasetId === rawDatasetId ? (
-                    ''
-                  ) : (
-                    <td className='actions-cell'>
-                      {editingIndex === item.index ? (
-                        <button onClick={() => handleSave(item.index)}>Save</button>
-                      ) : (
-                        <button onClick={() => handleEdit(item.index, item.topik)}>Edit</button>
-                      )}
-                      <button onClick={() => handleDelete(item.index)}>Delete</button>
-                    </td>
-                  )}
+              {dataset.length === 0 ? (
+                <tr>
+                  <td colSpan='3'>No data available.</td>
                 </tr>
-              ))}
+              ) : (
+                dataset.map((item) => (
+                  <tr key={item.index}>
+                    <td>{item.index + 1}</td>
+                    <td>{item.contentSnippet}</td>
+                    <td>{item.preprocessedContent}</td>
+                    <td>
+                      {editingIndex === item.index ? (
+                        <input
+                          type='text'
+                          value={newLabel}
+                          onChange={(e) => setNewLabel(e.target.value)}
+                        />
+                      ) : (
+                        item.topik
+                      )}
+                    </td>
+                    {preprocessedDatasetId === rawDatasetId ? (
+                      ''
+                    ) : (
+                      <td className='actions-cell'>
+                        {editingIndex === item.index ? (
+                          <button onClick={() => handleSave(item.index)}>Save</button>
+                        ) : (
+                          <button onClick={() => handleEdit(item.index, item.topik)}>Edit</button>
+                        )}
+                        <button onClick={() => handleDelete(item.index)}>Delete</button>
+                      </td>
+                    )}
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </>
@@ -80,7 +86,7 @@ PreprocessTable.propTypes = {
   handleDelete: PropTypes.func,
   preprocessedDatasetId: PropTypes.string,
   rawDatasetId: PropTypes.string,
-  loading: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default PreprocessTable;
