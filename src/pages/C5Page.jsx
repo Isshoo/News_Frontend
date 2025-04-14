@@ -20,10 +20,10 @@ const C5Page = () => {
     }
 
     dispatch(resetC5Stats());
-    if (modelId) dispatch(fetchWordStats(modelId, currentPage, limit));
+    if (modelId) dispatch(fetchWordStats(modelId));
 
     setLoading(false);
-  }, [dispatch, modelId, currentPage, limit]);
+  }, [dispatch, modelId]);
 
   const handleSetPage = (page) => {
     if (modelId) dispatch(fetchWordStats(modelId, page, limit));

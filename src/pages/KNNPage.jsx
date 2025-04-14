@@ -34,13 +34,13 @@ const KNNPage = () => {
         if (!result.error) {
           setNNeighbors(result.n_neighbors);
         }
-        await dispatch(fetchNeighbors(modelId, currentPage, result.n_neighbors));
+        await dispatch(fetchNeighbors(modelId, 1, result.n_neighbors));
       }
       setLoading(false);
     };
 
     fetchData();
-  }, [dispatch, modelId, currentPage]);
+  }, [dispatch, modelId]);
 
   const handleSetPage = (page) => {
     if (modelId) dispatch(fetchNeighbors(modelId, page, n_neighbors));

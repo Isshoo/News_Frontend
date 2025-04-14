@@ -23,11 +23,11 @@ const TfidfPage = () => {
     dispatch(resetTfidfStats());
 
     if (modelId) {
-      dispatch(fetchTfidfStats(modelId, currentPage, limit));
+      dispatch(fetchTfidfStats(modelId));
     }
 
     setLoading(false);
-  }, [dispatch, modelId, currentPage, limit]);
+  }, [dispatch, modelId]);
 
   const handleSetPage = (page) => {
     if (modelId) {
