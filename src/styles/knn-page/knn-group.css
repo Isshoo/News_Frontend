@@ -1,0 +1,22 @@
+.knn-group {
+  padding: 1.5rem;
+  background-color: var(--background);
+  border-radius: 1rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+.knn-group h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--form-border);
+  padding-bottom: 0.5rem;
+}
+
+.knn-group h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.knn-group p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}

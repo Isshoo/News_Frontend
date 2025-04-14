@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from 'react-icons/fa';
 
 const Pagination = ({ currentPage, totalPages, setCurrentPage }) => {
   return (
-    <div>
+    <div className='pagination'>
       <button disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>
-        First
+        <FaAngleDoubleLeft /> First
       </button>
-      <span> </span>
       <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
-        Previous
+        <FaAngleLeft /> Prev
       </button>
       <span>
-        {' '}
-        Page {currentPage} of {totalPages}{' '}
+        Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
       </span>
       <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
-        Next
+        Next <FaAngleRight />
       </button>
-      <span> </span>
       <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(totalPages)}>
-        Last
+        Last <FaAngleDoubleRight />
       </button>
     </div>
   );

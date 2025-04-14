@@ -64,8 +64,6 @@ const KNNPage = () => {
 
   return (
     <Pages>
-      <h2>K-Nearest Neighbors</h2>
-
       {loading && <p>Loading neighbors...</p>}
 
       {!loading && !modelId && <p>Please select a model first.</p>}

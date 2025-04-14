@@ -1,0 +1,84 @@
+.preprocess-table {
+  padding: 1rem;
+  background-color: var(--main-bg);
+  color: var(--primary-text);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.preprocess-table h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--primary-text);
+  border-bottom: 2px solid var(--form-border);
+  padding-bottom: 0.5rem;
+}
+
+.preprocess-table table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.preprocess-table thead {
+  background-color: var(--nav-bg);
+  color: var(--header-text);
+}
+
+.preprocess-table thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 2px solid var(--nav-border);
+}
+
+.preprocess-table tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--form-border);
+  color: var(--primary-text);
+  background-color: var(--background);
+  vertical-align: top;
+}
+
+.preprocess-table tbody tr:nth-child(even) td {
+  background-color: var(--main-bg);
+}
+
+.preprocess-table tbody tr:hover td {
+  background-color: var(--nav-bg-hover);
+  color: var(--secondary-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.preprocess-table input[type='text'] {
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--form-border);
+  background-color: var(--input-background);
+  color: var(--input-text);
+}
+
+.preprocess-table button {
+  margin-right: 0.4rem;
+  margin-bottom: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background-color: var(--submit-bg);
+  color: var(--submit-text);
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+.preprocess-table button:hover {
+  background-color: var(--submit-bg-hover);
+}
+
+.preprocess-table button:active {
+  background-color: var(--submit-bg-act);
+}

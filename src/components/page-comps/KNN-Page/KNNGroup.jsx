@@ -4,8 +4,9 @@ import KNNTable from './KNNTable';
 
 const KNNGroup = ({ group, index }) => {
   return (
-    <div style={{ marginBottom: '2rem' }}>
-      <h3>Test Sample #{index}</h3>
+    <div className='knn-group'>
+      <h2>Nearest Neighbors</h2>
+      <h3>Test Sample #{index + 1}</h3>
       <p>
         <strong>True Label:</strong> {group.true_label}
       </p>
@@ -15,7 +16,7 @@ const KNNGroup = ({ group, index }) => {
       <p>
         <strong>Text:</strong> {group.test_text}
       </p>
-      <KNNTable neighbors={group.neighbors} />
+      <KNNTable neighbors={group.neighbors} index={index} />
     </div>
   );
 };

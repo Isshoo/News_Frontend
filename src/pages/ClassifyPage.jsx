@@ -58,7 +58,7 @@ const ClassifyPage = () => {
   };
 
   return (
-    <Pages>
+    <Pages className='classifier-page'>
       <div className='classify-page'>
         <div className='small-page'>
           {/* Input Section di Atas */}

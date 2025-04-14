@@ -1,0 +1,47 @@
+.classification-report {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--main-bg);
+  border-radius: 1rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.classification-report h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--primary-text);
+}
+
+.report-section {
+  margin-bottom: 1.5rem;
+}
+
+.report-section h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-text);
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-table th{
+  border: 1px solid var(--form-border);
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+.report-table td {
+  border: 1px solid var(--form-border);
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  color: var(--primary-text);
+  font-size: 0.9rem;
+}
+
+.report-table thead {
+  background-color: var(--nav-bg);
+  color: var(--header-text);
+}

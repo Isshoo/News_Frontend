@@ -40,4 +40,24 @@ const formatUnixTimestamp = (timestamp) => {
   return new Intl.DateTimeFormat('id-ID', options).format(date);
 };
 
-export { showFormattedDate, formatISODate, formatUnixTimestamp };
+// mapping label
+
+const mapLabelResult = (result) => {
+  const mapping = {
+    0: 'Ekonomi',
+    1: 'Gaya Hidup',
+    2: 'Hiburan',
+    3: 'Olahraga',
+    4: 'Teknologi',
+    ekonomi: 'Ekonomi',
+    gayahidup: 'Gaya Hidup',
+    hiburan: 'Hiburan',
+    olahraga: 'Olahraga',
+    teknologi: 'Teknologi',
+    GayaHidup: 'Gaya Hidup'
+  };
+  return mapping[result] || result;
+};
+
+export { showFormattedDate, formatISODate, formatUnixTimestamp, mapLabelResult };
+

@@ -1,0 +1,37 @@
+.confusion-matrix {
+  background-color: var(--background);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.confusion-matrix h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: var(--primary-text);
+}
+
+.confusion-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.confusion-table td {
+  border: 1px solid var(--form-border);
+  padding: 0.5rem;
+  text-align: center;
+  color: var(--primary-text);
+  font-size: 0.9rem;
+}
+.confusion-table th {
+  border: 1px solid var(--form-border);
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.confusion-table thead {
+  background-color: var(--nav-bg);
+  color: var(--header-text);
+}

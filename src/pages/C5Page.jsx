@@ -31,12 +31,11 @@ const C5Page = () => {
 
   return (
     <Pages>
-      <h2>C5 Important Words</h2>
       {loading ? (
         <p>Loading C5 data...</p>
       ) : data.length > 0 ? (
         <>
-          <C5Table data={data} />
+          <C5Table data={data} loading={loading} />
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

@@ -37,12 +37,11 @@ const TfidfPage = () => {
 
   return (
     <Pages>
-      <h2>TF-IDF Statistics</h2>
       {loading ? (
         <p>Loading...</p>
       ) : data.length > 0 ? (
         <>
-          <TfidfTable data={data} />
+          <TfidfTable data={data} loading={loading} />
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

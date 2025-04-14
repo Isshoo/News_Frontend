@@ -4,7 +4,7 @@ import Loading from '../../Base/LoadingBar';
 
 const DatasetTable = ({ data, loading }) => {
   return (
-    <div>
+    <div className='dataset-table'>
       <h2>Dataset</h2>
       {loading ? (
         <Loading />

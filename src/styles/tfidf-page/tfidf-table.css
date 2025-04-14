@@ -1,0 +1,54 @@
+.tfidf-table {
+  padding: 1rem;
+  background-color: var(--main-bg);
+  color: var(--primary-text);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.tfidf-table h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--primary-text);
+  border-bottom: 2px solid var(--form-border);
+  padding-bottom: 0.5rem;
+}
+
+.tfidf-table table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.tfidf-table thead {
+  background-color: var(--nav-bg);
+  color: var(--header-text);
+}
+
+.tfidf-table thead th {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 2px solid var(--nav-border);
+}
+
+.tfidf-table tbody td {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  background-color: var(--background);
+  color: var(--primary-text);
+  border-bottom: 1px solid var(--form-border);
+  font-size: 0.9rem;
+}
+
+.tfidf-table tbody tr:nth-child(even) td {
+  background-color: var(--main-bg);
+}
+
+.tfidf-table tbody tr:hover td {
+  background-color: var(--nav-bg-hover);
+  color: var(--secondary-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
