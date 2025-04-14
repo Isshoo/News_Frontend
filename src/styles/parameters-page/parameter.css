@@ -1,0 +1,115 @@
+/* === Halaman Processing === */
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-text);
+}
+
+.section-subtitle {
+  font-size: 1.3rem;
+  color: var(--primary-text);
+}
+
+/* === Form Container === */
+.form-section {
+  background-color: var(--form-background);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* === Form Group === */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-block: 1rem;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px;
+  font-size: 1rem;
+  background-color: var(--background);
+  border: 1px solid #4f4f4f;
+  border-radius: 6px;
+}
+
+.form-group input:disabled,
+.form-group select:disabled {
+  background-color: #2a2d35;
+}
+
+/* === Summary Section (Train/Test Data) === */
+.summary-section {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-block: 1rem;
+}
+
+.summary-box {
+  background-color: var(--background);
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  padding: 15px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.summary-box p {
+  margin-bottom: 8px;
+  color: var(--primary-text);
+  font-weight: 600;
+}
+
+.summary-box ul {
+  padding-left: 16px;
+  margin: 0;
+}
+
+.summary-box li {
+  color: var(--primary-text);
+  font-size: 0.95rem;
+}
+
+/* === Train Button Area === */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Train Button Component === */
+.TrainButton button {
+  background-color: var(--submit-bg);
+  color: var(--secondary-text);
+  border: none;
+  padding: 14px 30px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.TrainButton button:disabled {
+  background-color: #6b6b6b;
+  cursor: not-allowed;
+}
+
+.TrainButton button:hover:enabled {
+  background-color: #007bff;
+}
+
+.TrainButton p {
+  margin-top: 10px;
+  color: var(--primary-text);
+  font-weight: 500;
+  text-align: center;
+}

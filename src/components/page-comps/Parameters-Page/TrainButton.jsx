@@ -20,7 +20,7 @@ const TrainButton = ({ handleTrain }) => {
   };
 
   return (
-    <div>
+    <div className='TrainButton'>
       <button onClick={trainModel} disabled={loading}>
         {loading ? 'Training...' : 'Train Model'}
       </button>

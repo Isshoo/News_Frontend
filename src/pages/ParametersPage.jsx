@@ -94,24 +94,91 @@ const ParametersPage = () => {
 
   return (
     <Pages>
-      <h2>Processing</h2>
-      <DatasetInfo totalData={totalData || 0} topicCounts={topicCounts || {}} loading={loading} />
-      <ParameterSelection
-        nNeighbors={nNeighbors}
-        splitSize={splitSize}
-        trainSize={trainSize}
-        testSize={testSize}
-        trainPerTopic={trainPerTopic}
-        testPerTopic={testPerTopic}
-        handleSplitChange={handleSplitChange}
-        handleNNeighborsChange={handleNNeighborsChange}
-        loading={loading}
-      />
-      <label>
-        Nama Model:
-        <input type='text' value={name || ''} onChange={handleNameChange} disabled={loading} />
-      </label>
-      <TrainButton handleTrain={handleTrain} />
+      <h2 className='section-title'>Processing</h2>
+
+      <div className='form-section'>
+        <h3 className='section-subtitle'>Dataset Information</h3>
+        <DatasetInfo totalData={totalData || 0} topicCounts={topicCounts || {}} loading={loading} />
+      </div>
+
+      <div className='form-section'>
+        <h3 className='section-subtitle'>Set Training Parameters</h3>
+
+        <div className='form-group'>
+          <label>Train-Test Split</label>
+          <select
+            value={splitSize}
+            onChange={(e) => handleSplitChange(Number(e.target.value))}
+            disabled={loading}
+          >
+            <option value={0} disabled>
+              Select Split Size
+            </option>
+            <option value={0.5}>50-50</option>
+            <option value={0.4}>60-40</option>
+            <option value={0.3}>70-30</option>
+            <option value={0.25}>75-25</option>
+            <option value={0.2}>80-20</option>
+          </select>
+        </div>
+
+        <div className='summary-section'>
+          <div className='summary-box'>
+            <p>
+              <strong>Train Data:</strong> {trainSize}
+            </p>
+            <p>Train Per Topic:</p>
+            <ul>
+              {Object.entries(trainPerTopic || {}).map(([topic, counts]) => (
+                <li key={topic}>
+                  {topic}: {counts}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className='summary-box'>
+            <p>
+              <strong>Test Data:</strong> {testSize}
+            </p>
+            <p>Test Per Topic:</p>
+            <ul>
+              {Object.entries(testPerTopic || {}).map(([topic, counts]) => (
+                <li key={topic}>
+                  {topic}: {counts}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className='form-group'>
+          <label>n_neighbors</label>
+          <input
+            type='number'
+            value={nNeighbors}
+            onChange={(e) => handleNNeighborsChange(Number(e.target.value))}
+            min='1'
+          />
+        </div>
+      </div>
+
+      <div className='form-section'>
+        <h3 className='section-subtitle'>Model Configuration</h3>
+        <div className='form-group'>
+          <label>Nama Model</label>
+          <input
+            type='text'
+            value={name || ''}
+            onChange={handleNameChange}
+            disabled={loading}
+            placeholder='Masukkan nama model'
+          />
+        </div>
+      </div>
+
+      <div className='form-section center'>
+        <TrainButton handleTrain={handleTrain} />
+      </div>
     </Pages>
   );
 };
