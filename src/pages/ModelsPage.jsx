@@ -46,23 +46,25 @@ const ModelsPage = () => {
   if (models === undefined) return null;
   return (
     <Pages>
-      <h2>Saved Models</h2>
-      {loading ? (
-        <Loading />
-      ) : models.length == 0 ? (
-        <p>No models available.</p>
-      ) : (
-        <div>
-          {models.map((model) => (
-            <ModelItem
-              key={model.id}
-              model={model}
-              onDelete={handleDelete}
-              onRename={handleRename}
-            />
-          ))}
-        </div>
-      )}
+      <div className='models-page'>
+        <h2>Saved Models</h2>
+        {loading ? (
+          <Loading />
+        ) : models.length == 0 ? (
+          <p>No models available.</p>
+        ) : (
+          <div>
+            {models.map((model) => (
+              <ModelItem
+                key={model.id}
+                model={model}
+                onDelete={handleDelete}
+                onRename={handleRename}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </Pages>
   );
 };

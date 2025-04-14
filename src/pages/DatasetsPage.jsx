@@ -40,18 +40,20 @@ const DatasetsPage = () => {
 
   return (
     <Pages>
-      <h2>Uploaded Datasets</h2>
-      {isLoading ? (
-        <Loading />
-      ) : datasets.length == 0 ? (
-        <p>No datasets available.</p>
-      ) : (
-        <div>
-          {datasets.map((dataset) => (
-            <DatasetItem key={dataset.id} dataset={dataset} onDelete={handleDeleteDataset} />
-          ))}
-        </div>
-      )}
+      <div className='datasets-page'>
+        <h2>Uploaded Datasets</h2>
+        {isLoading ? (
+          <Loading />
+        ) : datasets.length == 0 ? (
+          <p>No datasets available.</p>
+        ) : (
+          <div>
+            {datasets.map((dataset) => (
+              <DatasetItem key={dataset.id} dataset={dataset} onDelete={handleDeleteDataset} />
+            ))}
+          </div>
+        )}
+      </div>
     </Pages>
   );
 };

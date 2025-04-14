@@ -1,0 +1,12 @@
+.dataset-info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    gap: 1rem;
+}
+.dataset-info ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}

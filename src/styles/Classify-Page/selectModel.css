@@ -1,16 +1,4 @@
-:root {
-  --select-model-background: #212631;
-  --select-model-text: #f0f1f5;
-  --select-model-border: #374151;
-  --select-model-hover: #2a2f3c;
-}
 
-[data-theme="light"] {
-  --select-model-background: #fff;
-  --select-model-text: #212631;
-  --select-model-border: #cbd5e1;
-  --select-model-hover: #e5e7eb;
-}
 
 .model-select-container {
   display: flex;

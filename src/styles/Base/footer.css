@@ -1,12 +1,4 @@
-:root {
-  --footer-background: #212631;
-  --footer-text: #f0f1f5;
-}
 
-[data-theme="light"] {
-  --footer-background: #212631;
-  --footer-text: #f0f1f5;
-}
 
 footer {
   width: 100%;

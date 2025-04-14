@@ -1,32 +1,4 @@
-:root {
-  --form-background: #0a0e15;
-  --form-border: #212631;
-  --form-title: #ffffff;
-  --form-label: #ffffff;
-  --input-background: #e0e4eb;
-  --input-text-thread: #fff;
-  --input-placeholder-thread: #e0e4eb;
-  --input-focus: #93a7ff;
-  --submit-text: #212631;
-  --submit-bg: #f0f1f5f1;
-  --submit-bg-hover: #ffffff;
-  --submit-bg-act: #ffffff;
-}
 
-[data-theme="light"] {
-  --form-background: #ffffff;
-  --form-border: #21263120;
-  --form-title: #000000;
-  --form-label: #0a0e15;
-  --input-background: #212631d7;
-  --input-text-thread: #212631;
-  --input-placeholder-thread: #2126319a;
-  --input-focus: #93a7ff;
-  --submit-text: #ffffff;
-  --submit-bg: #212631;
-  --submit-bg-hover: #000000;
-  --submit-bg-act: #f0f1f5;
-}
 
 .input-section {
     display: flex;

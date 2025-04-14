@@ -1,5 +1,8 @@
 /* Tombol upload sederhana */
 .open-upload-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
   padding: 0.5rem 1rem;
   background-color: #007bff;
   border: none;
@@ -71,7 +74,6 @@
   cursor: pointer;
     padding: 2rem 1rem;
 }
-
 
 .cloud-icon {
     width: 80px;

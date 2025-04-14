@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
 
-const DatasetInfo = ({ totalData, topicCounts, loading }) => {
+const DatasetInfo = ({ totalData = 0, topicCounts, loading }) => {
   return (
-    <div>
-      <h2>Dataset Information</h2>
+    <div className='dataset-info'>
       {loading ? (
         <Loading />
       ) : (
         <>
-          <p>Total Data: {totalData}</p>
+          {totalData !== 0 ? <p>Total Data: {totalData}</p> : ''}
           <h3>Data per Topik:</h3>
           <ul>
             {Object.entries(topicCounts).map(([topic, count]) => (
@@ -26,7 +25,7 @@ const DatasetInfo = ({ totalData, topicCounts, loading }) => {
 };
 
 DatasetInfo.propTypes = {
-  totalData: PropTypes.number.isRequired,
+  totalData: PropTypes.number,
   topicCounts: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
 };

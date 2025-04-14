@@ -1,12 +1,4 @@
-:root {
-  --spin-line: rgb(255, 255, 255);
-  --spin-shadow: rgba(0, 0, 0, 0.2);
-}
 
-[data-theme="light"] {
-  --spin-line: rgb(0, 0, 0);
-  --spin-shadow: rgba(255, 255, 255, 0.2);
-}
 
 .loading {
   position: sticky;

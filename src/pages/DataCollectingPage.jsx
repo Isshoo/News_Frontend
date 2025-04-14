@@ -93,14 +93,10 @@ const DataCollectingPage = () => {
                 handleDatasetSelection={handleDatasetSelection}
                 loading={isLoading}
               />
-              <DatasetUpload
-                onUpload={handleUpload}
-                uploading={isUploading}
-                selectedDataset={selectedDataset}
-              />
+              <p>total data: {totalData}</p>
             </div>
             <div className='dataset-container-selected-upper-right'>
-              <DatasetInfo totalData={totalData} topicCounts={topicCounts} loading={loadingInfo} />
+              <DatasetInfo topicCounts={topicCounts} loading={loadingInfo} />
             </div>
           </div>
           <div className='dataset-container-selected-lower'>
@@ -113,6 +109,11 @@ const DataCollectingPage = () => {
               />
             )}
           </div>
+          <DatasetUpload
+            onUpload={handleUpload}
+            uploading={isUploading}
+            selectedDataset={selectedDataset}
+          />
         </div>
       ) : (
         <div className='dataset-container-not-selected centered-layout'>

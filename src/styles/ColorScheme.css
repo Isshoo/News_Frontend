@@ -1,0 +1,138 @@
+:root {
+  /* Typography */
+  --primary-text: #212631;
+  --secondary-text: #ffffff;
+  --notfound-text: #fff;
+  --results-text: #ffffff;
+
+  /* Layout Backgrounds */
+  --background: #0a0e15;
+  --main-bg: #13161c;
+
+  /* Header */
+  --header-background: #212631;
+  --header-text: #f0f1f5;
+
+  /* Navbar */
+  --navbar-bg: #e0e4eb;
+  --nav-text: #ffffff;
+  --nav-bg: #212631;
+  --nav-border: #212631;
+  --nav-bg-hover: #0a0e15;
+  --nav-bg-act: #4e576a;
+  --nav-active-bg: #0a0e15;
+  --nav-shadow: rgba(69, 69, 69, 0.2);
+  --navigation-bg: #13161c;
+
+  /* Sidebar */
+  --sidebar-bg: #101319;
+  --side-text: #ffffff;
+  --side-bg: #212631;
+  --side-border: #212631;
+  --side-bg-hover: #0a0e15;
+  --side-bg-act: #4e576a;
+  --side-active-bg: #0a0e15;
+  --side-shadow: rgba(69, 69, 69, 0.2);
+
+  /* Logout */
+  --logout-text: #000;
+  --logout-text-hover: #1a44ff;
+
+  /* Form */
+  --form-background: #0a0e15;
+  --form-border: #212631;
+  --form-title: #ffffff;
+  --form-label: #ffffff;
+  --input-background: #e0e4eb;
+  --input-text: #212631;
+  --input-text-thread: #fff;
+  --input-placeholder-thread: #e0e4eb;
+  --input-focus: #93a7ff;
+  --submit-text: #212631;
+  --submit-bg: #f0f1f5f1;
+  --submit-bg-hover: #ffffff;
+  --submit-bg-act: #ffffff;
+
+  /* Footer */
+  --footer-background: #212631;
+  --footer-text: #f0f1f5;
+
+  /* Spinner */
+  --spin-line: rgb(255, 255, 255);
+  --spin-shadow: rgba(0, 0, 0, 0.2);
+
+  /* Select Model */
+  --select-model-background: #212631;
+  --select-model-text: #f0f1f5;
+  --select-model-border: #374151;
+  --select-model-hover: #2a2f3c;
+}
+
+[data-theme="light"] {
+  /* Typography */
+  --primary-text: #212631;
+  --secondary-text: #ffffff;
+  --notfound-text: #212631;
+  --results-text: #212631;
+
+  /* Layout Backgrounds */
+  --background: #f4f4f5;
+  --main-bg: #ffffff;
+
+  /* Header */
+  --header-background: #212631;
+  --header-text: #f0f1f5;
+
+  /* Navbar */
+  --navbar-bg: #ffffff;
+  --nav-text: #000;
+  --nav-bg: #212631;
+  --nav-border: #212631;
+  --nav-bg-hover: #0a0e15;
+  --nav-bg-act: #4e576a;
+  --nav-active-bg: #212631;
+  --nav-shadow: rgba(0, 0, 0, 0.2);
+  --navigation-bg: rgba(255, 255, 255, 0.5);
+
+  /* Sidebar */
+  --sidebar-bg: #e6e6e6;
+  --side-text: #ffffff;
+  --side-bg: #212631;
+  --side-border: #212631;
+  --side-bg-hover: #0a0e15;
+  --side-bg-act: #4e576a;
+  --side-active-bg: #212631;
+  --side-shadow: rgba(0, 0, 0, 0.2);
+
+  /* Logout */
+  --logout-text: #000;
+  --logout-text-hover: #3b5efa;
+
+  /* Form */
+  --form-background: #ffffff;
+  --form-border: #21263120;
+  --form-title: #000000;
+  --form-label: #0a0e15;
+  --input-background: #212631d7;
+  --input-text-thread: #212631;
+  --input-placeholder-thread: #2126319a;
+  --input-focus: #93a7ff;
+  --submit-text: #ffffff;
+  --submit-bg: #212631;
+  --submit-bg-hover: #000000;
+  --submit-bg-act: #f0f1f5;
+
+  /* Footer */
+  --footer-background: #212631;
+  --footer-text: #f0f1f5;
+
+  /* Spinner */
+  --spin-line: rgb(0, 0, 0);
+  --spin-shadow: rgba(255, 255, 255, 0.2);
+
+  /* Select Model */
+  --select-model-background: #fff;
+  --select-model-text: #212631;
+  --select-model-border: #cbd5e1;
+  --select-model-hover: #e5e7eb;
+}

@@ -46,7 +46,7 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
     return (
       <>
         <button type='button' className='open-upload-btn' onClick={() => setShowModal(true)}>
-          Upload Dataset
+          <FaCloudArrowUp />
         </button>
 
         <div className={`upload-modal ${showModal ? 'show' : ''}`}>
