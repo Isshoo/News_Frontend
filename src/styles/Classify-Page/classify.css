@@ -18,5 +18,5 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  max-height: calc(100vh - 15rem);
+  max-height: calc(100vh - 12rem);
 }

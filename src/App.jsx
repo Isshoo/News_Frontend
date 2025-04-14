@@ -63,9 +63,9 @@ const App = () => {
               </Routes>
             </main>
           </div>
-          <footer>
+          {/* <footer>
             <FooterBar />
-          </footer>
+          </footer> */}
         </div>
       </ThemeProvider>
     </LocaleProvider>

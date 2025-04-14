@@ -93,15 +93,21 @@ label {
 }
 
 main {
-  width: 100%;
+  width: 83%;
   padding-inline: 32px;
-  padding-block: 6.85rem 1rem;
+  padding-block: 74.2px 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
   background-color: var(--main-bg);
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
 }
 
 /* not found page */

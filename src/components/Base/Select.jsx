@@ -30,36 +30,37 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
 
 const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, loading }) => {
   return (
-    <Dropdown>
-      <StyledSelect
+    <div className='dataset-select-container'>
+      <label className='dataset-select-label' htmlFor='dataset-select'>
+        Choose Dataset
+      </label>
+      <select
+        id='dataset-select'
+        className='dataset-select'
         onChange={handleDatasetSelection}
         value={selectedDataset || ''}
-        disabled={datasets.length === 0}
+        disabled={loading || datasets.length === 0}
       >
         {loading ? (
           <option value='' disabled>
             Loading datasets...
           </option>
+        ) : datasets.length === 0 ? (
+          <option value=''>No datasets available</option>
         ) : (
           <>
-            {datasets.length === 0 ? (
-              <option value=''>No datasets available</option>
-            ) : (
-              <>
-                <option value='' disabled>
-                  Select a dataset
-                </option>
-                {datasets.map((dataset) => (
-                  <option key={dataset.id} value={dataset.id}>
-                    {dataset.name}
-                  </option>
-                ))}
-              </>
-            )}
+            <option value='' disabled>
+              Select a dataset
+            </option>
+            {datasets.map((dataset) => (
+              <option key={dataset.id} value={dataset.id}>
+                {dataset.name}
+              </option>
+            ))}
           </>
         )}
-      </StyledSelect>
-    </Dropdown>
+      </select>
+    </div>
   );
 };
 

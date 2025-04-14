@@ -83,33 +83,50 @@ const DataCollectingPage = () => {
 
   return (
     <Pages>
-      <DatasetUpload onUpload={handleUpload} uploading={isUploading} />
-      <br />
-      <h3>Select Dataset</h3>
-      <div>
-        <DatasetSelect
-          datasets={datasets}
-          selectedDataset={selectedDataset}
-          handleDatasetSelection={handleDatasetSelection}
-          loading={isLoading}
-        />
-      </div>
-      <br />
       {selectedDataset ? (
-        <>
-          <DatasetInfo totalData={totalData} topicCounts={topicCounts} loading={loadingInfo} />
-          <br />
-          <DatasetTable data={data} loading={loadingDetail} />
-          {totalPages > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              setCurrentPage={handleSetPage}
+        <div className='dataset-container-selected'>
+          <div className='dataset-container-selected-upper'>
+            <div className='dataset-container-selected-upper-left'>
+              <DatasetSelect
+                datasets={datasets}
+                selectedDataset={selectedDataset}
+                handleDatasetSelection={handleDatasetSelection}
+                loading={isLoading}
+              />
+              <DatasetUpload
+                onUpload={handleUpload}
+                uploading={isUploading}
+                selectedDataset={selectedDataset}
+              />
+            </div>
+            <div className='dataset-container-selected-upper-right'>
+              <DatasetInfo totalData={totalData} topicCounts={topicCounts} loading={loadingInfo} />
+            </div>
+          </div>
+          <div className='dataset-container-selected-lower'>
+            <DatasetTable data={data} loading={loadingDetail} />
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                setCurrentPage={handleSetPage}
+              />
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className='dataset-container-not-selected centered-layout'>
+          <DatasetUpload onUpload={handleUpload} uploading={isUploading} />
+          <hr className='divider' />
+          {datasets.length > 0 && (
+            <DatasetSelect
+              datasets={datasets}
+              selectedDataset={selectedDataset}
+              handleDatasetSelection={handleDatasetSelection}
+              loading={isLoading}
             />
           )}
-        </>
-      ) : (
-        <p>Silakan pilih dataset untuk melihat detail.</p>
+        </div>
       )}
     </Pages>
   );
