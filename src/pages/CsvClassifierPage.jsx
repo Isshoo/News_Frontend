@@ -121,7 +121,14 @@ const CsvClassifierPage = () => {
             classifySingleRow={classifySingleRow}
           />
         )}
-        <button onClick={handlePopup}>Popup</button>
+        <button
+          className={
+            classificationResult.length > 0 ? 'csv-popup-button pojok' : 'csv-popup-button'
+          }
+          onClick={handlePopup}
+        >
+          Popup
+        </button>
       </div>
     </Pages>
   );

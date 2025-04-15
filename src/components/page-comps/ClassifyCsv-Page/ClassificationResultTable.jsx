@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 
 const ClassificationResultTable = ({ classificationResult, classifySingleRow }) => (
   <div className='csv-result-table'>
+    <h2>Classification Results</h2>
     <table>
+      <colgroup>
+        <col style={{ width: '70%' }} />
+        <col style={{ width: '15%' }} />
+        <col style={{ width: '15%' }} />
+      </colgroup>
       <thead>
         <tr>
           <th>Content Snippet</th>
@@ -14,7 +20,9 @@ const ClassificationResultTable = ({ classificationResult, classifySingleRow }) 
       <tbody>
         {classificationResult.map((row, index) => (
           <tr key={index}>
-            <td>{row.contentSnippet}</td>
+            <td title={row.contentSnippet} style={{ maxHeight: '3.6em', overflow: 'hidden' }}>
+              {row.contentSnippet}
+            </td>
             <td>{row.Hybrid_C5_KNN || '-'}</td>
             <td>
               {!row.DeepSeek || row.DeepSeek === 'Unknown' ? (

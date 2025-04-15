@@ -20,6 +20,7 @@
   border-collapse: collapse;
   border-radius: 0.5rem;
   overflow: hidden;
+  table-layout: fixed;
 }
 
 .tfidf-table thead {

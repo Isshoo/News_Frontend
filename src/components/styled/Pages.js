@@ -6,7 +6,7 @@ const Pages = styled.section`
   flex-direction: column;
   position: relative;
   padding-inline: 32px;
-  max-width: 1050px;
+  max-width: 1200px;
   margin-bottom: 1.5rem;
 `;
 

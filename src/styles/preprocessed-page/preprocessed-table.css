@@ -41,6 +41,12 @@
   color: var(--primary-text);
   background-color: var(--background);
   vertical-align: top;
+  text-align: left;
+  font-size: 0.95rem;
+  height: 117px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
 }
 
 .preprocess-table tbody tr:nth-child(even) td {

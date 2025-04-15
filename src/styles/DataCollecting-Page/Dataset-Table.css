@@ -20,6 +20,7 @@
   border-collapse: collapse;
   border-radius: 0.5rem;
   overflow: hidden;
+  table-layout: fixed;
 }
 
 .dataset-table thead {
@@ -40,6 +41,12 @@
   border-bottom: 1px solid var(--form-border);
   color: var(--primary-text);
   background-color: var(--background);
+  font-size: 0.95rem;
+  vertical-align: top;
+  text-align: left;
+  max-height: 94.5px;
+  overflow: hidden;
+  
 }
 
 .dataset-table tbody tr:nth-child(even) td {
@@ -57,3 +64,4 @@
   color: var(--notfound-text);
   font-style: italic;
 }
+

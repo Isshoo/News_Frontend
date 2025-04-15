@@ -22,6 +22,24 @@ const PreprocessTable = ({
       ) : (
         <>
           <table>
+            <colgroup>
+              {preprocessedDatasetId === rawDatasetId ? (
+                <>
+                  <col style={{ width: '5%' }} />
+                  <col style={{ width: '41.5%' }} />
+                  <col style={{ width: '41.5%' }} />
+                  <col style={{ width: '12%' }} />
+                </>
+              ) : (
+                <>
+                  <col style={{ width: '4%' }} />
+                  <col style={{ width: '38%' }} />
+                  <col style={{ width: '38%' }} />
+                  <col style={{ width: '10%' }} />
+                  <col style={{ width: '10%' }} />
+                </>
+              )}
+            </colgroup>
             <thead>
               <tr>
                 <th>ID</th>
@@ -40,8 +58,8 @@ const PreprocessTable = ({
                 dataset.map((item) => (
                   <tr key={item.index}>
                     <td>{item.index + 1}</td>
-                    <td>{item.contentSnippet}</td>
-                    <td>{item.preprocessedContent}</td>
+                    <td title={item.contentSnippet}>{item.contentSnippet}</td>
+                    <td title={item.preprocessedContent}>{item.preprocessedContent}</td>
                     <td>
                       {editingIndex === item.index ? (
                         <input

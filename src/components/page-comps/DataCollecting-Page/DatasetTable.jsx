@@ -11,11 +11,16 @@ const DatasetTable = ({ data, loading }) => {
       ) : (
         <>
           <table>
+            <colgroup>
+              <col style={{ width: '5%' }} />
+              <col style={{ width: '83%' }} />
+              <col style={{ width: '12%' }} />
+            </colgroup>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>contentSnippet</th>
-                <th>Category</th>
+                <th>topic</th>
               </tr>
             </thead>
             <tbody>
@@ -27,7 +32,9 @@ const DatasetTable = ({ data, loading }) => {
                 data.map((row, index) => (
                   <tr key={index}>
                     <td>{row.index + 1}</td>
-                    <td>{row.contentSnippet}</td>
+                    <td className='clamp' title={row.contentSnippet}>
+                      {row.contentSnippet}
+                    </td>
                     <td>{row.topik}</td>
                   </tr>
                 ))

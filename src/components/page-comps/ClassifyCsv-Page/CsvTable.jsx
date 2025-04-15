@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 const CsvTable = ({ csvData, handleEditCell, handleDeleteRow }) => (
   <div className='csv-table'>
     <table>
+      <colgroup>
+        <col style={{ width: '82%' }} />
+        <col style={{ width: '18%' }} />
+      </colgroup>
       <thead>
         <tr>
           <th>Content Snippet</th>
@@ -16,11 +20,12 @@ const CsvTable = ({ csvData, handleEditCell, handleDeleteRow }) => (
             <td>
               <input
                 type='text'
+                style={{ maxHeight: '3.6em', overflow: 'hidden' }}
                 value={row.contentSnippet}
                 onChange={(e) => handleEditCell(index, 'contentSnippet', e.target.value)}
               />
             </td>
-            <td>
+            <td className='csv-actions'>
               <button onClick={() => handleDeleteRow(index)}>Delete</button>
             </td>
           </tr>
