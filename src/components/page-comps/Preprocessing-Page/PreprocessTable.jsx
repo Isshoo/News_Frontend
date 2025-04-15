@@ -52,7 +52,9 @@ const PreprocessTable = ({
             <tbody>
               {dataset.length === 0 ? (
                 <tr>
-                  <td colSpan='3'>No data available.</td>
+                  <td colSpan='4' style={{ textAlign: 'center' }}>
+                    No data available.
+                  </td>
                 </tr>
               ) : (
                 dataset.map((item) => (
