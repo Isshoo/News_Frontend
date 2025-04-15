@@ -139,11 +139,17 @@
 .file-preview {
   display: flex;
   justify-content: space-between;
+  background-color: white;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
+  padding: 2rem 2.5rem;
   border: 2px dashed #ccc;
   border-radius: 10px;
+  position: fixed;
+  bottom: 1rem;
+  left: 60%;
+  transform: translateX(-50%);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .file-name {
@@ -159,9 +165,11 @@
   color: #d9534f;
   font-size: 1rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
-.upload-button {
+.upload-button-collect-data {
   background-color: #28a745;
   color: white;
   padding: 0.5rem 1rem;

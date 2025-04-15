@@ -102,7 +102,7 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
               <FaTimes />
             </button>
           </span>
-          <button type='submit' className='upload-button' disabled={uploading}>
+          <button type='submit' className='upload-button-collect-data' disabled={uploading}>
             {uploading ? 'Uploading...' : 'Upload Dataset'}
           </button>
         </div>
