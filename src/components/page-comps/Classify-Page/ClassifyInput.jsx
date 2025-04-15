@@ -31,9 +31,11 @@ const ClassifyInput = ({
     }
   }, [text]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    predictNews(text);
+    const newText = text;
+    setText(''); // reset textarea setelah submit
+    await predictNews(newText);
   };
 
   const handleSuggestionClick = (suggestion) => {

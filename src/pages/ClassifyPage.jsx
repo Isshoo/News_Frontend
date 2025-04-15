@@ -53,8 +53,8 @@ const ClassifyPage = () => {
     dispatch(setSelectedPreprocessedDataset(foundModel?.preprocessed_dataset_id));
   };
 
-  const predictNews = (text) => {
-    dispatch(classifyNews(text));
+  const predictNews = async (text) => {
+    await dispatch(classifyNews(text));
   };
 
   return (
