@@ -13,7 +13,6 @@ import { setSelectedModel } from '../states/models/action';
 
 import Pages from '../components/styled/Pages';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
-import ParameterSelection from '../components/page-comps/Parameters-Page/ParameterSelection';
 import TrainButton from '../components/page-comps/Parameters-Page/TrainButton';
 
 const ParametersPage = () => {
@@ -86,18 +85,18 @@ const ParametersPage = () => {
   if (!selectedDataset || !selectedPreprocessedDataset) {
     return (
       <Pages>
-        <h2>Processing</h2>
-        <p>Mohon pilih dataset, preprocessed dataset, dan model terlebih dahulu.</p>
+        <p>Please select a dataset and preprocessed dataset first.</p>
       </Pages>
     );
   }
 
   return (
     <Pages>
-      <h2 className='section-title'>Processing</h2>
-
       <div className='form-section'>
         <h3 className='section-subtitle'>Dataset Information</h3>
+        <p className='total-data-parameter'>
+          <strong>Total data:</strong> {totalData || 0}
+        </p>
         <DatasetInfo totalData={totalData || 0} topicCounts={topicCounts || {}} loading={loading} />
       </div>
 

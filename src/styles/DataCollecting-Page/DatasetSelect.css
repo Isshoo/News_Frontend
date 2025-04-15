@@ -1,17 +1,19 @@
 .dataset-select-container {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 .dataset-select-label {
-  margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #333;
+  color: #000;
+  font-size: 1.2rem;
+  margin-bottom: 0rem;
 }
 
 .dataset-select {
   padding: 0.6rem 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #444;
   border-radius: 0.5rem;
   font-size: 1rem;
   background-color: #fff;

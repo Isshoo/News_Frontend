@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { mapLabelResult } from '../../../utils/helper';
 
 const ClassificationReport = ({ classificationReport }) => {
-  if (!classificationReport) return <p>No classification report available.</p>;
-
   const accuracy = classificationReport.accuracy?.toFixed(2);
 
   const rows = Object.entries(classificationReport)
@@ -16,6 +14,10 @@ const ClassificationReport = ({ classificationReport }) => {
       f1: metrics['f1-score'].toFixed(2),
       support: metrics.support,
     }));
+
+  if (!classificationReport || rows.length === 0) {
+    return null;
+  }
 
   return (
     <div className='classification-report'>

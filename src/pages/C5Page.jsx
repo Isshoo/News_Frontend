@@ -29,6 +29,14 @@ const C5Page = () => {
     if (modelId) dispatch(fetchWordStats(modelId, page, limit));
   };
 
+  if (!modelId) {
+    return (
+      <Pages>
+        <p>Please select a model to view its C5 data.</p>
+      </Pages>
+    );
+  }
+
   return (
     <Pages>
       {loading ? (

@@ -6,55 +6,86 @@
   flex-direction: column;
   padding: 2rem 0rem;
 }
+/* .models-page {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+} */
 
 .model-item {
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--form-background);
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-block: 1rem;
 }
 
-.model-item h3 {
+.model-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.model-header h3 {
+  margin: 0;
   cursor: pointer;
+  font-size: 1.2rem;
 }
 
-.model-item input {
-  width: 100%;
-  font-size: 1.2em;
+.model-edit-input {
+  font-size: 1.2rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #666;
+  border-radius: 8px;
+  background-color: var(--background);
 }
 
-.model-item button {
-  margin: 5px;
-  padding: 8px 12px;
+.model-date {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.model-info p {
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
+}
+
+.model-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.detail-btn,
+.classify-btn,
+.delete-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
 }
 
 .detail-btn {
-  background-color: #3498db;
+  background-color: #3477db;
   color: white;
 }
 
 .classify-btn {
-  background-color: #27ae60;
-  color: white;
+  background-color: var(--submit-bg);
+  color: var(--secondary-text);
 }
 
 .delete-btn {
-  background-color: #e74c3c;
+  background-color: #d9534f;
   color: white;
-}
-
-.detail-btn:hover {
-  background-color: #2980b9;
-}
-
-.classify-btn:hover {
-  background-color: #219150;
-}
-
-.delete-btn:hover {
-  background-color: #c0392b;
 }

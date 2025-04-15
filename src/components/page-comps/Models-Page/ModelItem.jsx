@@ -56,9 +56,10 @@ const ModelItem = ({ model, onDelete, onRename }) => {
 
   return (
     <div className='model-item'>
-      {id !== 'default-stemmed' ? (
-        isEditing ? (
+      <div className='model-header'>
+        {id !== 'default-stemmed' && isEditing ? (
           <input
+            className='model-edit-input'
             type='text'
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
@@ -67,48 +68,48 @@ const ModelItem = ({ model, onDelete, onRename }) => {
             autoFocus
           />
         ) : (
-          <h3 onClick={() => setIsEditing(true)}>{name}</h3>
-        )
-      ) : (
-        <h3>{name}</h3>
-      )}
+          <h3 onClick={() => id !== 'default-stemmed' && setIsEditing(true)}>{name}</h3>
+        )}
+        <span className='model-date'>{new Date(updated_at).toLocaleString()}</span>
+      </div>
 
-      <p>
-        <strong>Preprocessed Dataset:</strong> {preprocessed_dataset_id}
-      </p>
-      <p>
-        <strong>Raw Dataset:</strong> {raw_dataset_id}
-      </p>
-      <p>
-        <strong>Total Data:</strong> {total_data}
-      </p>
-      <p>
-        <strong>n_neighbors:</strong> {n_neighbors}
-      </p>
-      <p>
-        <strong>Split Size:</strong> {split_size}
-      </p>
-      <p>
-        <strong>Created At:</strong> {new Date(created_at).toLocaleString()}
-      </p>
-      <p>
-        <strong>Updated At:</strong> {new Date(updated_at).toLocaleString()}
-      </p>
-      <p>
-        <strong>Accuracy:</strong> {(accuracy * 100).toFixed(2)}%
-      </p>
+      <div className='model-info'>
+        <p>
+          <strong>Accuracy:</strong> {(accuracy * 100).toFixed(2)}%
+        </p>
+        <p>
+          <strong>Total Data:</strong> {total_data}
+        </p>
+        <p>
+          <strong>Split Size:</strong> {split_size}
+        </p>
+        <p>
+          <strong>n_neighbors:</strong> {n_neighbors}
+        </p>
+        <p>
+          <strong>Preprocessed Dataset:</strong> {preprocessed_dataset_id}
+        </p>
+        <p>
+          <strong>Raw Dataset:</strong> {raw_dataset_id}
+        </p>
+        <p>
+          <strong>Created:</strong> {new Date(created_at).toLocaleString()}
+        </p>
+      </div>
 
-      <button onClick={handleDetail} className='detail-btn' disabled={isEditing}>
-        Details
-      </button>
-      <button onClick={handleClassify} className='classify-btn' disabled={isEditing}>
-        Use for Classification
-      </button>
-      {id !== 'default-stemmed' && (
-        <button onClick={() => onDelete(id)} className='delete-btn'>
-          Delete
+      <div className='model-actions'>
+        <button className='detail-btn' onClick={handleDetail} disabled={isEditing}>
+          Details
         </button>
-      )}
+        <button className='classify-btn' onClick={handleClassify} disabled={isEditing}>
+          Use for Classification
+        </button>
+        {id !== 'default-stemmed' && (
+          <button className='delete-btn' onClick={() => onDelete(id)}>
+            Delete
+          </button>
+        )}
+      </div>
     </div>
   );
 };

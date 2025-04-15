@@ -32,14 +32,21 @@ const EvaluationPage = () => {
     }
   }, [dispatch, selectedModelId]);
 
+  if (!selectedModelId) {
+    return (
+      <Pages>
+        <p>Please select a model to view its evaluation data.</p>
+      </Pages>
+    );
+  }
+
   return (
     <Pages>
-      <h2>Model Evaluation</h2>
       {
         (loading ? <p>Loading evaluation data...</p> : confusionMatrix,
         classificationReport ? (
           <>
-            <ModelInfo evaluationData={{ name, total_data }} />
+            {/* <ModelInfo evaluationData={{ name, total_data }} /> */}
             {confusionMatrix && <ConfusionMatrix confusionMatrix={confusionMatrix} />}
             {classificationReport && (
               <ClassificationReport classificationReport={classificationReport} />

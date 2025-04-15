@@ -35,6 +35,14 @@ const TfidfPage = () => {
     }
   };
 
+  if (!modelId) {
+    return (
+      <Pages>
+        <p>Please select a model to view its TF-IDF data.</p>
+      </Pages>
+    );
+  }
+
   return (
     <Pages>
       {loading ? (

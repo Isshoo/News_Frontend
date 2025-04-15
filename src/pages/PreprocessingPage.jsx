@@ -143,15 +143,14 @@ const PreprocessingPage = () => {
 
   return (
     <Pages>
-      <h2>Preprocessed Dataset</h2>
       {!selectedDataset ? (
-        <p>Silakan pilih dataset mentah terlebih dahulu.</p>
+        <p>Please select a raw dataset first to view its preprocessed datasets.</p>
       ) : preprocessedDatasets.length === 0 ? (
         <button onClick={handlePreprocess}>Preprocess Raw Dataset</button>
       ) : (
         <>
-          <h3 className='list-dataset-title'>Select Preprocessed Dataset:</h3>
           <div className='list-dataset-dropdown'>
+            <h3 className='list-dataset-title'>Select Preprocessed Dataset:</h3>
             <ListDataset
               preprocessedDatasets={preprocessedDatasets}
               rawDatasetId={selectedDataset}

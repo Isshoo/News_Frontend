@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { mapLabelResult } from '../../../utils/helper';
 
 const ConfusionMatrix = ({ confusionMatrix }) => {
+  if (!confusionMatrix || confusionMatrix.length === 0) {
+    return null;
+  }
   return (
     <div className='confusion-matrix'>
       <h3>Confusion Matrix</h3>

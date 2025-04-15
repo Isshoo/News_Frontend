@@ -8,7 +8,7 @@ const ModelInfo = ({ evaluationData }) => {
 
   return (
     <div>
-      <h3>Model Information</h3>
+      <h2>Model Information</h2>
       <p>
         <strong>Model Name:</strong> {name}
       </p>

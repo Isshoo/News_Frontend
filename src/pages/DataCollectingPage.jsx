@@ -93,7 +93,9 @@ const DataCollectingPage = () => {
                 handleDatasetSelection={handleDatasetSelection}
                 loading={isLoading}
               />
-              <p className='dataset-total'>Total Data: {totalData}</p>
+              <p className='dataset-total'>
+                <strong>Total Data:</strong> {totalData}
+              </p>
             </div>
             <div className='dataset-box dataset-right'>
               <DatasetInfo topicCounts={topicCounts} loading={loadingInfo} totalData={totalData} />

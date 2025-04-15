@@ -8,6 +8,7 @@ const Pages = styled.section`
   padding-inline: 32px;
   max-width: 1200px;
   margin-bottom: 1.5rem;
+  gap: 1rem;
 `;
 
 export default Pages;

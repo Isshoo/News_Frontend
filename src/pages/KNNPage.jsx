@@ -66,7 +66,7 @@ const KNNPage = () => {
     <Pages>
       {loading && <p>Loading neighbors...</p>}
 
-      {!loading && !modelId && <p>Please select a model first.</p>}
+      {!loading && !modelId && <p>Please select a model first to view its neighbors data.</p>}
 
       {!loading && modelId && !hasData && <p>No KNN data available.</p>}
 

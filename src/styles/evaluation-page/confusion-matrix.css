@@ -1,13 +1,13 @@
 .confusion-matrix {
   background-color: var(--background);
   padding: 1rem;
-  margin-top: 1rem;
   border-radius: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--form-border);
 }
 
 .confusion-matrix h3 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   font-size: 1.2rem;
   color: var(--primary-text);
 }
