@@ -9,26 +9,31 @@
 
 .dataset-container-selected-upper {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   width: 100%;
-  position: relative;
   padding: 1rem;
-  border: 1px solid #ccc;
+  background-color: var(--main-bg);
+  border-radius: 16px;
+  border: 1px solid #444;
 }
 
-.dataset-container-selected-upper-left {
-  width: 100%;
+.dataset-box {
+  flex: 1;
+  min-width: 300px;
+  padding: 1rem;
+  background-color: var(--form-background);
+  border-radius: 12px;
+  border: 1px solid #333;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border: 1px solid #ccc;
 }
-.dataset-container-selected-upper-right {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  border: 1px solid #ccc;
+
+.dataset-total {
+  margin-left: 0.5rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
 }
 
 .dataset-container-selected-lower {

@@ -9,12 +9,12 @@ const DatasetInfo = ({ totalData = 0, topicCounts, loading }) => {
         <Loading />
       ) : (
         <>
-          {totalData !== 0 ? <p>Total Data: {totalData}</p> : ''}
-          <h3>Data per Topik:</h3>
-          <ul>
+          <h3>Data per Topik</h3>
+          <ul className='topic-list'>
             {Object.entries(topicCounts).map(([topic, count]) => (
               <li key={topic}>
-                {topic}: {count}
+                <span className='topic-name'>{topic}:</span>
+                <span className='topic-count'>{count}</span>
               </li>
             ))}
           </ul>

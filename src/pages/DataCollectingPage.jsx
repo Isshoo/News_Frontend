@@ -86,17 +86,17 @@ const DataCollectingPage = () => {
       {selectedDataset ? (
         <div className='dataset-container-selected'>
           <div className='dataset-container-selected-upper'>
-            <div className='dataset-container-selected-upper-left'>
+            <div className='dataset-box dataset-left'>
               <DatasetSelect
                 datasets={datasets}
                 selectedDataset={selectedDataset}
                 handleDatasetSelection={handleDatasetSelection}
                 loading={isLoading}
               />
-              <p>total data: {totalData}</p>
+              <p className='dataset-total'>Total Data: {totalData}</p>
             </div>
-            <div className='dataset-container-selected-upper-right'>
-              <DatasetInfo topicCounts={topicCounts} loading={loadingInfo} />
+            <div className='dataset-box dataset-right'>
+              <DatasetInfo topicCounts={topicCounts} loading={loadingInfo} totalData={totalData} />
             </div>
           </div>
           <div className='dataset-container-selected-lower'>
