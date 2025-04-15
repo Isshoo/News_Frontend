@@ -150,20 +150,29 @@ const PreprocessingPage = () => {
         <button onClick={handlePreprocess}>Preprocess Raw Dataset</button>
       ) : (
         <>
-          <h3>Select Preprocessed Dataset:</h3>
-          <ListDataset
-            preprocessedDatasets={preprocessedDatasets}
-            rawDatasetId={selectedDataset}
-            handleDatasetSelection={handleDatasetSelection}
-            handleDeleteDataset={handleDeleteDataset}
-          />
+          <h3 className='list-dataset-title'>Select Preprocessed Dataset:</h3>
+          <div className='list-dataset-dropdown'>
+            <ListDataset
+              preprocessedDatasets={preprocessedDatasets}
+              rawDatasetId={selectedDataset}
+              handleDatasetSelection={handleDatasetSelection}
+              handleDeleteDataset={handleDeleteDataset}
+            />
+          </div>
 
           {selectedPreprocessedDataset ? (
             <>
               {selectedPreprocessedDataset === selectedDataset ? (
-                <button onClick={handleCopyDataset}>Copy Dataset to Edit</button>
+                <button className='prprocess-popup-button' onClick={handleCopyDataset}>
+                  Copy Dataset to Edit
+                </button>
               ) : (
-                <button onClick={() => setShowAddPopup(true)}>Add Data</button>
+                <button
+                  className='prprocess-popup-button'
+                  onClick={() => setShowAddPopup(!showAddPopup)}
+                >
+                  Add Data
+                </button>
               )}
 
               <PreprocessTable

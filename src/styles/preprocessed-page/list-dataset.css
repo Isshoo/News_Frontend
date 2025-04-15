@@ -1,0 +1,61 @@
+.list-dataset-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-text);
+}
+
+.list-dataset-dropdown {
+  width: 100%;
+  background-color: var(--form-background);
+  border-radius: 10px;
+  border: 1px solid #444;
+  padding: 0.75rem 1rem;
+}
+
+.list-dataset-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.list-dataset-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--background);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+.list-dataset-select {
+  background: transparent;
+  border: none;
+  font-size: 0.95rem;
+  text-align: left;
+  flex: 1;
+  cursor: pointer;
+}
+
+.list-dataset-select:hover {
+  text-decoration: underline;
+}
+
+.list-dataset-delete {
+  background: #c0392b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.list-dataset-delete:hover {
+  background: #e74c3c;
+}
+
+.list-dataset-empty {
+  font-style: italic;
+  color: #aaa;
+}

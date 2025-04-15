@@ -71,20 +71,24 @@ const ListDataset = ({
   handleDeleteDataset,
 }) => {
   return (
-    <ul>
+    <div className='list-dataset-wrapper'>
       {preprocessedDatasets.length > 0 ? (
         preprocessedDatasets.map((ds) => (
-          <li key={ds.id}>
-            <button onClick={() => handleDatasetSelection(ds.id)}>{ds.name}</button>
+          <div className='list-dataset-item' key={ds.id}>
+            <button className='list-dataset-select' onClick={() => handleDatasetSelection(ds.id)}>
+              {ds.name}
+            </button>
             {ds.id !== rawDatasetId && (
-              <button onClick={() => handleDeleteDataset(ds.id)}>Delete</button>
+              <button className='list-dataset-delete' onClick={() => handleDeleteDataset(ds.id)}>
+                ✕
+              </button>
             )}
-          </li>
+          </div>
         ))
       ) : (
-        <li>No preprocessed datasets found.</li>
+        <p className='list-dataset-empty'>No preprocessed datasets found.</p>
       )}
-    </ul>
+    </div>
   );
 };
 

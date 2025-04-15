@@ -10,22 +10,37 @@ const AddDataPopup = ({
   setShowAddPopup,
 }) => {
   return (
-    <div className='popup'>
-      <h3>Add New Data</h3>
-      <input
-        type='text'
-        placeholder='Content Snippet'
-        value={newContent}
-        onChange={(e) => setNewContent(e.target.value)}
-      />
-      <input
-        type='text'
-        placeholder='Topic'
-        value={newTopic}
-        onChange={(e) => setNewTopic(e.target.value)}
-      />
-      <button onClick={handleAddData}>Add</button>
-      <button onClick={() => setShowAddPopup(false)}>Cancel</button>
+    <div className='popup-overlay'>
+      <div className='popup-box'>
+        <div className='popup-header'>
+          <h3>Add New Data</h3>
+          <button className='popup-close' onClick={() => setShowAddPopup(false)}>
+            ✕
+          </button>
+        </div>
+        <div className='popup-body'>
+          <input
+            type='text'
+            placeholder='Content Snippet'
+            value={newContent}
+            onChange={(e) => setNewContent(e.target.value)}
+          />
+          <input
+            type='text'
+            placeholder='Topic'
+            value={newTopic}
+            onChange={(e) => setNewTopic(e.target.value)}
+          />
+        </div>
+        <div className='popup-actions'>
+          <button className='popup-btn primary' onClick={handleAddData}>
+            Add
+          </button>
+          <button className='popup-btn' onClick={() => setShowAddPopup(false)}>
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
