@@ -20,33 +20,35 @@ const DatasetItem = ({ dataset, onDelete }) => {
 
   return (
     <div className='dataset-item'>
-      <h3>{name}</h3>
-      <p>
-        <strong>Total Data:</strong> {total_data}
-      </p>
-      <p>
-        <strong>Topic Counts:</strong>
-      </p>
-      <ul>
-        {Object.entries(topic_counts).map(([topic, count]) => (
-          <li key={topic}>
-            {topic}: {count}
-          </li>
-        ))}
-      </ul>
-      <p>
-        <strong>Uploaded At:</strong> {new Date(upload_at).toLocaleString()}
-      </p>
-      <button onClick={handleTrain} className='train-btn'>
-        Train
-      </button>
-      {id != 'default-stemming' ? (
-        <button onClick={() => onDelete(id)} className='delete-btn'>
-          Delete
+      <div className='dataset-item-header'>
+        <h3>{name}</h3>
+        <p className='dataset-uploaded'>Uploaded: {new Date(upload_at).toLocaleString()}</p>
+      </div>
+      <div className='dataset-item-body'>
+        <p>
+          <strong>Total Data:</strong> {total_data}
+        </p>
+        <div className='dataset-topic-counts'>
+          <strong>Topic Counts:</strong>
+          <ul>
+            {Object.entries(topic_counts).map(([topic, count]) => (
+              <li key={topic}>
+                {topic}: {count}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className='dataset-item-actions'>
+        <button className='train-btn' onClick={handleTrain}>
+          Train
         </button>
-      ) : (
-        ''
-      )}
+        {id !== 'default-stemming' && (
+          <button className='delete-btn' onClick={() => onDelete(id)}>
+            Delete
+          </button>
+        )}
+      </div>
     </div>
   );
 };
