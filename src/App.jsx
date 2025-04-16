@@ -42,11 +42,9 @@ const App = () => {
             <HeaderBar />
           </header>
           <div className='main'>
-            {(location.pathname.startsWith('/user') || location.pathname.startsWith('/admin')) && (
-              <SideBar />
-            )}
+            {location.pathname.startsWith('/admin') && <SideBar />}
 
-            <main>
+            <main className={location.pathname.startsWith('/user') ? 'user-main' : ''}>
               <ScrollToTop />
               {(location.pathname.startsWith('/user/home') ||
                 location.pathname.startsWith('/admin/home')) && <NavigationBar />}

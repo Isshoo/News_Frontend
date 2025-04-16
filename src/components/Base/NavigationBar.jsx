@@ -86,7 +86,7 @@ const NavigationBar = () => {
       <LocaleConsumer>
         {({ locale }) => {
           return (
-            <nav className='navigation-bar'>
+            <nav className='navigation-bar user-nav'>
               <ul className='navigation'>
                 <li>
                   <Link
