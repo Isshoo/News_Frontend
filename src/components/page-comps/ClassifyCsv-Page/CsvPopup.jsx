@@ -17,6 +17,7 @@ const CsvPopup = ({
   handleEditCell,
   handleDeleteRow,
   setIsPopupOpen,
+  totalData,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
@@ -28,7 +29,7 @@ const CsvPopup = ({
   const totalPages = Math.ceil(csvData.length / rowsPerPage);
 
   return (
-    <div className='csv-popup'>
+    <div className={totalData == 0 ? 'csv-popup no-data' : 'csv-popup'}>
       <div className='csv-popup-content'>
         <div className='csv-model-selector'>
           <ModelSelect
@@ -37,9 +38,13 @@ const CsvPopup = ({
             handleModelChange={handleModelChange}
             showFormattedDate={showFormattedDate}
           />
-          <button className='csv-popup-overlay' onClick={() => setIsPopupOpen()}>
-            X
-          </button>
+          {totalData == 0 ? (
+            ''
+          ) : (
+            <button className='csv-popup-overlay' onClick={() => setIsPopupOpen()}>
+              X
+            </button>
+          )}
         </div>
         <div className='csv-file-upload'>
           <input type='file' accept='.csv' onChange={handleFileUpload} />
@@ -85,6 +90,7 @@ CsvPopup.propTypes = {
   handleEditCell: PropTypes.func.isRequired,
   handleDeleteRow: PropTypes.func.isRequired,
   setIsPopupOpen: PropTypes.func.isRequired,
+  totalData: PropTypes.number.isRequired,
 };
 
 export default CsvPopup;

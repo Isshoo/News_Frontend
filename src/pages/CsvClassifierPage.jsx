@@ -120,6 +120,7 @@ const CsvClassifierPage = () => {
             handleEditCell={handleEditCell}
             handleDeleteRow={handleDeleteRow}
             setIsPopupOpen={handlePopup}
+            totalData={classificationResult.length}
           />
         )}
 

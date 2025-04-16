@@ -64,9 +64,11 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
 
     const response = await predictCsv(csvFile, selectedModelPath);
     if (response.error) {
+      dispatch(setLoading(false));
       throw new Error('Failed to classify CSV');
     }
     dispatch(setClassificationResult(response));
+    dispatch(setLoading(false));
 
     return response;
   } catch (err) {
