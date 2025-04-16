@@ -4,6 +4,10 @@ footer {
   width: 100%;
   transition: background-color 0.3s ease;
   background-color: var(--footer-background);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .footer-bar {

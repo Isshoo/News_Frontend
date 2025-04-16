@@ -6,11 +6,17 @@
     background-color: var(--sidebar-bg);
     transition: transform 0.3s ease;
     padding-inline: 32px;
-    padding-block: 74.2px 1rem;
+    padding-block: 74.2px 2rem;
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
 }
 
 .side {
@@ -20,7 +26,7 @@
   align-items: center;
   gap: 1rem;
   height: 100%;
-  padding-block: 2rem 1rem;
+  padding-block: 2rem 0;
 }
 
 .side li {
@@ -61,6 +67,37 @@
 }
 .side-icon {
   font-size: 1rem;
+}
+
+.logout {
+  cursor: pointer;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logout p {
+  color: var(--logout-text);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.logout svg {
+  font-size: 1.25rem;
+  font-weight: 500;
+  path,
+  polyline,
+  line {
+    color: var(--logout-text);
+  }
+}
+
+.logout:hover {
+  p,
+  svg polyline,
+  svg line {
+    color: var(--logout-text-hover);
+  }
 }
 
 @media screen and (max-width: 860px) {

@@ -2,8 +2,13 @@ import React from 'react';
 import { MdOutlineWbSunny, MdSunny } from 'react-icons/md';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
 import { ThemeConsumer } from '../../contexts/ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderBar = () => {
+  const navigate = useNavigate();
+  const handleLogoClick = () => {
+    navigate('/');
+  };
   return (
     <LocaleConsumer>
       {({ locale, toggleLocale }) => {
@@ -12,7 +17,7 @@ const HeaderBar = () => {
             {({ theme, toggleTheme }) => {
               return (
                 <div className='header-bar'>
-                  <h1 className='nav-title'>
+                  <h1 className='nav-title' onClick={handleLogoClick}>
                     {locale === 'EN' ? 'News Classifier App.' : 'Aplikasi Klasifikasi Berita.'}
                   </h1>
                   <div className='header-buttons'>

@@ -87,6 +87,7 @@ main {
   height: 100vh;
   overflow-y: auto;
   transition: transform 0.3s ease;
+  z-index: 2;
 }
 
 main::-webkit-scrollbar {
@@ -96,15 +97,34 @@ main::-webkit-scrollbar {
 /* not found page */
 .notFound-container {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--main-bg);
+}
+.notFound-content {
+  display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  text-align: center;
 }
-.notFound-container h1,
-.notFound-container p,
+.notFound-content h1,
+.notFound-content p,
 .blank-thread {
   color: var(--notfound-text);
+  margin: auto;
+}
+.notFound-button {
+  /* background-color: var(--button-bg); */
+  color: var(--secondary-text);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 /* media query */

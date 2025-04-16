@@ -1,0 +1,43 @@
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--main-bg);
+  color: var(--primary-text);
+  text-align: center;
+  padding: 2rem;
+  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -10;
+}
+
+.logo {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.tagline {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.landing-buttons button {
+  margin: 0 1rem;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--submit-bg);
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.landing-buttons button:hover {
+  background-color: var(--submit-bg-hover);
+}

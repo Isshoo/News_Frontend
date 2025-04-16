@@ -34,14 +34,14 @@ const ModelItem = ({ model, onDelete, onRename }) => {
     dispatch(setSelectedModel(id, model_path));
     dispatch(setSelectedDataset(raw_dataset_id));
     dispatch(setSelectedPreprocessedDataset(preprocessed_dataset_id));
-    navigate('/train-model/evaluation');
+    navigate('/admin/home/evaluation');
   };
 
   const handleClassify = () => {
     dispatch(setSelectedModel(id, model_path));
     dispatch(setSelectedDataset(raw_dataset_id));
     dispatch(setSelectedPreprocessedDataset(preprocessed_dataset_id));
-    navigate('/');
+    navigate('/user/home');
   };
 
   const handleEdit = async () => {

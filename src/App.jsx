@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { LocaleProvider } from './contexts/LocaleContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import LandingPage from './pages/LandingPage';
 import ClassifyPage from './pages/ClassifyPage';
 import CsvClassifierPage from './pages/CsvClassifierPage';
 import DataCollectingPage from './pages/DataCollectingPage';
@@ -41,36 +42,36 @@ const App = () => {
             <HeaderBar />
           </header>
           <div className='main'>
-            <SideBar />
+            {(location.pathname.startsWith('/user') || location.pathname.startsWith('/admin')) && (
+              <SideBar />
+            )}
+
             <main>
               <ScrollToTop />
-              {(location.pathname.startsWith('/train-model') ||
-                location.pathname.startsWith('/classifier') ||
-                location.pathname === '/') && <NavigationBar />}
+              {(location.pathname.startsWith('/user/home') ||
+                location.pathname.startsWith('/admin/home')) && <NavigationBar />}
 
               <Routes>
-                <Route path='/' element={<ClassifyPage />} />
-                <Route path='/classifier' element={<ClassifyPage />} />
-                <Route path='/classifier/csv' element={<CsvClassifierPage />} />
-                <Route path='/train-model' element={<DataCollectingPage />} />
-                <Route path='/train-model/data-collecting' element={<DataCollectingPage />} />
-                <Route path='/train-model/preprocessing' element={<PreprocessingPage />} />
-                <Route path='/train-model/parameters' element={<ParametersPage />} />
-                <Route path='/train-model/tfidf' element={<TfidfPage />} />
-                <Route path='/train-model/c5' element={<C5Page />} />
-                <Route path='/train-model/knn' element={<KNNPage />} />
-                <Route path='/train-model/evaluation' element={<EvaluationPage />} />
-                <Route path='/datasets' element={<DatasetsPage />} />
-                <Route path='/models' element={<ModelsPage />} />
+                <Route path='/' element={<LandingPage />} />
+                <Route path='/user/home' element={<ClassifyPage />} />
+                <Route path='/user/home/text' element={<ClassifyPage />} />
+                <Route path='/user/home/csv' element={<CsvClassifierPage />} />
+                <Route path='/admin/home' element={<DataCollectingPage />} />
+                <Route path='/admin/home/data-collecting' element={<DataCollectingPage />} />
+                <Route path='/admin/home/preprocessing' element={<PreprocessingPage />} />
+                <Route path='/admin/home/parameters' element={<ParametersPage />} />
+                <Route path='/admin/home/tfidf' element={<TfidfPage />} />
+                <Route path='/admin/home/c5' element={<C5Page />} />
+                <Route path='/admin/home/knn' element={<KNNPage />} />
+                <Route path='/admin/home/evaluation' element={<EvaluationPage />} />
+                <Route path='/admin/datasets' element={<DatasetsPage />} />
+                <Route path='/admin/models' element={<ModelsPage />} />
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>
 
-              {location.pathname.startsWith('/train-model') && <TrainModelNavigation />}
+              {location.pathname.startsWith('/admin/home') && <TrainModelNavigation />}
             </main>
           </div>
-          {/* <footer>
-            <FooterBar />
-          </footer> */}
         </div>
       </ThemeProvider>
     </LocaleProvider>

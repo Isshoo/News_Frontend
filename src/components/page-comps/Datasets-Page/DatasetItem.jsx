@@ -15,7 +15,7 @@ const DatasetItem = ({ dataset, onDelete }) => {
     dispatch(setSelectedDataset(id));
     dispatch(setSelectedPreprocessedDataset(''));
     dispatch(setSelectedModel('', ''));
-    navigate('/train-model/preprocessing');
+    navigate('/admin/home/preprocessing');
   };
 
   return (

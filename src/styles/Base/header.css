@@ -25,6 +25,7 @@ header {
 .nav-title {
   font-size: 1.75rem;
   color: var(--header-text);
+  cursor: pointer;
 }
 
 .header-buttons {

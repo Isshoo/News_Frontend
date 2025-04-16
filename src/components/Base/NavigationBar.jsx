@@ -5,7 +5,7 @@ import { LocaleConsumer } from '../../contexts/LocaleContext';
 const NavigationBar = () => {
   const location = useLocation();
 
-  if (location.pathname.startsWith('/train-model')) {
+  if (location.pathname.startsWith('/admin/home')) {
     return (
       <LocaleConsumer>
         {({ locale }) => {
@@ -14,8 +14,8 @@ const NavigationBar = () => {
               <ul className='navigation'>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/train-model/data-collecting' || location.pathname === '/train-model' ? 'active' : ''}`}
-                    to='/train-model/data-collecting'
+                    className={`nav-button ${location.pathname === '/admin/home/data-collecting' || location.pathname === '/admin/home' ? 'active' : ''}`}
+                    to='/admin/home/data-collecting'
                   >
                     <p>{locale === 'EN' ? 'Collect Data' : 'Kumpul Data'}</p>
                   </Link>
@@ -23,8 +23,8 @@ const NavigationBar = () => {
                 <li>&gt;</li>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/train-model/preprocessing' ? 'active' : ''}`}
-                    to='/train-model/preprocessing'
+                    className={`nav-button ${location.pathname === '/admin/home/preprocessing' ? 'active' : ''}`}
+                    to='/admin/home/preprocessing'
                   >
                     <p>{locale === 'EN' ? 'Preprocessing' : 'Prapemrosesan'}</p>
                   </Link>
@@ -32,8 +32,8 @@ const NavigationBar = () => {
                 <li>&gt;</li>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/train-model/parameters' ? 'active' : ''}`}
-                    to='/train-model/parameters'
+                    className={`nav-button ${location.pathname === '/admin/home/parameters' ? 'active' : ''}`}
+                    to='/admin/home/parameters'
                   >
                     <p>{locale === 'EN' ? 'Parameters' : 'Parameter'}</p>
                   </Link>
@@ -41,8 +41,8 @@ const NavigationBar = () => {
                 <li>&gt;</li>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/train-model/tfidf' ? 'active' : ''}`}
-                    to='/train-model/tfidf'
+                    className={`nav-button ${location.pathname === '/admin/home/tfidf' ? 'active' : ''}`}
+                    to='/admin/home/tfidf'
                   >
                     <p>{locale === 'EN' ? 'TF-IDF' : 'TF-IDF'}</p>
                   </Link>
@@ -50,8 +50,8 @@ const NavigationBar = () => {
                 <li>&gt;</li>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/train-model/c5' ? 'active' : ''}`}
-                    to='/train-model/c5'
+                    className={`nav-button ${location.pathname === '/admin/home/c5' ? 'active' : ''}`}
+                    to='/admin/home/c5'
                   >
                     <p>{locale === 'EN' ? 'C5' : 'C5'}</p>
                   </Link>
@@ -59,8 +59,8 @@ const NavigationBar = () => {
                 <li>&gt;</li>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/train-model/knn' ? 'active' : ''}`}
-                    to='/train-model/knn'
+                    className={`nav-button ${location.pathname === '/admin/home/knn' ? 'active' : ''}`}
+                    to='/admin/home/knn'
                   >
                     <p>{locale === 'EN' ? 'KNN' : 'KNN'}</p>
                   </Link>
@@ -68,8 +68,8 @@ const NavigationBar = () => {
                 <li>&gt;</li>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/train-model/evaluation' ? 'active' : ''}`}
-                    to='/train-model/evaluation'
+                    className={`nav-button ${location.pathname === '/admin/home/evaluation' ? 'active' : ''}`}
+                    to='/admin/home/evaluation'
                   >
                     <p>{locale === 'EN' ? 'Evaluation' : 'Evaluasi'}</p>
                   </Link>
@@ -81,35 +81,39 @@ const NavigationBar = () => {
       </LocaleConsumer>
     );
   }
-  return (
-    <LocaleConsumer>
-      {({ locale }) => {
-        return (
-          <nav className='navigation-bar'>
-            <ul className='navigation'>
-              <li>
-                <Link
-                  className={`nav-button ${location.pathname === '/' || location.pathname === '/classifier' ? 'active' : ''}`}
-                  to='/classifier'
-                >
-                  <p>{locale === 'EN' ? 'Text Classification' : 'Klasifikasi Teks'}</p>
-                </Link>
-              </li>
-              <li>||</li>
-              <li>
-                <Link
-                  className={`nav-button ${location.pathname === '/classifier/csv' ? 'active' : ''}`}
-                  to='/classifier/csv'
-                >
-                  <p>{locale === 'EN' ? 'CSV Classification' : 'Klasifikasi CSV'}</p>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        );
-      }}
-    </LocaleConsumer>
-  );
+  if (location.pathname.startsWith('/user/home')) {
+    return (
+      <LocaleConsumer>
+        {({ locale }) => {
+          return (
+            <nav className='navigation-bar'>
+              <ul className='navigation'>
+                <li>
+                  <Link
+                    className={`nav-button ${location.pathname === '/user/home' || location.pathname === '/user/home/text' ? 'active' : ''}`}
+                    to='/user/home/text'
+                  >
+                    <p>{locale === 'EN' ? 'Text Classification' : 'Klasifikasi Teks'}</p>
+                  </Link>
+                </li>
+                <li>||</li>
+                <li>
+                  <Link
+                    className={`nav-button ${location.pathname === '/user/home/csv' ? 'active' : ''}`}
+                    to='/user/home/csv'
+                  >
+                    <p>{locale === 'EN' ? 'CSV Classification' : 'Klasifikasi CSV'}</p>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          );
+        }}
+      </LocaleConsumer>
+    );
+  }
+
+  return null;
 };
 
 export default NavigationBar;

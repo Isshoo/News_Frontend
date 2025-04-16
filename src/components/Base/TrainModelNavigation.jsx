@@ -7,13 +7,13 @@ const TrainModelNavigation = () => {
   const navigate = useNavigate();
 
   const steps = [
-    ['/train-model', '/train-model/data-collecting'], // group as one step
-    '/train-model/preprocessing',
-    '/train-model/parameters',
-    '/train-model/tfidf',
-    '/train-model/c5',
-    '/train-model/knn',
-    '/train-model/evaluation',
+    ['/admin/home', '/admin/home/data-collecting'], // group as one step
+    '/admin/home/preprocessing',
+    '/admin/home/parameters',
+    '/admin/home/tfidf',
+    '/admin/home/c5',
+    '/admin/home/knn',
+    '/admin/home/evaluation',
   ];
   const labels = [
     'Collecting Data',
