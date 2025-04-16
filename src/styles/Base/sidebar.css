@@ -1,7 +1,7 @@
 
 
 .side-bar {
-    width: 17%;
+    width: 16.5%;
     flex: 0.175;
     background-color: var(--sidebar-bg);
     transition: transform 0.3s ease;

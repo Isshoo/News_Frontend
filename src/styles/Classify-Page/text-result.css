@@ -2,10 +2,10 @@
   overflow: auto;
   scroll-behavior: smooth;
   width: 100%;
+  padding-inline: 1rem;
 }
-.chat-section::-webkit-scrollbar{
-  display: none;
-}
+/* .chat-section::-webkit-scrollbar{
+} */
 
 .chat-container {
   display: flex;

@@ -73,12 +73,13 @@ label {
 }
 
 main {
-  width: 83%;
-  padding-block: 74.2px 1rem;
+  width: 83.5%;
+  padding-block: 74.2px 0rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 1.5rem;
   background-color: var(--main-bg);
   position: fixed;
