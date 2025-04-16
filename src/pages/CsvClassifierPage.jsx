@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Papa from 'papaparse';
 import Pages from '../components/styled/Pages';
 import CsvPopup from '../components/page-comps/ClassifyCsv-Page/CsvPopup';
+import Pagination from '../components/Base/Pagination';
 import ClassificationResultTable from '../components/page-comps/ClassifyCsv-Page/ClassificationResultTable';
 import { classifyCsvThunk, classifyRowThunk } from '../states/classifier/thunk';
 import {
@@ -25,6 +26,13 @@ const CsvClassifierPage = () => {
     (state) => state.classifier
   );
   const { models, selectedModelId } = useSelector((state) => state.models);
+
+  const [resultPage, setResultPage] = useState(1);
+  const rowsPerPage = 5;
+  const resultStartIndex = (resultPage - 1) * rowsPerPage;
+  const resultEndIndex = resultStartIndex + rowsPerPage;
+  const paginatedResult = classificationResult.slice(resultStartIndex, resultEndIndex);
+  const resultTotalPages = Math.ceil(classificationResult.length / rowsPerPage);
 
   useEffect(() => {
     if (firstRun.current) {
@@ -116,10 +124,19 @@ const CsvClassifierPage = () => {
         )}
 
         {classificationResult.length > 0 && (
-          <ClassificationResultTable
-            classificationResult={classificationResult}
-            classifySingleRow={classifySingleRow}
-          />
+          <>
+            <ClassificationResultTable
+              totalData={classificationResult.length}
+              classificationResult={paginatedResult}
+              classifySingleRow={classifySingleRow}
+              startIndex={resultStartIndex}
+            />
+            <Pagination
+              currentPage={resultPage}
+              totalPages={resultTotalPages}
+              setCurrentPage={setResultPage}
+            />
+          </>
         )}
         <button
           className={

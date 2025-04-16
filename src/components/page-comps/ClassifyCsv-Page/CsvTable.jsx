@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CsvTable = ({ csvData, handleEditCell, handleDeleteRow }) => (
+const CsvTable = ({ csvData, handleEditCell, handleDeleteRow, startIndex }) => (
   <div className='csv-table'>
     <table>
       <colgroup>
@@ -19,7 +19,7 @@ const CsvTable = ({ csvData, handleEditCell, handleDeleteRow }) => (
       <tbody>
         {csvData.map((row, index) => (
           <tr key={index}>
-            <td>{index + 1}</td>
+            <td>{startIndex + index + 1}</td>
             <td>
               <input
                 type='text'
@@ -42,6 +42,7 @@ CsvTable.propTypes = {
   csvData: PropTypes.array.isRequired,
   handleEditCell: PropTypes.func.isRequired,
   handleDeleteRow: PropTypes.func.isRequired,
+  startIndex: PropTypes.number.isRequired,
 };
 
 export default CsvTable;

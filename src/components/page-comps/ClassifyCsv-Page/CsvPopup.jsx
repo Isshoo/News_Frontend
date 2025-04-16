@@ -30,10 +30,6 @@ const CsvPopup = ({
   return (
     <div className='csv-popup'>
       <div className='csv-popup-content'>
-        <button className='csv-popup-overlay' onClick={() => setIsPopupOpen()}>
-          X
-        </button>
-        <h2 className='csv-popup-title'>Upload Data dan Pilih Model</h2>
         <div className='csv-model-selector'>
           <ModelSelect
             models={models}
@@ -41,6 +37,9 @@ const CsvPopup = ({
             handleModelChange={handleModelChange}
             showFormattedDate={showFormattedDate}
           />
+          <button className='csv-popup-overlay' onClick={() => setIsPopupOpen()}>
+            X
+          </button>
         </div>
         <div className='csv-file-upload'>
           <input type='file' accept='.csv' onChange={handleFileUpload} />
@@ -54,6 +53,7 @@ const CsvPopup = ({
               csvData={paginatedData} // ⬅️ pakai data yang sudah dipotong
               handleEditCell={handleEditCell}
               handleDeleteRow={handleDeleteRow}
+              startIndex={startIndex}
             />
             <Pagination
               currentPage={currentPage}

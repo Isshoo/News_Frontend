@@ -29,6 +29,7 @@
 .csv-popup {
   position: absolute;
   width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0);
   backdrop-filter: blur(5px);
   display: flex;
@@ -40,19 +41,15 @@
 .csv-popup-content {
   background: var(--form-background);
   color: var(--secondary-text);
-  padding: 24px;
+  padding-inline: 24px;
   border-radius: 16px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
   width: 100%;
   max-width: 700px;
   position: relative;
-  margin-bottom: 1.5rem;
 }
 
 .csv-popup-overlay {
-  position: absolute;
-  top: 16px;
-  right: 16px;
   background: transparent;
   border: none;
   font-size: 1.2rem;
@@ -70,6 +67,13 @@
 .csv-file-upload,
 .csv-actions {
   margin-block: 16px;
+}
+
+.csv-model-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 
@@ -115,14 +119,26 @@
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
+}
+.csv-result-table-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--form-border);
+  padding-bottom: 0.5rem;
+}
+.csv-result-table-info h2{
+  font-size: 1.5rem;
+  color: var(--primary-text);
 }
 
 .csv-table {
   margin-bottom: 0.25rem;
 }
 
-.csv-table h2,
-.csv-result-table h2 {
+.csv-table h2 {
   margin-bottom: 1rem;
   font-size: 1.5rem;
   color: var(--primary-text);
@@ -143,10 +159,17 @@
   background-color: var(--nav-bg);
   color: var(--header-text);
 }
-.csv-table thead th,
+.csv-table thead th {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 2px solid var(--nav-border);
+}
+
 .csv-result-table thead th {
   padding: 0.75rem 1rem;
-  text-align: center;
+  text-align: left;
   font-weight: 600;
   font-size: 0.95rem;
   border-bottom: 2px solid var(--nav-border);

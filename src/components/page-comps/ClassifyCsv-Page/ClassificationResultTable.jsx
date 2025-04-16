@@ -1,17 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ClassificationResultTable = ({ classificationResult, classifySingleRow }) => (
+const ClassificationResultTable = ({
+  totalData,
+  classificationResult,
+  classifySingleRow,
+  startIndex,
+}) => (
   <div className='csv-result-table'>
-    <h2>Classification Results</h2>
+    <div className='csv-result-table-info'>
+      <h2>Classification Results</h2>
+      <p>
+        <strong>Total Data:</strong> {totalData}
+      </p>
+    </div>
     <table>
       <colgroup>
-        <col style={{ width: '70%' }} />
-        <col style={{ width: '15%' }} />
-        <col style={{ width: '15%' }} />
+        <col style={{ width: '4%' }} />
+        <col style={{ width: '72%' }} />
+        <col style={{ width: '12%' }} />
+        <col style={{ width: '12%' }} />
       </colgroup>
       <thead>
         <tr>
+          <th>No</th>
           <th>Content Snippet</th>
           <th>Hybrid Predicted</th>
           <th>DeepSeek Predicted</th>
@@ -20,13 +32,14 @@ const ClassificationResultTable = ({ classificationResult, classifySingleRow }) 
       <tbody>
         {classificationResult.map((row, index) => (
           <tr key={index}>
+            <td>{startIndex + index + 1}</td>
             <td title={row.contentSnippet} style={{ maxHeight: '3.6em', overflow: 'hidden' }}>
               {row.contentSnippet}
             </td>
             <td>{row.Hybrid_C5_KNN || '-'}</td>
             <td>
               {!row.DeepSeek || row.DeepSeek === 'Unknown' ? (
-                <button onClick={() => classifySingleRow(index, row.contentSnippet)}>
+                <button onClick={() => classifySingleRow(startIndex + index, row.contentSnippet)}>
                   Classify Again
                 </button>
               ) : (
@@ -41,8 +54,9 @@ const ClassificationResultTable = ({ classificationResult, classifySingleRow }) 
 );
 
 ClassificationResultTable.propTypes = {
+  totalData: PropTypes.number.isRequired,
   classificationResult: PropTypes.array.isRequired,
   classifySingleRow: PropTypes.func.isRequired,
+  startIndex: PropTypes.number.isRequired,
 };
-
 export default ClassificationResultTable;
