@@ -116,6 +116,11 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
 }
+
+.csv-table {
+  margin-bottom: 0.25rem;
+}
+
 .csv-table h2,
 .csv-result-table h2 {
   margin-bottom: 1rem;
@@ -153,7 +158,7 @@
   color: var(--primary-text);
   background-color: var(--background);
   font-size: 0.95rem;
-  vertical-align: top;
+  vertical-align: center;
   text-align: left;
   max-height: 94.5px; /* ~6 lines */
   overflow: hidden;

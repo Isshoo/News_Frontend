@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ModelSelect } from '../../Base/Select';
 import CsvTable from './CsvTable';
 import { showFormattedDate } from '../../../utils/helper';
 import PropTypes from 'prop-types';
+import Pagination from '../../Base/Pagination';
 
 const CsvPopup = ({
   models,
@@ -17,6 +18,15 @@ const CsvPopup = ({
   handleDeleteRow,
   setIsPopupOpen,
 }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const paginatedData = csvData.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(csvData.length / rowsPerPage);
+
   return (
     <div className='csv-popup'>
       <div className='csv-popup-content'>
@@ -39,11 +49,18 @@ const CsvPopup = ({
           </p>
         </div>
         {csvData.length > 0 && (
-          <CsvTable
-            csvData={csvData}
-            handleEditCell={handleEditCell}
-            handleDeleteRow={handleDeleteRow}
-          />
+          <>
+            <CsvTable
+              csvData={paginatedData} // ⬅️ pakai data yang sudah dipotong
+              handleEditCell={handleEditCell}
+              handleDeleteRow={handleDeleteRow}
+            />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+            />
+          </>
         )}
         <div className='csv-actions'>
           <button onClick={handleAddRow}>Tambah Data</button>
