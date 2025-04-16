@@ -14,6 +14,8 @@ const PreprocessTable = ({
   rawDatasetId,
   loading,
 }) => {
+  const labelOptions = ['ekonomi', 'gayahidup', 'hiburan', 'olahraga', 'teknologi'];
+
   return (
     <div className='preprocess-table'>
       <h2>Preprocessed Dataset</h2>
@@ -64,15 +66,18 @@ const PreprocessTable = ({
                     <td title={item.preprocessedContent}>{item.preprocessedContent}</td>
                     <td>
                       {editingIndex === item.index ? (
-                        <input
-                          type='text'
-                          value={newLabel}
-                          onChange={(e) => setNewLabel(e.target.value)}
-                        />
+                        <select value={newLabel} onChange={(e) => setNewLabel(e.target.value)}>
+                          {labelOptions.map((label, i) => (
+                            <option key={i} value={label}>
+                              {label}
+                            </option>
+                          ))}
+                        </select>
                       ) : (
                         item.topik
                       )}
                     </td>
+
                     {preprocessedDatasetId === rawDatasetId ? (
                       ''
                     ) : (
