@@ -8,8 +8,9 @@
     font-size: 1rem;
     transition: background-color 0.3s ease, color 0.3s ease;
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 2rem;
+    right: 40%;
+    transform: translateX(50%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

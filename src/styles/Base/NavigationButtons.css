@@ -1,0 +1,38 @@
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid #333;
+  width: 100%;
+  padding-inline: 32px;
+}
+
+.nav-btn {
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+  background-color: #3477db;
+  color: #fff;
+}
+
+.nav-btn:hover {
+  background-color: #2b65bb;
+}
+
+.nav-btn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.prev-btn {
+  margin-right: auto;
+}
+
+.next-btn {
+  margin-left: auto;
+}

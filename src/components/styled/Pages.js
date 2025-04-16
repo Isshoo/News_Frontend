@@ -9,6 +9,7 @@ const Pages = styled.section`
   max-width: 1200px;
   margin-bottom: 1.5rem;
   gap: 1rem;
+  flex: 1;
 `;
 
 export default Pages;
