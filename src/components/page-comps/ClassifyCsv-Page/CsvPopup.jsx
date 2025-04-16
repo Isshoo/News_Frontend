@@ -34,6 +34,9 @@ const CsvPopup = ({
         </div>
         <div className='csv-file-upload'>
           <input type='file' accept='.csv' onChange={handleFileUpload} />
+          <p>
+            <strong>Total Data:</strong> {Number(csvData.length)}
+          </p>
         </div>
         {csvData.length > 0 && (
           <CsvTable

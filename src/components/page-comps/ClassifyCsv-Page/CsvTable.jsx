@@ -5,11 +5,13 @@ const CsvTable = ({ csvData, handleEditCell, handleDeleteRow }) => (
   <div className='csv-table'>
     <table>
       <colgroup>
-        <col style={{ width: '82%' }} />
-        <col style={{ width: '18%' }} />
+        <col style={{ width: '5%' }} />
+        <col style={{ width: '80%' }} />
+        <col style={{ width: '15%' }} />
       </colgroup>
       <thead>
         <tr>
+          <th>No</th>
           <th>Content Snippet</th>
           <th>Actions</th>
         </tr>
@@ -17,6 +19,7 @@ const CsvTable = ({ csvData, handleEditCell, handleDeleteRow }) => (
       <tbody>
         {csvData.map((row, index) => (
           <tr key={index}>
+            <td>{index + 1}</td>
             <td>
               <input
                 type='text'
