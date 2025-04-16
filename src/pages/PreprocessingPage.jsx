@@ -146,7 +146,15 @@ const PreprocessingPage = () => {
       {!selectedDataset ? (
         <p>Please select a raw dataset first to view its preprocessed datasets.</p>
       ) : preprocessedDatasets.length === 0 ? (
-        <button onClick={handlePreprocess}>Preprocess Raw Dataset</button>
+        <div className='no-preprocessed-dataset'>
+          <h3 className='no-preprocessed-dataset-title'>Dataset Has Not Been Preprocessed</h3>
+          <p className='no-preprocessed-dataset-text'>
+            You can preprocess the raw dataset by clicking the button below.
+          </p>
+          <button className='preprocess-btn' onClick={handlePreprocess}>
+            Preprocess
+          </button>
+        </div>
       ) : (
         <>
           <div className='list-dataset-dropdown'>
