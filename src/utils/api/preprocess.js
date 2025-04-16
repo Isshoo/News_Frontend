@@ -55,18 +55,18 @@ export const deletePreprocessedDataset = async (dataset_id) => {
   }
 };
 
-export const updateLabel = async (dataset_id, index, newLabel) =>{
+export const updatePreprocessedData = async (dataset_id, index, newLabel, newPreprocessedContent) =>{
   try {
-    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}/label`, {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/${dataset_id}/data`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ index: index, topik: newLabel }),
+      body: JSON.stringify({ index: index, topik: newLabel, preprocessedContent: newPreprocessedContent }),
     });
     return await response.json();
   } catch (error) {
-    return { error: 'Failed to update label.' };
+    return { error: 'Failed to update preprocessed data.' };
   }
 };
 

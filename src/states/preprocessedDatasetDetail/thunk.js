@@ -9,7 +9,7 @@ import {
 
 import {
   fetchPreprocessedDataset,
-  updateLabel,
+  updatePreprocessedData,
   deleteData,
   addData,
 } from '../../utils/api/preprocess';
@@ -30,9 +30,9 @@ export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit =
   dispatch(setPreprocessedDatasetDetailLoading(false));
 };
 
-export const asyncUpdatePreprocessedDataLabel = (datasetId, index, newLabel) => async (dispatch, getState) => {
+export const asyncUpdatePreprocessedData = (datasetId, index, newLabel, newPreprocessedContent) => async (dispatch, getState) => {
   try {
-    await updateLabel(datasetId, index, newLabel); // API call
+    await updatePreprocessedData(datasetId, index, newLabel, newPreprocessedContent); // API call
     const { limit, currentPage } = getState().preprocessedDatasetDetail;
     dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
   } catch (err) {

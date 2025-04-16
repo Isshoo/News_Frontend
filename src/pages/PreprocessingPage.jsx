@@ -8,7 +8,7 @@ import {
 } from '../states/preprocessedDatasets/thunk';
 import {
   asyncFetchPreprocessedDatasetDetail,
-  asyncUpdatePreprocessedDataLabel,
+  asyncUpdatePreprocessedData,
   asyncDeletePreprocessedData,
   asyncAddPreprocessedData,
 } from '../states/preprocessedDatasetDetail/thunk';
@@ -43,6 +43,7 @@ const PreprocessingPage = () => {
   } = useSelector((state) => state.preprocessedDatasetDetail);
 
   const [editingIndex, setEditingIndex] = useState(null);
+  const [newPreprocessedContent, setNewPreprocessedContent] = useState('');
   const [newLabel, setNewLabel] = useState('');
   const [showAddPopup, setShowAddPopup] = useState(false);
   const [newContent, setNewContent] = useState('');
@@ -93,13 +94,21 @@ const PreprocessingPage = () => {
     }
   };
 
-  const handleEdit = (index, currentTopic) => {
+  const handleEdit = (index, currentTopic, currentPreprocessedContent) => {
     setEditingIndex(index);
     setNewLabel(currentTopic);
+    setNewPreprocessedContent(currentPreprocessedContent);
   };
 
   const handleSave = (index) => {
-    dispatch(asyncUpdatePreprocessedDataLabel(selectedPreprocessedDataset, index, newLabel));
+    dispatch(
+      asyncUpdatePreprocessedData(
+        selectedPreprocessedDataset,
+        index,
+        newLabel,
+        newPreprocessedContent
+      )
+    );
     setEditingIndex(null);
   };
 
@@ -188,6 +197,8 @@ const PreprocessingPage = () => {
                 newLabel={newLabel}
                 setNewLabel={setNewLabel}
                 handleEdit={handleEdit}
+                newPreprocessedContent={newPreprocessedContent}
+                setNewPreprocessedContent={setNewPreprocessedContent}
                 handleSave={handleSave}
                 handleDelete={handleDelete}
                 preprocessedDatasetId={selectedPreprocessedDataset}

@@ -7,6 +7,8 @@ const PreprocessTable = ({
   editingIndex,
   newLabel,
   setNewLabel,
+  newPreprocessedContent,
+  setNewPreprocessedContent,
   handleEdit,
   handleSave,
   handleDelete,
@@ -63,7 +65,17 @@ const PreprocessTable = ({
                   <tr key={item.index}>
                     <td>{item.index + 1}</td>
                     <td title={item.contentSnippet}>{item.contentSnippet}</td>
-                    <td title={item.preprocessedContent}>{item.preprocessedContent}</td>
+                    <td title={item.preprocessedContent}>
+                      {editingIndex === item.index ? (
+                        <textarea
+                          placeholder='Preprocessed Content'
+                          value={newPreprocessedContent}
+                          onChange={(e) => setNewPreprocessedContent(e.target.value)}
+                        />
+                      ) : (
+                        item.preprocessedContent
+                      )}
+                    </td>
                     <td>
                       {editingIndex === item.index ? (
                         <select value={newLabel} onChange={(e) => setNewLabel(e.target.value)}>
@@ -85,7 +97,13 @@ const PreprocessTable = ({
                         {editingIndex === item.index ? (
                           <button onClick={() => handleSave(item.index)}>Save</button>
                         ) : (
-                          <button onClick={() => handleEdit(item.index, item.topik)}>Edit</button>
+                          <button
+                            onClick={() =>
+                              handleEdit(item.index, item.topik, item.preprocessedContent)
+                            }
+                          >
+                            Edit
+                          </button>
                         )}
                         <button onClick={() => handleDelete(item.index)}>Delete</button>
                       </td>
@@ -106,6 +124,8 @@ PreprocessTable.propTypes = {
   editingIndex: PropTypes.number,
   newLabel: PropTypes.string,
   setNewLabel: PropTypes.func,
+  newPreprocessedContent: PropTypes.string,
+  setNewPreprocessedContent: PropTypes.func,
   handleEdit: PropTypes.func,
   handleSave: PropTypes.func,
   handleDelete: PropTypes.func,
