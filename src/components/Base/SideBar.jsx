@@ -25,13 +25,6 @@ const SideBar = () => {
                   </Link>
                 </li>
               </ul>
-              <div>
-                <Link to='/'>
-                  <button className='logout'>
-                    <p>User</p> <FiLogOut />
-                  </button>
-                </Link>
-              </div>
             </nav>
           );
         }}
@@ -73,13 +66,6 @@ const SideBar = () => {
                   </Link>
                 </li>
               </ul>
-              <div>
-                <Link to='/'>
-                  <button className='logout'>
-                    <p>Admin</p> <FiLogOut />
-                  </button>
-                </Link>
-              </div>
             </nav>
           );
         }}

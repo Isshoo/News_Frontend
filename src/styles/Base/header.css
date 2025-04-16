@@ -41,6 +41,41 @@ header {
   font-size: 1.25rem;
   color: var(--header-text);
 }
+.header-buttons .separator {
+  font-size: 1.1rem;
+  color: var(--header-text);
+  padding-inline: 0.25rem;
+}
+.logout {
+  cursor: pointer;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logout p {
+  color: var(--secondary-text);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.logout svg {
+  font-size: 1.15rem;
+  font-weight: 500;
+  path,
+  polyline,
+  line {
+    color: var(--secondary-text);
+  }
+}
+
+.logout:hover {
+  p,
+  svg polyline,
+  svg line {
+    color: var(--logout-text-hover);
+  }
+}
 
 .navigation-bar {
   width: 100%;

@@ -69,36 +69,7 @@
   font-size: 1rem;
 }
 
-.logout {
-  cursor: pointer;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
 
-.logout p {
-  color: var(--logout-text);
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-.logout svg {
-  font-size: 1.25rem;
-  font-weight: 500;
-  path,
-  polyline,
-  line {
-    color: var(--logout-text);
-  }
-}
-
-.logout:hover {
-  p,
-  svg polyline,
-  svg line {
-    color: var(--logout-text-hover);
-  }
-}
 
 @media screen and (max-width: 860px) {
     .side-icon {
