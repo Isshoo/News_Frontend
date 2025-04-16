@@ -151,7 +151,9 @@ const ParametersPage = () => {
         </div>
 
         <div className='form-group'>
-          <label>n_neighbors</label>
+          <label>
+            <i>k</i> neighbors
+          </label>
           <input
             type='number'
             value={nNeighbors}
