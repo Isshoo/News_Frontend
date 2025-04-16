@@ -59,13 +59,14 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.preprocess-table input[type='text'] {
+.preprocess-table select {
   width: 100%;
-  padding: 0.4rem;
+  padding: 0.25rem 0;
   border-radius: 0.4rem;
   border: 1px solid var(--form-border);
   background-color: var(--input-background);
-  color: var(--input-text);
+  color: var(--submit-text);
+  cursor: pointer;
 }
 
 .preprocess-table button {
@@ -73,7 +74,7 @@
   margin-bottom: 0.4rem;
   padding: 0.4rem 0.75rem;
   background-color: var(--submit-bg);
-  color: var(--submit-text);
+  color: var(--secondary-text);
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
@@ -82,7 +83,8 @@
 }
 
 .preprocess-table button:hover {
-  background-color: var(--submit-bg-hover);
+  background-color: var(--submit-text);
+  color: var(--primary-text);
 }
 
 .preprocess-table button:active {

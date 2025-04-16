@@ -48,7 +48,8 @@
   margin-bottom: 1rem;
 }
 
-.popup-body input {
+.popup-body input,
+.popup-body select {
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   border: 1px solid #555;
@@ -56,6 +57,10 @@
   color: var(--primary-text);
   font-size: 0.95rem;
 }
+.popup-body select {
+  cursor: pointer;
+}
+
 
 /* Buttons */
 .popup-actions {

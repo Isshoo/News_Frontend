@@ -9,6 +9,7 @@ const AddDataPopup = ({
   handleAddData,
   setShowAddPopup,
 }) => {
+  const labelOptions = ['ekonomi', 'gayahidup', 'hiburan', 'olahraga', 'teknologi'];
   return (
     <div className='popup-overlay'>
       <div className='popup-box'>
@@ -25,12 +26,16 @@ const AddDataPopup = ({
             value={newContent}
             onChange={(e) => setNewContent(e.target.value)}
           />
-          <input
-            type='text'
-            placeholder='Topic'
-            value={newTopic}
-            onChange={(e) => setNewTopic(e.target.value)}
-          />
+          <select value={newTopic} onChange={(e) => setNewTopic(e.target.value)}>
+            <option value='' disabled>
+              Pilih Topik
+            </option>
+            {labelOptions.map((label, i) => (
+              <option key={i} value={label}>
+                {label}
+              </option>
+            ))}
+          </select>
         </div>
         <div className='popup-actions'>
           <button className='popup-btn primary' onClick={handleAddData}>
