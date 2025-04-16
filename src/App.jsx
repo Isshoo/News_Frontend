@@ -19,7 +19,7 @@ import useTheme from './hooks/useTheme';
 import HeaderBar from './components/Base/HeaderBar';
 import FooterBar from './components/Base/FooterBar';
 import NavigationBar from './components/Base/NavigationBar';
-import NavigationButtons from './components/Base/NavigationButtons';
+import TrainModelNavigation from './components/Base/TrainModelNavigation';
 import SideBar from './components/Base/SideBar';
 import ScrollToTop from './components/Base/ScrollToTop';
 import { useLocation } from 'react-router-dom';
@@ -65,53 +65,7 @@ const App = () => {
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>
 
-              {location.pathname.startsWith('/train-model') &&
-                (() => {
-                  const steps = [
-                    ['/train-model', '/train-model/data-collecting'], // group as one step
-                    '/train-model/preprocessing',
-                    '/train-model/parameters',
-                    '/train-model/tfidf',
-                    '/train-model/c5',
-                    '/train-model/knn',
-                    '/train-model/evaluation',
-                  ];
-                  const labels = [
-                    'Collecting Data',
-                    'Preprocessing',
-                    'Set Parameters',
-                    'TF-IDF',
-                    'C5',
-                    'KNN',
-                    'Evaluation',
-                  ];
-
-                  // Cari index langkah berdasarkan path sekarang
-                  const currentIndex = steps.findIndex((step) =>
-                    Array.isArray(step)
-                      ? step.includes(location.pathname)
-                      : step === location.pathname
-                  );
-
-                  if (currentIndex === -1) return null;
-
-                  const getPath = (step) => (Array.isArray(step) ? step[0] : step);
-
-                  const prevPath = currentIndex > 0 ? getPath(steps[currentIndex - 1]) : null;
-                  const nextPath =
-                    currentIndex < steps.length - 1 ? getPath(steps[currentIndex + 1]) : null;
-
-                  return (
-                    <NavigationButtons
-                      onPrevious={() => prevPath && navigate(prevPath)}
-                      onNext={() => nextPath && navigate(nextPath)}
-                      disablePrevious={currentIndex === 0}
-                      disableNext={currentIndex === steps.length - 1}
-                      previousPage={labels[currentIndex - 1] || ''}
-                      nextPage={labels[currentIndex + 1] || ''}
-                    />
-                  );
-                })()}
+              {location.pathname.startsWith('/train-model') && <TrainModelNavigation />}
             </main>
           </div>
           {/* <footer>
