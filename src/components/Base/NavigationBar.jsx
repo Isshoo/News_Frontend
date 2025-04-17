@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
+import { MdOutlineLeaderboard } from 'react-icons/md';
+import { GoHome } from 'react-icons/go';
 
 const NavigationBar = () => {
   const location = useLocation();
@@ -93,7 +95,10 @@ const NavigationBar = () => {
                     className={`nav-button ${location.pathname === '/user/home' || location.pathname === '/user/home/text' ? 'active' : ''}`}
                     to='/user/home/text'
                   >
-                    <p>{locale === 'EN' ? 'Text Classification' : 'Klasifikasi Teks'}</p>
+                    <div className='nav-link-con'>
+                      <GoHome className='nav-icon' />
+                      <p>{locale === 'EN' ? 'Home' : 'Beranda'}</p>
+                    </div>
                   </Link>
                 </li>
                 <li>||</li>
@@ -102,7 +107,10 @@ const NavigationBar = () => {
                     className={`nav-button ${location.pathname === '/user/home/csv' ? 'active' : ''}`}
                     to='/user/home/csv'
                   >
-                    <p>{locale === 'EN' ? 'CSV Classification' : 'Klasifikasi CSV'}</p>
+                    <div className='nav-link-con'>
+                      <MdOutlineLeaderboard className='nav-icon' />
+                      <p>{locale === 'EN' ? 'CSV Classifier' : 'Klasifikasi CSV'}</p>
+                    </div>
                   </Link>
                 </li>
               </ul>
