@@ -91,6 +91,7 @@
   border-radius: 8px;
   border: 1px solid #aaa;
   color: var(--results-text);
+  cursor: pointer;
 }
 .csv-file-upload p {
   color: var(--results-text);
