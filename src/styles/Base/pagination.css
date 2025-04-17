@@ -31,6 +31,6 @@
 }
 
 .pagination span {
-  color: var(--primary-text);
+  color: var(--results-text);
   font-size: 0.9rem;
 }

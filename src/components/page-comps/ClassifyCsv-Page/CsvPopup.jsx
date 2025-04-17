@@ -4,6 +4,8 @@ import CsvTable from './CsvTable';
 import { showFormattedDate } from '../../../utils/helper';
 import PropTypes from 'prop-types';
 import Pagination from '../../Base/Pagination';
+// react icons for x
+import { AiOutlineClose } from 'react-icons/ai';
 
 const CsvPopup = ({
   models,
@@ -42,7 +44,7 @@ const CsvPopup = ({
             ''
           ) : (
             <button className='csv-popup-overlay' onClick={() => setIsPopupOpen()}>
-              X
+              <AiOutlineClose />
             </button>
           )}
         </div>
@@ -70,7 +72,7 @@ const CsvPopup = ({
         <div className='csv-actions'>
           <button onClick={handleAddRow}>Tambah Data</button>
           <button onClick={classifyAllCsv} disabled={loading}>
-            {loading ? 'Processing...' : 'Classify CSV'}
+            {loading ? 'Classifying...' : 'Classify CSV'}
           </button>
         </div>
       </div>

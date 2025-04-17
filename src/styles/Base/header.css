@@ -23,7 +23,7 @@ header {
 }
 
 .nav-title {
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   color: var(--header-text);
   cursor: pointer;
 }

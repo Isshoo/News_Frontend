@@ -13,31 +13,44 @@
     left: 0;
     width: 100%;
     z-index: -10;
+  gap: 1.5rem;
 }
 
 .logo {
-  font-size: 3rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo svg {
+  width: 140px;
+  height: 140px;
+  color: var(--form-label);
 }
 
 .tagline {
   font-size: 1.25rem;
-  margin-bottom: 2rem;
+  font-weight: 500;
+  color: var(--form-label);
 }
 
 .landing-buttons button {
   margin: 0 1rem;
-  padding: 0.75rem 2rem;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
   border: none;
   border-radius: 8px;
   background-color: var(--submit-bg);
-  color: var(--secondary-text);
+  color: var(--submit-text);
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .landing-buttons button:hover {
   background-color: var(--submit-bg-hover);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
