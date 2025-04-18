@@ -6,7 +6,7 @@ import { setSelectedModel } from '../../../states/models/action';
 import { setSelectedDataset } from '../../../states/datasets/action';
 import { setSelectedPreprocessedDataset } from '../../../states/preprocessedDatasets/action';
 
-const DatasetItem = ({ dataset, onDelete }) => {
+const DatasetItem = ({ dataset, onDelete, deletingId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id, name, total_data, topic_counts, upload_at } = dataset;
@@ -44,8 +44,8 @@ const DatasetItem = ({ dataset, onDelete }) => {
           Train
         </button>
         {id !== 'default-stemming' && (
-          <button className='delete-btn' onClick={() => onDelete(id)}>
-            Delete
+          <button className='delete-btn' onClick={() => onDelete(id)} disabled={deletingId === id}>
+            {deletingId === id ? 'Deleting...' : 'Delete'}
           </button>
         )}
       </div>
@@ -62,6 +62,7 @@ DatasetItem.propTypes = {
     upload_at: PropTypes.string.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
+  deletingId: PropTypes.string,
 };
 
 export default DatasetItem;

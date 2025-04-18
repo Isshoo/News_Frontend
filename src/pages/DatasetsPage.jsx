@@ -11,11 +11,14 @@ import Pages from '../components/styled/Pages';
 import Loading from '../components/Base/LoadingBar';
 import DatasetItem from '../components/page-comps/Datasets-Page/DatasetItem';
 
+import Swal from 'sweetalert2';
+
 const DatasetsPage = () => {
   const firstRun = useRef(true);
   const dispatch = useDispatch();
   const { datasets } = useSelector((state) => state.datasets);
   const [isLoading, setIsloading] = React.useState(true);
+  const [deletingId, setDeletingId] = React.useState(null);
 
   useEffect(() => {
     if (firstRun.current) {
@@ -29,11 +32,15 @@ const DatasetsPage = () => {
     }
   }, [dispatch]);
 
-  const handleDeleteDataset = (id) => {
-    dispatch(asyncDeleteDataset(id));
-    dispatch(setSelectedDataset(''));
-    dispatch(setSelectedPreprocessedDataset(''));
-    dispatch(setSelectedModel('', ''));
+  const handleDeleteDataset = async (id) => {
+    setDeletingId(id);
+    const result = await dispatch(asyncDeleteDataset(id));
+    if (!result?.canceled) {
+      dispatch(setSelectedDataset(''));
+      dispatch(setSelectedPreprocessedDataset(''));
+      dispatch(setSelectedModel('', ''));
+    }
+    setDeletingId(null);
   };
 
   if (datasets === undefined) return null;
@@ -49,7 +56,12 @@ const DatasetsPage = () => {
         ) : (
           <div>
             {datasets.map((dataset) => (
-              <DatasetItem key={dataset.id} dataset={dataset} onDelete={handleDeleteDataset} />
+              <DatasetItem
+                key={dataset.id}
+                dataset={dataset}
+                onDelete={handleDeleteDataset}
+                deletingId={deletingId}
+              />
             ))}
           </div>
         )}
