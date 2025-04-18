@@ -1,10 +1,9 @@
 .dataset-table {
-  padding: 0.75rem 1rem;
   background-color: var(--main-bg);
   color: var(--primary-text);
   border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  
 }
 
 .dataset-table-header {
@@ -45,6 +44,7 @@
   border-radius: 0.5rem;
   overflow: hidden;
   table-layout: fixed;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dataset-table thead {

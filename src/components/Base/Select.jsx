@@ -46,11 +46,11 @@ const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, load
           <option value=''>No datasets available</option>
         ) : (
           <>
-            <option value='' disabled>
+            <option className='dataset-select-option' value='' disabled>
               Select a dataset
             </option>
             {datasets.map((dataset) => (
-              <option key={dataset.id} value={dataset.id}>
+              <option className='dataset-select-option' key={dataset.id} value={dataset.id}>
                 {dataset.name}
               </option>
             ))}
