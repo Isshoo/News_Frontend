@@ -6,8 +6,6 @@ const Pages = styled.section`
   flex-direction: column;
   position: relative;
   padding-inline: 32px;
-  max-width: 1100px;
-  margin-bottom: 1.5rem;
   gap: 1rem;
   flex: 1;
 `;

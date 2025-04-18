@@ -13,7 +13,7 @@ const DatasetInfo = ({ totalData = 0, topicCounts, loading }) => {
           <ul className='topic-list'>
             {Object.entries(topicCounts).map(([topic, count]) => (
               <li key={topic}>
-                <span className='topic-name'>{topic}:</span>
+                <span className='topic-name'>{topic}</span>
                 <span className='topic-count'>{count}</span>
               </li>
             ))}

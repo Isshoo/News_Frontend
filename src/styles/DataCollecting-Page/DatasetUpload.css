@@ -1,10 +1,17 @@
 /* Tombol upload sederhana */
 .dataset-select-upload {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 1rem;
 }
+.dataset-open-upload{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: sticky;
+  bottom: 2rem;
+}
+
 .open-upload-btn {
   padding: 0.5rem 1rem;
   background-color: #007bff;

@@ -1,19 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
+import { DatasetSelect } from '../../Base/Select';
+// info icon from react-icons
+import { AiFillInfoCircle } from 'react-icons/ai';
 
-const DatasetTable = ({ data, loading }) => {
+const DatasetTable = ({
+  data,
+  loading,
+  totalData,
+  setShowInfo,
+  datasets,
+  selectedDataset,
+  handleDatasetSelection,
+  isLoading,
+}) => {
   return (
     <div className='dataset-table'>
-      <h2>Dataset</h2>
+      <div className='dataset-table-header'>
+        <div className='dataset-select-upload'>
+          <DatasetSelect
+            datasets={datasets}
+            selectedDataset={selectedDataset}
+            handleDatasetSelection={handleDatasetSelection}
+            loading={isLoading}
+          />
+        </div>
+        <div className='dataset-table-header-info'>
+          <p>
+            <strong>Total Data: {totalData}</strong>
+          </p>
+          <button onClick={() => setShowInfo(true)}>
+            <AiFillInfoCircle className='info-icon' />
+          </button>
+        </div>
+      </div>
       {loading ? (
         <Loading />
       ) : (
         <>
           <table>
             <colgroup>
-              <col style={{ width: '5%' }} />
-              <col style={{ width: '83%' }} />
+              <col style={{ width: '3%' }} />
+              <col style={{ width: '86%' }} />
               <col style={{ width: '12%' }} />
             </colgroup>
             <thead>
@@ -50,6 +79,12 @@ const DatasetTable = ({ data, loading }) => {
 DatasetTable.propTypes = {
   data: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
+  totalData: PropTypes.number.isRequired,
+  setShowInfo: PropTypes.func.isRequired,
+  datasets: PropTypes.array.isRequired,
+  selectedDataset: PropTypes.string,
+  handleDatasetSelection: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default DatasetTable;

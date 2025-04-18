@@ -18,6 +18,7 @@ const DataCollectingPage = () => {
   const firstRun2 = useRef(true);
   const dispatch = useDispatch();
   const [loadingInfo, setLoadingInfo] = React.useState(false);
+  const [showInfo, setShowInfo] = React.useState(false);
 
   const { datasets, selectedDataset, isUploading, isLoading } = useSelector(
     (state) => state.datasets
@@ -85,34 +86,40 @@ const DataCollectingPage = () => {
     <Pages>
       {selectedDataset ? (
         <div className='dataset-container-selected'>
-          <div className='dataset-container-selected-upper'>
-            <div className='dataset-box dataset-left'>
-              <label className='dataset-select-label' htmlFor='dataset-select'>
-                Choose Dataset
-              </label>
-              <div className='dataset-select-upload'>
-                <DatasetSelect
-                  datasets={datasets}
-                  selectedDataset={selectedDataset}
-                  handleDatasetSelection={handleDatasetSelection}
-                  loading={isLoading}
-                />
-                <DatasetUpload
-                  onUpload={handleUpload}
-                  uploading={isUploading}
-                  selectedDataset={selectedDataset}
+          {showInfo === true ? (
+            <div className='dataset-container-selected-upper'>
+              <div className='dataset-box dataset-left'>
+                <label className='dataset-select-label' htmlFor='dataset-select'>
+                  Choose Dataset
+                </label>
+
+                <p className='dataset-total'>
+                  <strong>Total Data:</strong> {totalData}
+                </p>
+              </div>
+              <div className='dataset-box dataset-right'>
+                <DatasetInfo
+                  topicCounts={topicCounts}
+                  loading={loadingInfo}
+                  totalData={totalData}
                 />
               </div>
-              <p className='dataset-total'>
-                <strong>Total Data:</strong> {totalData}
-              </p>
             </div>
-            <div className='dataset-box dataset-right'>
-              <DatasetInfo topicCounts={topicCounts} loading={loadingInfo} totalData={totalData} />
-            </div>
-          </div>
+          ) : (
+            ''
+          )}
+
           <div className='dataset-container-selected-lower'>
-            <DatasetTable data={data} loading={loadingDetail} />
+            <DatasetTable
+              data={data}
+              loading={loadingDetail}
+              totalData={totalData}
+              setShowInfo={setShowInfo}
+              datasets={datasets}
+              selectedDataset={selectedDataset}
+              handleDatasetSelection={handleDatasetSelection}
+              isLoading={isLoading}
+            />
             {totalPages > 1 && (
               <Pagination
                 currentPage={currentPage}
@@ -121,6 +128,11 @@ const DataCollectingPage = () => {
               />
             )}
           </div>
+          <DatasetUpload
+            onUpload={handleUpload}
+            uploading={isUploading}
+            selectedDataset={selectedDataset}
+          />
         </div>
       ) : (
         <div className='dataset-container-not-selected centered-layout'>

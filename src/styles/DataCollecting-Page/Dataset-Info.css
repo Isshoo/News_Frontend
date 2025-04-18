@@ -18,13 +18,23 @@
 }
 
 .topic-list li {
-  background-color: var(--background);
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  border: 1px solid #444;
+
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  font-size: 0.95rem;
+  border: 1px solid var(--select-model-border);
+  border-radius: 2rem;
+  background-color: var(--select-model-background);
+  transition: background-color 0.2s ease-in-out;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
+
+  padding: 0.40rem 1rem;
+  background-color: transparent;
+  color: var(--select-model-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 100%;
 }
 
 .topic-name {

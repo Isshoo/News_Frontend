@@ -45,9 +45,11 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
   if (selectedDataset && !file) {
     return (
       <>
-        <button type='button' className='open-upload-btn' onClick={() => setShowModal(true)}>
-          <FaCloudArrowUp />
-        </button>
+        <div className='dataset-open-upload'>
+          <button type='button' className='open-upload-btn' onClick={() => setShowModal(true)}>
+            <FaCloudArrowUp />
+          </button>
+        </div>
 
         <div className={`upload-modal ${showModal ? 'show' : ''}`}>
           <div className='modal-content'>
