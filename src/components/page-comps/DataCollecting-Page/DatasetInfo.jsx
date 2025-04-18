@@ -8,17 +8,27 @@ const DatasetInfo = ({ totalData = 0, topicCounts, loading }) => {
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <h3>Data per Topik</h3>
-          <ul className='topic-list'>
-            {Object.entries(topicCounts).map(([topic, count]) => (
-              <li key={topic}>
-                <span className='topic-name'>{topic}</span>
-                <span className='topic-count'>{count}</span>
-              </li>
-            ))}
-          </ul>
-        </>
+        <div className='dataset-info-content'>
+          <p className='dataset-total'>
+            <strong>Topics Count:</strong>
+          </p>
+          <table className='dataset-info-table'>
+            <thead>
+              <tr>
+                <th>Topic</th>
+                <th>Total Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(topicCounts).map(([topic, count]) => (
+                <tr key={topic}>
+                  <td>{topic}</td>
+                  <td>{count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -4,6 +4,7 @@ import Pages from '../components/styled/Pages';
 import DatasetUpload from '../components/page-comps/DataCollecting-Page/DatasetUpload';
 import DatasetTable from '../components/page-comps/DataCollecting-Page/DatasetTable';
 import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
+import PopupModalInfo from '../components/page-comps/DataCollecting-Page/PopupModalInfo';
 import Pagination from '../components/Base/Pagination';
 import { DatasetSelect } from '../components/Base/Select';
 import { asyncFetchDatasetDetail } from '../states/datasetDetail/thunk';
@@ -86,27 +87,15 @@ const DataCollectingPage = () => {
     <Pages>
       {selectedDataset ? (
         <div className='dataset-container-selected'>
-          {showInfo === true ? (
-            <div className='dataset-container-selected-upper'>
-              <div className='dataset-box dataset-left'>
-                <label className='dataset-select-label' htmlFor='dataset-select'>
-                  Choose Dataset
-                </label>
-
-                <p className='dataset-total'>
-                  <strong>Total Data:</strong> {totalData}
-                </p>
-              </div>
-              <div className='dataset-box dataset-right'>
-                <DatasetInfo
-                  topicCounts={topicCounts}
-                  loading={loadingInfo}
-                  totalData={totalData}
-                />
-              </div>
-            </div>
-          ) : (
-            ''
+          {showInfo && (
+            <PopupModalInfo
+              onClose={() => setShowInfo(false)}
+              totalData={totalData}
+              topicCounts={topicCounts}
+              loading={loadingInfo}
+              datasets={datasets}
+              selectedDataset={selectedDataset}
+            />
           )}
 
           <div className='dataset-container-selected-lower'>
@@ -135,17 +124,20 @@ const DataCollectingPage = () => {
           />
         </div>
       ) : (
-        <div className='dataset-container-not-selected centered-layout'>
-          <DatasetUpload onUpload={handleUpload} uploading={isUploading} />
-          <hr className='divider' />
-          {datasets.length > 0 && (
-            <DatasetSelect
-              datasets={datasets}
-              selectedDataset={selectedDataset}
-              handleDatasetSelection={handleDatasetSelection}
-              loading={isLoading}
-            />
-          )}
+        <div className='dataset-container-not-selected'>
+          <div className='not-selected-list-dataset'>
+            {datasets.length > 0 && (
+              <DatasetSelect
+                datasets={datasets}
+                selectedDataset={selectedDataset}
+                handleDatasetSelection={handleDatasetSelection}
+                loading={isLoading}
+              />
+            )}
+          </div>
+          <div className='not-selected-upload'>
+            <DatasetUpload onUpload={handleUpload} uploading={isUploading} />
+          </div>
         </div>
       )}
     </Pages>
