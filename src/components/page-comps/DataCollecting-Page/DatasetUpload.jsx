@@ -89,24 +89,28 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
   // CASE: File selected, show preview with upload button
   if (file) {
     return (
-      <form className='upload-box' onSubmit={handleSubmit}>
-        <div className='file-preview'>
-          <span className='file-name'>
-            {file.name}
-            <button
-              type='button'
-              className='clear-file-btn'
-              onClick={handleClearFile}
-              title='Clear file'
-            >
-              <FaTimes />
-            </button>
-          </span>
-          <button type='submit' className='upload-button-collect-data' disabled={uploading}>
-            {uploading ? 'Uploading...' : 'Upload Dataset'}
-          </button>
+      <div className={`upload-modal ${showModal ? 'show' : 'show'}`}>
+        <div className='modal-content'>
+          <form className='upload-box' onSubmit={handleSubmit}>
+            <div className='file-preview'>
+              <span className='file-name'>
+                {file.name}
+                <button
+                  type='button'
+                  className='clear-file-btn'
+                  onClick={handleClearFile}
+                  title='Clear file'
+                >
+                  <FaTimes />
+                </button>
+              </span>
+              <button type='submit' className='upload-button-collect-data' disabled={uploading}>
+                {uploading ? 'Uploading...' : 'Upload Dataset'}
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     );
   }
 

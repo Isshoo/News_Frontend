@@ -31,9 +31,6 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
 const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, loading }) => {
   return (
     <div className='dataset-select-container'>
-      <label className='dataset-select-label' htmlFor='dataset-select'>
-        Choose Dataset
-      </label>
       <select
         id='dataset-select'
         className='dataset-select'

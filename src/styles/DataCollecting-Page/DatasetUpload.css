@@ -1,9 +1,11 @@
 /* Tombol upload sederhana */
+.dataset-select-upload {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
 .open-upload-btn {
-  position: fixed;
-  bottom: 2rem;
-  right: 40%;
-  transform: translateX(50%);
   padding: 0.5rem 1rem;
   background-color: #007bff;
   border: none;
@@ -143,13 +145,9 @@
   background-color: white;
   align-items: center;
   gap: 1rem;
-  padding: 2rem 2.5rem;
+  padding: 1rem;
   border: 2px dashed #ccc;
   border-radius: 10px;
-  position: fixed;
-  bottom: 1rem;
-  left: 60%;
-  transform: translateX(-50%);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 

@@ -5,17 +5,19 @@
   border-top: 1px solid #333;
   width: 100%;
   padding-inline: 32px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 .nav-btn {
-  padding: 0.6rem 1.4rem;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 10px;
   cursor: pointer;
   border: none;
   transition: background-color 0.2s ease;
-  background-color: #3477db;
+  background-color: var(--input-background);
   color: #fff;
 }
 
