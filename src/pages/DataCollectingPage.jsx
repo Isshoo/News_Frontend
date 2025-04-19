@@ -58,7 +58,7 @@ const DataCollectingPage = () => {
     if (!result.error) {
       const newId = result.dataset.id;
       dispatch(setSelectedDataset(newId));
-      dispatch(setSelectedPreprocessedDataset(''));
+      dispatch(setSelectedPreprocessedDataset(newId));
       dispatch(setSelectedModel('', ''));
       dispatch(asyncFetchDatasetDetail(newId, 1, 10));
     }
@@ -71,7 +71,7 @@ const DataCollectingPage = () => {
     setLoadingInfo(true);
     dispatch(resetDatasetDetail());
     dispatch(setSelectedDataset(selectedId));
-    dispatch(setSelectedPreprocessedDataset(''));
+    dispatch(setSelectedPreprocessedDataset(selectedId));
     dispatch(setSelectedModel('', ''));
     dispatch(asyncFetchDatasetDetail(selectedId, 1, 10));
     setLoadingInfo(false);

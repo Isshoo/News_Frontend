@@ -20,7 +20,8 @@ import { setSelectedDataset } from '../states/datasets/action';
 
 import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
-import { ListDataset } from '../components/Base/Select';
+import { ListDataset, DatasetSelect } from '../components/Base/Select';
+
 import PreprocessTable from '../components/page-comps/Preprocessing-Page/PreprocessTable';
 import AddDataPopup from '../components/page-comps/Preprocessing-Page/AddDataPopup';
 
@@ -30,7 +31,7 @@ const PreprocessingPage = () => {
   const firstRun2 = useRef(true);
 
   const { selectedDataset } = useSelector((state) => state.datasets);
-  const { selectedPreprocessedDataset, preprocessedDatasets } = useSelector(
+  const { selectedPreprocessedDataset, preprocessedDatasets, isLoading } = useSelector(
     (state) => state.preprocessedDatasets
   );
 
@@ -40,6 +41,8 @@ const PreprocessingPage = () => {
     currentPage = 1,
     limit = 10,
     loadingDetail,
+    totalData = 0,
+    topicCounts = {},
   } = useSelector((state) => state.preprocessedDatasetDetail);
 
   const [editingIndex, setEditingIndex] = useState(null);
@@ -49,6 +52,7 @@ const PreprocessingPage = () => {
   const [newContent, setNewContent] = useState('');
   const [newTopic, setNewTopic] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     if (firstRun.current) {
@@ -127,7 +131,8 @@ const PreprocessingPage = () => {
     setShowAddPopup(false);
   };
 
-  const handleDatasetSelection = (datasetId) => {
+  const handleDatasetSelection = (event) => {
+    const datasetId = event.target.value;
     if (datasetId === selectedPreprocessedDataset) return;
     dispatch(resetPreprocessedDatasetDetail());
     dispatch(setSelectedPreprocessedDataset(datasetId));
@@ -166,16 +171,6 @@ const PreprocessingPage = () => {
         </div>
       ) : (
         <>
-          <div className='list-dataset-dropdown'>
-            <h3 className='list-dataset-title'>Select Preprocessed Dataset:</h3>
-            <ListDataset
-              preprocessedDatasets={preprocessedDatasets}
-              rawDatasetId={selectedDataset}
-              handleDatasetSelection={handleDatasetSelection}
-              handleDeleteDataset={handleDeleteDataset}
-            />
-          </div>
-
           {selectedPreprocessedDataset ? (
             <>
               {selectedPreprocessedDataset === selectedDataset ? (
@@ -204,6 +199,12 @@ const PreprocessingPage = () => {
                 preprocessedDatasetId={selectedPreprocessedDataset}
                 rawDatasetId={selectedDataset}
                 loading={loading}
+                preprocessedDatasets={preprocessedDatasets}
+                selectedPreprocessedDataset={selectedPreprocessedDataset}
+                handleDatasetSelection={handleDatasetSelection}
+                isLoading={isLoading}
+                totalData={totalData}
+                setShowInfo={setShowInfo}
               />
 
               {totalPages > 1 && (
@@ -215,7 +216,21 @@ const PreprocessingPage = () => {
               )}
             </>
           ) : (
-            <p>Silakan pilih salah satu preprocessed dataset.</p>
+            <div className='dataset-container-not-selected'>
+              <div className='not-selected-list-dataset'>
+                {preprocessedDatasets.length > 0 && (
+                  <DatasetSelect
+                    datasets={preprocessedDatasets}
+                    selectedDataset={selectedPreprocessedDataset}
+                    handleDatasetSelection={handleDatasetSelection}
+                    loading={isLoading}
+                  />
+                )}
+              </div>
+              <div className='not-selected-upload'>
+                <p>Silakan pilih salah satu preprocessed dataset.</p>
+              </div>
+            </div>
           )}
         </>
       )}

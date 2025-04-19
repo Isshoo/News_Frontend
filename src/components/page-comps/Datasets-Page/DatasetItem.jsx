@@ -13,7 +13,7 @@ const DatasetItem = ({ dataset, onDelete, deletingId }) => {
 
   const handleTrain = () => {
     dispatch(setSelectedDataset(id));
-    dispatch(setSelectedPreprocessedDataset(''));
+    dispatch(setSelectedPreprocessedDataset(id));
     dispatch(setSelectedModel('', ''));
     navigate('/admin/home/preprocessing');
   };

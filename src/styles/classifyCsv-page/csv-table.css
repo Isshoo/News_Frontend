@@ -82,7 +82,7 @@
   background-color: var(--background);
   font-size: 0.95rem;
   vertical-align: top;
-  text-align: left;
+  text-align: justify;
   max-height: 94.5px; /* ~6 lines */
   overflow: hidden;
 }

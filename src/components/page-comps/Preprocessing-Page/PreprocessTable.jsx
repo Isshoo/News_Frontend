@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
+import { MdInfoOutline } from 'react-icons/md';
+import { DatasetSelect } from '../../Base/Select';
 
 const PreprocessTable = ({
   dataset,
@@ -15,12 +17,35 @@ const PreprocessTable = ({
   preprocessedDatasetId,
   rawDatasetId,
   loading,
+  preprocessedDatasets,
+  selectedPreprocessedDataset,
+  handleDatasetSelection,
+  isLoading,
+  totalData,
+  setShowInfo,
 }) => {
   const labelOptions = ['ekonomi', 'gayahidup', 'hiburan', 'olahraga', 'teknologi'];
 
   return (
     <div className='preprocess-table'>
-      <h2>Preprocessed Dataset</h2>
+      <div className='dataset-table-header'>
+        <div className='dataset-select-upload'>
+          <DatasetSelect
+            datasets={preprocessedDatasets}
+            selectedDataset={selectedPreprocessedDataset}
+            handleDatasetSelection={handleDatasetSelection}
+            loading={isLoading}
+          />
+        </div>
+        <div className='dataset-table-header-info'>
+          <p>
+            <strong>Total Data: {totalData}</strong>
+          </p>
+          <button onClick={() => setShowInfo(true)}>
+            <MdInfoOutline className='info-icon' />
+          </button>
+        </div>
+      </div>
       {loading ? (
         <Loading />
       ) : (
@@ -37,9 +62,9 @@ const PreprocessTable = ({
               ) : (
                 <>
                   <col style={{ width: '4%' }} />
-                  <col style={{ width: '38%' }} />
-                  <col style={{ width: '38%' }} />
-                  <col style={{ width: '10%' }} />
+                  <col style={{ width: '37.5%' }} />
+                  <col style={{ width: '37.5%' }} />
+                  <col style={{ width: '11%' }} />
                   <col style={{ width: '10%' }} />
                 </>
               )}
@@ -63,30 +88,39 @@ const PreprocessTable = ({
               ) : (
                 dataset.map((item) => (
                   <tr key={item.index}>
-                    <td>{item.index + 1}</td>
-                    <td title={item.contentSnippet}>{item.contentSnippet}</td>
+                    <td>
+                      <p className='preprocessed-content-text'>{item.index + 1}</p>
+                    </td>
+                    <td title={item.contentSnippet}>
+                      <p className='preprocessed-content-text'>{item.contentSnippet}</p>
+                    </td>
                     <td title={item.preprocessedContent}>
                       {editingIndex === item.index ? (
                         <textarea
+                          className='preprocessed-content-input'
                           placeholder='Preprocessed Content'
                           value={newPreprocessedContent}
                           onChange={(e) => setNewPreprocessedContent(e.target.value)}
                         />
                       ) : (
-                        item.preprocessedContent
+                        <p className='preprocessed-content-text'>{item.preprocessedContent}</p>
                       )}
                     </td>
                     <td>
                       {editingIndex === item.index ? (
-                        <select value={newLabel} onChange={(e) => setNewLabel(e.target.value)}>
+                        <select
+                          className='preprocessed-content-select'
+                          value={newLabel}
+                          onChange={(e) => setNewLabel(e.target.value)}
+                        >
                           {labelOptions.map((label, i) => (
                             <option key={i} value={label}>
-                              {label}
+                              <p className='preprocessed-content-text'>{label}</p>
                             </option>
                           ))}
                         </select>
                       ) : (
-                        item.topik
+                        <p className='preprocessed-content-text'>{item.topik}</p>
                       )}
                     </td>
 
@@ -95,9 +129,15 @@ const PreprocessTable = ({
                     ) : (
                       <td className='actions-cell'>
                         {editingIndex === item.index ? (
-                          <button onClick={() => handleSave(item.index)}>Save</button>
+                          <button
+                            className='preprocess-action-button'
+                            onClick={() => handleSave(item.index)}
+                          >
+                            Save
+                          </button>
                         ) : (
                           <button
+                            className='preprocess-action-button'
                             onClick={() =>
                               handleEdit(item.index, item.topik, item.preprocessedContent)
                             }
@@ -105,7 +145,12 @@ const PreprocessTable = ({
                             Edit
                           </button>
                         )}
-                        <button onClick={() => handleDelete(item.index)}>Delete</button>
+                        <button
+                          className='preprocess-action-button'
+                          onClick={() => handleDelete(item.index)}
+                        >
+                          Delete
+                        </button>
                       </td>
                     )}
                   </tr>
@@ -132,6 +177,12 @@ PreprocessTable.propTypes = {
   preprocessedDatasetId: PropTypes.string,
   rawDatasetId: PropTypes.string,
   loading: PropTypes.bool.isRequired,
+  preprocessedDatasets: PropTypes.array.isRequired,
+  selectedPreprocessedDataset: PropTypes.string,
+  handleDatasetSelection: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  totalData: PropTypes.number.isRequired,
+  setShowInfo: PropTypes.func.isRequired,
 };
 
 export default PreprocessTable;
