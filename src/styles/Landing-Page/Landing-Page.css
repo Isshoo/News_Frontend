@@ -39,18 +39,18 @@
   font-size: 1rem;
   border: none;
   border-radius: 8px;
-  background-color: var(--submit-bg);
-  color: var(--submit-text);
+  background-color: var(--add-btn-bg);
+  color: var(--add-icon);
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-weight: 600;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .landing-buttons button:hover {
-  background-color: var(--submit-bg-hover);
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: var(--add-icon);
+  box-shadow: -2px 2px 5px 5px var(--add-btn-shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--add-btn-bg);
 }
