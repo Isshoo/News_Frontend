@@ -52,9 +52,7 @@
   background-color: var(--main-bg);
 }
 
-.preprocess-table tbody tr:hover td,
-.preprocess-table tbody tr:hover textarea,
-.preprocess-table tbody tr:hover select {
+.preprocess-table tbody tr:hover td {
   background-color: var(--nav-bg-hover);
   color: var(--secondary-text);
   transition: background-color 0.3s ease, color 0.3s ease;

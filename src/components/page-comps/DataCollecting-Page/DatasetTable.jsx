@@ -4,6 +4,7 @@ import Loading from '../../Base/LoadingBar';
 import { DatasetSelect } from '../../Base/Select';
 // info icon from react-icons
 import { AiFillInfoCircle } from 'react-icons/ai';
+import { MdInfoOutline } from 'react-icons/md';
 
 const DatasetTable = ({
   data,
@@ -31,7 +32,7 @@ const DatasetTable = ({
             <strong>Total Data: {totalData}</strong>
           </p>
           <button onClick={() => setShowInfo(true)}>
-            <AiFillInfoCircle className='info-icon' />
+            <MdInfoOutline className='info-icon' />
           </button>
         </div>
       </div>

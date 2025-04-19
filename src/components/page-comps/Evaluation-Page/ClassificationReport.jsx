@@ -39,7 +39,9 @@ const ClassificationReport = ({ classificationReport }) => {
         <tbody>
           {rows.map((row, idx) => (
             <tr key={idx}>
-              <td>{row.label}</td>
+              <td>
+                <strong>{row.label}</strong>
+              </td>
               <td>{row.precision}</td>
               <td>{row.recall}</td>
               <td>{row.f1}</td>
