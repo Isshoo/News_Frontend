@@ -15,6 +15,7 @@
 }
 .navigation-bar.user-nav {
   max-width: 1100px;
+  padding-block: 1.75rem 1.25rem;
 }
 .navigation {
   width: 100%;
@@ -55,4 +56,30 @@
 .nav-icon {
     font-size: 1.1rem;
     padding-bottom: 0.1rem;
+}
+
+.nav-button.user-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 160px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--nav-bg);
+  color: var(--side-text);
+  cursor: pointer;
+  opacity: 0.9;
+  border: 1px solid var(--nav-border);
+  min-height: 41px;
+}
+.nav-button.user-nav:hover {
+  background-color: var(--nav-bg-hover);
+}
+.nav-button.user-nav:active {
+  background-color: var(--nav-bg-act);
+}
+.nav-button.user-nav.active {
+  background-color: var(--nav-active-bg);
+  opacity: 1;
 }

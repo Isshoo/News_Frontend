@@ -61,6 +61,10 @@ export const updateClassificationRow = (index, field, value) => ({
   payload: { index, field, value },
 });
 
+export const clearCsvDataAndResult = () => ({
+  type: 'CLEAR_CSV_DATA_AND_RESULT',
+});
+
 export const setLoading = (isLoading) => ({
   type: 'SET_LOADING',
   payload: isLoading,

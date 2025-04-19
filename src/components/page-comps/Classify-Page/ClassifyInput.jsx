@@ -88,7 +88,7 @@ const ClassifyInput = ({
               </button>
             )}
             <button
-              className={loading ? 'disabled' : ''}
+              className={text === '' ? 'disabled' : ''}
               type='submit'
               id='threadsSubmit'
               disabled={loading}

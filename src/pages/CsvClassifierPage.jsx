@@ -21,6 +21,7 @@ import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/a
 const CsvClassifierPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
+  const lastRowRef = useRef(null);
 
   const { csvData, classificationResult, loading, isPopupOpen } = useSelector(
     (state) => state.classifier
@@ -28,7 +29,9 @@ const CsvClassifierPage = () => {
   const { models, selectedModelId } = useSelector((state) => state.models);
 
   const [resultPage, setResultPage] = useState(1);
+  const [csvPage, setCsvPage] = useState(1);
   const rowsPerPage = 5;
+
   const resultStartIndex = (resultPage - 1) * rowsPerPage;
   const resultEndIndex = resultStartIndex + rowsPerPage;
   const paginatedResult = classificationResult.slice(resultStartIndex, resultEndIndex);
@@ -37,9 +40,8 @@ const CsvClassifierPage = () => {
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false;
-      return;
+      dispatch(asyncFetchModels());
     }
-    dispatch(asyncFetchModels());
   }, [dispatch]);
 
   useEffect(() => {
@@ -47,6 +49,19 @@ const CsvClassifierPage = () => {
       dispatch(setPopupOpen(true));
     }
   }, [dispatch, csvData, classificationResult]);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(csvData.length / rowsPerPage);
+    if (csvPage > totalPages) {
+      setCsvPage(Math.max(1, totalPages));
+    }
+  }, [csvData.length]);
+
+  useEffect(() => {
+    if (lastRowRef.current) {
+      lastRowRef.current.focus();
+    }
+  }, [csvData.length]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;
@@ -76,10 +91,17 @@ const CsvClassifierPage = () => {
 
   const handleAddRow = () => {
     dispatch(addCsvRow());
+    const totalPages = Math.ceil((csvData.length + 1) / rowsPerPage);
+    setCsvPage(totalPages);
   };
 
   const handleDeleteRow = (index) => {
     dispatch(deleteCsvRow(index));
+    const newLength = csvData.length - 1;
+    const totalPages = Math.ceil(newLength / rowsPerPage);
+    if (csvPage > totalPages) {
+      setCsvPage(Math.max(1, totalPages));
+    }
   };
 
   const classifyAllCsv = async () => {
@@ -92,6 +114,9 @@ const CsvClassifierPage = () => {
     if (response.error) {
       alert('Gagal mengklasifikasikan CSV');
     }
+
+    // Reset halaman hasil ke 1
+    setResultPage(1);
     dispatch(setPopupOpen(false));
     return response;
   };
@@ -120,7 +145,11 @@ const CsvClassifierPage = () => {
             handleEditCell={handleEditCell}
             handleDeleteRow={handleDeleteRow}
             setIsPopupOpen={handlePopup}
-            totalData={classificationResult.length}
+            totalData={csvData.length}
+            currentPage={csvPage}
+            setCurrentPage={setCsvPage}
+            rowsPerPage={rowsPerPage}
+            lastRowRef={lastRowRef}
           />
         )}
 

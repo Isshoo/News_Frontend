@@ -54,8 +54,6 @@ const classifierReducer = (state = initialState, action) => {
     return { ...state, predictionResults: updated };
   }
 
-
-
   case 'SET_CSV_DATA':
     return { ...state, csvData: action.payload };
 
@@ -95,6 +93,13 @@ const classifierReducer = (state = initialState, action) => {
     };
     return { ...state, classificationResult: updatedResult };
   }
+
+  case 'CLEAR_CSV_DATA_AND_RESULT':
+    return {
+      ...state,
+      csvData: [],
+      classificationResult: [],
+    };
 
   case 'SET_LOADING':
     return { ...state, loading: action.payload };

@@ -89,10 +89,10 @@ const NavigationBar = () => {
         {({ locale }) => {
           return (
             <nav className='navigation-bar user-nav'>
-              <ul className='navigation'>
+              <ul className='navigation user-nav'>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/user/home' || location.pathname === '/user/home/text' ? 'active' : ''}`}
+                    className={`nav-button user-nav ${location.pathname === '/user/home' || location.pathname === '/user/home/text' ? 'active' : ''}`}
                     to='/user/home/text'
                   >
                     <div className='nav-link-con'>
@@ -101,10 +101,9 @@ const NavigationBar = () => {
                     </div>
                   </Link>
                 </li>
-                <li>||</li>
                 <li>
                   <Link
-                    className={`nav-button ${location.pathname === '/user/home/csv' ? 'active' : ''}`}
+                    className={`nav-button user-nav ${location.pathname === '/user/home/csv' ? 'active' : ''}`}
                     to='/user/home/csv'
                   >
                     <div className='nav-link-con'>

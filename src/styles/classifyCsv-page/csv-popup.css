@@ -19,7 +19,7 @@
 .csv-popup {
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0);
   backdrop-filter: blur(5px);
   display: flex;
@@ -71,6 +71,50 @@
   margin-block: 16px;
 }
 
+.csv-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.csv-actions-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.csv-actions-right .reset-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: var(--select-model-background);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: 1px solid var(--select-model-border);
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
+}
+.csv-actions-right .reset-button svg {
+    color: var(--select-model-text);
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+}
+.csv-actions-right .reset-button:hover {
+    background-color: var(--select-model-hover);
+}
+.csv-actions-right .reset-button:hover svg {
+    color: var(--select-model-text);
+}
+.csv-actions-right .reset-button:active {
+    background-color: var(--select-model-hover);
+}
+.csv-actions-right .reset-button:active svg {
+    color: var(--select-model-text);
+}
+
 .csv-model-selector {
   display: flex;
   align-items: center;
@@ -94,6 +138,12 @@
   cursor: pointer;
 }
 .csv-file-upload p {
+  color: var(--results-text);
+}
+.csv-file-upload p.total-data-limit {
+  color: red;
+}
+.csv-file-upload p.total-data-limit strong {
   color: var(--results-text);
 }
 
