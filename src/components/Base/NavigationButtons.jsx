@@ -15,14 +15,20 @@ const NavigationButtons = ({
         ''
       ) : (
         <button className='nav-btn prev-btn' onClick={onPrevious} disabled={disablePrevious}>
-          ← {previousPage}
+          <p>
+            <span>←</span>
+          </p>{' '}
+          {previousPage}
         </button>
       )}
       {disableNext ? (
         ''
       ) : (
         <button className='nav-btn next-btn' onClick={onNext} disabled={disableNext}>
-          {nextPage} →
+          {nextPage}{' '}
+          <p>
+            <span>→</span>
+          </p>
         </button>
       )}
     </div>
