@@ -35,6 +35,10 @@
   height: 1.2rem;
   color: var(--primary-text);
 }
+.dataset-table-header-info button svg:hover {
+  color: #000;
+  transition: color 0.3s ease;
+}
 
 .dataset-table-header-info button::after {
   content: var(--dataset-info);

@@ -5,8 +5,8 @@ const CsvTable = ({ csvData, handleEditCell, handleDeleteRow, startIndex, lastRo
   <div className='csv-table'>
     <table>
       <colgroup>
-        <col style={{ width: '5%' }} />
-        <col style={{ width: '80%' }} />
+        <col style={{ width: '7%' }} />
+        <col style={{ width: '77%' }} />
         <col style={{ width: '15%' }} />
       </colgroup>
       <thead>

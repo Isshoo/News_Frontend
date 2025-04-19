@@ -42,8 +42,8 @@ const DatasetTable = ({
         <>
           <table>
             <colgroup>
-              <col style={{ width: '3%' }} />
-              <col style={{ width: '86%' }} />
+              <col style={{ width: '5%' }} />
+              <col style={{ width: '83%' }} />
               <col style={{ width: '12%' }} />
             </colgroup>
             <thead>

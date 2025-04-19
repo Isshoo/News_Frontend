@@ -17,9 +17,9 @@ const ClassificationResultTable = ({
     <table>
       <colgroup>
         <col style={{ width: '4%' }} />
-        <col style={{ width: '72%' }} />
-        <col style={{ width: '12%' }} />
-        <col style={{ width: '12%' }} />
+        <col style={{ width: '70%' }} />
+        <col style={{ width: '13%' }} />
+        <col style={{ width: '13%' }} />
       </colgroup>
       <thead>
         <tr>
