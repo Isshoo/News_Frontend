@@ -9,6 +9,10 @@
   padding-inline: 0 0.75rem;
 }
 
+.dataset-select-container:hover {
+  background-color: var(--select-model-hover);
+}
+
 .dataset-select-label {
   font-weight: 600;
   color: #000;

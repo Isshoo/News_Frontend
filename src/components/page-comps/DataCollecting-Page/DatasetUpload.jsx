@@ -80,6 +80,16 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
                   />
                   <div className='browse-button'>Browse Files</div>
                 </div>
+                <div className='upload-note-container'>
+                  <p className='upload-note'>
+                    <strong>Note: </strong>
+                  </p>
+                  <p className='upload-note'>
+                    CSV file must have &apos;contentSnippet&apos; and &apos;topik&apos; columns. And
+                    the &apos;topik&apos; column must have{' '}
+                    <strong>ekonomi, gayahidup, olahraga, teknologi, hiburan</strong> classes.
+                  </p>
+                </div>
               </label>
             </form>
           </div>
@@ -140,6 +150,16 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
             className='upload-input'
           />
           <div className='browse-button'>Browse Files</div>
+        </div>
+        <div className='upload-note-container'>
+          <p className='upload-note'>
+            <strong>Note: </strong>
+          </p>
+          <p className='upload-note'>
+            CSV file must have &apos;contentSnippet&apos; and &apos;topik&apos; columns. And the
+            &apos;topik&apos; column must have{' '}
+            <strong>ekonomi, gayahidup, olahraga, teknologi, hiburan</strong> classes.
+          </p>
         </div>
       </label>
     </form>

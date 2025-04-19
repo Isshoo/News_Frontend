@@ -171,6 +171,24 @@
   background-color: #ddd;
 }
 
+.upload-note-container {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+.upload-note {
+  text-align: justify;
+  font-size: 0.75rem;
+  color: #666;
+}
+.upload-note.center-text {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #666;
+}
+
 .upload-button {
   margin-top: 1.5rem;
   padding: 0.6rem 1.5rem;

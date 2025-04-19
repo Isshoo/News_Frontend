@@ -173,7 +173,7 @@
 
 .csv-file-upload {
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: space-between;
   gap: 16px;
 }
@@ -193,6 +193,16 @@
 }
 .csv-file-upload p.total-data-limit strong {
   color: var(--results-text);
+}
+
+.file-upload-label{
+  padding-inline: 8px;
+}
+
+.file-upload-text {
+  color: var(--results-text);
+  opacity: 0.8;
+  font-size: 0.75rem;
 }
 
 .csv-actions button,

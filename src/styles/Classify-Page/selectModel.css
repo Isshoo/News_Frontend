@@ -13,6 +13,7 @@
   background-color: var(--select-model-background);
   transition: background-color 0.2s ease-in-out;
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
+  padding-inline: 0.4rem;
 }
 
 .modelDropdown:hover {
@@ -20,7 +21,7 @@
 }
 
 .modelSelect {
-  padding: 0.40rem 1rem;
+  padding: 0.40rem 0.4rem 0.4rem 0.5rem;
   background-color: transparent;
   border: none;
   outline: none;
@@ -33,9 +34,9 @@
   height: 100%;
 
   /* Remove arrow default styling for consistency across browsers */
-  appearance: none;
+  /* appearance: none;
   -webkit-appearance: none;
-  -moz-appearance: none;
+  -moz-appearance: none; */
 }
 
 .modelSelect option {

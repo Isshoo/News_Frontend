@@ -70,7 +70,14 @@ const CsvPopup = ({
           )}
         </div>
         <div className='csv-file-upload'>
-          <input ref={fileInputRef} type='file' accept='.csv' onChange={handleFileUpload} />
+          <div>
+            <input ref={fileInputRef} type='file' accept='.csv' onChange={handleFileUpload} />
+            <label htmlFor='file-upload' className='file-upload-label'>
+              <span className='file-upload-text'>
+                Note: CSV file must have &apos;contentSnippet&apos; column.
+              </span>
+            </label>
+          </div>
 
           <p className={Number(csvData.length) > 20 ? 'total-data-limit' : ''}>
             <strong>Total Data:</strong> {Number(csvData.length)}{' '}
@@ -97,7 +104,7 @@ const CsvPopup = ({
         )}
         <div className='csv-actions'>
           <button onClick={handleAddRow} disabled={csvData.length >= 20}>
-            Tambah Data
+            Add Data
           </button>
           <div className='csv-actions-right'>
             {csvData.length > 0 && (
