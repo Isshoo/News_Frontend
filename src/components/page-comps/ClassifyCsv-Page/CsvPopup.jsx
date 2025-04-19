@@ -44,6 +44,13 @@ const CsvPopup = ({
     }
   };
 
+  const handleDeletingRow = (index) => {
+    handleDeleteRow(index);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
+  };
+
   return (
     <div className={totalData == 0 ? 'csv-popup no-data' : 'csv-popup'}>
       <div className='csv-popup-content'>
@@ -77,7 +84,7 @@ const CsvPopup = ({
             <CsvTable
               csvData={paginatedData}
               handleEditCell={handleEditCell}
-              handleDeleteRow={handleDeleteRow}
+              handleDeleteRow={handleDeletingRow}
               startIndex={startIndex}
               lastRowRef={lastRowRef}
             />

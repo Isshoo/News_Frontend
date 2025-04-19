@@ -77,6 +77,7 @@
 
   --dataset-info: "Dataset Information";
   --upload-new-dataset-info: "Upload New Dataset";
+  --classify-new-csv: "Set New Data";
 }
 
 [data-theme="light"] {

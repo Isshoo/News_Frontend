@@ -18,6 +18,8 @@ import { setSelectedModel } from '../states/models/action';
 import { setSelectedDataset } from '../states/datasets/action';
 import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
 
+import { FaPlus } from 'react-icons/fa';
+
 const CsvClassifierPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
@@ -168,14 +170,16 @@ const CsvClassifierPage = () => {
             />
           </>
         )}
-        <button
-          className={
-            classificationResult.length > 0 ? 'csv-popup-button pojok' : 'csv-popup-button'
-          }
-          onClick={handlePopup}
-        >
-          Popup
-        </button>
+        <div className='csv-popup-button-container'>
+          <button
+            className={
+              classificationResult.length > 0 ? 'csv-popup-button' : 'csv-popup-button none'
+            }
+            onClick={handlePopup}
+          >
+            <FaPlus />
+          </button>
+        </div>
       </div>
     </Pages>
   );
