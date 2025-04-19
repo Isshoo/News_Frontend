@@ -24,13 +24,18 @@ import { ListDataset, DatasetSelect } from '../components/Base/Select';
 
 import PreprocessTable from '../components/page-comps/Preprocessing-Page/PreprocessTable';
 import AddDataPopup from '../components/page-comps/Preprocessing-Page/AddDataPopup';
+import AddCopyPopup from '../components/page-comps/Preprocessing-Page/AddCopyPopup';
+import PopupModalInfo from '../components/page-comps/Preprocessing-Page/PopupModalInfo';
+
+import { FaPlus } from 'react-icons/fa';
+import { MdCopyAll } from 'react-icons/md';
 
 const PreprocessingPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
   const firstRun2 = useRef(true);
 
-  const { selectedDataset } = useSelector((state) => state.datasets);
+  const { selectedDataset, datasets } = useSelector((state) => state.datasets);
   const { selectedPreprocessedDataset, preprocessedDatasets, isLoading } = useSelector(
     (state) => state.preprocessedDatasets
   );
@@ -49,8 +54,12 @@ const PreprocessingPage = () => {
   const [newPreprocessedContent, setNewPreprocessedContent] = useState('');
   const [newLabel, setNewLabel] = useState('');
   const [showAddPopup, setShowAddPopup] = useState(false);
+  const [showCopyPopup, setShowCopyPopup] = useState(false);
   const [newContent, setNewContent] = useState('');
   const [newTopic, setNewTopic] = useState('');
+  const [newCopyName, setNewCopyName] = useState('');
+  const [preprocessLoading, setPreprocessLoading] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
@@ -77,6 +86,7 @@ const PreprocessingPage = () => {
   }, [dispatch, selectedPreprocessedDataset]);
 
   const handlePreprocess = async () => {
+    setPreprocessLoading(true);
     const result = await dispatch(asyncPreprocessRawDataset(selectedDataset));
     if (result?.data?.id) {
       const id = result.data.id;
@@ -84,18 +94,22 @@ const PreprocessingPage = () => {
       dispatch(setSelectedModel('', ''));
       dispatch(asyncFetchPreprocessedDatasetDetail(id, 1, 10));
     }
+    setPreprocessLoading(false);
   };
 
   const handleCopyDataset = async () => {
-    const name = prompt('Enter name for new dataset copy:');
-    if (!name) return;
-    const response = await dispatch(asyncCreatePreprocessedCopy(selectedDataset, name));
+    if (!newCopyName) {
+      alert('Dataset Name cannot be empty.');
+      return;
+    }
+    const response = await dispatch(asyncCreatePreprocessedCopy(selectedDataset, newCopyName));
     if (response?.data?.id) {
       const id = response.data.id;
       dispatch(setSelectedPreprocessedDataset(id));
       dispatch(setSelectedModel('', ''));
       dispatch(asyncFetchPreprocessedDatasetDetail(id, 1, 10));
     }
+    setShowCopyPopup(false);
   };
 
   const handleEdit = (index, currentTopic, currentPreprocessedContent) => {
@@ -104,8 +118,8 @@ const PreprocessingPage = () => {
     setNewPreprocessedContent(currentPreprocessedContent);
   };
 
-  const handleSave = (index) => {
-    dispatch(
+  const handleSave = async (index) => {
+    await dispatch(
       asyncUpdatePreprocessedData(
         selectedPreprocessedDataset,
         index,
@@ -114,21 +128,22 @@ const PreprocessingPage = () => {
       )
     );
     setEditingIndex(null);
+    dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
   };
 
-  const handleDelete = (index) => {
-    dispatch(asyncDeletePreprocessedData(selectedPreprocessedDataset, index));
+  const handleDelete = async (index) => {
+    await dispatch(asyncDeletePreprocessedData(selectedPreprocessedDataset, index));
+    dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
   };
 
-  const handleAddData = () => {
+  const handleAddData = async () => {
     if (!newContent || !newTopic) {
       alert('Please fill in all fields.');
       return;
     }
-    dispatch(
-      asyncAddPreprocessedData(selectedPreprocessedDataset, newContent, newTopic, totalPages, limit)
-    );
+    await dispatch(asyncAddPreprocessedData(selectedPreprocessedDataset, newContent, newTopic));
     setShowAddPopup(false);
+    dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
   };
 
   const handleDatasetSelection = (event) => {
@@ -140,12 +155,9 @@ const PreprocessingPage = () => {
     dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, 10));
   };
 
-  const handleDeleteDataset = (datasetId) => {
-    if (datasetId === selectedPreprocessedDataset) {
-      dispatch(resetPreprocessedDatasetDetail());
-    }
-    dispatch(asyncDeletePreprocessedDataset(datasetId));
-    dispatch(setSelectedPreprocessedDataset(''));
+  const handleDeleteDataset = async () => {
+    await dispatch(asyncDeletePreprocessedDataset(selectedPreprocessedDataset));
+    dispatch(setSelectedPreprocessedDataset(selectedDataset));
     dispatch(setSelectedModel('', ''));
   };
 
@@ -160,30 +172,53 @@ const PreprocessingPage = () => {
       {!selectedDataset ? (
         <p>Please select a raw dataset first to view its preprocessed datasets.</p>
       ) : preprocessedDatasets.length === 0 ? (
-        <div className='no-preprocessed-dataset'>
-          <h3 className='no-preprocessed-dataset-title'>Dataset Has Not Been Preprocessed</h3>
-          <p className='no-preprocessed-dataset-text'>
-            You can preprocess the raw dataset by clicking the button below.
-          </p>
-          <button className='preprocess-btn' onClick={handlePreprocess}>
-            Preprocess
-          </button>
+        <div className='upload-area'>
+          <div className='no-preprocessed-dataset'>
+            <h3 className='no-preprocessed-dataset-title'>Dataset Has Not Preprocessed Yet</h3>
+            <p className='no-preprocessed-dataset-text'>
+              You can preprocess the raw dataset by clicking the button below.
+            </p>
+            <button
+              className='preprocess-btn'
+              onClick={handlePreprocess}
+              disabled={preprocessLoading}
+              style={{ cursor: preprocessLoading ? 'not-allowed' : 'pointer' }}
+              title={
+                preprocessLoading
+                  ? 'Preprocessing in progress. Please wait a few minutes.'
+                  : 'Preprocess dataset'
+              }
+            >
+              {preprocessLoading ? 'Preprocessing...' : 'Preprocess'}
+            </button>
+            <div className='upload-note-container'>
+              <p className='upload-note'>
+                <strong>Note: </strong>
+              </p>
+              <p className='upload-note'>
+                Preprocessing is the process of transforming raw data into a format suitable for
+                analysis. It will take a few minutes to preprocess the data, because it requires
+                various techniques to clean and prepare the data, such as{' '}
+                <strong>Case Folding, Cleansing, Tokenizing, Stopword Removal, and Stemming</strong>
+                .
+              </p>
+            </div>
+          </div>
         </div>
       ) : (
         <>
           {selectedPreprocessedDataset ? (
             <>
-              {selectedPreprocessedDataset === selectedDataset ? (
-                <button className='prprocess-popup-button' onClick={handleCopyDataset}>
-                  Copy Dataset to Edit
-                </button>
-              ) : (
-                <button
-                  className='prprocess-popup-button'
-                  onClick={() => setShowAddPopup(!showAddPopup)}
-                >
-                  Add Data
-                </button>
+              {showInfo && (
+                <PopupModalInfo
+                  onClose={() => setShowInfo(false)}
+                  totalData={totalData}
+                  topicCounts={topicCounts}
+                  loading={loading}
+                  datasets={datasets}
+                  preprocessedDatasets={preprocessedDatasets}
+                  selectedDataset={selectedPreprocessedDataset}
+                />
               )}
 
               <PreprocessTable
@@ -205,6 +240,7 @@ const PreprocessingPage = () => {
                 isLoading={isLoading}
                 totalData={totalData}
                 setShowInfo={setShowInfo}
+                handleDeleteDataset={handleDeleteDataset}
               />
 
               {totalPages > 1 && (
@@ -213,6 +249,27 @@ const PreprocessingPage = () => {
                   totalPages={totalPages}
                   setCurrentPage={handleSetPage}
                 />
+              )}
+              {selectedPreprocessedDataset === selectedDataset ? (
+                <div className='dataset-open-upload'>
+                  <button
+                    type='button'
+                    className='open-upload-btn copy-preprocess'
+                    onClick={() => setShowCopyPopup(!showCopyPopup)}
+                  >
+                    <MdCopyAll />
+                  </button>
+                </div>
+              ) : (
+                <div className='dataset-open-upload'>
+                  <button
+                    type='button'
+                    className='open-upload-btn add-preprocess-data'
+                    onClick={() => setShowAddPopup(!showAddPopup)}
+                  >
+                    <FaPlus />
+                  </button>
+                </div>
               )}
             </>
           ) : (
@@ -243,6 +300,14 @@ const PreprocessingPage = () => {
           setNewTopic={setNewTopic}
           handleAddData={handleAddData}
           setShowAddPopup={setShowAddPopup}
+        />
+      )}
+      {showCopyPopup && (
+        <AddCopyPopup
+          newCopyName={newCopyName}
+          setNewCopyName={setNewCopyName}
+          handleCopyDataset={handleCopyDataset}
+          setShowCopyPopup={setShowCopyPopup}
         />
       )}
     </Pages>

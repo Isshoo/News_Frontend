@@ -1,0 +1,15 @@
+.dataset-table-header-info .preprocess-delete svg {
+  width: 1.55rem;
+  height: 1.55rem;
+  color: var(--primary-text);
+}
+
+.dataset-table-header-info .preprocess-delete svg:hover {
+  color: #ff0000;
+  transition: color 0.3s ease;
+}
+
+.dataset-table-header-info .preprocess-delete::after {
+  content: 'Delete Dataset';
+  left: 3rem;
+}

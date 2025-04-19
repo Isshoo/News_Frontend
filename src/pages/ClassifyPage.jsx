@@ -20,6 +20,8 @@ const ClassifyPage = () => {
   const { predictionResults, loading } = useSelector((state) => state.classifier);
   const { models, selectedModelId } = useSelector((state) => state.models);
 
+  const [classifyLoading, setClassifyLoading] = React.useState(false);
+
   const inputAtBottom = !!predictionResults?.length;
 
   const suggestions = [
@@ -54,7 +56,13 @@ const ClassifyPage = () => {
   };
 
   const predictNews = async (text) => {
+    if (!text) {
+      alert('Please enter a news text');
+      return;
+    }
+    setClassifyLoading(true);
     await dispatch(classifyNews(text));
+    setClassifyLoading(false);
   };
 
   return (
@@ -77,7 +85,7 @@ const ClassifyPage = () => {
                   <h2>Any news to classify?</h2>
                   <ClassifyInput
                     predictNews={predictNews}
-                    loading={loading}
+                    loading={classifyLoading}
                     models={models}
                     selectedModelId={selectedModelId || ''}
                     handleModelChange={handleModelChange}
@@ -104,7 +112,7 @@ const ClassifyPage = () => {
                       preprocessedText={result.text}
                       hybridPredict={result.hybrid}
                       deepseekPredict={result.deepseek}
-                      loading={loading}
+                      loading={classifyLoading}
                       idx={idx}
                     />
                   ))}
@@ -119,7 +127,7 @@ const ClassifyPage = () => {
                 >
                   <ClassifyInput
                     predictNews={predictNews}
-                    loading={loading}
+                    loading={classifyLoading}
                     models={models}
                     selectedModelId={selectedModelId || ''}
                     handleModelChange={handleModelChange}

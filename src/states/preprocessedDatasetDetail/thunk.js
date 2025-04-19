@@ -43,8 +43,15 @@ export const asyncUpdatePreprocessedData = (datasetId, index, newLabel, newPrepr
 export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch, getState) => {
   try {
     await deleteData(datasetId, index); // API call
-    const { limit, currentPage } = getState().preprocessedDatasetDetail;
-    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+    const  NowCurrentPage = getState().preprocessedDatasetDetail.currentPage;
+    await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId)); // Refresh data
+    const { limit, totalPages } = getState().preprocessedDatasetDetail;
+    if (totalPages > 0 && NowCurrentPage > totalPages) {
+      dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
+      return;
+    }
+    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, NowCurrentPage, limit)); // Refresh data
+
   } catch (err) {
     console.error(err);
   }
@@ -53,9 +60,12 @@ export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch
 export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => async (dispatch, getState) => {
   try {
     await addData(datasetId, contentSnippet, topik); // API call
+    await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId)); // Refresh data
     const { limit, totalPages } = getState().preprocessedDatasetDetail;
-    const currentPage = totalPages > 0 ? totalPages : 1;
-    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+    if (totalPages > 0) {
+      dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
+      return;
+    }
   } catch (err) {
     console.error(err);
   }

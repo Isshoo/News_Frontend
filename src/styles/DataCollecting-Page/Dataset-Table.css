@@ -98,10 +98,9 @@
   border-bottom: 1px solid var(--form-border);
   color: var(--primary-text);
   background-color: var(--background);
-  font-size: 0.95rem;
+  font-size: 0.87rem;
   vertical-align: top;
   text-align: justify;
-  max-height: 94.5px;
   overflow: hidden;
   
 }

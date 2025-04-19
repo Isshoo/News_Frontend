@@ -4,65 +4,6 @@
   align-items: center;
   gap: 1rem;
 }
-.dataset-open-upload{
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: sticky;
-  bottom: 2rem;
-}
-
-.open-upload-btn {
-  background-color: var(--add-btn-bg);
-  border-radius: 100%;
-  padding: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
-  position: relative;
-}
-.open-upload-btn:hover {
-  background-color: var(--add-icon);
-  box-shadow: -2px 2px 5px 5px var(--add-btn-shadow);
-
-  svg path {
-    color: var(--add-btn-bg);
-  }
-}
-
-.open-upload-btn svg {
-  font-size: 1.5rem;
-}
-.open-upload-btn svg path {
-  color: var(--add-icon);
-}
-
-.open-upload-btn::after {
-  content: var(--upload-new-dataset-info);
-  position: absolute;
-  top: -1rem;
-  left: -2rem;
-  transform: translateX(-50%);
-  background-color: var(--add-btn-bg);
-  color: var(--add-icon);
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-  box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
-  font-size: 0.75rem;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
-  z-index: 1000;
-}
-
-.open-upload-btn:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-1.3rem);
-}
 
 /* Modal styles */
 .upload-modal {

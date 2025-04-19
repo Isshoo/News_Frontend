@@ -17,22 +17,37 @@
 
 .no-preprocessed-dataset-text {
   font-size: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   opacity: 0.85;
 }
 
 .preprocess-btn {
-  padding: 0.6rem 1.2rem;
-  background-color: #3477db;
-  color: white;
-  border: none;
-  border-radius: 10px;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
-  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--add-btn-bg);
+  color: var(--add-icon);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+  box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .preprocess-btn:hover {
-  background-color: #2b65bb;
+    background-color: var(--add-icon);
+  box-shadow: -2px 2px 5px 5px var(--add-btn-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--add-btn-bg);
+}
+.preprocess-btn:disabled {
+  background-color: var(--add-btn-bg);
+  color: var(--add-icon);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.preprocess-btn:disabled:hover {
+  background-color: var(--add-btn-bg);
+  color: var(--add-icon);
 }

@@ -32,6 +32,7 @@ const CsvClassifierPage = () => {
 
   const [resultPage, setResultPage] = useState(1);
   const [csvPage, setCsvPage] = useState(1);
+  const [classifyLoading, setClassifyLoading] = useState(false);
   const rowsPerPage = 5;
 
   const resultStartIndex = (resultPage - 1) * rowsPerPage;
@@ -111,6 +112,7 @@ const CsvClassifierPage = () => {
       alert('Tambahkan data terlebih dahulu!');
       return;
     }
+    setClassifyLoading(true);
     const response = await dispatch(classifyCsvThunk());
 
     if (response.error) {
@@ -120,6 +122,7 @@ const CsvClassifierPage = () => {
     // Reset halaman hasil ke 1
     setResultPage(1);
     dispatch(setPopupOpen(false));
+    setClassifyLoading(false);
     return response;
   };
 
@@ -142,7 +145,7 @@ const CsvClassifierPage = () => {
             handleFileUpload={handleFileUpload}
             handleAddRow={handleAddRow}
             classifyAllCsv={classifyAllCsv}
-            loading={loading}
+            loading={classifyLoading}
             csvData={csvData}
             handleEditCell={handleEditCell}
             handleDeleteRow={handleDeleteRow}

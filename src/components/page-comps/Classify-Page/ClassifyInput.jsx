@@ -82,6 +82,7 @@ const ClassifyInput = ({
               <button
                 type='button'
                 className='reset-button'
+                disabled={loading}
                 onClick={() => dispatch(clearPredictions())}
               >
                 <RiResetLeftFill />

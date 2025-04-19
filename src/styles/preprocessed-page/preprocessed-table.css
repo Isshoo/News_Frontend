@@ -39,8 +39,7 @@
   background-color: var(--background);
   vertical-align: top;
   text-align: left;
-  font-size: 0.95rem;
-  height: 117px;
+  font-size: 0.87rem;
   
 }
 
@@ -54,22 +53,30 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.preprocess-table .preprocessed-content-text.index {
+  word-wrap: normal;
+  text-align: left;
+}
+
 .preprocess-table .preprocessed-content-text {
   width: 100%;
   height: 100%;
   border-radius: 0.4rem;
   background-color: transparent;
-  font-size: 0.95rem;
+  font-size: 0.87rem;
   padding: 0 0.25rem;
   text-align: justify;
+  word-wrap: break-word;
+
 }
 .preprocess-table .preprocessed-content-input {
   width: 100%;
   height: 100%;
   border-radius: 0.4rem;
   background-color: transparent;
-  font-size: 0.95rem;
-  resize: none;
+  font-size: 0.87rem;
+  resize: vertical;
+  overflow-y: auto;
   border: none;
   background-color: var(--input-background);
   color: var(--submit-text);
@@ -81,10 +88,13 @@
   width: 100%;
   border-radius: 0.4rem;
   border: none;
+
   background-color: var(--input-background);
   color: var(--submit-text);
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.87rem;
+  
+
 }
 
 .preprocess-table .preprocessed-content-select:hover {
@@ -101,7 +111,7 @@
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.80rem;
   transition: background-color 0.3s ease;
 }
 

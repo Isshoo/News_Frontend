@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
 import { MdInfoOutline } from 'react-icons/md';
+// trash icon from react-icons
+import { MdDelete } from 'react-icons/md';
 import { DatasetSelect } from '../../Base/Select';
 
 const PreprocessTable = ({
@@ -23,8 +25,22 @@ const PreprocessTable = ({
   isLoading,
   totalData,
   setShowInfo,
+  handleDeleteDataset,
 }) => {
   const labelOptions = ['ekonomi', 'gayahidup', 'hiburan', 'olahraga', 'teknologi'];
+  const textareaRef = useRef();
+
+  const selectedPrerpocessedDatasetName = preprocessedDatasets.find(
+    (dataset) => dataset.id === selectedPreprocessedDataset
+  )?.name;
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto'; // reset dulu
+      textarea.style.height = `${textarea.scrollHeight}px`; // set ulang sesuai isi
+    }
+  }, [newPreprocessedContent]);
 
   return (
     <div className='preprocess-table'>
@@ -36,6 +52,13 @@ const PreprocessTable = ({
             handleDatasetSelection={handleDatasetSelection}
             loading={isLoading}
           />
+          {selectedPrerpocessedDatasetName !== 'default' && (
+            <div className='dataset-table-header-info'>
+              <button className='preprocess-delete' onClick={handleDeleteDataset}>
+                <MdDelete className='delete-icon' />
+              </button>
+            </div>
+          )}
         </div>
         <div className='dataset-table-header-info'>
           <p>
@@ -55,15 +78,15 @@ const PreprocessTable = ({
               {preprocessedDatasetId === rawDatasetId ? (
                 <>
                   <col style={{ width: '5%' }} />
-                  <col style={{ width: '41.5%' }} />
-                  <col style={{ width: '41.5%' }} />
+                  <col style={{ width: '44%' }} />
+                  <col style={{ width: '39%' }} />
                   <col style={{ width: '12%' }} />
                 </>
               ) : (
                 <>
-                  <col style={{ width: '4%' }} />
-                  <col style={{ width: '37.5%' }} />
-                  <col style={{ width: '37.5%' }} />
+                  <col style={{ width: '4.5%' }} />
+                  <col style={{ width: '39.5%' }} />
+                  <col style={{ width: '35%' }} />
                   <col style={{ width: '11%' }} />
                   <col style={{ width: '10%' }} />
                 </>
@@ -73,7 +96,7 @@ const PreprocessTable = ({
               <tr>
                 <th>ID</th>
                 <th>Original Content</th>
-                <th>Processed Content</th>
+                <th>Preprocessed Content</th>
                 <th>Topic</th>
                 {preprocessedDatasetId === rawDatasetId ? '' : <th>Actions</th>}
               </tr>
@@ -81,15 +104,21 @@ const PreprocessTable = ({
             <tbody>
               {dataset.length === 0 ? (
                 <tr>
-                  <td colSpan='4' style={{ textAlign: 'center' }}>
-                    No data available.
-                  </td>
+                  {preprocessedDatasetId === rawDatasetId ? (
+                    <td colSpan='4' style={{ textAlign: 'center' }}>
+                      No data available.
+                    </td>
+                  ) : (
+                    <td colSpan='5' style={{ textAlign: 'center' }}>
+                      No data available.
+                    </td>
+                  )}
                 </tr>
               ) : (
                 dataset.map((item) => (
                   <tr key={item.index}>
                     <td>
-                      <p className='preprocessed-content-text'>{item.index + 1}</p>
+                      <p className='preprocessed-content-text index'>{item.index + 1}</p>
                     </td>
                     <td title={item.contentSnippet}>
                       <p className='preprocessed-content-text'>{item.contentSnippet}</p>
@@ -97,6 +126,7 @@ const PreprocessTable = ({
                     <td title={item.preprocessedContent}>
                       {editingIndex === item.index ? (
                         <textarea
+                          ref={textareaRef}
                           className='preprocessed-content-input'
                           placeholder='Preprocessed Content'
                           value={newPreprocessedContent}
@@ -115,12 +145,12 @@ const PreprocessTable = ({
                         >
                           {labelOptions.map((label, i) => (
                             <option key={i} value={label}>
-                              <p className='preprocessed-content-text'>{label}</p>
+                              <p className='preprocessed-content-text index'>{label}</p>
                             </option>
                           ))}
                         </select>
                       ) : (
-                        <p className='preprocessed-content-text'>{item.topik}</p>
+                        <p className='preprocessed-content-text index'>{item.topik}</p>
                       )}
                     </td>
 
@@ -183,6 +213,7 @@ PreprocessTable.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   totalData: PropTypes.number.isRequired,
   setShowInfo: PropTypes.func.isRequired,
+  handleDeleteDataset: PropTypes.func.isRequired,
 };
 
 export default PreprocessTable;

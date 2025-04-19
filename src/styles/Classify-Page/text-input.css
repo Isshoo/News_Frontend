@@ -85,14 +85,12 @@
 .reset-button:hover {
     background-color: var(--select-model-hover);
 }
-.reset-button:hover svg {
-    color: var(--select-model-text);
+.reset-button:disabled {
+    opacity: 0.6;
+    pointer-events: none;
 }
-.reset-button:active {
-    background-color: var(--select-model-hover);
-}
-.reset-button:active svg {
-    color: var(--select-model-text);
+.reset-button:disabled:hover {
+    background-color: var(--select-model-background);
 }
 
 /* Tombol kirim */
