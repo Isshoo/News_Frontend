@@ -118,7 +118,7 @@ const PreprocessTable = ({
               ) : (
                 dataset.map((item) => (
                   <tr key={item.index}>
-                    <td>
+                    <td className='numbering'>
                       <p className='preprocessed-content-text index'>{item.index + 1}</p>
                     </td>
                     <td title={item.contentSnippet}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loading from '../../Base/LoadingBar';
 import ModelSelect from '../../Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 
@@ -37,14 +36,14 @@ const TfidfTable = ({ data, loading, modelId, totalData, currentPage, limit, set
     }
 
     return data.map((item, idx) => (
-      <tr key={idx} className='text-center border-t'>
-        <td>{(currentPage - 1) * limit + idx + 1}</td>
-        <td className='p-2'>{item.word}</td>
-        <td className='p-2'>{item.df}</td>
-        <td className='p-2'>{item.df_ratio.toFixed(4)}</td>
-        <td className='p-2'>{item.tf_avg.toFixed(4)}</td>
-        <td className='p-2'>{item.idf.toFixed(4)}</td>
-        <td className='p-2'>{item.tfidf_avg.toFixed(4)}</td>
+      <tr key={idx} className='text-center'>
+        <td className='numbering'>{(currentPage - 1) * limit + idx + 1}</td>
+        <td>{item.word}</td>
+        <td>{item.df}</td>
+        <td>{item.df_ratio.toFixed(4)}</td>
+        <td>{item.tf_avg.toFixed(4)}</td>
+        <td>{item.idf.toFixed(4)}</td>
+        <td>{item.tfidf_avg.toFixed(4)}</td>
       </tr>
     ));
   };

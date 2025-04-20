@@ -62,7 +62,7 @@ const DatasetTable = ({
               ) : (
                 data.map((row, index) => (
                   <tr key={index}>
-                    <td>{row.index + 1}</td>
+                    <td className='numbering'>{row.index + 1}</td>
                     <td className='clamp' title={row.contentSnippet}>
                       {row.contentSnippet}
                     </td>

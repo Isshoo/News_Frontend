@@ -5,13 +5,16 @@ import { resetC5Stats } from '../states/c5/action';
 import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
 import C5Table from '../components/page-comps/C5-Page/C5Table';
+import PopupModalInfoModel from '../components/page-comps/C5-Page/PopupModalInfoModel';
 
 const C5Page = () => {
   const dispatch = useDispatch();
   const firstRender = useRef(true);
-  const modelId = useSelector((state) => state.models.selectedModelId);
-  const { data, currentPage, totalPages, limit } = useSelector((state) => state.c5);
   const [loading, setLoading] = React.useState(true);
+  const [showInfo, setShowInfo] = React.useState(false);
+
+  const modelId = useSelector((state) => state.models.selectedModelId);
+  const { data, currentPage, totalPages, limit, totalData } = useSelector((state) => state.c5);
 
   useEffect(() => {
     if (firstRender.current) {
@@ -29,30 +32,23 @@ const C5Page = () => {
     if (modelId) dispatch(fetchWordStats(modelId, page, limit));
   };
 
-  if (!modelId) {
-    return (
-      <Pages>
-        <p>Please select a model to view its C5 data.</p>
-      </Pages>
-    );
-  }
-
   return (
     <Pages>
-      {loading ? (
-        <p>Loading C5 data...</p>
-      ) : data.length > 0 ? (
-        <>
-          <C5Table data={data} loading={loading} />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            setCurrentPage={handleSetPage}
-          />
-        </>
-      ) : (
-        <p>No C5 data available.</p>
-      )}
+      <C5Table
+        data={data}
+        loading={loading}
+        modelId={modelId}
+        totalData={totalData}
+        currentPage={currentPage}
+        limit={limit}
+        setShowInfo={setShowInfo}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={handleSetPage}
+      />
+      {showInfo && <PopupModalInfoModel onClose={() => setShowInfo(false)} />}
     </Pages>
   );
 };

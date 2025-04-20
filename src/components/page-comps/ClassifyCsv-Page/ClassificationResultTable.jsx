@@ -32,7 +32,7 @@ const ClassificationResultTable = ({
       <tbody>
         {classificationResult.map((row, index) => (
           <tr key={index}>
-            <td>{startIndex + index + 1}</td>
+            <td className='numbering'>{startIndex + index + 1}</td>
             <td title={row.contentSnippet} style={{ maxHeight: '3.6em', overflow: 'hidden' }}>
               {row.contentSnippet}
             </td>
