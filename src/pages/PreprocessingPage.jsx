@@ -30,6 +30,8 @@ import PopupModalInfo from '../components/page-comps/Preprocessing-Page/PopupMod
 import { FaPlus } from 'react-icons/fa';
 import { MdCopyAll } from 'react-icons/md';
 
+import Swal from 'sweetalert2';
+
 const PreprocessingPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
@@ -156,9 +158,11 @@ const PreprocessingPage = () => {
   };
 
   const handleDeleteDataset = async () => {
-    await dispatch(asyncDeletePreprocessedDataset(selectedPreprocessedDataset));
-    dispatch(setSelectedPreprocessedDataset(selectedDataset));
-    dispatch(setSelectedModel('', ''));
+    const result = await dispatch(asyncDeletePreprocessedDataset(selectedPreprocessedDataset));
+    if (!result?.canceled) {
+      dispatch(setSelectedPreprocessedDataset(selectedDataset));
+      dispatch(setSelectedModel('', ''));
+    }
   };
 
   const handleSetPage = (page) => {
