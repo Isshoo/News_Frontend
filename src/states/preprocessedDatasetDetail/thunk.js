@@ -34,6 +34,26 @@ export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit =
 
 export const asyncUpdatePreprocessedData = (datasetId, index, newLabel, newPreprocessedContent) => async (dispatch, getState) => {
   try {
+    // cek jika kosong
+    if (!newLabel || !newPreprocessedContent) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Empty Fields',
+        text: 'Please fill in all fields before saving.',
+      });
+      return;
+    }
+    // cek apakah ada perubahan pada label tapi ambil dulu id datanya jika sama dengan index
+    const { preprocessedDatasetDetail } = getState();
+    const { data } = preprocessedDatasetDetail;
+    const currentData = data.find((item) => item.index === index);
+    const currentLabel = currentData.topik;
+    const currentPreprocessedContent = currentData.preprocessedContent;
+    // jika tidak ada perubahan, tampilkan alert
+    if (currentLabel === newLabel && currentPreprocessedContent === newPreprocessedContent) {
+      return;
+    }
+    // jika ada perubahan, lanjutkan dengan update
     const result = await updatePreprocessedData(datasetId, index, newLabel, newPreprocessedContent); // API call
     if (!result.error) {
       const { limit, currentPage } = getState().preprocessedDatasetDetail;

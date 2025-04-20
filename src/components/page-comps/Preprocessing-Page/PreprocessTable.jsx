@@ -146,7 +146,7 @@ const PreprocessTable = ({
                         >
                           {labelOptions.map((label, i) => (
                             <option key={i} value={label}>
-                              <p className='preprocessed-content-text index'>{label}</p>
+                              {label}
                             </option>
                           ))}
                         </select>
