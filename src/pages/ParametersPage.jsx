@@ -89,7 +89,14 @@ const ParametersPage = () => {
   if (!selectedDataset || !selectedPreprocessedDataset) {
     return (
       <Pages>
-        <p>Please select a dataset and preprocessed dataset first.</p>
+        <div className='parameters-page'>
+          <div className='parameters-header'>
+            <h2 className='parameters-title'>Parameters</h2>
+          </div>
+          <div className='parameters-empty'>
+            <p>Please select a dataset and preprocessed dataset to view parameters.</p>
+          </div>
+        </div>
       </Pages>
     );
   }

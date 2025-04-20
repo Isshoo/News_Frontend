@@ -177,41 +177,55 @@ const PreprocessingPage = () => {
   return (
     <Pages>
       {!selectedDataset ? (
-        <p>Please select a raw dataset first to view its preprocessed datasets.</p>
-      ) : preprocessedDatasets.length === 0 ? (
-        <div className='upload-area'>
-          <div className='no-preprocessed-dataset'>
-            <h3 className='no-preprocessed-dataset-title'>Dataset Has Not Preprocessed Yet</h3>
-            <p className='no-preprocessed-dataset-text'>
-              You can preprocess the raw dataset by clicking the button below.
-            </p>
-            <button
-              className='preprocess-btn'
-              onClick={handlePreprocess}
-              disabled={preprocessLoading}
-              style={{ cursor: preprocessLoading ? 'not-allowed' : 'pointer' }}
-              title={
-                preprocessLoading
-                  ? 'Preprocessing in progress. Please wait a few minutes.'
-                  : 'Preprocess dataset'
-              }
-            >
-              {preprocessLoading ? 'Preprocessing...' : 'Preprocess'}
-            </button>
-            <div className='upload-note-container'>
-              <p className='upload-note'>
-                <strong>Note: </strong>
-              </p>
-              <p className='upload-note'>
-                Preprocessing is the process of transforming raw data into a format suitable for
-                analysis. It will take a few minutes to preprocess the data, because it requires
-                various techniques to clean and prepare the data, such as{' '}
-                <strong>Case Folding, Cleansing, Tokenizing, Stopword Removal, and Stemming</strong>
-                .
-              </p>
-            </div>
+        <div className='parameters-page'>
+          <div className='parameters-header'>
+            <h2 className='parameters-title'>Preprocessed Dataset</h2>
+          </div>
+          <div className='parameters-empty'>
+            <p>Please select a raw dataset first to view its preprocessed datasets.</p>
           </div>
         </div>
+      ) : preprocessedDatasets.length === 0 ? (
+        <>
+          <div className='parameters-header'>
+            <h2 className='parameters-title'>Preprocessed Dataset</h2>
+          </div>
+          <div className='upload-area'>
+            <div className='no-preprocessed-dataset'>
+              <h3 className='no-preprocessed-dataset-title'>Dataset Has Not Preprocessed Yet</h3>
+              <p className='no-preprocessed-dataset-text'>
+                You can preprocess the raw dataset by clicking the button below.
+              </p>
+              <button
+                className='preprocess-btn'
+                onClick={handlePreprocess}
+                disabled={preprocessLoading}
+                style={{ cursor: preprocessLoading ? 'not-allowed' : 'pointer' }}
+                title={
+                  preprocessLoading
+                    ? 'Preprocessing in progress. Please wait a few minutes.'
+                    : 'Preprocess dataset'
+                }
+              >
+                {preprocessLoading ? 'Preprocessing...' : 'Preprocess'}
+              </button>
+              <div className='upload-note-container'>
+                <p className='upload-note'>
+                  <strong>Note: </strong>
+                </p>
+                <p className='upload-note'>
+                  Preprocessing is the process of transforming raw data into a format suitable for
+                  analysis. It will take a few minutes to preprocess the data, because it requires
+                  various techniques to clean and prepare the data, such as{' '}
+                  <strong>
+                    Case Folding, Cleansing, Tokenizing, Stopword Removal, and Stemming
+                  </strong>
+                  .
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
       ) : (
         <>
           {selectedPreprocessedDataset ? (
@@ -281,18 +295,21 @@ const PreprocessingPage = () => {
             </>
           ) : (
             <div className='dataset-container-not-selected'>
-              <div className='not-selected-list-dataset'>
-                {preprocessedDatasets.length > 0 && (
-                  <DatasetSelect
-                    datasets={preprocessedDatasets}
-                    selectedDataset={selectedPreprocessedDataset}
-                    handleDatasetSelection={handleDatasetSelection}
-                    loading={isLoading}
-                  />
-                )}
+              <div className='dataset-table-header'>
+                <div className='dataset-select-upload'>
+                  <h2>Preprocessed Dataset:</h2>
+                  {preprocessedDatasets.length > 0 && (
+                    <DatasetSelect
+                      datasets={preprocessedDatasets}
+                      selectedDataset={selectedPreprocessedDataset}
+                      handleDatasetSelection={handleDatasetSelection}
+                      loading={isLoading}
+                    />
+                  )}
+                </div>
               </div>
-              <div className='not-selected-upload'>
-                <p>Silakan pilih salah satu preprocessed dataset.</p>
+              <div className=''>
+                <p>Select a preprocessed dataset to view its details.</p>
               </div>
             </div>
           )}
