@@ -24,6 +24,18 @@ export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
   const response = await apiPreprocessDataset(rawDatasetId);
   if (!response.error) {
     dispatch(addPreprocessedDataset(response.data));
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: response.message || 'Successfully Preprocess Raw Dataset.',
+    });
+  }
+  else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: response.error || 'Failed to Preprocess Raw Dataset.',
+    });
   }
   return response;
 };
@@ -32,9 +44,19 @@ export const asyncCreatePreprocessedCopy = (rawDatasetId, name) => async (dispat
   const response = await apiCreatePreprocessedCopy(rawDatasetId, name);
   if (!response.error && response.data) {
     dispatch(addPreprocessedDataset(response.data));
+    Swal.fire({
+      icon: 'success',
+      title: 'Success!',
+      text: response.message || 'A new copy of Preprocessed Dataset has been created.',
+    });
     return response.data;
   }
-  return null;
+  Swal.fire({
+    icon: 'error',
+    title: 'Error!',
+    text: response.error || 'Failed to create a copy of Preprocessed Dataset.',
+  });
+  return response;
 };
 
 export const asyncDeletePreprocessedDataset = (datasetId) => async (dispatch) => {

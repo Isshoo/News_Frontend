@@ -38,14 +38,14 @@ export const asyncUploadDataset = (file) => async (dispatch) => {
     dispatch(addDataset(result.dataset));
     Swal.fire({
       icon: 'success',
-      title: 'Upload Berhasil',
-      text: result.message || 'Dataset berhasil diunggah.',
+      title: 'Upload Success',
+      text: result.message || 'Successfully uploaded new dataset.',
     });
   } else {
     Swal.fire({
       icon: 'error',
-      title: 'Upload Gagal',
-      text: result.error || 'Terjadi kesalahan saat mengunggah dataset.',
+      title: 'Upload Failed',
+      text: result.error || 'Failed to upload dataset.',
     });
   }
 
