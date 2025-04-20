@@ -4,8 +4,14 @@ import PropTypes from 'prop-types';
 const KNNTable = ({ neighbors, index }) => {
   return (
     <div className='knn-table'>
-      <h3>Test Sample #{index + 1} Nearest Neighbors</h3>
-      <table>
+      <h3>Nearest Neighbors:</h3>
+      <table className='dataset-info-table'>
+        <colgroup>
+          <col style={{ width: '8%' }} />
+          <col style={{ width: '70%' }} />
+          <col style={{ width: '11%' }} />
+          <col style={{ width: '11%' }} />
+        </colgroup>
         <thead>
           <tr>
             <th>Index</th>
@@ -18,7 +24,7 @@ const KNNTable = ({ neighbors, index }) => {
           {neighbors.map((neighbor, i) => (
             <tr key={i}>
               <td>{neighbor.neighbor_index + 1}</td>
-              <td>{neighbor.neighbor_text}</td>
+              <td className='justify'>{neighbor.neighbor_text}</td>
               <td>{neighbor.neighbor_distance.toFixed(4)}</td>
               <td>{neighbor.neighbor_label}</td>
             </tr>

@@ -1,20 +1,29 @@
+.knn-info-first {
+  text-align: justify;
+  text-indent: 2rem;
+  margin-bottom: 0.5rem;
+
+  font-size: 0.95rem;
+}
+.knn-info {
+  font-size: 0.95rem;
+}
+.knn-info.last {
+ margin-bottom: 0.35rem;
+}
+
 .knn-group {
   padding: 1rem 1.5rem;
   background-color: var(--background);
   border-radius: 1rem;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
   border: 1px solid var(--form-border);
-}
-.knn-group h2 {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  border-bottom: 2px solid var(--form-border);
-  padding-bottom: 0.5rem;
+  margin: 0.5rem 0;
 }
 
 .knn-group h3 {
   font-size: 1.25rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .knn-group p {
