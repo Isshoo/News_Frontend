@@ -71,7 +71,8 @@
   border-bottom: 2px solid var(--nav-border);
 }
 
-.dataset-info-table tbody td {
+.dataset-info-table tbody td,
+.dataset-info-table tfoot td {
   padding: 0.5rem 1rem;
   border-bottom: 1px solid var(--form-border);
   color: var(--primary-text);
@@ -84,11 +85,13 @@
   
 }
 
-.dataset-info-table tbody tr:nth-child(even) td {
+.dataset-info-table tbody tr:nth-child(even) td,
+.dataset-info-table tfoot tr td {
   background-color: var(--main-bg);
 }
 
-.dataset-info-table tbody tr:hover td {
+.dataset-info-table tbody tr:hover td,
+.dataset-info-table tfoot tr:hover td{
   background-color: var(--nav-bg-hover);
   color: var(--secondary-text);
   transition: background-color 0.3s ease, color 0.3s ease;

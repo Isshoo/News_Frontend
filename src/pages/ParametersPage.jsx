@@ -12,8 +12,12 @@ import { updateNNeighbors, resetParameter } from '../states/parameter/action';
 import { setSelectedModel } from '../states/models/action';
 
 import Pages from '../components/styled/Pages';
-import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
+import ParameterInfo from '../components/page-comps/Parameters-Page/parameterInfo';
 import TrainButton from '../components/page-comps/Parameters-Page/TrainButton';
+import ModelConfigForm from '../components/page-comps/Parameters-Page/ModelConfigForm';
+import SplitSelector from '../components/page-comps/Parameters-Page/SplitSelector';
+import TopicSummaryTable from '../components/page-comps/Parameters-Page/TopicSummaryTable';
+import NNeighborsInput from '../components/page-comps/Parameters-Page/NNeighborsInput';
 
 const ParametersPage = () => {
   const dispatch = useDispatch();
@@ -92,93 +96,44 @@ const ParametersPage = () => {
 
   return (
     <Pages>
-      <div className='form-section'>
-        <h3 className='section-subtitle'>Dataset Information</h3>
-        <p className='total-data-parameter'>
-          <strong>Total data:</strong> {totalData || 0}
-        </p>
-        <DatasetInfo totalData={totalData || 0} topicCounts={topicCounts || {}} loading={loading} />
-      </div>
-
-      <div className='form-section'>
-        <h3 className='section-subtitle'>Set Training Parameters</h3>
-
-        <div className='form-group'>
-          <label>Train-Test Split</label>
-          <select
-            value={splitSize}
-            onChange={(e) => handleSplitChange(Number(e.target.value))}
-            disabled={loading}
-          >
-            <option value={0} disabled>
-              Select Split Size
-            </option>
-            <option value={0.5}>50-50</option>
-            <option value={0.4}>60-40</option>
-            <option value={0.3}>70-30</option>
-            <option value={0.25}>75-25</option>
-            <option value={0.2}>80-20</option>
-          </select>
+      <div className='parameters-page'>
+        <div className='parameters-header'>
+          <h2 className='parameters-title'>Parameters</h2>
         </div>
+        <div className='parameters-upper'>
+          <div className='parameters-upper-left'>
+            <div className='form-section'>
+              <ParameterInfo
+                totalData={totalData || 0}
+                topicCounts={topicCounts || {}}
+                loading={loading}
+              />
+            </div>
 
-        <div className='summary-section'>
-          <div className='summary-box'>
-            <p>
-              <strong>Train Data:</strong> {trainSize}
-            </p>
-            <p>Train Per Topic:</p>
-            <ul>
-              {Object.entries(trainPerTopic || {}).map(([topic, counts]) => (
-                <li key={topic}>
-                  {topic}: {counts}
-                </li>
-              ))}
-            </ul>
+            <ModelConfigForm name={name} onChange={handleNameChange} loading={loading} />
           </div>
-          <div className='summary-box'>
-            <p>
-              <strong>Test Data:</strong> {testSize}
-            </p>
-            <p>Test Per Topic:</p>
-            <ul>
-              {Object.entries(testPerTopic || {}).map(([topic, counts]) => (
-                <li key={topic}>
-                  {topic}: {counts}
-                </li>
-              ))}
-            </ul>
+
+          <div className='parameters-upper-right'>
+            <div className='form-section'>
+              <div className='parameter-model-container'>
+                <SplitSelector value={splitSize} onChange={handleSplitChange} loading={loading} />
+                <NNeighborsInput value={nNeighbors} onChange={handleNNeighborsChange} />
+              </div>
+
+              <TopicSummaryTable
+                trainSize={trainSize}
+                testSize={testSize}
+                trainPerTopic={trainPerTopic}
+                testPerTopic={testPerTopic}
+              />
+            </div>
           </div>
         </div>
-
-        <div className='form-group'>
-          <label>
-            <i>k</i> neighbors
-          </label>
-          <input
-            type='number'
-            value={nNeighbors}
-            onChange={(e) => handleNNeighborsChange(Number(e.target.value))}
-            min='1'
-          />
+        <div className='parameters-lower'>
+          <div className='form-section center'>
+            <TrainButton handleTrain={handleTrain} />
+          </div>
         </div>
-      </div>
-
-      <div className='form-section'>
-        <h3 className='section-subtitle'>Model Configuration</h3>
-        <div className='form-group'>
-          <label>Nama Model</label>
-          <input
-            type='text'
-            value={name || ''}
-            onChange={handleNameChange}
-            disabled={loading}
-            placeholder='Masukkan nama model'
-          />
-        </div>
-      </div>
-
-      <div className='form-section center'>
-        <TrainButton handleTrain={handleTrain} />
       </div>
     </Pages>
   );
