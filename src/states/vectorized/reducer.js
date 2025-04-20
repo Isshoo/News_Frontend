@@ -4,7 +4,7 @@ import { SET_VECTORIZED, RESET_VECTORIZED } from './action';
 const initialState = {
   data: [],
   currentPage: 1,
-  totalPages: 0,
+  totalPages: 1,
   totalData: 0,
   limit: 10,
 };

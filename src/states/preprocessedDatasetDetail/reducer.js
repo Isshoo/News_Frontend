@@ -13,7 +13,7 @@ const initialState = {
   data: [],
   totalData: 0,
   topicCounts: {},
-  totalPages: 0,
+  totalPages: 1,
   currentPage: 1,
   limit: 10,
   loadingDetail: false,

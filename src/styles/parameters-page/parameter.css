@@ -4,17 +4,23 @@
   color: var(--primary-text);
   display: flex;
   flex-direction: column;
+  border-radius: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 .parameters-header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
+  border-bottom: 2px solid var(--form-border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  min-height: 50.78px;
 }
 
 .parameters-title {
   font-size: 1.5rem;
-  font-weight: bold;
 }
 
 .parameters-upper {

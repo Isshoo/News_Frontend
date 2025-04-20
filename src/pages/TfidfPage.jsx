@@ -5,14 +5,18 @@ import Pagination from '../components/Base/Pagination';
 import TfidfTable from '../components/page-comps/Tfidf-Page/TfidfTable';
 import { fetchTfidfStats } from '../states/vectorized/thunk';
 import { resetTfidfStats } from '../states/vectorized/action';
+import PopupModalInfoModel from '../components/page-comps/Tfidf-Page/PopupModalInfoModel';
 
 const TfidfPage = () => {
   const dispatch = useDispatch();
   const firstRender = useRef(true);
   const [loading, setLoading] = React.useState(true);
+  const [showInfo, setShowInfo] = React.useState(false);
 
   const modelId = useSelector((state) => state.models.selectedModelId);
-  const { data, totalPages, currentPage, limit } = useSelector((state) => state.vectorized);
+  const { data, totalPages, currentPage, limit, totalData } = useSelector(
+    (state) => state.vectorized
+  );
 
   useEffect(() => {
     if (firstRender.current) {
@@ -35,30 +39,24 @@ const TfidfPage = () => {
     }
   };
 
-  if (!modelId) {
-    return (
-      <Pages>
-        <p>Please select a model to view its TF-IDF data.</p>
-      </Pages>
-    );
-  }
-
   return (
     <Pages>
-      {loading ? (
-        <p>Loading...</p>
-      ) : data.length > 0 ? (
-        <>
-          <TfidfTable data={data} loading={loading} />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            setCurrentPage={handleSetPage}
-          />
-        </>
-      ) : (
-        <p>No TF-IDF data available for this model.</p>
-      )}
+      <TfidfTable
+        data={data}
+        loading={loading}
+        modelId={modelId}
+        totalData={totalData}
+        currentPage={currentPage}
+        limit={limit}
+        setShowInfo={setShowInfo}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={handleSetPage}
+      />
+
+      {showInfo && <PopupModalInfoModel onClose={() => setShowInfo(false)} />}
     </Pages>
   );
 };

@@ -1,0 +1,3 @@
+.dataset-table-header-info button.tfidf-icon::after {
+    content: 'Tabel Information';
+}
