@@ -11,8 +11,9 @@ const PopupModalInfoModel = ({ onClose }) => {
         </button>
         <h2>Tabel Information</h2>
         <p className='c5-info'>
-          The table displays the C5.0 statistics for the selected model. Each row represents a word
-          in the dataset, and the columns provide various metrics related to that word.
+          <strong>C5.0 Table</strong> displays the C5.0 statistics for the selected model. Each row
+          represents a word in the dataset, and the columns provide various metrics related to that
+          word.
         </p>
         <table className='dataset-info-table'>
           <colgroup>

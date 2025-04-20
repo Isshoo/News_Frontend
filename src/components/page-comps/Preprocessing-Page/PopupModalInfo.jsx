@@ -30,22 +30,22 @@ const PopupModalInfo = ({
           &times;
         </button>
         <h2>Dataset Information</h2>
-        <p>
+        <p className='data-info'>
           <strong>Preprocessed Dataset Name:</strong> {preprocessedDatasetName}
         </p>
-        <p>
+        <p className='data-info'>
           <strong>Raw Dataset Name:</strong> {rawDatasetName}
         </p>
-        <p>
+        <p className='data-info'>
           <strong>Created At:</strong> {createdAt}
         </p>
         {preprocessedDatasetName !== 'default' && (
-          <p>
+          <p className='data-info'>
             <strong>Updated At:</strong> {updatedAt}
           </p>
         )}
 
-        <p>
+        <p className='data-info'>
           <strong>Total Data:</strong> {totalData}
         </p>
         <DatasetInfo topicCounts={topicCounts} loading={loading} totalData={totalData} />

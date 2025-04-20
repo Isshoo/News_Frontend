@@ -1,7 +1,5 @@
 .c5-info {
-  text-align: justify;
-  text-indent: 2rem;
-  margin-bottom: 0.5rem;
+  margin-block: 0.25rem 0.5rem;
 }
 .c5-table thead th {
   padding: 0.7rem 1rem;

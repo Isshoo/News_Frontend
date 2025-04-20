@@ -20,13 +20,13 @@ const PopupModalInfo = ({
           &times;
         </button>
         <h2>Dataset Information</h2>
-        <p>
+        <p className='data-info'>
           <strong>Dataset Name:</strong> {datasetName}
         </p>
-        <p>
+        <p className='data-info'>
           <strong>Uploaded At:</strong> {uploadedAt}
         </p>
-        <p>
+        <p className='data-info'>
           <strong>Total Data:</strong> {totalData}
         </p>
         <DatasetInfo topicCounts={topicCounts} loading={loading} totalData={totalData} />

@@ -22,7 +22,9 @@ const DatasetInfo = ({ totalData = 0, topicCounts, loading }) => {
             <tbody>
               {Object.entries(topicCounts).map(([topic, count]) => (
                 <tr key={topic}>
-                  <td>{topic}</td>
+                  <td>
+                    <strong>{topic}</strong>
+                  </td>
                   <td>{count}</td>
                 </tr>
               ))}

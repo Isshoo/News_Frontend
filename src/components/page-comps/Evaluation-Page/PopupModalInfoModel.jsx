@@ -10,15 +10,19 @@ const PopupModalInfoModel = ({ onClose }) => {
           &times;
         </button>
         <h2>Tabel Information</h2>
-        <p className='tfidf-info'>
-          <strong>TF-IDF Table</strong> displays the TF-IDF (Term Frequency-Inverse Document
-          Frequency) statistics for the selected model. Each row represents a term in the dataset,
-          and the columns provide various metrics related to that term.
+        <p className='eval-info'>
+          <strong>Confusion Matrix</strong> is a table that summarizes the performance of a
+          classification model by comparing the predicted labels with the actual labels.
+        </p>
+        <p className='eval-info last'>
+          <strong>Classification Report</strong> is a table that summarizes the performance of a
+          classification model by providing metrics such as precision, recall, F1-score, and support
+          for each class.
         </p>
         <table className='dataset-info-table'>
           <colgroup>
-            <col style={{ width: '25%' }} />
-            <col style={{ width: '75%' }} />
+            <col style={{ width: '20%' }} />
+            <col style={{ width: '80%' }} />
           </colgroup>
           <thead>
             <tr>
@@ -29,39 +33,29 @@ const PopupModalInfoModel = ({ onClose }) => {
           <tbody>
             <tr>
               <td>
-                <strong>Word</strong>
+                <strong>Accuracy</strong>
               </td>
-              <td>The term or word being analyzed.</td>
+              <td>
+                The ratio of correctly predicted instances to the total instances in the dataset.
+              </td>
             </tr>
             <tr>
               <td>
-                <strong>DF</strong>
+                <strong>Precision</strong>
               </td>
-              <td>Document Frequency</td>
+              <td>The ratio of true positives to the total predicted positives.</td>
             </tr>
             <tr>
               <td>
-                <strong>DF Ratio</strong>
+                <strong>Recall</strong>
               </td>
-              <td>Document Frequency Ratio</td>
+              <td>The ratio of true positives to the total actual positives.</td>
             </tr>
             <tr>
               <td>
-                <strong>TF Avg</strong>
+                <strong>F1-Score</strong>
               </td>
-              <td>Average Term Frequency</td>
-            </tr>
-            <tr>
-              <td>
-                <strong>IDF</strong>
-              </td>
-              <td>Inverse Document Frequency</td>
-            </tr>
-            <tr>
-              <td>
-                <strong>TF-IDF Avg</strong>
-              </td>
-              <td>Average Term Frequency-Inverse Document Frequency</td>
+              <td>The harmonic mean of precision and recall.</td>
             </tr>
           </tbody>
         </table>

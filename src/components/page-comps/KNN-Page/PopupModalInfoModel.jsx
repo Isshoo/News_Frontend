@@ -11,9 +11,9 @@ const PopupModalInfoModel = ({ onClose }) => {
         </button>
         <h2>Tabel Information</h2>
         <p className='knn-info-first'>
-          This table displays the KNN (K-Nearest Neighbors) statistics for the selected model. Each
-          row represents a document in the dataset, and the columns provide various metrics related
-          to that document.
+          <strong>KNN Table</strong> displays the KNN (K-Nearest Neighbors) statistics for the
+          selected model. Each row represents a document in the dataset, and the columns provide
+          various metrics related to that document.
         </p>
         <p className='knn-info'>
           <strong>True Label:</strong> The true label of the document.

@@ -76,7 +76,7 @@ const KNNPage = () => {
           </div>
           <div className='dataset-table-header-info'>
             <p>
-              <strong>Total Data: {totalPages}</strong>
+              <strong>{totalPages === 1 ? 'Total Data: 0' : `Total Data: ${totalPages}`}</strong>
             </p>
             <button className='tfidf-icon' onClick={() => setShowInfo(true)}>
               <MdInfoOutline className='info-icon' />

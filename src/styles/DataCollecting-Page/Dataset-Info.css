@@ -41,6 +41,10 @@
   gap: 0.5rem;
 }
 
+.data-info {
+    margin: 0.125rem;
+}
+
 
 .popup-modal-dataset-info h2 {
   font-size: 1.5rem;
