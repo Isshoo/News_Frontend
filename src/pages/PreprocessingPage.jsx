@@ -135,8 +135,10 @@ const PreprocessingPage = () => {
 
   const handleDelete = async (index) => {
     setEditingIndex(null);
-    await dispatch(asyncDeletePreprocessedData(selectedPreprocessedDataset, index));
-    dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+    const result = await dispatch(asyncDeletePreprocessedData(selectedPreprocessedDataset, index));
+    if (!result?.canceled) {
+      dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+    }
   };
 
   const handleAddData = async () => {
