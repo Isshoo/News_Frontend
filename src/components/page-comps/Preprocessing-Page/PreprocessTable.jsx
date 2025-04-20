@@ -46,6 +46,7 @@ const PreprocessTable = ({
     <div className='preprocess-table'>
       <div className='dataset-table-header'>
         <div className='dataset-select-upload'>
+          <h2>Preprocessed Dataset:</h2>
           <DatasetSelect
             datasets={preprocessedDatasets}
             selectedDataset={selectedPreprocessedDataset}

@@ -20,6 +20,7 @@ const DatasetTable = ({
     <div className='dataset-table'>
       <div className='dataset-table-header'>
         <div className='dataset-select-upload'>
+          <h2>Dataset:</h2>
           <DatasetSelect
             datasets={datasets}
             selectedDataset={selectedDataset}
