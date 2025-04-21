@@ -15,6 +15,8 @@ import {
   deleteDataset,
 } from '../../utils/api/dataset';
 
+import { asyncFetchDatasetDetail } from '../datasetDetail/thunk';
+
 import Swal from 'sweetalert2';
 
 // Thunk: Fetch all datasets
@@ -35,7 +37,8 @@ export const asyncUploadDataset = (file) => async (dispatch) => {
   const result = await uploadDataset(file);
 
   if (result.dataset) {
-    dispatch(addDataset(result.dataset));
+    await dispatch(addDataset(result.dataset));
+    dispatch(asyncFetchDatasetDetail(result.dataset.id));
     Swal.fire({
       icon: 'success',
       title: 'Upload Success',
@@ -48,7 +51,6 @@ export const asyncUploadDataset = (file) => async (dispatch) => {
       text: result.error || 'Failed to upload dataset.',
     });
   }
-
   dispatch(setDatasetsUploading(false));
   return result;
 };

@@ -59,7 +59,6 @@ const DataCollectingPage = () => {
       dispatch(setSelectedDataset(newId));
       dispatch(setSelectedPreprocessedDataset(newId));
       dispatch(setSelectedModel('', ''));
-      dispatch(asyncFetchDatasetDetail(newId, 1, 10));
     }
   };
 
@@ -67,13 +66,10 @@ const DataCollectingPage = () => {
     const selectedId = event.target.value;
     if (selectedId === selectedDataset) return;
 
-    setLoadingInfo(true);
-    dispatch(resetDatasetDetail());
     dispatch(setSelectedDataset(selectedId));
     dispatch(setSelectedPreprocessedDataset(selectedId));
     dispatch(setSelectedModel('', ''));
     dispatch(asyncFetchDatasetDetail(selectedId, 1, 10));
-    setLoadingInfo(false);
   };
 
   const handleSetPage = (page) => {
