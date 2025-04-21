@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNeighbors } from '../states/knn/thunk';
-import { resetNeighbors } from '../states/knn/action';
 import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
 import KNNGroup from '../components/page-comps/KNN-Page/KNNGroup';
 import { asyncFetchModelDetail } from '../states/modelDetail/thunk';
-import { resetModelDetail } from '../states/modelDetail/action';
 import ModelSelect from '../components/Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 import PopupModalInfoModel from '../components/page-comps/KNN-Page/PopupModalInfoModel';
@@ -15,11 +13,11 @@ const KNNPage = () => {
   const dispatch = useDispatch();
   const firstRender = useRef(true);
 
-  const modelId = useSelector((state) => state.models.selectedModelId);
+  const { selectedModelId } = useSelector((state) => state.models);
   const { data, currentPage, totalPages, limit, totalData } = useSelector((state) => state.knn);
 
   const [n_neighbors, setNNeighbors] = useState(5);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
@@ -28,26 +26,21 @@ const KNNPage = () => {
       return;
     }
 
-    dispatch(resetNeighbors());
-    dispatch(resetModelDetail());
-
     const fetchData = async () => {
-      setLoading(true);
-      if (modelId) {
-        const result = await dispatch(asyncFetchModelDetail(modelId));
-        if (!result.error) {
-          setNNeighbors(result.n_neighbors);
-        }
-        await dispatch(fetchNeighbors(modelId, 1, result.n_neighbors));
+      const result = await dispatch(asyncFetchModelDetail(selectedModelId));
+      if (!result.error) {
+        setNNeighbors(result.n_neighbors);
       }
-      setLoading(false);
+      await dispatch(fetchNeighbors(selectedModelId, 1, result.n_neighbors));
     };
 
-    fetchData();
-  }, [dispatch, modelId]);
+    if (selectedModelId) {
+      fetchData();
+    }
+  }, [dispatch, selectedModelId]);
 
   const handleSetPage = (page) => {
-    if (modelId) dispatch(fetchNeighbors(modelId, page, n_neighbors));
+    if (selectedModelId) dispatch(fetchNeighbors(selectedModelId, page, n_neighbors));
   };
 
   // Kelompokkan berdasarkan test_index
@@ -86,11 +79,13 @@ const KNNPage = () => {
         <div className='knn-group'>
           {loading && <p>Loading neighbors...</p>}
 
-          {!loading && !modelId && <p>Please select a model first to view its neighbors data.</p>}
+          {!loading && !selectedModelId && (
+            <p>Please select a model first to view its neighbors data.</p>
+          )}
 
-          {!loading && modelId && !hasData && <p>No KNN data available.</p>}
+          {!loading && selectedModelId && !hasData && <p>No KNN data available.</p>}
 
-          {!loading && modelId && hasData && (
+          {!loading && selectedModelId && hasData && (
             <>
               {Object.entries(groupedData).map(([index, group]) => (
                 <KNNGroup key={index} group={group} index={Number(index)} />

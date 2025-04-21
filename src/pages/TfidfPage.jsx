@@ -24,8 +24,6 @@ const TfidfPage = () => {
       return;
     }
 
-    dispatch(resetTfidfStats());
-
     if (modelId) {
       dispatch(fetchTfidfStats(modelId));
     }

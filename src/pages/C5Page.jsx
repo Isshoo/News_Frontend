@@ -22,7 +22,6 @@ const C5Page = () => {
       return;
     }
 
-    dispatch(resetC5Stats());
     if (modelId) dispatch(fetchWordStats(modelId));
 
     setLoading(false);

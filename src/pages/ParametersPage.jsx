@@ -2,12 +2,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncFetchPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/thunk';
-import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
 import { asyncFetchModelDetail } from '../states/modelDetail/thunk';
 import { asyncTrainModel } from '../states/models/thunk';
-import { updateModelName, resetModelDetail } from '../states/modelDetail/action';
+import { updateModelName } from '../states/modelDetail/action';
 import { fetchParameters, updateParameter } from '../states/parameter/thunk';
-import { updateNNeighbors, resetParameter } from '../states/parameter/action';
+import { updateNNeighbors } from '../states/parameter/action';
 
 import { setSelectedModel } from '../states/models/action';
 
@@ -15,9 +14,7 @@ import Pages from '../components/styled/Pages';
 import ParameterInfo from '../components/page-comps/Parameters-Page/parameterInfo';
 import TrainButton from '../components/page-comps/Parameters-Page/TrainButton';
 import ModelConfigForm from '../components/page-comps/Parameters-Page/ModelConfigForm';
-import SplitSelector from '../components/page-comps/Parameters-Page/SplitSelector';
 import TopicSummaryTable from '../components/page-comps/Parameters-Page/TopicSummaryTable';
-import NNeighborsInput from '../components/page-comps/Parameters-Page/NNeighborsInput';
 
 import Swal from 'sweetalert2';
 
@@ -47,10 +44,6 @@ const ParametersPage = () => {
       firstRun.current = false;
       return;
     }
-
-    dispatch(resetPreprocessedDatasetDetail());
-    dispatch(resetModelDetail());
-    dispatch(resetParameter());
 
     if (selectedModelId) {
       dispatch(asyncFetchModelDetail(selectedModelId));

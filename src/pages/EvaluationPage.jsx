@@ -1,13 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
-import ModelInfo from '../components/page-comps/Evaluation-Page/ModelInfo';
 import ConfusionMatrix from '../components/page-comps/Evaluation-Page/ConfusionMatrix';
 import ClassificationReport from '../components/page-comps/Evaluation-Page/ClassificationReport';
-import { asyncFetchModelDetail } from '../states/modelDetail/thunk';
-import { resetModelDetail } from '../states/modelDetail/action';
 import { fetchEvaluation } from '../states/evaluation/thunk';
-import { resetEvaluation } from '../states/evaluation/action';
 import ModelSelect from '../components/Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 import PopupModalInfoModel from '../components/page-comps/Evaluation-Page/PopupModalInfoModel';
@@ -17,7 +13,6 @@ const EvaluationPage = () => {
   const firstRun = useRef(true);
 
   const { selectedModelId } = useSelector((state) => state.models);
-  const { loading, name, total_data } = useSelector((state) => state.modelDetail);
   const { confusionMatrix, classificationReport, accuracy } = useSelector(
     (state) => state.evaluation
   );
@@ -30,11 +25,7 @@ const EvaluationPage = () => {
       return;
     }
 
-    dispatch(resetModelDetail());
-    dispatch(resetEvaluation());
-
     if (selectedModelId) {
-      dispatch(asyncFetchModelDetail(selectedModelId));
       dispatch(fetchEvaluation(selectedModelId));
     }
   }, [dispatch, selectedModelId]);
