@@ -75,7 +75,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
 
       <div className='model-info'>
         <p>
-          <strong>Accuracy:</strong> {(accuracy * 100).toFixed(2)}%
+          <strong>Accuracy:</strong> {accuracy.toFixed(2) * 100}%
         </p>
         <p>
           <strong>Total Data:</strong> {total_data}

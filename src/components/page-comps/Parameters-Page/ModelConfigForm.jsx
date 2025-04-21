@@ -12,7 +12,7 @@ const ModelConfigForm = ({ name, onChange, loading, nNeighbors, handleNNeighbors
         value={name || ''}
         onChange={onChange}
         disabled={loading}
-        placeholder='Masukkan nama model'
+        placeholder='Input model name'
       />
     </div>
     <NNeighborsInput value={nNeighbors} onChange={handleNNeighborsChange} />

@@ -19,6 +19,8 @@ import SplitSelector from '../components/page-comps/Parameters-Page/SplitSelecto
 import TopicSummaryTable from '../components/page-comps/Parameters-Page/TopicSummaryTable';
 import NNeighborsInput from '../components/page-comps/Parameters-Page/NNeighborsInput';
 
+import Swal from 'sweetalert2';
+
 const ParametersPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
@@ -75,12 +77,22 @@ const ParametersPage = () => {
   };
 
   const handleTrain = async () => {
-    setLoading(true);
+    if (!name || !splitSize || !nNeighbors) {
+      Swal.fire({
+        icon: 'info',
+        text: 'Please input all parameters before training!',
+        timer: 2500,
+        showConfirmButton: false,
+      });
+      return;
+    }
     const response = await dispatch(
       asyncTrainModel(selectedDataset, selectedPreprocessedDataset, name, splitSize, nNeighbors)
     );
-    console.log(response);
-    dispatch(setSelectedModel(response.id, response.model_path));
+    if (!response?.canceled) {
+      setLoading(true);
+      dispatch(setSelectedModel(response.id, response.model_path));
+    }
     setLoading(false);
     return response;
   };

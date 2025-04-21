@@ -33,7 +33,6 @@ const TrainButton = ({ handleTrain }) => {
       <button onClick={trainModel} disabled={loading}>
         {loading ? 'Training...' : 'Train Model'}
       </button>
-      {message && <p>{message}</p>}
     </div>
   );
 };

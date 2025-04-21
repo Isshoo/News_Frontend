@@ -58,6 +58,16 @@ const mapLabelResult = (result) => {
   };
   return mapping[result] || result;
 };
+const mapSplitResult = (result) => {
+  const mapping = {
+    0.2: '80-20',
+    0.25: '75-25',
+    0.3: '70-30',
+    0.4: '60-40',
+    0.5: '50-50',
+  };
+  return mapping[result] || result;
+};
 
-export { showFormattedDate, formatISODate, formatUnixTimestamp, mapLabelResult };
+export { showFormattedDate, formatISODate, formatUnixTimestamp, mapLabelResult, mapSplitResult };
 
