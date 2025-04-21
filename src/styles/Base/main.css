@@ -8,6 +8,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+*:disabled, *.disabled {
+  pointer-events: none;
+}
+
 html {
   scroll-behavior: smooth;
 }

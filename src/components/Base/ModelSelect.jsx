@@ -29,7 +29,7 @@ const ModelSelect = () => {
     dispatch(setSelectedPreprocessedDataset(foundModel?.preprocessed_dataset_id));
   };
   return (
-    <Dropdown className='modelDropdown'>
+    <Dropdown className={`modelDropdown ${models.length === 0 ? 'disabled' : ''}`}>
       <StyledSelect
         className='modelSelect'
         value={selectedModelId || ''}
@@ -37,7 +37,7 @@ const ModelSelect = () => {
         disabled={models.length === 0}
       >
         {models.length === 0 ? (
-          <option value=''>Default</option>
+          <option value=''>No models available</option>
         ) : (
           <>
             <option className='dataset-select-option' value='' disabled>

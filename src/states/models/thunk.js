@@ -19,7 +19,7 @@ export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split
   // bertanya apakah benar-benar ingin melatih model dengan parameter tersebut? menggunakan bahasa inggris
   const confirm = await Swal.fire({
     title: 'Train model using these parameters?',
-    text: `Train-Test-Split = ${mapSplitResult(split_size)} ,  K_Neighbors = ${n_neighbors} ,  and Name = "${name}",`,
+    text: `Train-Test-Split = ${mapSplitResult(split_size)} ,  K_Neighbors = ${n_neighbors} ,  and Name = "${name}"`,
     icon: 'question',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',

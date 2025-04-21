@@ -1,8 +1,5 @@
 import {
   setPreprocessedDatasetDetail,
-  updatePreprocessedDataRowLabel,
-  deletePreprocessedDataRow,
-  setPreprocessedDatasetDetailLoading,
   setPreprocessedDatasetPage,
   setPreprocessedDatasetLimit,
 } from './action';
@@ -105,7 +102,7 @@ export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch
         });
         return;
       }
-      dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, NowCurrentPage, limit)); // Refresh data
+      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, NowCurrentPage, limit)); // Refresh data
 
       Swal.fire({
         icon: 'success',
@@ -128,12 +125,21 @@ export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch
 
 export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => async (dispatch, getState) => {
   try {
+    if (!topik || !contentSnippet) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Empty Fields',
+        text: 'Please fill in all fields before saving.',
+      });
+      return;
+    }
+
     const response = await addData(datasetId, contentSnippet, topik); // API call
     if (!response.error) {
       const { limit, currentPage } = getState().preprocessedDatasetDetail;
       await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
       const { totalPages } = getState().preprocessedDatasetDetail;
-      if (totalPages > 0) {
+      if (totalPages > 0 && totalPages > currentPage) {
         await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
         Swal.fire({
           icon: 'success',
@@ -142,6 +148,7 @@ export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => as
         });
         return;
       }
+      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit));
       Swal.fire({
         icon: 'success',
         title: 'Success!',

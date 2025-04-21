@@ -3,12 +3,14 @@ import {
   SET_SELECTED_PREPROCESSED_DATASET,
   ADD_PREPROCESSED_DATASET,
   DELETE_PREPROCESSED_DATASET,
+  SET_PREPROCESS_LOADING
 } from './action';
 
 const initialState = {
   preprocessedDatasets: [],
   selectedPreprocessedDataset: '',
   isLoading: false,
+  preprocessLoading: false
 };
 
 const preprocessedDatasetsReducer = (state = initialState, action) => {
@@ -36,17 +38,19 @@ const preprocessedDatasetsReducer = (state = initialState, action) => {
     const updatedDatasets = state.preprocessedDatasets.filter(
       (dataset) => dataset.id !== action.payload
     );
-    const isDeleted = state.selectedPreprocessedDataset === action.payload;
-    const nextSelected = isDeleted
-      ? (updatedDatasets[0]?.id || null)
-      : state.selectedPreprocessedDataset;
 
     return {
       ...state,
       preprocessedDatasets: updatedDatasets,
-      selectedPreprocessedDataset: nextSelected,
+      selectedPreprocessedDataset: '',
     };
   }
+
+  case SET_PREPROCESS_LOADING:
+    return {
+      ...state,
+      preprocessLoading: action.payload,
+    };
 
   default:
     return state;

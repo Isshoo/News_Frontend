@@ -12,15 +12,12 @@ import {
   asyncDeletePreprocessedData,
   asyncAddPreprocessedData,
 } from '../states/preprocessedDatasetDetail/thunk';
-import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
 import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
 
 import { setSelectedModel } from '../states/models/action';
-import { setSelectedDataset } from '../states/datasets/action';
 
 import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
-import { ListDataset, DatasetSelect } from '../components/Base/Select';
 
 import PreprocessTable from '../components/page-comps/Preprocessing-Page/PreprocessTable';
 import AddDataPopup from '../components/page-comps/Preprocessing-Page/AddDataPopup';
@@ -30,24 +27,20 @@ import PopupModalInfo from '../components/page-comps/Preprocessing-Page/PopupMod
 import { FaPlus } from 'react-icons/fa';
 import { MdCopyAll } from 'react-icons/md';
 
-import Swal from 'sweetalert2';
-
 const PreprocessingPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
   const firstRun2 = useRef(true);
 
   const { selectedDataset, datasets } = useSelector((state) => state.datasets);
-  const { selectedPreprocessedDataset, preprocessedDatasets, isLoading } = useSelector(
-    (state) => state.preprocessedDatasets
-  );
+  const { selectedPreprocessedDataset, preprocessedDatasets, isLoading, preprocessLoading } =
+    useSelector((state) => state.preprocessedDatasets);
 
   const {
     data = [],
     totalPages = 1,
     currentPage = 1,
     limit = 10,
-    loadingDetail,
     totalData = 0,
     topicCounts = {},
   } = useSelector((state) => state.preprocessedDatasetDetail);
@@ -60,7 +53,6 @@ const PreprocessingPage = () => {
   const [newContent, setNewContent] = useState('');
   const [newTopic, setNewTopic] = useState('');
   const [newCopyName, setNewCopyName] = useState('');
-  const [preprocessLoading, setPreprocessLoading] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -89,29 +81,11 @@ const PreprocessingPage = () => {
   }, [dispatch, selectedPreprocessedDataset]);
 
   const handlePreprocess = async () => {
-    setPreprocessLoading(true);
-    const result = await dispatch(asyncPreprocessRawDataset(selectedDataset));
-    if (result?.data?.id) {
-      const id = result.data.id;
-      dispatch(setSelectedPreprocessedDataset(id));
-      dispatch(setSelectedModel('', ''));
-      dispatch(asyncFetchPreprocessedDatasetDetail(id, 1, 10));
-    }
-    setPreprocessLoading(false);
+    await dispatch(asyncPreprocessRawDataset(selectedDataset));
   };
 
   const handleCopyDataset = async () => {
-    if (!newCopyName) {
-      alert('Dataset Name cannot be empty.');
-      return;
-    }
-    const response = await dispatch(asyncCreatePreprocessedCopy(selectedDataset, newCopyName));
-    if (response?.data?.id) {
-      const id = response.data.id;
-      dispatch(setSelectedPreprocessedDataset(id));
-      dispatch(setSelectedModel('', ''));
-      dispatch(asyncFetchPreprocessedDatasetDetail(id, 1, 10));
-    }
+    await dispatch(asyncCreatePreprocessedCopy(selectedDataset, newCopyName));
     setShowCopyPopup(false);
   };
 
@@ -143,10 +117,6 @@ const PreprocessingPage = () => {
   };
 
   const handleAddData = async () => {
-    if (!newContent || !newTopic) {
-      alert('Please fill in all fields.');
-      return;
-    }
     await dispatch(asyncAddPreprocessedData(selectedPreprocessedDataset, newContent, newTopic));
     setShowAddPopup(false);
     dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
@@ -237,8 +207,7 @@ const PreprocessingPage = () => {
             </p>
             <p className='upload-note'>
               Preprocessing is the process of transforming raw data into a format suitable for
-              analysis. It will take a few minutes to preprocess the data, because it requires
-              various techniques to clean and prepare the data, such as{' '}
+              analysis. It will takes a various techniques to clean and prepare the data, such as{' '}
               <strong>Case Folding, Cleansing, Tokenizing, Stopword Removal, and Stemming</strong>.
             </p>
           </div>

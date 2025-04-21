@@ -5,7 +5,7 @@ import { Dropdown, Select as StyledSelect } from '../styled/Dropdown'; // pastik
 
 const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormattedDate }) => {
   return (
-    <Dropdown className='modelDropdown'>
+    <Dropdown className={`modelDropdown ${models.length === 0 ? 'disabled' : ''}`}>
       <StyledSelect
         className='modelSelect'
         value={selectedModelId || ''}
@@ -16,6 +16,9 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
           <option value=''>Default</option>
         ) : (
           <>
+            <option className='dataset-select-option' value='' disabled>
+              Select a model
+            </option>
             {models.map((model) => (
               <option key={model.id} value={model.id}>
                 {model.name} (Created: {showFormattedDate(model.created_at)})
@@ -30,13 +33,13 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
 
 const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, loading }) => {
   return (
-    <div className='dataset-select-container'>
+    <div className={`dataset-select-container ${datasets.length === 0 ? 'disabled' : ''}`}>
       <select
         id='dataset-select'
         className='dataset-select'
         onChange={handleDatasetSelection}
         value={selectedDataset || ''}
-        disabled={loading || datasets.length === 0}
+        disabled={datasets.length === 0}
       >
         {datasets.length === 0 ? (
           <option value=''>No datasets available</option>
