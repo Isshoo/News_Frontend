@@ -37,15 +37,11 @@ const datasetsReducer = (state = initialState, action) => {
 
   case DELETE_DATASET: {
     const updatedDatasets = state.datasets.filter((dataset) => dataset.id !== action.payload);
-    const isDeleted = state.selectedDataset === action.payload;
-    const nextSelected = isDeleted
-      ? (updatedDatasets[0]?.id || null)
-      : state.selectedDataset;
 
     return {
       ...state,
       datasets: updatedDatasets,
-      selectedDataset: nextSelected,
+      selectedDataset: '',
     };
   }
 

@@ -18,6 +18,8 @@ import {
 import { asyncFetchDatasetDetail } from '../datasetDetail/thunk';
 
 import Swal from 'sweetalert2';
+import { setSelectedPreprocessedDataset } from '../preprocessedDatasets/action';
+import { setSelectedModel } from '../models/action';
 
 // Thunk: Fetch all datasets
 export const asyncFetchDatasets = () => async (dispatch) => {
@@ -38,6 +40,8 @@ export const asyncUploadDataset = (file) => async (dispatch) => {
 
   if (result.dataset) {
     await dispatch(addDataset(result.dataset));
+    dispatch(setSelectedPreprocessedDataset(result.dataset.id));
+    dispatch(setSelectedModel('', ''));
     dispatch(asyncFetchDatasetDetail(result.dataset.id));
     Swal.fire({
       icon: 'success',
@@ -74,7 +78,9 @@ export const asyncDeleteDataset = (datasetId) => async (dispatch) => {
   const result = await deleteDataset(datasetId);
 
   if (!result.error) {
-    dispatch(deleteDatasetById(datasetId));
+    await dispatch(deleteDatasetById(datasetId));
+    dispatch(setSelectedPreprocessedDataset(''));
+    dispatch(setSelectedModel('', ''));
     Swal.fire({
       icon: 'success',
       title: 'Deleted!',

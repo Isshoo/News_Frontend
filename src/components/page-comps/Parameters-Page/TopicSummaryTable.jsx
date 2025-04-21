@@ -38,8 +38,8 @@ const TopicSummaryTable = ({
         {index === 0 && (
           <td colSpan='2' rowSpan={defaultTopics.length}>
             <em>
-              Please select a dataset and preprocessed dataset or select a model to view its topic
-              distribution data after split.
+              Please select a preprocessed dataset first and choose the split size to view its topic
+              distribution data after split, or select a model.
             </em>
           </td>
         )}

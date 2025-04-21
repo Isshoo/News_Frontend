@@ -3,12 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
 import DatasetUpload from '../components/page-comps/DataCollecting-Page/DatasetUpload';
 import DatasetTable from '../components/page-comps/DataCollecting-Page/DatasetTable';
-import DatasetInfo from '../components/page-comps/DataCollecting-Page/DatasetInfo';
 import PopupModalInfo from '../components/page-comps/DataCollecting-Page/PopupModalInfo';
 import Pagination from '../components/Base/Pagination';
 import { DatasetSelect } from '../components/Base/Select';
 import { asyncFetchDatasetDetail } from '../states/datasetDetail/thunk';
-import { resetDatasetDetail } from '../states/datasetDetail/action';
 import { asyncFetchDatasets, asyncUploadDataset } from '../states/datasets/thunk';
 import { setSelectedDataset } from '../states/datasets/action';
 import { setSelectedModel } from '../states/models/action';
@@ -53,13 +51,7 @@ const DataCollectingPage = () => {
   }, [dispatch, selectedDataset]);
 
   const handleUpload = async (file) => {
-    const result = await dispatch(asyncUploadDataset(file));
-    if (!result.error) {
-      const newId = result.dataset.id;
-      dispatch(setSelectedDataset(newId));
-      dispatch(setSelectedPreprocessedDataset(newId));
-      dispatch(setSelectedModel('', ''));
-    }
+    await dispatch(asyncUploadDataset(file));
   };
 
   const handleDatasetSelection = (event) => {
