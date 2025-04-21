@@ -1,8 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
+import { mapLabelResult } from '../../../utils/helper';
 
 const ParameterInfo = ({ totalData = 0, topicCounts, loading }) => {
+  const defaultTopics = ['0', '1', '2', '3', '4'];
+  const isEmpty = !topicCounts || Object.keys(topicCounts).length === 0;
+
+  const renderDataRows = () =>
+    Object.entries(topicCounts).map(([topic, count]) => (
+      <tr key={topic}>
+        <td>{mapLabelResult(topic)}</td>
+        <td>{count}</td>
+      </tr>
+    ));
+
+  const renderEmptyPlaceholder = () =>
+    defaultTopics.map((topic, index) => (
+      <tr key={topic}>
+        <td>{mapLabelResult(topic)}</td>
+        {index === 0 && (
+          <td rowSpan={defaultTopics.length} colSpan='1'>
+            <em>
+              Please select a dataset and preprocessed dataset or select a model to view its topic
+              distribution data.
+            </em>
+          </td>
+        )}
+      </tr>
+    ));
+
   return (
     <div className='dataset-info'>
       {loading ? (
@@ -12,21 +39,19 @@ const ParameterInfo = ({ totalData = 0, topicCounts, loading }) => {
           <h3 className='section-subtitle'>
             <span>Topics Count:</span>
           </h3>
-          <table className='dataset-info-table'>
+          <table className='report-table'>
+            <colgroup>
+              <col style={{ width: '40%' }} />
+              <col style={{ width: '60%' }} />
+            </colgroup>
             <thead>
               <tr>
                 <th>Topic</th>
                 <th>Total Data</th>
               </tr>
             </thead>
-            <tbody>
-              {Object.entries(topicCounts).map(([topic, count]) => (
-                <tr key={topic}>
-                  <td>{topic}</td>
-                  <td>{count}</td>
-                </tr>
-              ))}
-            </tbody>
+            <tbody>{isEmpty ? renderEmptyPlaceholder() : renderDataRows()}</tbody>
+
             <tfoot>
               <tr className='summary-total-row'>
                 <td>

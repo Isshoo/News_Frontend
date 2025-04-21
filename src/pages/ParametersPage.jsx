@@ -40,6 +40,7 @@ const ParametersPage = () => {
   } = useSelector((state) => state.parameter);
 
   const [loading, setLoading] = React.useState(false);
+  const noDataset = !selectedDataset || !selectedPreprocessedDataset;
 
   useEffect(() => {
     if (firstRun.current) {
@@ -97,22 +98,6 @@ const ParametersPage = () => {
     return response;
   };
 
-  // Conditional rendering to prevent undefined props usage
-  if (!selectedDataset || !selectedPreprocessedDataset) {
-    return (
-      <Pages>
-        <div className='parameters-page'>
-          <div className='parameters-header'>
-            <h2 className='parameters-title'>Parameters</h2>
-          </div>
-          <div className='parameters-empty'>
-            <p>Please select a dataset and preprocessed dataset to view parameters.</p>
-          </div>
-        </div>
-      </Pages>
-    );
-  }
-
   return (
     <Pages>
       <div className='parameters-page'>
@@ -142,6 +127,7 @@ const ParametersPage = () => {
                   loading={loading}
                   splitSize={splitSize}
                   handleSplitChange={handleSplitChange}
+                  noDataset={noDataset}
                 />
               </div>
             </div>
@@ -167,7 +153,7 @@ const ParametersPage = () => {
                 <h3 className='section-subtitle'>
                   <span>Train Model:</span>
                 </h3>
-                <TrainButton handleTrain={handleTrain} />
+                <TrainButton handleTrain={handleTrain} noDataset={noDataset} />
               </div>
             </div>
           </div>

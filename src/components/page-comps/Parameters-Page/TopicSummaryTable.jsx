@@ -1,7 +1,7 @@
-// src/components/page-comps/Parameters-Page/TopicSummaryTable.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
 import SplitSelector from './SplitSelector';
+import { mapLabelResult } from '../../../utils/helper';
 
 const TopicSummaryTable = ({
   trainSize,
@@ -11,11 +11,40 @@ const TopicSummaryTable = ({
   splitSize,
   handleSplitChange,
   loading,
+  noDataset,
 }) => {
-  // Gabungkan semua topik yang muncul di train maupun test
+  // Topik default – bisa ubah ke label sebenarnya kalau bukan 0-4
+  const defaultTopics = ['0', '1', '2', '3', '4'];
+
+  const isEmpty = Object.keys(trainPerTopic).length === 0 && Object.keys(testPerTopic).length === 0;
+
   const allTopics = Array.from(
     new Set([...Object.keys(trainPerTopic), ...Object.keys(testPerTopic)])
   );
+
+  const renderDataRows = () =>
+    allTopics.map((topic) => (
+      <tr key={topic}>
+        <td>{mapLabelResult(topic)}</td>
+        <td>{trainPerTopic[topic] || 0}</td>
+        <td>{testPerTopic[topic] || 0}</td>
+      </tr>
+    ));
+
+  const renderEmptyPlaceholder = () =>
+    defaultTopics.map((topic, index) => (
+      <tr key={topic}>
+        <td>{mapLabelResult(topic)}</td>
+        {index === 0 && (
+          <td colSpan='2' rowSpan={defaultTopics.length}>
+            <em>
+              Please select a dataset and preprocessed dataset or select a model to view its topic
+              distribution data after split.
+            </em>
+          </td>
+        )}
+      </tr>
+    ));
 
   return (
     <div className='dataset-info-content'>
@@ -23,9 +52,15 @@ const TopicSummaryTable = ({
         <h3 className='section-subtitle'>
           <span>Topics Count After Split:</span>
         </h3>
-        <SplitSelector value={splitSize} onChange={handleSplitChange} loading={loading} />
+        <SplitSelector
+          value={splitSize}
+          onChange={handleSplitChange}
+          loading={loading}
+          noDataset={noDataset}
+        />
       </div>
-      <table className='dataset-info-table'>
+
+      <table className='report-table'>
         <thead>
           <tr>
             <th>Topic</th>
@@ -33,15 +68,8 @@ const TopicSummaryTable = ({
             <th>Test Data</th>
           </tr>
         </thead>
-        <tbody>
-          {allTopics.map((topic) => (
-            <tr key={topic}>
-              <td>{topic}</td>
-              <td>{trainPerTopic[topic] || 0}</td>
-              <td>{testPerTopic[topic] || 0}</td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{isEmpty ? renderEmptyPlaceholder() : renderDataRows()}</tbody>
+
         <tfoot>
           <tr className='summary-total-row'>
             <td>
@@ -68,6 +96,7 @@ TopicSummaryTable.propTypes = {
   splitSize: PropTypes.number.isRequired,
   handleSplitChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  noDataset: PropTypes.bool.isRequired,
 };
 
 export default TopicSummaryTable;

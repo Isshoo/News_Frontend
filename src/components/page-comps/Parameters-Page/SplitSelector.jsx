@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SplitSelector = ({ value, onChange, loading }) => (
-  <div className='train-test-split modelDropdown'>
+const SplitSelector = ({ value, onChange, loading, noDataset }) => (
+  <div className={`train-test-split modelDropdown ${noDataset ? 'disabled' : ''}`}>
     <select
       className='modelSelect train-test-select'
       value={value}
@@ -25,6 +25,7 @@ SplitSelector.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  noDataset: PropTypes.bool.isRequired,
 };
 
 export default SplitSelector;

@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const TrainButton = ({ handleTrain }) => {
+const TrainButton = ({ handleTrain, noDataset }) => {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
 
   const trainModel = async () => {
     setLoading(true);
-    setMessage('');
 
     const response = await handleTrain();
 
     setLoading(false);
-    if (!response.error) {
-      setMessage('Model trained successfully!');
-    } else {
-      setMessage('Failed to train model.');
-    }
   };
 
   return (
@@ -30,7 +23,7 @@ const TrainButton = ({ handleTrain }) => {
           feature, and <strong>C5.0-KNN</strong> algorithm to classify.
         </p>
       </div>
-      <button onClick={trainModel} disabled={loading}>
+      <button onClick={trainModel} disabled={loading || noDataset}>
         {loading ? 'Training...' : 'Train Model'}
       </button>
     </div>
@@ -39,6 +32,7 @@ const TrainButton = ({ handleTrain }) => {
 
 TrainButton.propTypes = {
   handleTrain: PropTypes.func.isRequired,
+  noDataset: PropTypes.bool.isRequired,
 };
 
 export default TrainButton;

@@ -87,6 +87,9 @@
   justify-content: space-between;
 }
 
+.train-test-split.disabled {
+  pointer-events: none;
+}
 .train-test-select {
   padding: 0.25rem 0.25rem;
 }
@@ -160,4 +163,9 @@
   box-shadow: -2px 2px 5px 5px var(--add-btn-shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: var(--add-btn-bg);
+}
+
+.TrainButton button:disabled {
+  pointer-events: none;
+  opacity: 0.7;
 }
