@@ -3,9 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SplitSelector = ({ value, onChange, loading }) => (
-  <div className='form-group train-test-split'>
-    <label>Train-Test Split</label>
-    <select value={value} onChange={(e) => onChange(Number(e.target.value))} disabled={loading}>
+  <div className='train-test-split modelDropdown'>
+    <select
+      className='modelSelect train-test-select'
+      value={value}
+      onChange={(e) => onChange(Number(e.target.value))}
+      disabled={loading}
+    >
       <option value={0} disabled>
         Select Split Size
       </option>

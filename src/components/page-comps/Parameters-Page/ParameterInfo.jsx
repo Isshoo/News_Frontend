@@ -9,9 +9,9 @@ const ParameterInfo = ({ totalData = 0, topicCounts, loading }) => {
         <Loading />
       ) : (
         <div className='dataset-info-content'>
-          <p className='dataset-total'>
-            <strong>Topics Count:</strong>
-          </p>
+          <h3 className='section-subtitle'>
+            <span>Topics Count:</span>
+          </h3>
           <table className='dataset-info-table'>
             <thead>
               <tr>

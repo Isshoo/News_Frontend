@@ -1,15 +1,30 @@
 // src/components/page-comps/Parameters-Page/TopicSummaryTable.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
+import SplitSelector from './SplitSelector';
 
-const TopicSummaryTable = ({ trainSize, testSize, trainPerTopic, testPerTopic }) => {
+const TopicSummaryTable = ({
+  trainSize,
+  testSize,
+  trainPerTopic,
+  testPerTopic,
+  splitSize,
+  handleSplitChange,
+  loading,
+}) => {
   // Gabungkan semua topik yang muncul di train maupun test
   const allTopics = Array.from(
     new Set([...Object.keys(trainPerTopic), ...Object.keys(testPerTopic)])
   );
 
   return (
-    <div className='summary-section'>
+    <div className='dataset-info-content'>
+      <div className='split-topic-container'>
+        <h3 className='section-subtitle'>
+          <span>Topics Count After Split:</span>
+        </h3>
+        <SplitSelector value={splitSize} onChange={handleSplitChange} loading={loading} />
+      </div>
       <table className='dataset-info-table'>
         <thead>
           <tr>
@@ -50,6 +65,9 @@ TopicSummaryTable.propTypes = {
   testSize: PropTypes.number.isRequired,
   trainPerTopic: PropTypes.object.isRequired,
   testPerTopic: PropTypes.object.isRequired,
+  splitSize: PropTypes.number.isRequired,
+  handleSplitChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default TopicSummaryTable;

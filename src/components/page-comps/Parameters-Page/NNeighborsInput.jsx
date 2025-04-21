@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const NNeighborsInput = ({ value, onChange }) => (
-  <div className='form-group'>
+  <div className='form-group neighbors'>
     <label>
       <i>k</i> neighbors
     </label>

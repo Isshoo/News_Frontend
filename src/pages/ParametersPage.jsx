@@ -106,39 +106,58 @@ const ParametersPage = () => {
       <div className='parameters-page'>
         <div className='parameters-header'>
           <h2 className='parameters-title'>Parameters</h2>
+          <p style={{ color: 'transparent' }}>.</p>
         </div>
-        <div className='parameters-upper'>
-          <div className='parameters-upper-left'>
-            <div className='form-section'>
-              <ParameterInfo
-                totalData={totalData || 0}
-                topicCounts={topicCounts || {}}
-                loading={loading}
-              />
-            </div>
-
-            <ModelConfigForm name={name} onChange={handleNameChange} loading={loading} />
-          </div>
-
-          <div className='parameters-upper-right'>
-            <div className='form-section'>
-              <div className='parameter-model-container'>
-                <SplitSelector value={splitSize} onChange={handleSplitChange} loading={loading} />
-                <NNeighborsInput value={nNeighbors} onChange={handleNNeighborsChange} />
+        <div className='parameters-container-section'>
+          <div className='parameters-upper'>
+            <div className='parameters-upper-left'>
+              <div className='form-section'>
+                <ParameterInfo
+                  totalData={totalData || 0}
+                  topicCounts={topicCounts || {}}
+                  loading={loading}
+                />
               </div>
+            </div>
 
-              <TopicSummaryTable
-                trainSize={trainSize}
-                testSize={testSize}
-                trainPerTopic={trainPerTopic}
-                testPerTopic={testPerTopic}
-              />
+            <div className='parameters-upper-right'>
+              <div className='form-section'>
+                <TopicSummaryTable
+                  trainSize={trainSize}
+                  testSize={testSize}
+                  trainPerTopic={trainPerTopic}
+                  testPerTopic={testPerTopic}
+                  loading={loading}
+                  splitSize={splitSize}
+                  handleSplitChange={handleSplitChange}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className='parameters-lower'>
-          <div className='form-section center'>
-            <TrainButton handleTrain={handleTrain} />
+          <div className='parameters-lower'>
+            <div className='parameters-lower-left'>
+              <div className='form-section lower-left'>
+                <h3 className='section-subtitle'>
+                  <span>Model Configuration:</span>
+                </h3>
+                <ModelConfigForm
+                  name={name}
+                  onChange={handleNameChange}
+                  loading={loading}
+                  nNeighbors={nNeighbors}
+                  handleNNeighborsChange={handleNNeighborsChange}
+                />
+              </div>
+            </div>
+
+            <div className='parameters-lower-right'>
+              <div className='form-section lower-left'>
+                <h3 className='section-subtitle'>
+                  <span>Train Model:</span>
+                </h3>
+                <TrainButton handleTrain={handleTrain} />
+              </div>
+            </div>
           </div>
         </div>
       </div>

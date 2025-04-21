@@ -21,6 +21,15 @@ const TrainButton = ({ handleTrain }) => {
 
   return (
     <div className='TrainButton'>
+      <div className='train-text'>
+        <p className='upload-note'>
+          <strong>Note: </strong>
+        </p>
+        <p className='upload-note'>
+          Training model will take a few steps, such as <strong>Vectorizing</strong> to extracting
+          feature, and <strong>C5.0-KNN</strong> algorithm to classify.
+        </p>
+      </div>
       <button onClick={trainModel} disabled={loading}>
         {loading ? 'Training...' : 'Train Model'}
       </button>
