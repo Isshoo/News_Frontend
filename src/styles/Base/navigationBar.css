@@ -66,20 +66,18 @@
   min-width: 160px;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background-color: var(--nav-bg);
-  color: var(--side-text);
+  background-color: var(--add-btn-bg);
+  color: var(--add-icon);
   cursor: pointer;
-  opacity: 0.9;
+  opacity: 0.8;
   border: 1px solid var(--nav-border);
   min-height: 41px;
+  box-shadow: -2px 2px 1px 1px var(--add-btn-shadow);
 }
-.nav-button.user-nav:hover {
-  background-color: var(--nav-bg-hover);
-}
-.nav-button.user-nav:active {
-  background-color: var(--nav-bg-act);
+.nav-button.user-nav:hover,
+.nav-button.user-nav.active:hover {
+   opacity: 1;
 }
 .nav-button.user-nav.active {
-  background-color: var(--nav-active-bg);
-  opacity: 1;
+  opacity: 0.9;
 }

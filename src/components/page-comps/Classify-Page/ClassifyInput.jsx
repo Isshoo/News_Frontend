@@ -32,7 +32,7 @@ const ClassifyInput = ({
   }, [text]);
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const newText = text;
     setText(''); // reset textarea setelah submit
     await predictNews(newText);
@@ -45,7 +45,7 @@ const ClassifyInput = ({
 
   return (
     <>
-      <form id='threadForm' autoComplete='off' onSubmit={handleSubmit}>
+      <form id='threadForm' autoComplete='off'>
         <div className='input-section'>
           <textarea
             ref={textareaRef}
@@ -58,6 +58,7 @@ const ClassifyInput = ({
             aria-describedby='titleValidation'
             value={text}
             onChange={onTextChange}
+            // onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
             rows={1}
             style={{
               resize: 'none',
@@ -90,7 +91,8 @@ const ClassifyInput = ({
             )}
             <button
               className={text === '' ? 'disabled' : ''}
-              type='submit'
+              type='button'
+              onClick={handleSubmit}
               id='threadsSubmit'
               disabled={loading}
             >

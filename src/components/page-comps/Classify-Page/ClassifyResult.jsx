@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
 import { motion } from 'framer-motion';
-import { h4 } from 'framer-motion/client';
 
 const ClassifyResult = ({ preprocessedText, hybridPredict, deepseekPredict, loading, idx }) => {
   return (
@@ -17,7 +16,7 @@ const ClassifyResult = ({ preprocessedText, hybridPredict, deepseekPredict, load
       </div>
       <div className='chat-bubble ai-msg'>
         {!hybridPredict || !deepseekPredict ? (
-          <h4>...</h4>
+          <h4>Classifying...</h4>
         ) : (
           <>
             <p>

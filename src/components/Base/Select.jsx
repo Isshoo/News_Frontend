@@ -16,9 +16,6 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
           <option value=''>Default</option>
         ) : (
           <>
-            <option className='dataset-select-option' value='' disabled>
-              Select a model
-            </option>
             {models.map((model) => (
               <option key={model.id} value={model.id}>
                 {model.name} (Created: {showFormattedDate(model.created_at)})
