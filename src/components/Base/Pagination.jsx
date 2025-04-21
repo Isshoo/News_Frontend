@@ -12,12 +12,18 @@ const Pagination = ({ currentPage, totalPages, setCurrentPage }) => {
         <FaAngleLeft /> Prev
       </button>
       <span>
-        Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
+        Page <strong>{currentPage}</strong> of <strong>{totalPages !== 0 ? totalPages : 1}</strong>
       </span>
-      <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
+      <button
+        disabled={currentPage === totalPages || currentPage > totalPages}
+        onClick={() => setCurrentPage(currentPage + 1)}
+      >
         Next <FaAngleRight />
       </button>
-      <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(totalPages)}>
+      <button
+        disabled={currentPage === totalPages || currentPage > totalPages}
+        onClick={() => setCurrentPage(totalPages)}
+      >
         Last <FaAngleDoubleRight />
       </button>
     </div>

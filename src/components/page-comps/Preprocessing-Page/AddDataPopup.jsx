@@ -38,7 +38,11 @@ const AddDataPopup = ({
           </select>
         </div>
         <div className='popup-actions'>
-          <button className='popup-btn primary' onClick={handleAddData}>
+          <button
+            className='popup-btn primary'
+            onClick={handleAddData}
+            disabled={!newContent || !newTopic}
+          >
             Add
           </button>
           <button className='popup-btn' onClick={() => setShowAddPopup(false)}>

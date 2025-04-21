@@ -2,7 +2,6 @@ import { setModelDetail } from './action';
 import { getModel } from '../../utils/api/model';
 
 export const asyncFetchModelDetail = (modelId) => async (dispatch) => {
-  console.log(modelId);
   const response = await getModel(modelId);
   if (!response.error) {
     dispatch(setModelDetail({

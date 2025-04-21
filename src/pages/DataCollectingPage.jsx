@@ -109,13 +109,12 @@ const DataCollectingPage = () => {
               handleDatasetSelection={handleDatasetSelection}
               isLoading={isLoading}
             />
-            {totalPages > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                setCurrentPage={handleSetPage}
-              />
-            )}
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={handleSetPage}
+            />
           </div>
           <DatasetUpload
             onUpload={handleUpload}

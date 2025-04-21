@@ -76,6 +76,15 @@
   font-weight: bold;
   cursor: pointer;
   font-size: 0.9rem;
+  opacity: 0.9;
+}
+.popup-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.popup-btn:hover {
+  opacity: 1;
 }
 
 .popup-btn.primary {
@@ -86,4 +95,7 @@
 .popup-btn:not(.primary) {
   background-color: #444;
   color: var(--secondary-text);
+}
+.popup-btn:not(.primary):hover {
+  background-color: var(--submit-bg);
 }

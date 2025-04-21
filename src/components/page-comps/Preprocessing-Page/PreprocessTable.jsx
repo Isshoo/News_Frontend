@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
-import { MdInfoOutline } from 'react-icons/md';
-// trash icon from react-icons
-import { MdDelete } from 'react-icons/md';
+import { MdInfoOutline, MdDelete } from 'react-icons/md';
 import { DatasetSelect } from '../../Base/Select';
 
 const PreprocessTable = ({
@@ -29,16 +27,15 @@ const PreprocessTable = ({
 }) => {
   const labelOptions = ['ekonomi', 'gayahidup', 'hiburan', 'olahraga', 'teknologi'];
   const textareaRef = useRef();
+  const isSameDataset = preprocessedDatasetId === rawDatasetId;
 
-  const selectedPrerpocessedDatasetName = preprocessedDatasets.find(
-    (dataset) => dataset.id === selectedPreprocessedDataset
-  )?.name;
+  const selectedDataset = preprocessedDatasets.find((ds) => ds.id === selectedPreprocessedDataset);
+  const selectedDatasetName = selectedDataset?.name;
 
   useEffect(() => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto'; // reset dulu
-      textarea.style.height = `${textarea.scrollHeight}px`; // set ulang sesuai isi
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [newPreprocessedContent]);
 
@@ -47,85 +44,101 @@ const PreprocessTable = ({
       <div className='dataset-table-header'>
         <div className='dataset-select-upload'>
           <h2>Preprocessed Dataset:</h2>
+
           <DatasetSelect
             datasets={preprocessedDatasets}
             selectedDataset={selectedPreprocessedDataset}
             handleDatasetSelection={handleDatasetSelection}
             loading={isLoading}
           />
-          {selectedPrerpocessedDatasetName !== 'default' && (
-            <div className='dataset-table-header-info'>
-              <button className='preprocess-delete' onClick={handleDeleteDataset}>
-                <MdDelete className='delete-icon' />
-              </button>
-            </div>
-          )}
+
+          {!selectedPreprocessedDataset ||
+            (preprocessedDatasets.length > 0 && selectedDatasetName !== 'default' && (
+              <div className='dataset-table-header-info'>
+                <button className='preprocess-delete' onClick={handleDeleteDataset}>
+                  <MdDelete className='delete-icon' />
+                </button>
+              </div>
+            ))}
         </div>
+
         <div className='dataset-table-header-info'>
           <p>
-            <strong>Total Data: {totalData}</strong>
+            <strong>Total Data: {totalData || 0}</strong>
           </p>
-          <button onClick={() => setShowInfo(true)}>
-            <MdInfoOutline className='info-icon' />
-          </button>
+          {!selectedPreprocessedDataset ||
+            (preprocessedDatasets.length > 0 && (
+              <button onClick={() => setShowInfo(true)}>
+                <MdInfoOutline className='info-icon' />
+              </button>
+            ))}
         </div>
       </div>
+
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <table>
-            <colgroup>
-              {preprocessedDatasetId === rawDatasetId ? (
-                <>
-                  <col style={{ width: '5%' }} />
-                  <col style={{ width: '44%' }} />
-                  <col style={{ width: '39%' }} />
-                  <col style={{ width: '12%' }} />
-                </>
-              ) : (
-                <>
-                  <col style={{ width: '4.5%' }} />
-                  <col style={{ width: '39.5%' }} />
-                  <col style={{ width: '35%' }} />
-                  <col style={{ width: '11%' }} />
-                  <col style={{ width: '10%' }} />
-                </>
-              )}
-            </colgroup>
-            <thead>
+        <table>
+          <colgroup>
+            {isSameDataset ? (
+              <>
+                <col style={{ width: '5%' }} />
+                <col style={{ width: '44%' }} />
+                <col style={{ width: '39%' }} />
+                <col style={{ width: '12%' }} />
+              </>
+            ) : (
+              <>
+                <col style={{ width: '4.5%' }} />
+                <col style={{ width: '39.5%' }} />
+                <col style={{ width: '35%' }} />
+                <col style={{ width: '11%' }} />
+                <col style={{ width: '10%' }} />
+              </>
+            )}
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Original Content</th>
+              <th>Preprocessed Content</th>
+              <th>Topic</th>
+              {!isSameDataset && <th>Actions</th>}
+            </tr>
+          </thead>
+
+          <tbody>
+            {dataset.length === 0 ? (
               <tr>
-                <th>ID</th>
-                <th>Original Content</th>
-                <th>Preprocessed Content</th>
-                <th>Topic</th>
-                {preprocessedDatasetId === rawDatasetId ? '' : <th>Actions</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {dataset.length === 0 ? (
-                <tr>
-                  {preprocessedDatasetId === rawDatasetId ? (
-                    <td colSpan='4' style={{ textAlign: 'center' }}>
-                      No data available.
-                    </td>
+                <td colSpan={isSameDataset ? 4 : 5} style={{ textAlign: 'center' }}>
+                  {preprocessedDatasets.length ? (
+                    <>
+                      {!selectedPreprocessedDataset
+                        ? 'No data available, please select a preprocessed dataset first.'
+                        : 'No data available, please add a new data.'}
+                    </>
                   ) : (
-                    <td colSpan='5' style={{ textAlign: 'center' }}>
-                      No data available.
-                    </td>
+                    'No data available, Please select raw dataset first.'
                   )}
-                </tr>
-              ) : (
-                dataset.map((item) => (
+                </td>
+              </tr>
+            ) : (
+              dataset.map((item) => {
+                const isEditing = editingIndex === item.index;
+
+                return (
                   <tr key={item.index}>
                     <td className='numbering'>
                       <p className='preprocessed-content-text index'>{item.index + 1}</p>
                     </td>
+
                     <td title={item.contentSnippet}>
                       <p className='preprocessed-content-text'>{item.contentSnippet}</p>
                     </td>
+
                     <td title={item.preprocessedContent}>
-                      {editingIndex === item.index ? (
+                      {isEditing ? (
                         <textarea
                           ref={textareaRef}
                           className='preprocessed-content-input'
@@ -137,15 +150,16 @@ const PreprocessTable = ({
                         <p className='preprocessed-content-text'>{item.preprocessedContent}</p>
                       )}
                     </td>
+
                     <td>
-                      {editingIndex === item.index ? (
+                      {isEditing ? (
                         <select
                           className='preprocessed-content-select'
                           value={newLabel}
                           onChange={(e) => setNewLabel(e.target.value)}
                         >
-                          {labelOptions.map((label, i) => (
-                            <option key={i} value={label}>
+                          {labelOptions.map((label) => (
+                            <option key={label} value={label}>
                               {label}
                             </option>
                           ))}
@@ -155,11 +169,9 @@ const PreprocessTable = ({
                       )}
                     </td>
 
-                    {preprocessedDatasetId === rawDatasetId ? (
-                      ''
-                    ) : (
+                    {!isSameDataset && (
                       <td className='actions-cell'>
-                        {editingIndex === item.index ? (
+                        {isEditing ? (
                           <button
                             className='preprocess-action-button'
                             onClick={() => handleSave(item.index)}
@@ -185,11 +197,11 @@ const PreprocessTable = ({
                       </td>
                     )}
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </>
+                );
+              })
+            )}
+          </tbody>
+        </table>
       )}
     </div>
   );

@@ -65,6 +65,8 @@ const PreprocessingPage = () => {
   const [loading, setLoading] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
 
+  const [listLoading, setListLoading] = useState(false);
+
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false;
@@ -72,8 +74,10 @@ const PreprocessingPage = () => {
     }
 
     if (selectedDataset) {
+      setListLoading(true);
       dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
     }
+    setListLoading(false);
   }, [dispatch, selectedDataset]);
 
   useEffect(() => {
@@ -174,166 +178,154 @@ const PreprocessingPage = () => {
     }
   };
 
-  return (
-    <Pages>
-      {!selectedDataset ? (
-        <div className='parameters-page'>
-          <div className='parameters-header'>
-            <h2 className='parameters-title'>Preprocessed Dataset</h2>
-          </div>
-          <div className='parameters-empty'>
-            <p>Please select a raw dataset first to view its preprocessed datasets.</p>
+  const tableProps = {
+    dataset: data,
+    editingIndex,
+    newLabel,
+    setNewLabel,
+    handleEdit,
+    newPreprocessedContent,
+    setNewPreprocessedContent,
+    handleSave,
+    handleDelete,
+    preprocessedDatasetId: selectedPreprocessedDataset,
+    rawDatasetId: selectedDataset,
+    loading,
+    preprocessedDatasets,
+    selectedPreprocessedDataset,
+    handleDatasetSelection,
+    isLoading,
+    totalData,
+    setShowInfo,
+    handleDeleteDataset,
+  };
+
+  const renderNoDatasetSelected = () => (
+    <>
+      <PreprocessTable {...tableProps} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={handleSetPage}
+      />
+    </>
+  );
+
+  const renderNoPreprocessedDataset = () => (
+    <>
+      <div className='parameters-header'>
+        <h2 className='parameters-title'>Preprocessed Dataset</h2>
+      </div>
+      <div className='upload-area'>
+        <div className='no-preprocessed-dataset'>
+          <h3 className='no-preprocessed-dataset-title'>Dataset Has Not Preprocessed Yet</h3>
+          <p className='no-preprocessed-dataset-text'>
+            You can preprocess the raw dataset by clicking the button below.
+          </p>
+          <button
+            className='preprocess-btn'
+            onClick={handlePreprocess}
+            disabled={preprocessLoading}
+            style={{ cursor: preprocessLoading ? 'not-allowed' : 'pointer' }}
+            title={
+              preprocessLoading
+                ? 'Preprocessing in progress. Please wait a few minutes.'
+                : 'Preprocess dataset'
+            }
+          >
+            {preprocessLoading ? 'Preprocessing...' : 'Preprocess'}
+          </button>
+          <div className='upload-note-container'>
+            <p className='upload-note'>
+              <strong>Note: </strong>
+            </p>
+            <p className='upload-note'>
+              Preprocessing is the process of transforming raw data into a format suitable for
+              analysis. It will take a few minutes to preprocess the data, because it requires
+              various techniques to clean and prepare the data, such as{' '}
+              <strong>Case Folding, Cleansing, Tokenizing, Stopword Removal, and Stemming</strong>.
+            </p>
           </div>
         </div>
-      ) : preprocessedDatasets.length === 0 ? (
+      </div>
+    </>
+  );
+
+  const renderPreprocessedDatasetContent = () => (
+    <>
+      {showInfo && (
+        <PopupModalInfo
+          onClose={() => setShowInfo(false)}
+          totalData={totalData}
+          topicCounts={topicCounts}
+          loading={loading}
+          datasets={datasets}
+          preprocessedDatasets={preprocessedDatasets}
+          selectedDataset={selectedPreprocessedDataset}
+        />
+      )}
+
+      <PreprocessTable {...tableProps} />
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={handleSetPage}
+      />
+
+      {selectedPreprocessedDataset === selectedDataset ? (
         <>
-          <div className='parameters-header'>
-            <h2 className='parameters-title'>Preprocessed Dataset</h2>
+          <div className='dataset-open-upload'>
+            <button
+              type='button'
+              className='open-upload-btn copy-preprocess'
+              onClick={() => setShowCopyPopup(!showCopyPopup)}
+            >
+              <MdCopyAll />
+            </button>
           </div>
-          <div className='upload-area'>
-            <div className='no-preprocessed-dataset'>
-              <h3 className='no-preprocessed-dataset-title'>Dataset Has Not Preprocessed Yet</h3>
-              <p className='no-preprocessed-dataset-text'>
-                You can preprocess the raw dataset by clicking the button below.
-              </p>
-              <button
-                className='preprocess-btn'
-                onClick={handlePreprocess}
-                disabled={preprocessLoading}
-                style={{ cursor: preprocessLoading ? 'not-allowed' : 'pointer' }}
-                title={
-                  preprocessLoading
-                    ? 'Preprocessing in progress. Please wait a few minutes.'
-                    : 'Preprocess dataset'
-                }
-              >
-                {preprocessLoading ? 'Preprocessing...' : 'Preprocess'}
-              </button>
-              <div className='upload-note-container'>
-                <p className='upload-note'>
-                  <strong>Note: </strong>
-                </p>
-                <p className='upload-note'>
-                  Preprocessing is the process of transforming raw data into a format suitable for
-                  analysis. It will take a few minutes to preprocess the data, because it requires
-                  various techniques to clean and prepare the data, such as{' '}
-                  <strong>
-                    Case Folding, Cleansing, Tokenizing, Stopword Removal, and Stemming
-                  </strong>
-                  .
-                </p>
-              </div>
-            </div>
-          </div>
+          {showCopyPopup && (
+            <AddCopyPopup
+              newCopyName={newCopyName}
+              setNewCopyName={setNewCopyName}
+              handleCopyDataset={handleCopyDataset}
+              setShowCopyPopup={setShowCopyPopup}
+            />
+          )}
         </>
       ) : (
         <>
-          {selectedPreprocessedDataset ? (
-            <>
-              {showInfo && (
-                <PopupModalInfo
-                  onClose={() => setShowInfo(false)}
-                  totalData={totalData}
-                  topicCounts={topicCounts}
-                  loading={loading}
-                  datasets={datasets}
-                  preprocessedDatasets={preprocessedDatasets}
-                  selectedDataset={selectedPreprocessedDataset}
-                />
-              )}
-
-              <PreprocessTable
-                dataset={data}
-                editingIndex={editingIndex}
-                newLabel={newLabel}
-                setNewLabel={setNewLabel}
-                handleEdit={handleEdit}
-                newPreprocessedContent={newPreprocessedContent}
-                setNewPreprocessedContent={setNewPreprocessedContent}
-                handleSave={handleSave}
-                handleDelete={handleDelete}
-                preprocessedDatasetId={selectedPreprocessedDataset}
-                rawDatasetId={selectedDataset}
-                loading={loading}
-                preprocessedDatasets={preprocessedDatasets}
-                selectedPreprocessedDataset={selectedPreprocessedDataset}
-                handleDatasetSelection={handleDatasetSelection}
-                isLoading={isLoading}
-                totalData={totalData}
-                setShowInfo={setShowInfo}
-                handleDeleteDataset={handleDeleteDataset}
-              />
-
-              {totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  setCurrentPage={handleSetPage}
-                />
-              )}
-              {selectedPreprocessedDataset === selectedDataset ? (
-                <div className='dataset-open-upload'>
-                  <button
-                    type='button'
-                    className='open-upload-btn copy-preprocess'
-                    onClick={() => setShowCopyPopup(!showCopyPopup)}
-                  >
-                    <MdCopyAll />
-                  </button>
-                </div>
-              ) : (
-                <div className='dataset-open-upload'>
-                  <button
-                    type='button'
-                    className='open-upload-btn add-preprocess-data'
-                    onClick={() => setShowAddPopup(!showAddPopup)}
-                  >
-                    <FaPlus />
-                  </button>
-                </div>
-              )}
-            </>
-          ) : (
-            <div className='dataset-container-not-selected'>
-              <div className='dataset-table-header'>
-                <div className='dataset-select-upload'>
-                  <h2>Preprocessed Dataset:</h2>
-                  {preprocessedDatasets.length > 0 && (
-                    <DatasetSelect
-                      datasets={preprocessedDatasets}
-                      selectedDataset={selectedPreprocessedDataset}
-                      handleDatasetSelection={handleDatasetSelection}
-                      loading={isLoading}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className=''>
-                <p>Select a preprocessed dataset to view its details.</p>
-              </div>
-            </div>
+          <div className='dataset-open-upload'>
+            <button
+              type='button'
+              className='open-upload-btn add-preprocess-data'
+              onClick={() => setShowAddPopup(!showAddPopup)}
+            >
+              <FaPlus />
+            </button>
+          </div>
+          {showAddPopup && (
+            <AddDataPopup
+              newContent={newContent}
+              setNewContent={setNewContent}
+              newTopic={newTopic}
+              setNewTopic={setNewTopic}
+              handleAddData={handleAddData}
+              setShowAddPopup={setShowAddPopup}
+            />
           )}
         </>
       )}
+    </>
+  );
 
-      {showAddPopup && (
-        <AddDataPopup
-          newContent={newContent}
-          setNewContent={setNewContent}
-          newTopic={newTopic}
-          setNewTopic={setNewTopic}
-          handleAddData={handleAddData}
-          setShowAddPopup={setShowAddPopup}
-        />
-      )}
-      {showCopyPopup && (
-        <AddCopyPopup
-          newCopyName={newCopyName}
-          setNewCopyName={setNewCopyName}
-          handleCopyDataset={handleCopyDataset}
-          setShowCopyPopup={setShowCopyPopup}
-        />
-      )}
+  return (
+    <Pages>
+      {!selectedDataset
+        ? renderNoDatasetSelected()
+        : preprocessedDatasets.length === 0 && !listLoading
+          ? renderNoPreprocessedDataset()
+          : renderPreprocessedDatasetContent()}
     </Pages>
   );
 };

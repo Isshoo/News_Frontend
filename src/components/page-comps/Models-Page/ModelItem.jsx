@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { setSelectedModel } from '../../../states/models/action';
 import { setSelectedDataset } from '../../../states/datasets/action';
 import { setSelectedPreprocessedDataset } from '../../../states/preprocessedDatasets/action';
+import { mapSplitResult } from '../../../utils/helper';
 
 const ModelItem = ({ model, onDelete, onRename }) => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
           <strong>Total Data:</strong> {total_data}
         </p>
         <p>
-          <strong>Split Size:</strong> {split_size}
+          <strong>Split Size:</strong> {mapSplitResult(split_size)}
         </p>
         <p>
           <strong>n_neighbors:</strong> {n_neighbors}

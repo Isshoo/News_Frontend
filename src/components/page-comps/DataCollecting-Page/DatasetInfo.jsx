@@ -20,14 +20,22 @@ const DatasetInfo = ({ totalData = 0, topicCounts, loading }) => {
               </tr>
             </thead>
             <tbody>
-              {Object.entries(topicCounts).map(([topic, count]) => (
-                <tr key={topic}>
-                  <td>
-                    <strong>{topic}</strong>
+              {Object.entries(topicCounts).length !== 0 ? (
+                Object.entries(topicCounts).map(([topic, count]) => (
+                  <tr key={topic}>
+                    <td>
+                      <strong>{topic}</strong>
+                    </td>
+                    <td>{count}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={2} style={{ textAlign: 'center' }}>
+                    No data available.
                   </td>
-                  <td>{count}</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

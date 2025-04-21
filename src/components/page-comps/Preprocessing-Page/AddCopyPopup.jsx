@@ -20,7 +20,7 @@ const AddCopyPopup = ({ newCopyName, setNewCopyName, handleCopyDataset, setShowC
           />
         </div>
         <div className='popup-actions'>
-          <button className='popup-btn primary' onClick={handleCopyDataset}>
+          <button className='popup-btn primary' onClick={handleCopyDataset} disabled={!newCopyName}>
             Make New Copy
           </button>
           <button className='popup-btn' onClick={() => setShowCopyPopup(false)}>
