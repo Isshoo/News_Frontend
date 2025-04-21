@@ -31,16 +31,12 @@ const ModelsPage = () => {
     }
   }, [dispatch]);
 
-  const handleDelete = (id) => {
-    dispatch(deleteModelThunk(id));
-    dispatch(setSelectedDataset(''));
-    dispatch(setSelectedPreprocessedDataset(''));
-    dispatch(setSelectedModel('', ''));
+  const handleDelete = async (id) => {
+    await dispatch(deleteModelThunk(id));
   };
 
   const handleRename = async (id, newName) => {
     await dispatch(editModelNameThunk(id, newName));
-    dispatch(fetchModels());
   };
 
   if (models === undefined) return null;

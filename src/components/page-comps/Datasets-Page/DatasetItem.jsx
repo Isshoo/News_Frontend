@@ -11,11 +11,11 @@ const DatasetItem = ({ dataset, onDelete, deletingId }) => {
   const dispatch = useDispatch();
   const { id, name, total_data, topic_counts, upload_at } = dataset;
 
-  const handleTrain = () => {
+  const handleTrain = async () => {
     dispatch(setSelectedDataset(id));
     dispatch(setSelectedPreprocessedDataset(id));
     dispatch(setSelectedModel('', ''));
-    navigate('/admin/home/preprocessing');
+    navigate('/admin/home/data-collecting');
   };
 
   return (

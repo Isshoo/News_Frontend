@@ -25,7 +25,7 @@ const ParametersPage = () => {
   const { selectedDataset } = useSelector((state) => state.datasets);
   const { selectedPreprocessedDataset } = useSelector((state) => state.preprocessedDatasets);
   const { totalData, topicCounts } = useSelector((state) => state.preprocessedDatasetDetail);
-  const { selectedModelId } = useSelector((state) => state.models);
+  const { selectedModelId, trainLoading } = useSelector((state) => state.models);
   const { name } = useSelector((state) => state.modelDetail);
   const {
     nNeighbors = 0,
@@ -80,15 +80,9 @@ const ParametersPage = () => {
       });
       return;
     }
-    const response = await dispatch(
+    await dispatch(
       asyncTrainModel(selectedDataset, selectedPreprocessedDataset, name, splitSize, nNeighbors)
     );
-    if (!response?.canceled) {
-      setLoading(true);
-      dispatch(setSelectedModel(response.id, response.model_path));
-    }
-    setLoading(false);
-    return response;
   };
 
   return (
@@ -146,7 +140,11 @@ const ParametersPage = () => {
                 <h3 className='section-subtitle'>
                   <span>Train Model:</span>
                 </h3>
-                <TrainButton handleTrain={handleTrain} noDataset={noDataset} />
+                <TrainButton
+                  handleTrain={handleTrain}
+                  noDataset={noDataset}
+                  trainLoading={trainLoading}
+                />
               </div>
             </div>
           </div>

@@ -1,15 +1,17 @@
-import { setModels, setSelectedModel, setLoading, deleteModel, updateModelName } from './action';
+import { setModels, setSelectedModel, addModel, setLoading, deleteModel, setTrainLoading } from './action';
 import { getModels, deleteModel as deleteModelAPI, editModelName } from '../../utils/api/model';
 import { trainModel } from '../../utils/api/process';
 import { mapSplitResult } from '../../utils/helper';
 
 import Swal from 'sweetalert2';
+import { setSelectedDataset } from '../datasets/action';
+import { setSelectedPreprocessedDataset } from '../preprocessedDatasets/action';
 
 export const asyncFetchModels = () => async (dispatch) => {
   dispatch(setLoading(true));
   const response = await getModels();
   if (!response.error) {
-    dispatch(setModels(response));
+    await dispatch(setModels(response));
   }
   dispatch(setLoading(false));
   return response;
@@ -30,9 +32,11 @@ export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split
 
   if (!confirm.isConfirmed) return { canceled: true };
 
+  dispatch(setTrainLoading(true));
+
   const response = await trainModel(rawDatasetId, preprocessedDatasetId, name, split_size, n_neighbors);
   if (!response.error) {
-    dispatch(asyncFetchModels());
+    await dispatch(addModel(response));
     dispatch(setSelectedModel(response.id,  response.model_path));
     Swal.fire({
       icon: 'success',
@@ -47,21 +51,72 @@ export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split
       text: response.error || 'Failed to Train model.',
     });
   }
+  dispatch(setTrainLoading(false));
   return response;
 };
 
 export const asyncDeleteModel = (modelId) => async (dispatch) => {
+  const confirm = await Swal.fire({
+    title: 'Delete Model?',
+    text: 'This action cannot be undone!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'Cancel',
+  });
+
+  if (!confirm.isConfirmed) return { canceled: true };
+
   const response = await deleteModelAPI(modelId);
   if (!response.error) {
-    dispatch(deleteModel(modelId));
+    await dispatch(deleteModel(modelId));
+    dispatch(setSelectedDataset(''));
+    dispatch(setSelectedPreprocessedDataset(''));
+    Swal.fire({
+      icon: 'success',
+      title: 'Deleted!',
+      text: response.message || 'Model has been successfully deleted.',
+    });
+  }  else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: response.error || 'Failed to delete model.',
+    });
   }
   return response;
 };
 
 export const asyncUpdateModelName = (modelId, newName) => async (dispatch) => {
+  // const confirm = await Swal.fire({
+  //   title: 'Continue Renaming Model?',
+  //   text: `Model's name will change to "${newName}"`,
+  //   icon: 'question',
+  //   showCancelButton: true,
+  //   confirmButtonColor: '#3085d6',
+  //   cancelButtonColor: '#d33',
+  //   confirmButtonText: 'Yes, Rename Model!',
+  //   cancelButtonText: 'Cancel',
+  // });
+
+  // if (!confirm.isConfirmed) return { canceled: true };
+
   const response = await editModelName(modelId, newName);
   if (!response.error) {
-    dispatch(asyncFetchModels());
+    await dispatch(asyncFetchModels());
+    Swal.fire({
+      icon: 'success',
+      title: 'Renamed!',
+      text: response.message || 'Model has been successfully renamed.',
+    });
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: response.error || 'Failed to rename model.',
+    });
   }
   return response;
 };

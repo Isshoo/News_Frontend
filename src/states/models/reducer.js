@@ -1,9 +1,11 @@
 import {
   SET_MODELS,
   SET_SELECTED_MODEL,
+  ADD_MODEL,
   DELETE_MODEL,
   UPDATE_MODEL_NAME,
   SET_LOADING,
+  SET_TRAIN_LOADING
 } from './action';
 
 const initialState = {
@@ -11,6 +13,7 @@ const initialState = {
   selectedModelId: '',
   selectedModelPath: '',
   modelsLoading: false,
+  trainLoading: false
 };
 
 const modelsReducer = (state = initialState, action) => {
@@ -28,19 +31,23 @@ const modelsReducer = (state = initialState, action) => {
       selectedModelPath: action.payload.path,
     };
 
+  case ADD_MODEL:
+    return {
+      ...state,
+      models: [...state.models, action.payload],
+      selectedModelId: action.payload.id,
+      selectedModelPath: action.payload.path,
+    };
+
   case DELETE_MODEL: {
     const updatedModels = state.models.filter((model) => model.id !== action.payload);
-    const isDeleted = state.selectedModelId === action.payload;
-    const fallbackModel = updatedModels[0] || {
-      id: null,
-      path: null,
-    };
+
 
     return {
       ...state,
       models: updatedModels,
-      selectedModelId: isDeleted ? fallbackModel.id : state.selectedModelId,
-      selectedModelPath: isDeleted ? fallbackModel.path : state.selectedModelPath,
+      selectedModelId: '',
+      selectedModelPath: '',
     };
   }
 
@@ -58,6 +65,12 @@ const modelsReducer = (state = initialState, action) => {
     return {
       ...state,
       modelsLoading: action.payload,
+    };
+
+  case SET_TRAIN_LOADING:
+    return {
+      ...state,
+      trainLoading: action.payload,
     };
 
   default:
