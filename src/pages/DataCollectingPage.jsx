@@ -47,7 +47,6 @@ const DataCollectingPage = () => {
       firstRun2.current = false;
       return;
     }
-    dispatch(resetDatasetDetail());
     if (selectedDataset) {
       dispatch(asyncFetchDatasetDetail(selectedDataset));
     }

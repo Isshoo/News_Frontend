@@ -74,10 +74,8 @@ const PreprocessingPage = () => {
     }
 
     if (selectedDataset) {
-      setListLoading(true);
       dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
     }
-    setListLoading(false);
   }, [dispatch, selectedDataset]);
 
   useEffect(() => {
@@ -85,7 +83,6 @@ const PreprocessingPage = () => {
       firstRun2.current = false;
       return;
     }
-    dispatch(resetPreprocessedDatasetDetail());
     if (selectedPreprocessedDataset) {
       dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
     }
@@ -158,7 +155,6 @@ const PreprocessingPage = () => {
   const handleDatasetSelection = (event) => {
     const datasetId = event.target.value;
     if (datasetId === selectedPreprocessedDataset) return;
-    dispatch(resetPreprocessedDatasetDetail());
     dispatch(setSelectedPreprocessedDataset(datasetId));
     dispatch(setSelectedModel('', ''));
     dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, 10));

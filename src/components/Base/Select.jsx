@@ -38,11 +38,7 @@ const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, load
         value={selectedDataset || ''}
         disabled={loading || datasets.length === 0}
       >
-        {loading ? (
-          <option value='' disabled>
-            Loading datasets...
-          </option>
-        ) : datasets.length === 0 ? (
+        {datasets.length === 0 ? (
           <option value=''>No datasets available</option>
         ) : (
           <>

@@ -17,7 +17,6 @@ import {
 import Swal from 'sweetalert2';
 
 export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit = 10) => async (dispatch) => {
-  dispatch(setPreprocessedDatasetDetailLoading(true));
   const result = await fetchPreprocessedDataset(datasetId, page, limit);
   if (!result.error) {
     dispatch(setPreprocessedDatasetDetail({
@@ -29,7 +28,6 @@ export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit =
     dispatch(setPreprocessedDatasetPage(page));
     dispatch(setPreprocessedDatasetLimit(limit));
   }
-  dispatch(setPreprocessedDatasetDetailLoading(false));
 };
 
 export const asyncUpdatePreprocessedData = (datasetId, index, newLabel, newPreprocessedContent) => async (dispatch, getState) => {
@@ -57,7 +55,7 @@ export const asyncUpdatePreprocessedData = (datasetId, index, newLabel, newPrepr
     const result = await updatePreprocessedData(datasetId, index, newLabel, newPreprocessedContent); // API call
     if (!result.error) {
       const { limit, currentPage } = getState().preprocessedDatasetDetail;
-      dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
       Swal.fire({
         icon: 'success',
         title: 'Success!',
@@ -95,10 +93,11 @@ export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch
 
     if (!result.error) {
       const  NowCurrentPage = getState().preprocessedDatasetDetail.currentPage;
-      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId)); // Refresh data
-      const { limit, totalPages } = getState().preprocessedDatasetDetail;
+      const { limit, currentPage } = getState().preprocessedDatasetDetail;
+      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+      const { totalPages } = getState().preprocessedDatasetDetail;
       if (totalPages > 0 && NowCurrentPage > totalPages) {
-        dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
+        await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
         Swal.fire({
           icon: 'success',
           title: 'Success!',
@@ -131,10 +130,11 @@ export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => as
   try {
     const response = await addData(datasetId, contentSnippet, topik); // API call
     if (!response.error) {
-      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId)); // Refresh data
-      const { limit, totalPages } = getState().preprocessedDatasetDetail;
+      const { limit, currentPage } = getState().preprocessedDatasetDetail;
+      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+      const { totalPages } = getState().preprocessedDatasetDetail;
       if (totalPages > 0) {
-        dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
+        await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
         Swal.fire({
           icon: 'success',
           title: 'Success!',
