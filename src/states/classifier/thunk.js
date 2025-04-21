@@ -39,6 +39,7 @@ export const classifyNews = (text, retryCount = 4) => async (dispatch, getState)
   if (!response.DeepSeek) {
     console.log(`DeepSeek retrying... (${4 - retryCount})`);
     setTimeout(() => dispatch(classifyNews(text, retryCount - 1)), 1000);
+    dispatch(setLoading(false));
     return;
   }
 
@@ -72,6 +73,7 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
 
     return response;
   } catch (err) {
+    dispatch(setLoading(false));
     alert('Gagal mengklasifikasikan CSV');
     console.error(err);
   }

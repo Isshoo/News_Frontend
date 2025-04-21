@@ -116,6 +116,7 @@ const CsvClassifierPage = () => {
     const response = await dispatch(classifyCsvThunk());
 
     if (response.error) {
+      setClassifyLoading(false);
       alert('Gagal mengklasifikasikan CSV');
     }
 
@@ -145,7 +146,7 @@ const CsvClassifierPage = () => {
             handleFileUpload={handleFileUpload}
             handleAddRow={handleAddRow}
             classifyAllCsv={classifyAllCsv}
-            loading={classifyLoading}
+            loading={loading}
             csvData={csvData}
             handleEditCell={handleEditCell}
             handleDeleteRow={handleDeleteRow}

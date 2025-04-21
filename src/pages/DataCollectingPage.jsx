@@ -114,14 +114,12 @@ const DataCollectingPage = () => {
           <div className='dataset-table-header'>
             <div className='dataset-select-upload'>
               <h2>Dataset:</h2>
-              {datasets.length > 0 && (
-                <DatasetSelect
-                  datasets={datasets}
-                  selectedDataset={selectedDataset}
-                  handleDatasetSelection={handleDatasetSelection}
-                  loading={isLoading}
-                />
-              )}
+              <DatasetSelect
+                datasets={datasets}
+                selectedDataset={selectedDataset}
+                handleDatasetSelection={handleDatasetSelection}
+                loading={isLoading}
+              />
             </div>
           </div>
           <div className='not-selected-upload'>
