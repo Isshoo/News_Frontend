@@ -2,11 +2,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncFetchPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/thunk';
+import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
 import { asyncFetchModelDetail } from '../states/modelDetail/thunk';
 import { asyncTrainModel } from '../states/models/thunk';
-import { updateModelName } from '../states/modelDetail/action';
+import { updateModelName, resetModelDetail } from '../states/modelDetail/action';
 import { fetchParameters, updateParameter } from '../states/parameter/thunk';
-import { updateNNeighbors } from '../states/parameter/action';
+import { updateNNeighbors, resetParameter } from '../states/parameter/action';
 
 import { setSelectedModel } from '../states/models/action';
 
@@ -24,7 +25,9 @@ const ParametersPage = () => {
   const firstRun = useRef(true);
 
   const { selectedDataset } = useSelector((state) => state.datasets);
-  const { selectedPreprocessedDataset } = useSelector((state) => state.preprocessedDatasets);
+  const { selectedPreprocessedDataset, preprocessedDatasets } = useSelector(
+    (state) => state.preprocessedDatasets
+  );
   const { totalData, topicCounts } = useSelector((state) => state.preprocessedDatasetDetail);
   const { selectedModelId, trainLoading } = useSelector((state) => state.models);
   const { name } = useSelector((state) => state.modelDetail);
@@ -46,15 +49,23 @@ const ParametersPage = () => {
       return;
     }
 
-    if (selectedModelId) {
+    if (selectedModelId && selectedPreprocessedDataset) {
+      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
       dispatch(asyncFetchModelDetail(selectedModelId));
       dispatch(fetchParameters(selectedModelId));
+      return;
     }
-
-    if (selectedPreprocessedDataset) {
+    if (preprocessedDatasets.length > 0 && selectedPreprocessedDataset) {
       dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+      dispatch(resetParameter());
+      dispatch(resetModelDetail());
+    } else {
+      dispatch(resetPreprocessedDatasetDetail());
+      dispatch(resetModelDetail());
+      dispatch(resetParameter());
     }
-  }, [selectedModelId, selectedPreprocessedDataset, dispatch]);
+    return;
+  }, [selectedModelId, selectedPreprocessedDataset, preprocessedDatasets.length, dispatch]);
 
   const handleSplitChange = async (newSplitSize) => {
     if (selectedDataset && selectedPreprocessedDataset) {
