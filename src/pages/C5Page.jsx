@@ -14,7 +14,9 @@ const C5Page = () => {
   const [showInfo, setShowInfo] = React.useState(false);
 
   const modelId = useSelector((state) => state.models.selectedModelId);
-  const { data, currentPage, totalPages, limit, totalData } = useSelector((state) => state.c5);
+  const { data, initialEntropy, currentPage, totalPages, limit, totalData } = useSelector(
+    (state) => state.c5
+  );
 
   useEffect(() => {
     if (firstRender.current) {
@@ -39,6 +41,7 @@ const C5Page = () => {
     <Pages>
       <C5Table
         data={data}
+        initialEntropy={initialEntropy}
         loading={loading}
         modelId={modelId}
         totalData={totalData}

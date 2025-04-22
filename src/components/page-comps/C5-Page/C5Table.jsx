@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 import ModelSelect from '../../Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 
-const C5Table = ({ data, loading, modelId, totalData, currentPage, limit, setShowInfo }) => {
+const C5Table = ({
+  data,
+  initialEntropy,
+  loading,
+  modelId,
+  totalData,
+  currentPage,
+  limit,
+  setShowInfo,
+}) => {
   const renderTableBody = () => {
     if (loading) {
       return (
@@ -58,6 +67,9 @@ const C5Table = ({ data, loading, modelId, totalData, currentPage, limit, setSho
         </div>
         <div className='dataset-table-header-info'>
           <p>
+            <strong>Initial Entropy: {initialEntropy.toFixed(4)}</strong>
+          </p>
+          <p>
             <strong>Total Data: {totalData}</strong>
           </p>
           <button className='tfidf-icon' onClick={() => setShowInfo(true)}>
@@ -71,10 +83,10 @@ const C5Table = ({ data, loading, modelId, totalData, currentPage, limit, setSho
           <col style={{ width: '5%' }} />
           <col style={{ width: '12%' }} />
           <col style={{ width: '7%' }} />
-          <col style={{ width: '9.5%' }} />
-          <col style={{ width: '9.5%' }} />
-          <col style={{ width: '9.5%' }} />
-          <col style={{ width: '9.5%' }} />
+          <col style={{ width: '9%' }} />
+          <col style={{ width: '9%' }} />
+          <col style={{ width: '11%' }} />
+          <col style={{ width: '9%' }} />
           <col style={{ width: '27%' }} />
           <col style={{ width: '11%' }} />
         </colgroup>
@@ -84,9 +96,9 @@ const C5Table = ({ data, loading, modelId, totalData, currentPage, limit, setSho
             <th>Word</th>
             <th>DF</th>
             <th>DF Ratio</th>
-            <th>Word Entropy</th>
-            <th>Entropy w/o Word</th>
-            <th>Information Gain</th>
+            <th>Entropy</th>
+            <th>Entropy w/o</th>
+            <th>IG</th>
             <th>Freq per Label</th>
             <th>Top Label</th>
           </tr>
@@ -99,6 +111,7 @@ const C5Table = ({ data, loading, modelId, totalData, currentPage, limit, setSho
 
 C5Table.propTypes = {
   data: PropTypes.array.isRequired,
+  initialEntropy: PropTypes.number,
   loading: PropTypes.bool,
   modelId: PropTypes.string,
   totalData: PropTypes.number,

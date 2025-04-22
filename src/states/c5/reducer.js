@@ -3,6 +3,7 @@ import { SET_C5, RESET_C5 } from './action';
 
 const initialState = {
   data: [],
+  initialEntropy: 0,
   currentPage: 1,
   totalPages: 1,
   totalData: 0,
@@ -15,6 +16,7 @@ const c5Reducer = (state = initialState, action) => {
     return {
       ...state,
       data: action.payload.data,
+      initialEntropy: action.payload.initialEntropy,
       currentPage: action.payload.pagination.currentPage,
       totalPages: action.payload.pagination.totalPages,
       totalData: action.payload.pagination.totalData,

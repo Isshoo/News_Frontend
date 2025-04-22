@@ -8,6 +8,7 @@ export const fetchWordStats = (modelId, page = 1, limit = 10) => async (dispatch
     if (response?.data) {
       dispatch(setC5Stats({
         data: response.data,
+        initialEntropy: response.initial_entropy,
         pagination: {
           currentPage: response.current_page,
           totalPages: response.total_pages,

@@ -14,12 +14,10 @@ const ModelSelect = () => {
   useEffect(() => {
     if (firstRun.current) {
       firstRun.current = false;
-
-      if (models.length === 0) {
-        dispatch(asyncFetchModels());
-      }
+      return;
     }
-  }, [dispatch, models.length]);
+    dispatch(asyncFetchModels());
+  }, [dispatch]);
 
   const handleModelChange = (e) => {
     const modelId = e.target.value;
