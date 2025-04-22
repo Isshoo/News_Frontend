@@ -26,6 +26,7 @@ import PopupModalInfo from '../components/page-comps/Preprocessing-Page/PopupMod
 
 import { FaPlus } from 'react-icons/fa';
 import { MdCopyAll } from 'react-icons/md';
+import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
 
 const PreprocessingPage = () => {
   const dispatch = useDispatch();
@@ -77,6 +78,8 @@ const PreprocessingPage = () => {
     }
     if (selectedPreprocessedDataset) {
       dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+    } else {
+      dispatch(resetPreprocessedDatasetDetail());
     }
   }, [dispatch, selectedPreprocessedDataset]);
 
