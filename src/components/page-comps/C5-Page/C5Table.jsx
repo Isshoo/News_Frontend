@@ -67,7 +67,7 @@ const C5Table = ({
         </div>
         <div className='dataset-table-header-info'>
           <p>
-            <strong>Initial Entropy: {initialEntropy?.toFixed(3) || 0}</strong>
+            <strong>Initial Entropy: {initialEntropy?.toFixed(2) || 0}</strong>
           </p>
           <p>
             <strong>Total Data: {totalData}</strong>

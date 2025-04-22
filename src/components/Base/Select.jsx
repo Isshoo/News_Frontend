@@ -30,15 +30,17 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
 
 const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, loading }) => {
   return (
-    <div className={`dataset-select-container ${datasets.length === 0 ? 'disabled' : ''}`}>
+    <div
+      className={`dataset-select-container ${datasets.length === 0 && !selectedDataset ? 'disabled' : ''}`}
+    >
       <select
         id='dataset-select'
         className='dataset-select'
         onChange={handleDatasetSelection}
         value={selectedDataset || ''}
-        disabled={datasets.length === 0}
+        disabled={datasets.length === 0 && !selectedDataset}
       >
-        {datasets.length === 0 ? (
+        {datasets.length === 0 && !selectedDataset ? (
           <option value=''>No datasets available</option>
         ) : (
           <>
@@ -57,30 +59,38 @@ const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, load
   );
 };
 
-const ListDataset = ({
-  preprocessedDatasets,
-  rawDatasetId,
+const PreprocessedDatasetSelect = ({
+  datasets,
+  selectedDataset,
   handleDatasetSelection,
-  handleDeleteDataset,
+  loading,
 }) => {
   return (
-    <div className='list-dataset-wrapper'>
-      {preprocessedDatasets.length > 0 ? (
-        preprocessedDatasets.map((ds) => (
-          <div className='list-dataset-item' key={ds.id}>
-            <button className='list-dataset-select' onClick={() => handleDatasetSelection(ds.id)}>
-              {ds.name}
-            </button>
-            {ds.id !== rawDatasetId && (
-              <button className='list-dataset-delete' onClick={() => handleDeleteDataset(ds.id)}>
-                ✕
-              </button>
-            )}
-          </div>
-        ))
-      ) : (
-        <p className='list-dataset-empty'>No preprocessed datasets found.</p>
-      )}
+    <div
+      className={`dataset-select-container ${datasets.length === 0 || !selectedDataset ? 'disabled' : ''}`}
+    >
+      <select
+        id='dataset-select'
+        className='dataset-select'
+        onChange={handleDatasetSelection}
+        value={selectedDataset || ''}
+        disabled={datasets.length === 0 || !selectedDataset}
+      >
+        {datasets.length === 0 || !selectedDataset ? (
+          <option value=''>No datasets available</option>
+        ) : (
+          <>
+            <option className='dataset-select-option' value='' disabled>
+              Select a dataset
+            </option>
+            {datasets.map((dataset) => (
+              <option className='dataset-select-option' key={dataset.id} value={dataset.id}>
+                {dataset.name}
+              </option>
+            ))}
+          </>
+        )}
+      </select>
     </div>
   );
 };
@@ -97,11 +107,11 @@ DatasetSelect.propTypes = {
   handleDatasetSelection: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
-ListDataset.propTypes = {
-  preprocessedDatasets: PropTypes.array.isRequired,
-  rawDatasetId: PropTypes.string.isRequired,
+PreprocessedDatasetSelect.propTypes = {
+  datasets: PropTypes.array.isRequired,
+  selectedDataset: PropTypes.string,
   handleDatasetSelection: PropTypes.func.isRequired,
-  handleDeleteDataset: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
-export { ModelSelect, DatasetSelect, ListDataset };
+export { ModelSelect, DatasetSelect, PreprocessedDatasetSelect };

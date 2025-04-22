@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
 import { MdInfoOutline, MdDelete } from 'react-icons/md';
-import { DatasetSelect } from '../../Base/Select';
+import { PreprocessedDatasetSelect } from '../../Base/Select';
 
 const PreprocessTable = ({
   dataset,
@@ -45,7 +45,7 @@ const PreprocessTable = ({
         <div className='dataset-select-upload'>
           <h2>Preprocessed Dataset:</h2>
 
-          <DatasetSelect
+          <PreprocessedDatasetSelect
             datasets={preprocessedDatasets}
             selectedDataset={selectedPreprocessedDataset}
             handleDatasetSelection={handleDatasetSelection}
