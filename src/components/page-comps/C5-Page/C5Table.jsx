@@ -49,10 +49,10 @@ const C5Table = ({
         <td className='numbering'>{(currentPage - 1) * limit + index + 1}</td>
         <td>{item.word}</td>
         <td>{item.df}</td>
-        <td>{item.df_ratio.toFixed(4)}</td>
-        <td>{item.word_entropy?.toFixed(4)}</td>
-        <td>{item.entropy_without_word?.toFixed(4)}</td>
-        <td>{item.information_gain?.toFixed(4)}</td>
+        <td>{item.df_ratio?.toFixed(3)}</td>
+        <td>{item.word_entropy?.toFixed(3)}</td>
+        <td>{item.entropy_without_word?.toFixed(3)}</td>
+        <td>{item.information_gain?.toFixed(3)}</td>
         <td className='left-text'>{item.freq_per_label}</td>
         <td>{item.top_label}</td>
       </tr>
@@ -67,7 +67,7 @@ const C5Table = ({
         </div>
         <div className='dataset-table-header-info'>
           <p>
-            <strong>Initial Entropy: {initialEntropy.toFixed(4)}</strong>
+            <strong>Initial Entropy: {initialEntropy?.toFixed(3) || 0}</strong>
           </p>
           <p>
             <strong>Total Data: {totalData}</strong>

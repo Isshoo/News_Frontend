@@ -15,6 +15,9 @@ const PopupModalInfoModel = ({ onClose }) => {
           represents a word in the dataset, and the columns provide various metrics related to that
           word.
         </p>
+        <p className='c5-info'>
+          <strong>Initial Entropy:</strong> The initial entropy of the dataset.
+        </p>
         <table className='dataset-info-table'>
           <colgroup>
             <col style={{ width: '25%' }} />
@@ -47,19 +50,19 @@ const PopupModalInfoModel = ({ onClose }) => {
             </tr>
             <tr>
               <td>
-                <strong>Word Entropy</strong>
+                <strong>Entropy</strong>
               </td>
               <td>Entropy of the word across all documents</td>
             </tr>
             <tr>
               <td>
-                <strong>Entropy w/o Word</strong>
+                <strong>Entropy w/o</strong>
               </td>
               <td>Entropy of the word across all documents, excluding the current word</td>
             </tr>
             <tr>
               <td>
-                <strong>Information Gain</strong>
+                <strong>IG</strong>
               </td>
               <td>Information Gain of the word</td>
             </tr>
