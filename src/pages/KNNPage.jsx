@@ -8,6 +8,7 @@ import { asyncFetchModelDetail } from '../states/modelDetail/thunk';
 import ModelSelect from '../components/Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 import PopupModalInfoModel from '../components/page-comps/KNN-Page/PopupModalInfoModel';
+import { resetNeighbors } from '../states/knn/action';
 
 const KNNPage = () => {
   const dispatch = useDispatch();
@@ -30,12 +31,16 @@ const KNNPage = () => {
       const result = await dispatch(asyncFetchModelDetail(selectedModelId));
       if (!result.error) {
         setNNeighbors(result.n_neighbors);
+        await dispatch(fetchNeighbors(selectedModelId, 1, result.n_neighbors));
+      } else {
+        dispatch(resetNeighbors());
       }
-      await dispatch(fetchNeighbors(selectedModelId, 1, result.n_neighbors));
     };
 
     if (selectedModelId) {
       fetchData();
+    } else {
+      dispatch(resetNeighbors());
     }
   }, [dispatch, selectedModelId]);
 

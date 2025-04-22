@@ -26,6 +26,8 @@ const TfidfPage = () => {
 
     if (modelId) {
       dispatch(fetchTfidfStats(modelId));
+    } else {
+      dispatch(resetTfidfStats());
     }
 
     setLoading(false);

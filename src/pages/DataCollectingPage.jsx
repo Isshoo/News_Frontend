@@ -11,6 +11,7 @@ import { asyncFetchDatasets, asyncUploadDataset } from '../states/datasets/thunk
 import { setSelectedDataset } from '../states/datasets/action';
 import { setSelectedModel } from '../states/models/action';
 import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
+import { resetDatasetDetail } from '../states/datasetDetail/action';
 
 const DataCollectingPage = () => {
   const firstRun = useRef(true);
@@ -37,18 +38,17 @@ const DataCollectingPage = () => {
       firstRun.current = false;
       return;
     }
-    dispatch(asyncFetchDatasets());
-  }, [dispatch]);
 
-  useEffect(() => {
-    if (firstRun2.current) {
-      firstRun2.current = false;
-      return;
+    if (datasets.length === 0) {
+      dispatch(asyncFetchDatasets());
+    } else {
+      if (selectedDataset) {
+        dispatch(asyncFetchDatasetDetail(selectedDataset));
+      } else {
+        dispatch(resetDatasetDetail());
+      }
     }
-    if (selectedDataset) {
-      dispatch(asyncFetchDatasetDetail(selectedDataset));
-    }
-  }, [dispatch, selectedDataset]);
+  }, [dispatch, datasets, selectedDataset]);
 
   const handleUpload = async (file) => {
     await dispatch(asyncUploadDataset(file));

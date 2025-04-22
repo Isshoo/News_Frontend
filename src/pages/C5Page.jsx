@@ -22,7 +22,11 @@ const C5Page = () => {
       return;
     }
 
-    if (modelId) dispatch(fetchWordStats(modelId));
+    if (modelId) {
+      dispatch(fetchWordStats(modelId));
+    } else {
+      dispatch(resetC5Stats());
+    }
 
     setLoading(false);
   }, [dispatch, modelId]);
