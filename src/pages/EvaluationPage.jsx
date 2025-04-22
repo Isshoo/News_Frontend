@@ -7,6 +7,7 @@ import { fetchEvaluation } from '../states/evaluation/thunk';
 import ModelSelect from '../components/Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 import PopupModalInfoModel from '../components/page-comps/Evaluation-Page/PopupModalInfoModel';
+import { resetEvaluation } from '../states/evaluation/action';
 
 const EvaluationPage = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ const EvaluationPage = () => {
 
     if (selectedModelId) {
       dispatch(fetchEvaluation(selectedModelId));
+    } else {
+      dispatch(resetEvaluation());
     }
   }, [dispatch, selectedModelId]);
 
