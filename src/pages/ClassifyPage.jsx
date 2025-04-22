@@ -140,6 +140,7 @@ const ClassifyPage = () => {
           </AnimatePresence>
         </div>
       </div>
+      <p className='copyright'> &copy; Copyright Kelompok 5</p>
     </Pages>
   );
 };

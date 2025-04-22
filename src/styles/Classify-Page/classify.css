@@ -25,3 +25,13 @@
   gap: 1rem;
   max-height: calc(100vh - 12rem);
 }
+
+.copyright {
+  width: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+  padding-block: 0rem 0.75rem;
+  font-weight: 600;
+  color: var(--notfound-text);
+  opacity: 0.6;
+}
