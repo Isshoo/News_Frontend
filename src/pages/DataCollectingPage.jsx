@@ -39,16 +39,14 @@ const DataCollectingPage = () => {
       return;
     }
 
-    if (datasets.length === 0) {
-      dispatch(asyncFetchDatasets());
+    dispatch(asyncFetchDatasets());
+
+    if (selectedDataset) {
+      dispatch(asyncFetchDatasetDetail(selectedDataset));
     } else {
-      if (selectedDataset) {
-        dispatch(asyncFetchDatasetDetail(selectedDataset));
-      } else {
-        dispatch(resetDatasetDetail());
-      }
+      dispatch(resetDatasetDetail());
     }
-  }, [dispatch, datasets, selectedDataset]);
+  }, [dispatch, selectedDataset]);
 
   const handleUpload = async (file) => {
     await dispatch(asyncUploadDataset(file));
