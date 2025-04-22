@@ -17,6 +17,7 @@ import ModelConfigForm from '../components/page-comps/Parameters-Page/ModelConfi
 import TopicSummaryTable from '../components/page-comps/Parameters-Page/TopicSummaryTable';
 
 import Swal from 'sweetalert2';
+import ModelSelect from '../components/Base/ModelSelect';
 
 const ParametersPage = () => {
   const dispatch = useDispatch();
@@ -59,15 +60,18 @@ const ParametersPage = () => {
     if (selectedDataset && selectedPreprocessedDataset) {
       dispatch(updateParameter(selectedDataset, selectedPreprocessedDataset, newSplitSize));
     }
+    dispatch(setSelectedModel('', ''));
   };
 
   const handleNNeighborsChange = (newNNeighbors) => {
     dispatch(updateNNeighbors(newNNeighbors));
+    dispatch(setSelectedModel('', ''));
   };
 
   const handleNameChange = (e) => {
     const newName = e.target.value;
     dispatch(updateModelName(newName));
+    dispatch(setSelectedModel('', ''));
   };
 
   const handleTrain = async () => {
@@ -88,9 +92,12 @@ const ParametersPage = () => {
   return (
     <Pages>
       <div className='parameters-page'>
-        <div className='parameters-header'>
-          <h2 className='parameters-title'>Parameters</h2>
-          <p style={{ color: 'transparent' }}>.</p>
+        <div className='dataset-table-header'>
+          <div className='dataset-select-upload'>
+            <h2>Parameters:</h2>
+            <ModelSelect />
+          </div>
+          <div className='dataset-table-header-info'></div>
         </div>
         <div className='parameters-container-section'>
           <div className='parameters-upper'>
