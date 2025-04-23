@@ -3,18 +3,8 @@ import PropTypes from 'prop-types';
 import ModelSelect from '../../Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 
-const TfidfTable = ({ data, loading, modelId, totalData, currentPage, limit, setShowInfo }) => {
+const TfidfTable = ({ data, modelId, totalData, currentPage, limit, setShowInfo }) => {
   const renderTableBody = () => {
-    if (loading) {
-      return (
-        <tr>
-          <td colSpan='7' className='center-text'>
-            Loading TF-IDF data...
-          </td>
-        </tr>
-      );
-    }
-
     if (!modelId) {
       return (
         <tr>
@@ -93,13 +83,12 @@ const TfidfTable = ({ data, loading, modelId, totalData, currentPage, limit, set
 };
 
 TfidfTable.propTypes = {
-  data: PropTypes.array,
-  loading: PropTypes.bool,
-  modelId: PropTypes.string,
-  totalData: PropTypes.number,
+  data: PropTypes.array.isRequired,
+  modelId: PropTypes.string.isRequired,
+  totalData: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
-  setShowInfo: PropTypes.func,
+  setShowInfo: PropTypes.func.isRequired,
 };
 
 export default TfidfTable;

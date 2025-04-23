@@ -6,6 +6,7 @@ import TfidfTable from '../components/page-comps/Tfidf-Page/TfidfTable';
 import { fetchTfidfStats } from '../states/vectorized/thunk';
 import { resetTfidfStats } from '../states/vectorized/action';
 import PopupModalInfoModel from '../components/page-comps/Tfidf-Page/PopupModalInfoModel';
+import Loading from '../components/Base/LoadingBar';
 
 const TfidfPage = () => {
   const dispatch = useDispatch();
@@ -19,18 +20,21 @@ const TfidfPage = () => {
   );
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
+    if (!modelId) {
+      dispatch(resetTfidfStats());
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
       return;
     }
+    const loadData = async () => {
+      await dispatch(fetchTfidfStats(modelId));
+    };
 
-    if (modelId) {
-      dispatch(fetchTfidfStats(modelId));
-    } else {
-      dispatch(resetTfidfStats());
-    }
-
-    setLoading(false);
+    loadData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, [dispatch, modelId]);
 
   const handleSetPage = (page) => {
@@ -41,9 +45,9 @@ const TfidfPage = () => {
 
   return (
     <Pages>
+      {loading && <Loading page='admin-home' />}
       <TfidfTable
         data={data}
-        loading={loading}
         modelId={modelId}
         totalData={totalData}
         currentPage={currentPage}

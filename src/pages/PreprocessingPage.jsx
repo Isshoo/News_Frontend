@@ -62,7 +62,9 @@ const PreprocessingPage = () => {
   useEffect(() => {
     if (!selectedDataset) {
       dispatch(resetPreprocessedDatasetDetail());
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
       return;
     }
 
@@ -70,6 +72,8 @@ const PreprocessingPage = () => {
       await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
       if (selectedPreprocessedDataset) {
         await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+      } else {
+        dispatch(resetPreprocessedDatasetDetail());
       }
     };
     if (firstRun.current) {

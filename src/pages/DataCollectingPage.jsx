@@ -12,6 +12,7 @@ import { asyncFetchDatasets, asyncUploadDataset } from '../states/datasets/thunk
 import { setSelectedDataset } from '../states/datasets/action';
 import { setSelectedModel } from '../states/models/action';
 import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
+import { resetDatasetDetail } from '../states/datasetDetail/action';
 
 const DataCollectingPage = () => {
   const firstRun = useRef(true);
@@ -34,6 +35,8 @@ const DataCollectingPage = () => {
       await dispatch(asyncFetchDatasets());
       if (selectedDataset) {
         await dispatch(asyncFetchDatasetDetail(selectedDataset));
+      } else {
+        dispatch(resetDatasetDetail());
       }
     };
 

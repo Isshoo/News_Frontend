@@ -49,7 +49,9 @@ const ParametersPage = () => {
       dispatch(resetPreprocessedDatasetDetail());
       dispatch(resetModelDetail());
       dispatch(resetParameter());
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
       return;
     }
 
