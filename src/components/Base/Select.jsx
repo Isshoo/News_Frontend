@@ -28,7 +28,7 @@ const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormatted
   );
 };
 
-const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection, loading }) => {
+const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection }) => {
   return (
     <div
       className={`dataset-select-container ${datasets.length === 0 && !selectedDataset ? 'disabled' : ''}`}
@@ -105,7 +105,6 @@ DatasetSelect.propTypes = {
   datasets: PropTypes.array.isRequired,
   selectedDataset: PropTypes.string,
   handleDatasetSelection: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
 };
 PreprocessedDatasetSelect.propTypes = {
   datasets: PropTypes.array.isRequired,

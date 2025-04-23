@@ -2,14 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DatasetInfo from './DatasetInfo';
 
-const PopupModalInfo = ({
-  onClose,
-  totalData,
-  topicCounts,
-  loading,
-  datasets,
-  selectedDataset,
-}) => {
+const PopupModalInfo = ({ onClose, totalData, topicCounts, datasets, selectedDataset }) => {
   const dataset = datasets.find((dataset) => dataset.id === selectedDataset);
   const datasetName = dataset ? dataset.name : 'N/A';
   const uploadedAt = dataset ? new Date(dataset.upload_at).toLocaleString() : 'N/A';
@@ -29,7 +22,7 @@ const PopupModalInfo = ({
         <p className='data-info'>
           <strong>Total Data:</strong> {totalData}
         </p>
-        <DatasetInfo topicCounts={topicCounts} loading={loading} totalData={totalData} />
+        <DatasetInfo topicCounts={topicCounts} totalData={totalData} />
       </div>
     </div>
   );
@@ -39,7 +32,6 @@ PopupModalInfo.propTypes = {
   onClose: PropTypes.func.isRequired,
   totalData: PropTypes.number.isRequired,
   topicCounts: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
   datasets: PropTypes.array.isRequired,
   selectedDataset: PropTypes.string.isRequired,
 };

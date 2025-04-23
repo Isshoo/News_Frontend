@@ -110,6 +110,7 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
                 <button
                   type='button'
                   className='clear-file-btn'
+                  disabled={uploading}
                   onClick={handleClearFile}
                   title='Clear file'
                 >

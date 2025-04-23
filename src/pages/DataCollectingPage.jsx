@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Pages from '../components/styled/Pages';
+import Loading from '../components/Base/LoadingBar';
 import DatasetUpload from '../components/page-comps/DataCollecting-Page/DatasetUpload';
 import DatasetTable from '../components/page-comps/DataCollecting-Page/DatasetTable';
 import PopupModalInfo from '../components/page-comps/DataCollecting-Page/PopupModalInfo';
@@ -11,14 +12,11 @@ import { asyncFetchDatasets, asyncUploadDataset } from '../states/datasets/thunk
 import { setSelectedDataset } from '../states/datasets/action';
 import { setSelectedModel } from '../states/models/action';
 import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
-import { resetDatasetDetail } from '../states/datasetDetail/action';
 
 const DataCollectingPage = () => {
   const firstRun = useRef(true);
-  const firstRun2 = useRef(true);
   const dispatch = useDispatch();
-  const [loadingInfo, setLoadingInfo] = React.useState(false);
-  const [showInfo, setShowInfo] = React.useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   const { datasets, selectedDataset, isUploading, isLoading } = useSelector(
     (state) => state.datasets
@@ -30,21 +28,19 @@ const DataCollectingPage = () => {
     totalPages = 1,
     currentPage = 1,
     limit = 10,
-    loadingDetail,
   } = useSelector((state) => state.datasetDetail);
 
   useEffect(() => {
+    const initialFetch = async () => {
+      await dispatch(asyncFetchDatasets());
+      if (selectedDataset) {
+        await dispatch(asyncFetchDatasetDetail(selectedDataset));
+      }
+    };
+
     if (firstRun.current) {
+      initialFetch();
       firstRun.current = false;
-      return;
-    }
-
-    dispatch(asyncFetchDatasets());
-
-    if (selectedDataset) {
-      dispatch(asyncFetchDatasetDetail(selectedDataset));
-    } else {
-      dispatch(resetDatasetDetail());
     }
   }, [dispatch, selectedDataset]);
 
@@ -70,6 +66,7 @@ const DataCollectingPage = () => {
 
   return (
     <Pages>
+      {isLoading && <Loading page='admin-home' />}
       {selectedDataset ? (
         <div className='dataset-container-selected'>
           {showInfo && (
@@ -77,7 +74,6 @@ const DataCollectingPage = () => {
               onClose={() => setShowInfo(false)}
               totalData={totalData}
               topicCounts={topicCounts}
-              loading={loadingInfo}
               datasets={datasets}
               selectedDataset={selectedDataset}
             />
@@ -86,13 +82,11 @@ const DataCollectingPage = () => {
           <div className='dataset-container-selected-lower'>
             <DatasetTable
               data={data}
-              loading={loadingDetail}
               totalData={totalData}
               setShowInfo={setShowInfo}
               datasets={datasets}
               selectedDataset={selectedDataset}
               handleDatasetSelection={handleDatasetSelection}
-              isLoading={isLoading}
             />
 
             <Pagination
@@ -116,7 +110,6 @@ const DataCollectingPage = () => {
                 datasets={datasets}
                 selectedDataset={selectedDataset}
                 handleDatasetSelection={handleDatasetSelection}
-                loading={isLoading}
               />
             </div>
           </div>
