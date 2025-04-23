@@ -26,7 +26,7 @@ const CsvClassifierPage = () => {
   const firstRun = useRef(true);
   const lastRowRef = useRef(null);
 
-  const { csvData, classificationResult, loading, isPopupOpen } = useSelector(
+  const { csvData, classificationResult, loading, isPopupOpen, retryLoading } = useSelector(
     (state) => state.classifier
   );
   const { models, selectedModelId } = useSelector((state) => state.models);
@@ -154,8 +154,12 @@ const CsvClassifierPage = () => {
   };
 
   const classifyAllCsv = async () => {
-    if (csvData.length === 0) {
-      alert('Tambahkan data terlebih dahulu!');
+    if (csvData.length < 2) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Insufficient Data',
+        text: 'Please upload at least 2 rows of data to classify.',
+      });
       return;
     }
     setClassifyLoading(true);
@@ -163,7 +167,7 @@ const CsvClassifierPage = () => {
 
     if (response.error) {
       setClassifyLoading(false);
-      alert('Gagal mengklasifikasikan CSV');
+      return response;
     }
 
     // Reset halaman hasil ke 1
@@ -212,6 +216,7 @@ const CsvClassifierPage = () => {
               classificationResult={paginatedResult}
               classifySingleRow={classifySingleRow}
               startIndex={resultStartIndex}
+              retryLoading={retryLoading}
             />
             <Pagination
               currentPage={resultPage}

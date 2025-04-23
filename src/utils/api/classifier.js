@@ -9,12 +9,7 @@ const predict = async ({ text, model_path = '' }) => {
     body: JSON.stringify({ text, model_path }),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || 'Server error');
-  }
-
-  return response.json();
+  return await response.json();
 };
 
 const predictCsv = async (file, model_path = '') => {
@@ -27,12 +22,8 @@ const predictCsv = async (file, model_path = '') => {
     body: formData,
   });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || 'Server error');
-  }
 
-  return response.json();
+  return await response.json();
 };
 
 export { predict, predictCsv };

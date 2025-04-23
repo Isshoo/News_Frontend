@@ -7,15 +7,13 @@ import {
   addPredictionEntry,
   updateLastPrediction,
   updateClassificationRow,
+  setRetryLoading
 } from './action';
 import { predictCsv, predict } from '../../utils/api/classifier';
 
-export const classifyNews = (text, retryCount = 4) => async (dispatch, getState) => {
-  if (retryCount <= 0) {
-    console.warn('DeepSeek prediction failed after multiple retries.');
-    dispatch(setLoading(false));
-    return;
-  }
+import Swal from 'sweetalert2';
+
+export const classifyNews = (text) => async (dispatch, getState) => {
 
   // Masukkan dulu ke state agar UI langsung muncul
   dispatch(addPredictionEntry({
@@ -31,16 +29,13 @@ export const classifyNews = (text, retryCount = 4) => async (dispatch, getState)
   const response = await predict({ text, model_path: selectedModelPath });
 
   if (response.error) {
-    alert(response.error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: response.error || 'Failed to classify news.',
+    });
     dispatch(setLoading(false));
-    return;
-  }
-
-  if (!response.DeepSeek) {
-    console.log(`DeepSeek retrying... (${4 - retryCount})`);
-    setTimeout(() => dispatch(classifyNews(text, retryCount - 1)), 1000);
-    dispatch(setLoading(false));
-    return;
+    return response;
   }
 
   dispatch(updateLastPrediction({
@@ -50,6 +45,8 @@ export const classifyNews = (text, retryCount = 4) => async (dispatch, getState)
   }));
 
   dispatch(setLoading(false));
+
+  return response;
 };
 
 
@@ -58,38 +55,44 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
   const { csvData } = getState().classifier;
 
   dispatch(setLoading(true));
-  try {
-    const csvContent = csvData.map((row) => `"${row.contentSnippet}"`).join('\n');
-    const csvBlob = new Blob([`"contentSnippet"\n${csvContent}`], { type: 'text/csv' });
-    const csvFile = new File([csvBlob], 'classification-result.csv', { type: 'text/csv' });
 
-    const response = await predictCsv(csvFile, selectedModelPath);
-    if (response.error) {
-      dispatch(setLoading(false));
-      throw new Error('Failed to classify CSV');
-    }
-    dispatch(setClassificationResult(response));
+  const csvContent = csvData.map((row) => `"${row.contentSnippet}"`).join('\n');
+  const csvBlob = new Blob([`"contentSnippet"\n${csvContent}`], { type: 'text/csv' });
+  const csvFile = new File([csvBlob], 'classification-result.csv', { type: 'text/csv' });
+
+  const response = await predictCsv(csvFile, selectedModelPath);
+  if (response.error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: response.error || 'Failed to classify CSV.',
+    });
     dispatch(setLoading(false));
-
     return response;
-  } catch (err) {
-    dispatch(setLoading(false));
-    alert('Gagal mengklasifikasikan CSV');
-    console.error(err);
   }
+  dispatch(setClassificationResult(response));
   dispatch(setLoading(false));
+
+  return response;
+
 };
 
 export const classifyRowThunk = (index, contentSnippet) => async (dispatch, getState) => {
+  dispatch(setRetryLoading(true));
   const { selectedModelPath } = getState().models;
-  try {
-    const response = await predict({ text: contentSnippet, model_path: selectedModelPath });
-    if (response.error) {
-      throw new Error('Failed to classify row');
-    }
-    dispatch(updateClassificationRow(index, 'DeepSeek', response?.DeepSeek || 'Unknown'));
-  } catch (err) {
-    alert('Gagal mengklasifikasikan baris.');
-    console.error(err);
+
+  const response = await predict({ text: contentSnippet, model_path: selectedModelPath });
+  if (response.error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: response.error || 'Failed to classify news.',
+    });
+    dispatch(setRetryLoading(false));
+    return response;
   }
+  dispatch(updateClassificationRow(index, 'DeepSeek', response?.DeepSeek || 'Unknown'));
+  dispatch(setRetryLoading(false));
+
+  return response;
 };

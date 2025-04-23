@@ -6,6 +6,7 @@ const ClassificationResultTable = ({
   classificationResult,
   classifySingleRow,
   startIndex,
+  retryLoading,
 }) => (
   <div className='csv-result-table'>
     <div className='csv-result-table-info'>
@@ -36,11 +37,15 @@ const ClassificationResultTable = ({
             <td title={row.contentSnippet} style={{ maxHeight: '3.6em', overflow: 'hidden' }}>
               {row.contentSnippet}
             </td>
-            <td>{row.Hybrid_C5_KNN || '-'}</td>
+            <td>{row.Hybrid_C5_KNN || 'Unknown'}</td>
             <td>
               {!row.DeepSeek || row.DeepSeek === 'Unknown' ? (
-                <button onClick={() => classifySingleRow(startIndex + index, row.contentSnippet)}>
-                  Classify Again
+                <button
+                  className='retry-button'
+                  disabled={retryLoading}
+                  onClick={() => classifySingleRow(startIndex + index, row.contentSnippet)}
+                >
+                  {retryLoading ? 'Retrying...' : 'Retry'}
                 </button>
               ) : (
                 row.DeepSeek
@@ -58,5 +63,6 @@ ClassificationResultTable.propTypes = {
   classificationResult: PropTypes.array.isRequired,
   classifySingleRow: PropTypes.func.isRequired,
   startIndex: PropTypes.number.isRequired,
+  retryLoading: PropTypes.bool,
 };
 export default ClassificationResultTable;

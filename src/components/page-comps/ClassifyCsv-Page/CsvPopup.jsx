@@ -72,11 +72,11 @@ const CsvPopup = ({
         <div className='csv-file-upload'>
           <div>
             <input ref={fileInputRef} type='file' accept='.csv' onChange={handleFileUpload} />
-            <label htmlFor='file-upload' className='file-upload-label'>
+            <p htmlFor='file-upload' className='file-upload-label'>
               <span className='file-upload-text'>
                 Note: CSV file must have &apos;contentSnippet&apos; column.
               </span>
-            </label>
+            </p>
           </div>
 
           <p className={Number(csvData.length) > 20 ? 'total-data-limit' : ''}>

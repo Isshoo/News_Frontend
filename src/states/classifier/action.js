@@ -69,3 +69,8 @@ export const setLoading = (isLoading) => ({
   type: 'SET_LOADING',
   payload: isLoading,
 });
+
+export const setRetryLoading = (isLoading) => ({
+  type: 'SET_RETRY_LOADING',
+  payload: isLoading,
+});

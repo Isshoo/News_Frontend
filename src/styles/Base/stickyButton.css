@@ -59,11 +59,17 @@
 }
 
 .open-upload-btn.copy-preprocess::after {
-    content: 'Copy Preprocessed Dataset';
-    left: -3rem;
+    content: 'Copy to make new dataset that can be edited';
+    left: -4rem;
+    top: -2rem;
+    font-size: 0.80rem;
+    white-space: wrap;
+    min-width: 180px;
 }
 .open-upload-btn.add-preprocess-data::after {
     content: 'Add New Data';
-    left: -1rem;
+    left: -1.5rem;
+    font-size: 0.80rem;
+    padding: 0.25rem 0.5rem;
 }
 

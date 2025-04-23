@@ -113,3 +113,23 @@
 .csv-result-table tbody tr {
   height: 3.6em;
 }
+
+.csv-result-table .retry-button {
+  margin-right: 0.4rem;
+  margin-bottom: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background-color: var(--submit-bg);
+  color: var(--secondary-text);
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.85rem;
+}
+.csv-result-table .retry-button:hover {
+  background-color: var(--submit-text);
+  color: var(--primary-text);
+}
+.csv-result-table .retry-button:active {
+  background-color: var(--submit-bg-act);
+}
