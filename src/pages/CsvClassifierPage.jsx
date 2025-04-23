@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Papa from 'papaparse';
 import Pages from '../components/styled/Pages';
@@ -19,6 +19,7 @@ import { setSelectedDataset } from '../states/datasets/action';
 import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
 
 import { FaPlus } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 const CsvClassifierPage = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,11 @@ const CsvClassifierPage = () => {
 
   const resultStartIndex = (resultPage - 1) * rowsPerPage;
   const resultEndIndex = resultStartIndex + rowsPerPage;
-  const paginatedResult = classificationResult.slice(resultStartIndex, resultEndIndex);
+  const paginatedResult = useMemo(() => {
+    const start = (resultPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    return classificationResult.slice(start, end);
+  }, [resultPage, rowsPerPage, classificationResult]);
   const resultTotalPages = Math.ceil(classificationResult.length / rowsPerPage);
 
   useEffect(() => {
@@ -83,7 +88,48 @@ const CsvClassifierPage = () => {
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
-        dispatch(setCsvData(result.data));
+        const parsedData = result.data;
+        const fields = result.meta.fields || [];
+
+        // ❌ Validasi kolom wajib 'contentSnippet'
+        if (!fields.includes('contentSnippet')) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Missing Required Column',
+            text: 'The uploaded CSV must contain a "contentSnippet" column.',
+          });
+          return;
+        }
+
+        // ❌ Validasi jumlah data minimal 2
+        if (parsedData.length < 2) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Insufficient Data',
+            text: 'The uploaded CSV must contain at least 2 rows of data.',
+          });
+          return;
+        }
+
+        // ❌ Validasi error parsing dari Papaparse
+        if (result.errors && result.errors.length > 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Failed to Read CSV File',
+            text: 'An error occurred while parsing the CSV file. Please ensure it is properly formatted.',
+          });
+          return;
+        }
+
+        // ✅ Jika valid, set data ke Redux
+        dispatch(setCsvData(parsedData));
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'File Upload Error',
+          text: `An error occurred while reading the file: ${err.message}`,
+        });
       },
     });
   };
