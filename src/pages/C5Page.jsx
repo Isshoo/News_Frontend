@@ -6,10 +6,10 @@ import Pages from '../components/styled/Pages';
 import Pagination from '../components/Base/Pagination';
 import C5Table from '../components/page-comps/C5-Page/C5Table';
 import PopupModalInfoModel from '../components/page-comps/C5-Page/PopupModalInfoModel';
+import Loading from '../components/Base/LoadingBar';
 
 const C5Page = () => {
   const dispatch = useDispatch();
-  const firstRender = useRef(true);
   const [loading, setLoading] = React.useState(true);
   const [showInfo, setShowInfo] = React.useState(false);
 
@@ -19,30 +19,34 @@ const C5Page = () => {
   );
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
+    if (!modelId) {
+      dispatch(resetC5Stats());
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
       return;
     }
 
-    if (modelId) {
-      dispatch(fetchWordStats(modelId));
-    } else {
-      dispatch(resetC5Stats());
-    }
+    const loadData = async () => {
+      await dispatch(fetchWordStats(modelId));
+    };
 
-    setLoading(false);
+    loadData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, [dispatch, modelId]);
 
-  const handleSetPage = (page) => {
-    if (modelId) dispatch(fetchWordStats(modelId, page, limit));
+  const handleSetPage = async (page) => {
+    if (modelId) await dispatch(fetchWordStats(modelId, page, limit));
   };
 
   return (
     <Pages>
+      {loading && <Loading page='admin-home' />}
       <C5Table
         data={data}
         initialEntropy={initialEntropy}
-        loading={loading}
         modelId={modelId}
         totalData={totalData}
         currentPage={currentPage}

@@ -10,7 +10,6 @@ import Loading from '../components/Base/LoadingBar';
 
 const TfidfPage = () => {
   const dispatch = useDispatch();
-  const firstRender = useRef(true);
   const [loading, setLoading] = React.useState(true);
   const [showInfo, setShowInfo] = React.useState(false);
 
@@ -37,9 +36,9 @@ const TfidfPage = () => {
     }, 1000);
   }, [dispatch, modelId]);
 
-  const handleSetPage = (page) => {
+  const handleSetPage = async (page) => {
     if (modelId) {
-      dispatch(fetchTfidfStats(modelId, page, limit));
+      await dispatch(fetchTfidfStats(modelId, page, limit));
     }
   };
 

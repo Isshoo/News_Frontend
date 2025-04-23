@@ -8,6 +8,7 @@ import ModelSelect from '../components/Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 import PopupModalInfoModel from '../components/page-comps/Evaluation-Page/PopupModalInfoModel';
 import { resetEvaluation } from '../states/evaluation/action';
+import Loading from '../components/Base/LoadingBar';
 
 const EvaluationPage = () => {
   const dispatch = useDispatch();
@@ -18,23 +19,31 @@ const EvaluationPage = () => {
     (state) => state.evaluation
   );
 
+  const [loading, setLoading] = React.useState(true);
+
   const [showInfo, setShowInfo] = React.useState(false);
 
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
+    if (!selectedModelId) {
+      dispatch(resetEvaluation());
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
       return;
     }
+    const loadData = async () => {
+      await dispatch(fetchEvaluation(selectedModelId));
+    };
 
-    if (selectedModelId) {
-      dispatch(fetchEvaluation(selectedModelId));
-    } else {
-      dispatch(resetEvaluation());
-    }
+    loadData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, [dispatch, selectedModelId]);
 
   return (
     <Pages>
+      {loading && <Loading page='admin-home' />}
       <div className='evaluation-page'>
         <div className='dataset-table-header'>
           <div className='dataset-select-upload'>

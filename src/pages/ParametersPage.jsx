@@ -23,7 +23,6 @@ import Loading from '../components/Base/LoadingBar';
 
 const ParametersPage = () => {
   const dispatch = useDispatch();
-  const firstRun = useRef(true);
 
   const { selectedDataset } = useSelector((state) => state.datasets);
   const { selectedPreprocessedDataset, preprocessedDatasets } = useSelector(

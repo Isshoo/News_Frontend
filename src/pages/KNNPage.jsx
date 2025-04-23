@@ -9,21 +9,24 @@ import ModelSelect from '../components/Base/ModelSelect';
 import { MdInfoOutline } from 'react-icons/md';
 import PopupModalInfoModel from '../components/page-comps/KNN-Page/PopupModalInfoModel';
 import { resetNeighbors } from '../states/knn/action';
+import Loading from '../components/Base/LoadingBar';
 
 const KNNPage = () => {
   const dispatch = useDispatch();
-  const firstRender = useRef(true);
 
   const { selectedModelId } = useSelector((state) => state.models);
   const { data, currentPage, totalPages, limit, totalData } = useSelector((state) => state.knn);
 
   const [n_neighbors, setNNeighbors] = useState(5);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
+    if (!selectedModelId) {
+      dispatch(resetNeighbors());
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
       return;
     }
 
@@ -37,15 +40,14 @@ const KNNPage = () => {
       }
     };
 
-    if (selectedModelId) {
-      fetchData();
-    } else {
-      dispatch(resetNeighbors());
-    }
+    fetchData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, [dispatch, selectedModelId]);
 
-  const handleSetPage = (page) => {
-    if (selectedModelId) dispatch(fetchNeighbors(selectedModelId, page, n_neighbors));
+  const handleSetPage = async (page) => {
+    if (selectedModelId) await dispatch(fetchNeighbors(selectedModelId, page, n_neighbors));
   };
 
   // Kelompokkan berdasarkan test_index
@@ -66,6 +68,7 @@ const KNNPage = () => {
 
   return (
     <Pages>
+      {loading && <Loading page='admin-home' />}
       <div className='knn-page'>
         <div className='dataset-table-header'>
           <div className='dataset-select-upload'>
