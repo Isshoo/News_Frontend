@@ -3,17 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NNeighborsInput from './NNeighborsInput';
 
-const ModelConfigForm = ({ name, onChange, loading, nNeighbors, handleNNeighborsChange }) => (
+const ModelConfigForm = ({ name, onChange, nNeighbors, handleNNeighborsChange }) => (
   <div className='model-config-form'>
     <div className='form-group nama-model'>
       <label>Name</label>
-      <input
-        type='text'
-        value={name || ''}
-        onChange={onChange}
-        disabled={loading}
-        placeholder='Input model name'
-      />
+      <input type='text' value={name || ''} onChange={onChange} placeholder='Input model name' />
     </div>
     <NNeighborsInput value={nNeighbors} onChange={handleNNeighborsChange} />
   </div>
@@ -21,7 +15,6 @@ const ModelConfigForm = ({ name, onChange, loading, nNeighbors, handleNNeighbors
 ModelConfigForm.propTypes = {
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
   nNeighbors: PropTypes.number,
   handleNNeighborsChange: PropTypes.func.isRequired,
 };

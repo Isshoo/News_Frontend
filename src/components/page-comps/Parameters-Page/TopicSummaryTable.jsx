@@ -10,7 +10,6 @@ const TopicSummaryTable = ({
   testPerTopic,
   splitSize,
   handleSplitChange,
-  loading,
   noDataset,
 }) => {
   // Topik default – bisa ubah ke label sebenarnya kalau bukan 0-4
@@ -52,12 +51,7 @@ const TopicSummaryTable = ({
         <h3 className='section-subtitle'>
           <span>Topics Count After Split:</span>
         </h3>
-        <SplitSelector
-          value={splitSize}
-          onChange={handleSplitChange}
-          loading={loading}
-          noDataset={noDataset}
-        />
+        <SplitSelector value={splitSize} onChange={handleSplitChange} noDataset={noDataset} />
       </div>
 
       <table className='report-table'>
@@ -95,7 +89,6 @@ TopicSummaryTable.propTypes = {
   testPerTopic: PropTypes.object.isRequired,
   splitSize: PropTypes.number.isRequired,
   handleSplitChange: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
   noDataset: PropTypes.bool.isRequired,
 };
 

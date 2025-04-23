@@ -12,11 +12,13 @@ const ModelSelect = () => {
   const { models, selectedModelId } = useSelector((state) => state.models);
 
   useEffect(() => {
+    const initialFetch = async () => {
+      await dispatch(asyncFetchModels());
+    };
     if (firstRun.current) {
+      initialFetch();
       firstRun.current = false;
-      return;
     }
-    dispatch(asyncFetchModels());
   }, [dispatch]);
 
   const handleModelChange = (e) => {

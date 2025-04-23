@@ -2,13 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SplitSelector = ({ value, onChange, loading, noDataset }) => (
+const SplitSelector = ({ value, onChange, noDataset }) => (
   <div className={`train-test-split modelDropdown ${noDataset ? 'disabled' : ''}`}>
     <select
       className='modelSelect train-test-select'
       value={value}
       onChange={(e) => onChange(Number(e.target.value))}
-      disabled={loading}
+      disabled={noDataset}
     >
       <option value={0} disabled>
         Select Split Size
@@ -24,7 +24,6 @@ const SplitSelector = ({ value, onChange, loading, noDataset }) => (
 SplitSelector.propTypes = {
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
   noDataset: PropTypes.bool.isRequired,
 };
 

@@ -19,6 +19,7 @@ import TopicSummaryTable from '../components/page-comps/Parameters-Page/TopicSum
 
 import Swal from 'sweetalert2';
 import ModelSelect from '../components/Base/ModelSelect';
+import Loading from '../components/Base/LoadingBar';
 
 const ParametersPage = () => {
   const dispatch = useDispatch();
@@ -40,31 +41,42 @@ const ParametersPage = () => {
     testPerTopic = {},
   } = useSelector((state) => state.parameter);
 
-  const [loading, setLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const noDataset = !selectedDataset || !selectedPreprocessedDataset;
 
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
+    if (preprocessedDatasets.length === 0 && !selectedPreprocessedDataset) {
+      dispatch(resetPreprocessedDatasetDetail());
+      dispatch(resetModelDetail());
+      dispatch(resetParameter());
+      setIsLoading(false);
       return;
     }
 
     if (selectedModelId && selectedPreprocessedDataset) {
-      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
-      dispatch(asyncFetchModelDetail(selectedModelId));
-      dispatch(fetchParameters(selectedModelId));
+      const loadData = async () => {
+        await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+        await dispatch(asyncFetchModelDetail(selectedModelId));
+        await dispatch(fetchParameters(selectedModelId));
+      };
+      loadData();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
       return;
     }
     if (preprocessedDatasets.length > 0 && selectedPreprocessedDataset) {
-      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
-      dispatch(resetParameter());
-      dispatch(resetModelDetail());
-    } else {
-      dispatch(resetPreprocessedDatasetDetail());
-      dispatch(resetModelDetail());
-      dispatch(resetParameter());
+      const loadData = async () => {
+        dispatch(resetParameter());
+        dispatch(resetModelDetail());
+        await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+      };
+      loadData();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      return;
     }
-    return;
   }, [selectedModelId, selectedPreprocessedDataset, preprocessedDatasets.length, dispatch]);
 
   const handleSplitChange = async (newSplitSize) => {
@@ -102,6 +114,7 @@ const ParametersPage = () => {
 
   return (
     <Pages>
+      {isLoading && <Loading page='admin-home' />}
       <div className='parameters-page'>
         <div className='dataset-table-header'>
           <div className='dataset-select-upload'>
@@ -114,11 +127,7 @@ const ParametersPage = () => {
           <div className='parameters-upper'>
             <div className='parameters-upper-left'>
               <div className='form-section'>
-                <ParameterInfo
-                  totalData={totalData || 0}
-                  topicCounts={topicCounts || {}}
-                  loading={loading}
-                />
+                <ParameterInfo totalData={totalData || 0} topicCounts={topicCounts || {}} />
               </div>
             </div>
 
@@ -129,7 +138,6 @@ const ParametersPage = () => {
                   testSize={testSize}
                   trainPerTopic={trainPerTopic}
                   testPerTopic={testPerTopic}
-                  loading={loading}
                   splitSize={splitSize}
                   handleSplitChange={handleSplitChange}
                   noDataset={noDataset}
@@ -146,7 +154,6 @@ const ParametersPage = () => {
                 <ModelConfigForm
                   name={name}
                   onChange={handleNameChange}
-                  loading={loading}
                   nNeighbors={nNeighbors}
                   handleNNeighborsChange={handleNNeighborsChange}
                 />
