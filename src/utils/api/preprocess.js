@@ -26,6 +26,15 @@ export const createPreprocessedCopy = async (raw_dataset_id, name) => {
   }
 };
 
+export const fetchAllPreprocessedDatasets = async () =>  {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocesseds/list`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to fetch dataset.' };
+  }
+};
+
 export const fetchPreprocessedDatasets = async (raw_dataset_id) =>  {
   try {
     const response = await fetch(`${BASE_URL}/dataset/${raw_dataset_id}/preprocessed/list`);

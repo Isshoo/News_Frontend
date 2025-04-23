@@ -1,4 +1,5 @@
 import {
+  setAllPreprocessedDatasets,
   setPreprocessedDatasets,
   addPreprocessedDataset,
   deletePreprocessedDatasetById,
@@ -6,6 +7,7 @@ import {
 } from './action';
 
 import {
+  fetchAllPreprocessedDatasets as apiFetchAllPreprocessedDatasets,
   fetchPreprocessedDatasets as apiFetchPreprocessedDatasets,
   createPreprocessedCopy as apiCreatePreprocessedCopy,
   deletePreprocessedDataset as apiDeletePreprocessedDataset,
@@ -15,6 +17,13 @@ import {
 import Swal from 'sweetalert2';
 import { asyncFetchPreprocessedDatasetDetail } from '../preprocessedDatasetDetail/thunk';
 import { setSelectedModel } from '../models/action';
+
+export const asyncFetchAllPreprocessedDatasets = () => async (dispatch) => {
+  const response = await apiFetchAllPreprocessedDatasets();
+  if (!response.error) {
+    dispatch(setAllPreprocessedDatasets(response));
+  }
+};
 
 export const asyncFetchPreprocessedDatasets = (rawDatasetId) => async (dispatch) => {
   const response = await apiFetchPreprocessedDatasets(rawDatasetId);

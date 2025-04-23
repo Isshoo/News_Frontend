@@ -8,10 +8,7 @@ import {
   asyncDeleteModel as deleteModelThunk,
   asyncUpdateModelName as editModelNameThunk,
 } from '../states/models/thunk';
-
-import { setSelectedDataset } from '../states/datasets/action';
-import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
-import { setSelectedModel } from '../states/models/action';
+import { asyncFetchAllPreprocessedDatasets } from '../states/preprocessedDatasets/thunk';
 
 const ModelsPage = () => {
   const dispatch = useDispatch();
@@ -22,6 +19,7 @@ const ModelsPage = () => {
   useEffect(() => {
     if (firstRun.current) {
       dispatch(fetchModels());
+      dispatch(asyncFetchAllPreprocessedDatasets());
       // delaying the loading state
       setTimeout(() => {
         setLoading(false);

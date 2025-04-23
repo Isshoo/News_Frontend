@@ -25,10 +25,10 @@ const ModelItem = ({ model, onDelete, onRename }) => {
   } = model;
 
   const { datasets } = useSelector((state) => state.datasets);
-  const { preprocessedDatasets } = useSelector((state) => state.preprocessedDatasets);
+  const { allPreprocessedDatasets } = useSelector((state) => state.preprocessedDatasets);
 
   const dataset = datasets.find((dataset) => dataset.id === raw_dataset_id);
-  const preprocessedDataset = preprocessedDatasets.find(
+  const preprocessedDataset = allPreprocessedDatasets.find(
     (dataset) => dataset.id === preprocessed_dataset_id
   );
 
