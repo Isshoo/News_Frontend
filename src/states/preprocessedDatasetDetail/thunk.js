@@ -22,8 +22,8 @@ export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit =
       topicCounts: result.topic_counts,
       totalPages: result.total_pages,
     }));
-    dispatch(setPreprocessedDatasetPage(page));
-    dispatch(setPreprocessedDatasetLimit(limit));
+    await dispatch(setPreprocessedDatasetPage(page));
+    await dispatch(setPreprocessedDatasetLimit(limit));
   }
 };
 
@@ -94,21 +94,21 @@ export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch
       await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
       const { totalPages } = getState().preprocessedDatasetDetail;
       if (totalPages > 0 && NowCurrentPage > totalPages) {
-        await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
         Swal.fire({
           icon: 'success',
           title: 'Success!',
           text: result.message || `Successfully deleted the preprocessed data in index ${  index  }.`,
         });
+        await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
         return;
       }
-      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, NowCurrentPage, limit)); // Refresh data
 
       Swal.fire({
         icon: 'success',
         title: 'Success!',
         text: result.message || `Successfully deleted the preprocessed data in index ${  index  }.`,
       });
+      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, NowCurrentPage, limit)); // Refresh data
     }
     else {
       Swal.fire({
