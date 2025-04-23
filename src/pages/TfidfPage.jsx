@@ -10,6 +10,7 @@ import Loading from '../components/Base/LoadingBar';
 
 const TfidfPage = () => {
   const dispatch = useDispatch();
+  const firstrun = useRef(true);
   const [loading, setLoading] = React.useState(true);
   const [showInfo, setShowInfo] = React.useState(false);
 
@@ -19,6 +20,13 @@ const TfidfPage = () => {
   );
 
   useEffect(() => {
+    if (firstrun.current) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      firstrun.current = false;
+      return;
+    }
     if (!modelId) {
       dispatch(resetTfidfStats());
       setTimeout(() => {

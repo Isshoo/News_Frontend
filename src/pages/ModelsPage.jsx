@@ -17,10 +17,12 @@ const ModelsPage = () => {
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
+    const loadData = async () => {
+      await dispatch(fetchModels());
+      await dispatch(asyncFetchAllPreprocessedDatasets());
+    };
     if (firstRun.current) {
-      dispatch(fetchModels());
-      dispatch(asyncFetchAllPreprocessedDatasets());
-      // delaying the loading state
+      loadData();
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -45,9 +47,8 @@ const ModelsPage = () => {
       </div>
       <Pages>
         <div className='admins-page'>
-          {loading ? (
-            <Loading />
-          ) : models.length == 0 ? (
+          {loading && <Loading />}
+          {models.length == 0 ? (
             <p>No models available.</p>
           ) : (
             <div className='datasets container-list-item'>

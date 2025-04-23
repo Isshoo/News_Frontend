@@ -23,6 +23,7 @@ import Loading from '../components/Base/LoadingBar';
 
 const ParametersPage = () => {
   const dispatch = useDispatch();
+  const firstrun = useRef(true);
 
   const { selectedDataset } = useSelector((state) => state.datasets);
   const { selectedPreprocessedDataset, preprocessedDatasets } = useSelector(
@@ -44,16 +45,13 @@ const ParametersPage = () => {
   const noDataset = !selectedDataset || !selectedPreprocessedDataset;
 
   useEffect(() => {
-    if (preprocessedDatasets.length === 0 && !selectedPreprocessedDataset) {
-      dispatch(resetPreprocessedDatasetDetail());
-      dispatch(resetModelDetail());
-      dispatch(resetParameter());
+    if (firstrun.current) {
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
+      firstrun.current = false;
       return;
     }
-
     if (selectedModelId && selectedPreprocessedDataset) {
       const loadData = async () => {
         await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
@@ -78,6 +76,12 @@ const ParametersPage = () => {
       }, 1000);
       return;
     }
+    dispatch(resetPreprocessedDatasetDetail());
+    dispatch(resetModelDetail());
+    dispatch(resetParameter());
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   }, [selectedModelId, selectedPreprocessedDataset, preprocessedDatasets.length, dispatch]);
 
   const handleSplitChange = async (newSplitSize) => {

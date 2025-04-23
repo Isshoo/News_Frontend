@@ -12,7 +12,7 @@ import Loading from '../components/Base/LoadingBar';
 
 const EvaluationPage = () => {
   const dispatch = useDispatch();
-  const firstRun = useRef(true);
+  const firstrun = useRef(true);
 
   const { selectedModelId } = useSelector((state) => state.models);
   const { confusionMatrix, classificationReport, accuracy } = useSelector(
@@ -24,6 +24,13 @@ const EvaluationPage = () => {
   const [showInfo, setShowInfo] = React.useState(false);
 
   useEffect(() => {
+    if (firstrun.current) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      firstrun.current = false;
+      return;
+    }
     if (!selectedModelId) {
       dispatch(resetEvaluation());
       setTimeout(() => {

@@ -10,6 +10,7 @@ import Loading from '../components/Base/LoadingBar';
 
 const C5Page = () => {
   const dispatch = useDispatch();
+  const firstrun = useRef(true);
   const [loading, setLoading] = React.useState(true);
   const [showInfo, setShowInfo] = React.useState(false);
 
@@ -19,6 +20,13 @@ const C5Page = () => {
   );
 
   useEffect(() => {
+    if (firstrun.current) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      firstrun.current = false;
+      return;
+    }
     if (!modelId) {
       dispatch(resetC5Stats());
       setTimeout(() => {

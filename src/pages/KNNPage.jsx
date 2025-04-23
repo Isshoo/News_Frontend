@@ -13,6 +13,7 @@ import Loading from '../components/Base/LoadingBar';
 
 const KNNPage = () => {
   const dispatch = useDispatch();
+  const firstrun = useRef(true);
 
   const { selectedModelId } = useSelector((state) => state.models);
   const { data, currentPage, totalPages, limit, totalData } = useSelector((state) => state.knn);
@@ -22,6 +23,13 @@ const KNNPage = () => {
   const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
+    if (firstrun.current) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      firstrun.current = false;
+      return;
+    }
     if (!selectedModelId) {
       dispatch(resetNeighbors());
       setTimeout(() => {

@@ -17,9 +17,11 @@ const DatasetsPage = () => {
   const [deletingId, setDeletingId] = React.useState(null);
 
   useEffect(() => {
+    const loadDatasets = async () => {
+      await dispatch(asyncFetchDatasets());
+    };
     if (firstRun.current) {
-      dispatch(asyncFetchDatasets());
-      // delaying the loading state
+      loadDatasets();
       setTimeout(() => {
         setIsloading(false);
       }, 1000);
@@ -43,9 +45,8 @@ const DatasetsPage = () => {
       </div>
       <Pages>
         <div className='admins-page'>
-          {isLoading ? (
-            <Loading />
-          ) : datasets.length == 0 ? (
+          {isLoading && <Loading />}
+          {datasets.length == 0 ? (
             <p>No datasets available.</p>
           ) : (
             <div className='datasets container-list-item'>
