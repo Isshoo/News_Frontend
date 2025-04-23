@@ -12,6 +12,7 @@
   top: 0;
   z-index: 999;
   padding-inline: 32px;
+  height: 79px;
 }
 .navigation-bar.user-nav {
   max-width: 1100px;

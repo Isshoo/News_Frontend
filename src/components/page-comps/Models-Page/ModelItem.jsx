@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setSelectedModel } from '../../../states/models/action';
 import { setSelectedDataset } from '../../../states/datasets/action';
@@ -23,6 +23,17 @@ const ModelItem = ({ model, onDelete, onRename }) => {
     updated_at,
     accuracy,
   } = model;
+
+  const { datasets } = useSelector((state) => state.datasets);
+  const { preprocessedDatasets } = useSelector((state) => state.preprocessedDatasets);
+
+  const dataset = datasets.find((dataset) => dataset.id === raw_dataset_id);
+  const preprocessedDataset = preprocessedDatasets.find(
+    (dataset) => dataset.id === preprocessed_dataset_id
+  );
+
+  const rawDatasetName = dataset ? dataset.name : 'N/A';
+  const preprocessedDatasetName = preprocessedDataset ? preprocessedDataset.name : 'N/A';
 
   const [newName, setNewName] = useState(name);
   const [isEditing, setIsEditing] = useState(false);
@@ -56,60 +67,74 @@ const ModelItem = ({ model, onDelete, onRename }) => {
   };
 
   return (
-    <div className='model-item'>
+    <div className='model-card'>
       <div className='model-header'>
-        {id !== 'default-stemmed' && isEditing ? (
-          <input
-            className='model-edit-input'
-            type='text'
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            onBlur={handleEdit}
-            onKeyDown={(e) => e.key === 'Enter' && handleEdit()}
-            autoFocus
-          />
-        ) : (
-          <h3 onClick={() => id !== 'default-stemmed' && setIsEditing(true)}>{name}</h3>
-        )}
-        <span className='model-date'>{new Date(updated_at).toLocaleString()}</span>
+        <div className='model-title-group'>
+          {id !== 'default-stemmed' && isEditing ? (
+            <input
+              className='model-edit-input'
+              type='text'
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              onBlur={handleEdit}
+              onKeyDown={(e) => e.key === 'Enter' && handleEdit()}
+              autoFocus
+            />
+          ) : (
+            <h3
+              className='model-title'
+              onClick={() => id !== 'default-stemmed' && setIsEditing(true)}
+            >
+              {name}
+            </h3>
+          )}
+          <p className='model-date'>Updated on {new Date(updated_at).toLocaleDateString()}</p>
+        </div>
+        <div className='model-accuracy'>{accuracy.toFixed(2) * 100}%</div>
       </div>
 
-      <div className='model-info'>
-        <p>
-          <strong>Accuracy:</strong> {accuracy.toFixed(2) * 100}%
-        </p>
-        <p>
-          <strong>Total Data:</strong> {total_data}
-        </p>
-        <p>
-          <strong>Split Size:</strong> {mapSplitResult(split_size)}
-        </p>
-        <p>
-          <strong>n_neighbors:</strong> {n_neighbors}
-        </p>
-        <p>
-          <strong>Preprocessed Dataset:</strong> {preprocessed_dataset_id}
-        </p>
-        <p>
-          <strong>Raw Dataset:</strong> {raw_dataset_id}
-        </p>
-        <p>
-          <strong>Created:</strong> {new Date(created_at).toLocaleString()}
-        </p>
+      <div className='model-body'>
+        <div className='model-section'>
+          <p className='model-section-title'>Parameters</p>
+          <div className='model-section-details'>
+            <div>
+              <p className='model-sub-title'>Split Size</p>
+              <p>: {mapSplitResult(split_size)}</p>
+            </div>
+            <div>
+              <p className='model-sub-title'>n_neighbors</p>
+              <p>: {n_neighbors}</p>
+            </div>
+          </div>
+        </div>
+        <div className='model-section'>
+          <p className='model-section-title'>Datasets</p>
+          <div className='model-section-details'>
+            <div>
+              <p className='model-sub-title'>Raw</p>
+              <p>: {rawDatasetName}</p>
+            </div>
+            <div>
+              <p className='model-sub-title'>Preprocessed</p>
+              <p>: {preprocessedDatasetName}</p>
+            </div>
+          </div>
+        </div>
+        <p className='model-created'>Created on {new Date(created_at).toLocaleDateString()}</p>
       </div>
 
-      <div className='model-actions'>
-        <button className='detail-btn' onClick={handleDetail} disabled={isEditing}>
-          Details
-        </button>
-        <button className='classify-btn' onClick={handleClassify} disabled={isEditing}>
-          Use for Classification
-        </button>
+      <div className='model-footer'>
         {id !== 'default-stemmed' && (
-          <button className='delete-btn' onClick={() => onDelete(id)}>
+          <button className='btn-delete' onClick={() => onDelete(id)}>
             Delete
           </button>
         )}
+        <button className='btn-detail' onClick={handleDetail} disabled={isEditing}>
+          Details
+        </button>
+        <button className='btn-classify' onClick={handleClassify} disabled={isEditing}>
+          Classify
+        </button>
       </div>
     </div>
   );

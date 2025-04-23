@@ -1,0 +1,32 @@
+.page-header {
+  width: 100%;
+  padding-block: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--main-bg);
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 2px 0px 0px var(--nav-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  padding-inline: 32px;
+  height: 79px;
+}
+
+.admins-page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-list-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: calc(100vh - 13rem);
+}

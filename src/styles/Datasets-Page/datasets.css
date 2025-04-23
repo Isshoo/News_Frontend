@@ -1,8 +1,114 @@
-.datasets-page {
-    width: 100%;
-  height: 100%;
+.dataset-card {
   position: relative;
+  border-left: 6px solid var(--submit-bg); /* putih soft sebagai aksen */
+  border-bottom: 2px solid var(--submit-bg);
+  background-color: var(--main-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
+  color: var(--primary-text);
   display: flex;
   flex-direction: column;
-  padding: 2rem 0rem;
+  gap: 1rem;
+}
+
+.dataset-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.dataset-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.dataset-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--primary-text);
+}
+
+.dataset-date {
+  font-size: 0.85rem;
+  color: #6b7280; /* abu-abu halus */
+  margin-top: 0.25rem;
+}
+
+.dataset-count {
+  font-size: 0.9rem;
+  background-color: var(--submit-bg);
+  color: var(--submit-text);
+  padding: 0.35rem 0.9rem;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.dataset-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.topic-badge {
+  flex: 1;
+  color: var(--input-text-thread);
+  border: 1px solid var(--form-border);
+  padding: 0.4rem 0.7rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.topic-count {
+  background-color: var(--submit-text);
+  color: var(--submit-bg);
+  border-radius: 10px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.dataset-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+   margin-top: 0.5rem;
+}
+
+.dataset-footer button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  box-shadow: -2px 2px 5px 1px var(--add-btn-shadow);
+}
+
+.btn-train {
+  background-color: var(--submit-bg);
+  color: var(--submit-text);
+}
+
+.btn-train:hover {
+  background-color: black;
+}
+
+.btn-delete {
+  background-color: #ea4b4b;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #dc1c1c;
 }

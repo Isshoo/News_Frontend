@@ -19,35 +19,35 @@ const DatasetItem = ({ dataset, onDelete, deletingId }) => {
   };
 
   return (
-    <div className='dataset-item'>
-      <div className='dataset-item-header'>
-        <h3>{name}</h3>
-        <p className='dataset-uploaded'>Uploaded: {new Date(upload_at).toLocaleString()}</p>
+    <div className='dataset-card'>
+      <div className='dataset-header'>
+        <div>
+          <h3 className='dataset-title'>{name}</h3>
+          <p className='dataset-date'>Uploaded on {new Date(upload_at).toLocaleDateString()}</p>
+        </div>
+        <div className='dataset-count'>{total_data} entries</div>
       </div>
-      <div className='dataset-item-body'>
-        <p>
-          <strong>Total Data:</strong> {total_data}
-        </p>
-        <div className='dataset-topic-counts'>
-          <strong>Topic Counts:</strong>
-          <ul>
-            {Object.entries(topic_counts).map(([topic, count]) => (
-              <li key={topic}>
-                {topic}: {count}
-              </li>
-            ))}
-          </ul>
+
+      <div className='dataset-body'>
+        <div className='dataset-topics'>
+          {Object.entries(topic_counts).map(([topic, count]) => (
+            <div key={topic} className='topic-badge'>
+              <span className='topic-name'>{topic}</span>
+              <span className='topic-count'>{count}</span>
+            </div>
+          ))}
         </div>
       </div>
-      <div className='dataset-item-actions'>
-        <button className='train-btn' onClick={handleTrain}>
-          Train
-        </button>
+
+      <div className='dataset-footer'>
         {id !== 'default-stemming' && (
-          <button className='delete-btn' onClick={() => onDelete(id)} disabled={deletingId === id}>
+          <button className='btn-delete' onClick={() => onDelete(id)} disabled={deletingId === id}>
             {deletingId === id ? 'Deleting...' : 'Delete'}
           </button>
         )}
+        <button className='btn-train' onClick={handleTrain}>
+          Train
+        </button>
       </div>
     </div>
   );

@@ -41,27 +41,31 @@ const ModelsPage = () => {
 
   if (models === undefined) return null;
   return (
-    <Pages>
-      <div className='models-page'>
-        <h2>Saved Models</h2>
-        {loading ? (
-          <Loading />
-        ) : models.length == 0 ? (
-          <p>No models available.</p>
-        ) : (
-          <div>
-            {models.map((model) => (
-              <ModelItem
-                key={model.id}
-                model={model}
-                onDelete={handleDelete}
-                onRename={handleRename}
-              />
-            ))}
-          </div>
-        )}
+    <>
+      <div className='page-header'>
+        <h2>Trained Models</h2>
       </div>
-    </Pages>
+      <Pages>
+        <div className='admins-page'>
+          {loading ? (
+            <Loading />
+          ) : models.length == 0 ? (
+            <p>No models available.</p>
+          ) : (
+            <div className='datasets container-list-item'>
+              {models.map((model) => (
+                <ModelItem
+                  key={model.id}
+                  model={model}
+                  onDelete={handleDelete}
+                  onRename={handleRename}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </Pages>
+    </>
   );
 };
 

@@ -37,27 +37,31 @@ const DatasetsPage = () => {
   if (datasets === undefined) return null;
 
   return (
-    <Pages>
-      <div className='datasets-page'>
+    <>
+      <div className='datasets page-header'>
         <h2>Uploaded Datasets</h2>
-        {isLoading ? (
-          <Loading />
-        ) : datasets.length == 0 ? (
-          <p>No datasets available.</p>
-        ) : (
-          <div>
-            {datasets.map((dataset) => (
-              <DatasetItem
-                key={dataset.id}
-                dataset={dataset}
-                onDelete={handleDeleteDataset}
-                deletingId={deletingId}
-              />
-            ))}
-          </div>
-        )}
       </div>
-    </Pages>
+      <Pages>
+        <div className='admins-page'>
+          {isLoading ? (
+            <Loading />
+          ) : datasets.length == 0 ? (
+            <p>No datasets available.</p>
+          ) : (
+            <div className='datasets container-list-item'>
+              {datasets.map((dataset) => (
+                <DatasetItem
+                  key={dataset.id}
+                  dataset={dataset}
+                  onDelete={handleDeleteDataset}
+                  deletingId={deletingId}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </Pages>
+    </>
   );
 };
 
