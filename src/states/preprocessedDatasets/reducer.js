@@ -4,6 +4,7 @@ import {
   SET_SELECTED_PREPROCESSED_DATASET,
   ADD_PREPROCESSED_DATASET,
   DELETE_PREPROCESSED_DATASET,
+  SET_PREPROCESSED_DATASET_LOADING,
   SET_PREPROCESS_LOADING
 } from './action';
 
@@ -53,6 +54,12 @@ const preprocessedDatasetsReducer = (state = initialState, action) => {
       selectedPreprocessedDataset: '',
     };
   }
+
+  case SET_PREPROCESSED_DATASET_LOADING:
+    return {
+      ...state,
+      isLoading: action.payload,
+    };
 
   case SET_PREPROCESS_LOADING:
     return {

@@ -27,15 +27,16 @@ import PopupModalInfo from '../components/page-comps/Preprocessing-Page/PopupMod
 import { FaPlus } from 'react-icons/fa';
 import { MdCopyAll } from 'react-icons/md';
 import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
+import Loading from '../components/Base/LoadingBar';
 
 const PreprocessingPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
-  const firstRun2 = useRef(true);
 
   const { selectedDataset, datasets } = useSelector((state) => state.datasets);
-  const { selectedPreprocessedDataset, preprocessedDatasets, isLoading, preprocessLoading } =
-    useSelector((state) => state.preprocessedDatasets);
+  const { selectedPreprocessedDataset, preprocessedDatasets, preprocessLoading } = useSelector(
+    (state) => state.preprocessedDatasets
+  );
 
   const {
     data = [],
@@ -55,33 +56,30 @@ const PreprocessingPage = () => {
   const [newTopic, setNewTopic] = useState('');
   const [newCopyName, setNewCopyName] = useState('');
 
-  const [loading, setLoading] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
-
-  const [listLoading, setListLoading] = useState(false);
-
-  useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-      return;
-    }
-
-    if (selectedDataset) {
-      dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
-    }
-  }, [dispatch, selectedDataset]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (firstRun2.current) {
-      firstRun2.current = false;
-      return;
-    }
-    if (selectedPreprocessedDataset) {
-      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
-    } else {
+    if (!selectedDataset) {
       dispatch(resetPreprocessedDatasetDetail());
+      setIsLoading(false);
+      return;
     }
-  }, [dispatch, selectedPreprocessedDataset]);
+
+    const loadData = async () => {
+      await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+      if (selectedPreprocessedDataset) {
+        await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+      }
+    };
+    if (firstRun.current) {
+      loadData();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      firstRun.current = false;
+    }
+  }, [dispatch, selectedDataset, selectedPreprocessedDataset]);
 
   const handlePreprocess = async () => {
     await dispatch(asyncPreprocessRawDataset(selectedDataset));
@@ -90,6 +88,7 @@ const PreprocessingPage = () => {
   const handleCopyDataset = async () => {
     await dispatch(asyncCreatePreprocessedCopy(selectedDataset, newCopyName));
     setShowCopyPopup(false);
+    setNewCopyName('');
   };
 
   const handleEdit = (index, currentTopic, currentPreprocessedContent) => {
@@ -108,42 +107,44 @@ const PreprocessingPage = () => {
       )
     );
     setEditingIndex(null);
-    dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+    await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
   };
 
   const handleDelete = async (index) => {
     setEditingIndex(null);
     const result = await dispatch(asyncDeletePreprocessedData(selectedPreprocessedDataset, index));
     if (!result?.canceled) {
-      dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+      await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
     }
   };
 
   const handleAddData = async () => {
     await dispatch(asyncAddPreprocessedData(selectedPreprocessedDataset, newContent, newTopic));
     setShowAddPopup(false);
-    dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
+    setNewContent('');
+    setNewTopic('');
+    await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
   };
 
-  const handleDatasetSelection = (event) => {
+  const handleDatasetSelection = async (event) => {
     const datasetId = event.target.value;
     if (datasetId === selectedPreprocessedDataset) return;
     dispatch(setSelectedPreprocessedDataset(datasetId));
     dispatch(setSelectedModel('', ''));
-    dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, 10));
+    await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, 10));
   };
 
   const handleDeleteDataset = async () => {
     const result = await dispatch(asyncDeletePreprocessedDataset(selectedPreprocessedDataset));
     if (!result?.canceled) {
-      dispatch(setSelectedPreprocessedDataset(selectedDataset));
+      await dispatch(setSelectedPreprocessedDataset(selectedDataset));
       dispatch(setSelectedModel('', ''));
     }
   };
 
-  const handleSetPage = (page) => {
+  const handleSetPage = async (page) => {
     if (selectedPreprocessedDataset) {
-      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset, page, limit));
+      await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset, page, limit));
     }
   };
 
@@ -159,11 +160,9 @@ const PreprocessingPage = () => {
     handleDelete,
     preprocessedDatasetId: selectedPreprocessedDataset,
     rawDatasetId: selectedDataset,
-    loading,
     preprocessedDatasets,
     selectedPreprocessedDataset,
     handleDatasetSelection,
-    isLoading,
     totalData,
     setShowInfo,
     handleDeleteDataset,
@@ -226,7 +225,6 @@ const PreprocessingPage = () => {
           onClose={() => setShowInfo(false)}
           totalData={totalData}
           topicCounts={topicCounts}
-          loading={loading}
           datasets={datasets}
           preprocessedDatasets={preprocessedDatasets}
           selectedDataset={selectedPreprocessedDataset}
@@ -289,9 +287,10 @@ const PreprocessingPage = () => {
 
   return (
     <Pages>
+      {isLoading && <Loading page='admin-home' />}
       {!selectedDataset
         ? renderNoDatasetSelected()
-        : preprocessedDatasets.length === 0 && !listLoading
+        : preprocessedDatasets.length === 0
           ? renderNoPreprocessedDataset()
           : renderPreprocessedDatasetContent()}
     </Pages>

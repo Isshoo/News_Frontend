@@ -16,11 +16,9 @@ const PreprocessTable = ({
   handleDelete,
   preprocessedDatasetId,
   rawDatasetId,
-  loading,
   preprocessedDatasets,
   selectedPreprocessedDataset,
   handleDatasetSelection,
-  isLoading,
   totalData,
   setShowInfo,
   handleDeleteDataset,
@@ -49,7 +47,6 @@ const PreprocessTable = ({
             datasets={preprocessedDatasets}
             selectedDataset={selectedPreprocessedDataset}
             handleDatasetSelection={handleDatasetSelection}
-            loading={isLoading}
           />
 
           {!selectedPreprocessedDataset ||
@@ -75,134 +72,130 @@ const PreprocessTable = ({
         </div>
       </div>
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <table>
-          <colgroup>
-            {isSameDataset ? (
-              <>
-                <col style={{ width: '5%' }} />
-                <col style={{ width: '44%' }} />
-                <col style={{ width: '39%' }} />
-                <col style={{ width: '12%' }} />
-              </>
-            ) : (
-              <>
-                <col style={{ width: '4.5%' }} />
-                <col style={{ width: '39.5%' }} />
-                <col style={{ width: '35%' }} />
-                <col style={{ width: '11%' }} />
-                <col style={{ width: '10%' }} />
-              </>
-            )}
-          </colgroup>
+      <table>
+        <colgroup>
+          {isSameDataset ? (
+            <>
+              <col style={{ width: '5%' }} />
+              <col style={{ width: '44%' }} />
+              <col style={{ width: '39%' }} />
+              <col style={{ width: '12%' }} />
+            </>
+          ) : (
+            <>
+              <col style={{ width: '4.5%' }} />
+              <col style={{ width: '39.5%' }} />
+              <col style={{ width: '35%' }} />
+              <col style={{ width: '11%' }} />
+              <col style={{ width: '10%' }} />
+            </>
+          )}
+        </colgroup>
 
-          <thead>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Original Content</th>
+            <th>Preprocessed Content</th>
+            <th>Topic</th>
+            {!isSameDataset && <th>Actions</th>}
+          </tr>
+        </thead>
+
+        <tbody>
+          {dataset.length === 0 ? (
             <tr>
-              <th>ID</th>
-              <th>Original Content</th>
-              <th>Preprocessed Content</th>
-              <th>Topic</th>
-              {!isSameDataset && <th>Actions</th>}
+              <td colSpan={isSameDataset ? 4 : 5} style={{ textAlign: 'center' }}>
+                {preprocessedDatasets.length ? (
+                  <>
+                    {!selectedPreprocessedDataset
+                      ? 'No data available, please select a preprocessed dataset first.'
+                      : 'No data available, please add a new data.'}
+                  </>
+                ) : (
+                  'No data available, Please select raw dataset first.'
+                )}
+              </td>
             </tr>
-          </thead>
+          ) : (
+            dataset.map((item) => {
+              const isEditing = editingIndex === item.index;
 
-          <tbody>
-            {dataset.length === 0 ? (
-              <tr>
-                <td colSpan={isSameDataset ? 4 : 5} style={{ textAlign: 'center' }}>
-                  {preprocessedDatasets.length ? (
-                    <>
-                      {!selectedPreprocessedDataset
-                        ? 'No data available, please select a preprocessed dataset first.'
-                        : 'No data available, please add a new data.'}
-                    </>
-                  ) : (
-                    'No data available, Please select raw dataset first.'
-                  )}
-                </td>
-              </tr>
-            ) : (
-              dataset.map((item) => {
-                const isEditing = editingIndex === item.index;
+              return (
+                <tr key={item.index}>
+                  <td className='numbering'>
+                    <p className='preprocessed-content-text index'>{item.index + 1}</p>
+                  </td>
 
-                return (
-                  <tr key={item.index}>
-                    <td className='numbering'>
-                      <p className='preprocessed-content-text index'>{item.index + 1}</p>
-                    </td>
+                  <td title={item.contentSnippet}>
+                    <p className='preprocessed-content-text'>{item.contentSnippet}</p>
+                  </td>
 
-                    <td title={item.contentSnippet}>
-                      <p className='preprocessed-content-text'>{item.contentSnippet}</p>
-                    </td>
+                  <td title={item.preprocessedContent}>
+                    {isEditing ? (
+                      <textarea
+                        ref={textareaRef}
+                        className='preprocessed-content-input'
+                        placeholder='Preprocessed Content'
+                        value={newPreprocessedContent}
+                        onChange={(e) => setNewPreprocessedContent(e.target.value)}
+                      />
+                    ) : (
+                      <p className='preprocessed-content-text'>{item.preprocessedContent}</p>
+                    )}
+                  </td>
 
-                    <td title={item.preprocessedContent}>
+                  <td>
+                    {isEditing ? (
+                      <select
+                        className='preprocessed-content-select'
+                        value={newLabel}
+                        onChange={(e) => setNewLabel(e.target.value)}
+                      >
+                        {labelOptions.map((label) => (
+                          <option key={label} value={label}>
+                            {label}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <p className='preprocessed-content-text index'>{item.topik}</p>
+                    )}
+                  </td>
+
+                  {!isSameDataset && (
+                    <td className='actions-cell'>
                       {isEditing ? (
-                        <textarea
-                          ref={textareaRef}
-                          className='preprocessed-content-input'
-                          placeholder='Preprocessed Content'
-                          value={newPreprocessedContent}
-                          onChange={(e) => setNewPreprocessedContent(e.target.value)}
-                        />
-                      ) : (
-                        <p className='preprocessed-content-text'>{item.preprocessedContent}</p>
-                      )}
-                    </td>
-
-                    <td>
-                      {isEditing ? (
-                        <select
-                          className='preprocessed-content-select'
-                          value={newLabel}
-                          onChange={(e) => setNewLabel(e.target.value)}
-                        >
-                          {labelOptions.map((label) => (
-                            <option key={label} value={label}>
-                              {label}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <p className='preprocessed-content-text index'>{item.topik}</p>
-                      )}
-                    </td>
-
-                    {!isSameDataset && (
-                      <td className='actions-cell'>
-                        {isEditing ? (
-                          <button
-                            className='preprocess-action-button'
-                            onClick={() => handleSave(item.index)}
-                          >
-                            Save
-                          </button>
-                        ) : (
-                          <button
-                            className='preprocess-action-button'
-                            onClick={() =>
-                              handleEdit(item.index, item.topik, item.preprocessedContent)
-                            }
-                          >
-                            Edit
-                          </button>
-                        )}
                         <button
                           className='preprocess-action-button'
-                          onClick={() => handleDelete(item.index)}
+                          onClick={() => handleSave(item.index)}
                         >
-                          Delete
+                          Save
                         </button>
-                      </td>
-                    )}
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
-      )}
+                      ) : (
+                        <button
+                          className='preprocess-action-button'
+                          onClick={() =>
+                            handleEdit(item.index, item.topik, item.preprocessedContent)
+                          }
+                        >
+                          Edit
+                        </button>
+                      )}
+                      <button
+                        className='preprocess-action-button'
+                        onClick={() => handleDelete(item.index)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -219,11 +212,9 @@ PreprocessTable.propTypes = {
   handleDelete: PropTypes.func,
   preprocessedDatasetId: PropTypes.string,
   rawDatasetId: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
   preprocessedDatasets: PropTypes.array.isRequired,
   selectedPreprocessedDataset: PropTypes.string,
   handleDatasetSelection: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
   totalData: PropTypes.number.isRequired,
   setShowInfo: PropTypes.func.isRequired,
   handleDeleteDataset: PropTypes.func.isRequired,

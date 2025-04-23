@@ -3,7 +3,8 @@ import {
   setPreprocessedDatasets,
   addPreprocessedDataset,
   deletePreprocessedDatasetById,
-  setPreprocessLoading
+  setPreprocessLoading,
+  setPreprocessedDatasetLoading
 } from './action';
 
 import {
@@ -19,17 +20,23 @@ import { asyncFetchPreprocessedDatasetDetail } from '../preprocessedDatasetDetai
 import { setSelectedModel } from '../models/action';
 
 export const asyncFetchAllPreprocessedDatasets = () => async (dispatch) => {
+
   const response = await apiFetchAllPreprocessedDatasets();
   if (!response.error) {
-    dispatch(setAllPreprocessedDatasets(response));
+    await dispatch(setAllPreprocessedDatasets(response));
   }
+  dispatch(setPreprocessedDatasetLoading(false));
+  return response;
 };
 
 export const asyncFetchPreprocessedDatasets = (rawDatasetId) => async (dispatch) => {
+
   const response = await apiFetchPreprocessedDatasets(rawDatasetId);
   if (!response.error) {
-    dispatch(setPreprocessedDatasets(response));
+    await dispatch(setPreprocessedDatasets(response));
   }
+  dispatch(setPreprocessedDatasetLoading(false));
+  return response;
 };
 
 export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
@@ -52,7 +59,7 @@ export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
   if (!response.error) {
     await dispatch(addPreprocessedDataset(response.data));
     dispatch(setSelectedModel('', ''));
-    dispatch(asyncFetchPreprocessedDatasetDetail(response.data.id));
+    await dispatch(asyncFetchPreprocessedDatasetDetail(response.data.id));
     Swal.fire({
       icon: 'success',
       title: 'Success!',

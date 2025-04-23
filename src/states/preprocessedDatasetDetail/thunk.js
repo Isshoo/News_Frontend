@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit = 10) => async (dispatch) => {
   const result = await fetchPreprocessedDataset(datasetId, page, limit);
   if (!result.error) {
-    dispatch(setPreprocessedDatasetDetail({
+    await dispatch(setPreprocessedDatasetDetail({
       data: result.data,
       totalData: result.total_data,
       topicCounts: result.topic_counts,

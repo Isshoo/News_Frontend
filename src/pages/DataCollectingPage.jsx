@@ -17,10 +17,9 @@ const DataCollectingPage = () => {
   const firstRun = useRef(true);
   const dispatch = useDispatch();
   const [showInfo, setShowInfo] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { datasets, selectedDataset, isUploading, isLoading } = useSelector(
-    (state) => state.datasets
-  );
+  const { datasets, selectedDataset, isUploading } = useSelector((state) => state.datasets);
   const {
     data = [],
     totalData = 0,
@@ -40,6 +39,9 @@ const DataCollectingPage = () => {
 
     if (firstRun.current) {
       initialFetch();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
       firstRun.current = false;
     }
   }, [dispatch, selectedDataset]);

@@ -6,7 +6,6 @@ const PopupModalInfo = ({
   onClose,
   totalData,
   topicCounts,
-  loading,
   datasets,
   preprocessedDatasets,
   selectedDataset,
@@ -48,7 +47,7 @@ const PopupModalInfo = ({
         <p className='data-info'>
           <strong>Total Data:</strong> {totalData}
         </p>
-        <DatasetInfo topicCounts={topicCounts} loading={loading} totalData={totalData} />
+        <DatasetInfo topicCounts={topicCounts} totalData={totalData} />
       </div>
     </div>
   );
@@ -58,7 +57,6 @@ PopupModalInfo.propTypes = {
   onClose: PropTypes.func.isRequired,
   totalData: PropTypes.number.isRequired,
   topicCounts: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
   datasets: PropTypes.array.isRequired,
   preprocessedDatasets: PropTypes.array.isRequired,
   selectedDataset: PropTypes.string.isRequired,
