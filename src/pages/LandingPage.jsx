@@ -14,8 +14,8 @@ const LandingPage = () => {
         </div>
         <p className='tagline'>Classify any indonesian news article, faster and easier.</p>
         <div className='landing-buttons'>
-          <button onClick={() => navigate('/user/home')}>Login as User</button>
-          <button onClick={() => navigate('/admin/home')}>Login as Admin</button>
+          <button onClick={() => navigate('/user/home')}>Use as User</button>
+          <button onClick={() => navigate('/admin/home')}>Use as Admin</button>
         </div>
         <div></div>
       </div>
