@@ -66,6 +66,7 @@ const SideBar = () => {
                   </Link>
                 </li>
               </ul>
+              <p className='copyright'>&copy; Copyright Kelompok 5</p>
             </nav>
           );
         }}

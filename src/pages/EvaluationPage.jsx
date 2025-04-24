@@ -52,7 +52,7 @@ const EvaluationPage = () => {
     <Pages>
       {loading && <Loading page='admin-home' />}
       <div className='evaluation-page'>
-        <div className='dataset-table-header'>
+        <div className='dataset-table-header header-eval-page'>
           <div className='dataset-select-upload'>
             <h2>Evaluation:</h2>
             <ModelSelect />
@@ -70,6 +70,7 @@ const EvaluationPage = () => {
           <ConfusionMatrix confusionMatrix={confusionMatrix} />
           <ClassificationReport classificationReport={classificationReport} />
         </div>
+        <div className='evaluaton-footer'>Any message?</div>
         {showInfo && <PopupModalInfoModel onClose={() => setShowInfo(false)} />}
       </div>
     </Pages>
