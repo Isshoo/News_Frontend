@@ -11,6 +11,7 @@ import ParametersPage from './pages/ParametersPage';
 import TfidfPage from './pages/TfidfPage';
 import C5Page from './pages/C5Page';
 import KNNPage from './pages/KNNPage';
+import PredictResultsPage from './pages/PredictResultsPage';
 import EvaluationPage from './pages/EvaluationPage';
 import DatasetsPage from './pages/DatasetsPage';
 import ModelsPage from './pages/ModelsPage';
@@ -61,6 +62,7 @@ const App = () => {
                 <Route path='/admin/home/tfidf' element={<TfidfPage />} />
                 <Route path='/admin/home/c5' element={<C5Page />} />
                 <Route path='/admin/home/knn' element={<KNNPage />} />
+                <Route path='/admin/home/predict-results' element={<PredictResultsPage />} />
                 <Route path='/admin/home/evaluation' element={<EvaluationPage />} />
                 <Route path='/admin/datasets' element={<DatasetsPage />} />
                 <Route path='/admin/models' element={<ModelsPage />} />

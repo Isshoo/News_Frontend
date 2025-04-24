@@ -70,6 +70,15 @@ const NavigationBar = () => {
                 <li>&gt;</li>
                 <li>
                   <Link
+                    className={`nav-button ${location.pathname === '/admin/home/predict-results' ? 'active' : ''}`}
+                    to='/admin/home/predict-results'
+                  >
+                    <p>{locale === 'EN' ? 'Results' : 'Prediksi'}</p>
+                  </Link>
+                </li>
+                <li>&gt;</li>
+                <li>
+                  <Link
                     className={`nav-button ${location.pathname === '/admin/home/evaluation' ? 'active' : ''}`}
                     to='/admin/home/evaluation'
                   >

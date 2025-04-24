@@ -13,6 +13,7 @@ const TrainModelNavigation = () => {
     '/admin/home/tfidf',
     '/admin/home/c5',
     '/admin/home/knn',
+    '/admin/home/predict-results',
     '/admin/home/evaluation',
   ];
   const labels = [
@@ -22,6 +23,7 @@ const TrainModelNavigation = () => {
     'TF-IDF',
     'C5',
     'KNN',
+    'Results',
     'Evaluation',
   ];
 

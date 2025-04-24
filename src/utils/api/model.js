@@ -90,3 +90,14 @@ export const getNeighbors = async (modelId, page = 1, limit = 10) => {
   }
 };
 
+export const getPredictResults = async (modelId, page = 1, limit = 10) => {
+  try {
+    const response = await fetch(`${BASE_URL}/process/model/${modelId}/predict-results?page=${page}&limit=${limit}`);
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to get predict results.' };
+  }
+};
+
+
+

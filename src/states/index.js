@@ -15,6 +15,7 @@ import vectorizedReducer from './vectorized/reducer';
 import c5Reducer from './c5/reducer';
 import knnReducer from './knn/reducer';
 import evaluationReducer from './evaluation/reducer';
+import predictResultsReducer from './predictResults/reducer';
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     c5: c5Reducer,
     knn: knnReducer,
     evaluation: evaluationReducer,
+    predictResults: predictResultsReducer,
     loadingBar: loadingBarReducer,
   },
 });

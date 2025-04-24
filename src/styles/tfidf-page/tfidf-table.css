@@ -15,3 +15,6 @@
   font-size: 0.85rem;
 }
 
+.tfidf-table tbody td.justify {
+  text-align: justify;
+}
