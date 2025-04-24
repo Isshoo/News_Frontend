@@ -21,14 +21,10 @@ const ModelsPage = () => {
       await dispatch(fetchModels());
       await dispatch(asyncFetchAllPreprocessedDatasets());
     };
-    if (firstRun.current) {
-      loadData();
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-      firstRun.current = false;
-      return;
-    }
+    loadData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, [dispatch]);
 
   const handleDelete = async (id) => {

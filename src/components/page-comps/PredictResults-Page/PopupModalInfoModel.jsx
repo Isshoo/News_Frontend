@@ -17,8 +17,8 @@ const PopupModalInfoModel = ({ onClose }) => {
         </p>
         <table className='dataset-info-table'>
           <colgroup>
-            <col style={{ width: '25%' }} />
-            <col style={{ width: '75%' }} />
+            <col style={{ width: '30%' }} />
+            <col style={{ width: '70%' }} />
           </colgroup>
           <thead>
             <tr>
@@ -50,12 +50,6 @@ const PopupModalInfoModel = ({ onClose }) => {
                 <strong>Predicted By</strong>
               </td>
               <td>The model or rules used to make the prediction</td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Is Correct?</strong>
-              </td>
-              <td>Indicates whether the predicted label matches the true label</td>
             </tr>
           </tbody>
         </table>
