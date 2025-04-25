@@ -83,8 +83,8 @@ const PredictResultsTable = ({
         <thead>
           <tr>
             <th>No</th>
-            <th>contentSnippet</th>
-            <th>True Label</th>
+            <th>Text</th>
+            <th>Actual Label</th>
             <th>Predicted Label</th>
             <th>Predicted By</th>
           </tr>

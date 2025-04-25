@@ -99,7 +99,7 @@ const C5Table = ({
             <th>Entropy</th>
             <th>Entropy w/o</th>
             <th>IG</th>
-            <th>Freq per Label</th>
+            <th>Freq per Topic</th>
             <th>Top Label</th>
           </tr>
         </thead>

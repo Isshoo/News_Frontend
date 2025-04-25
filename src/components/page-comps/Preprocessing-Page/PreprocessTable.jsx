@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
 import { MdInfoOutline, MdDelete } from 'react-icons/md';
 import { PreprocessedDatasetSelect } from '../../Base/Select';
+import { mapLabelResult } from '../../../utils/helper';
 
 const PreprocessTable = ({
   dataset,
@@ -154,12 +155,14 @@ const PreprocessTable = ({
                       >
                         {labelOptions.map((label) => (
                           <option key={label} value={label}>
-                            {label}
+                            {mapLabelResult(label)}
                           </option>
                         ))}
                       </select>
                     ) : (
-                      <p className='preprocessed-content-text index'>{item.topik}</p>
+                      <p className='preprocessed-content-text index'>
+                        {mapLabelResult(item.topik)}
+                      </p>
                     )}
                   </td>
 

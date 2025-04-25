@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../../Base/LoadingBar';
+import { mapLabelResult } from '../../../utils/helper';
 
 const DatasetInfo = ({ totalData = 0, topicCounts }) => {
   return (
@@ -21,7 +22,7 @@ const DatasetInfo = ({ totalData = 0, topicCounts }) => {
               Object.entries(topicCounts).map(([topic, count]) => (
                 <tr key={topic}>
                   <td>
-                    <strong>{topic}</strong>
+                    <strong>{mapLabelResult(topic)}</strong>
                   </td>
                   <td>{count}</td>
                 </tr>

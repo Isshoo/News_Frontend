@@ -5,6 +5,7 @@ import { DatasetSelect } from '../../Base/Select';
 // info icon from react-icons
 import { AiFillInfoCircle } from 'react-icons/ai';
 import { MdInfoOutline } from 'react-icons/md';
+import { mapLabelResult } from '../../../utils/helper';
 
 const DatasetTable = ({
   data,
@@ -60,7 +61,7 @@ const DatasetTable = ({
                 <td className='clamp' title={row.contentSnippet}>
                   {row.contentSnippet}
                 </td>
-                <td>{row.topik}</td>
+                <td>{mapLabelResult(row.topik)}</td>
               </tr>
             ))
           )}
