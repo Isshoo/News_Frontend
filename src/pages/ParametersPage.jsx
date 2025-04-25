@@ -85,21 +85,28 @@ const ParametersPage = () => {
   }, [selectedModelId, selectedPreprocessedDataset, preprocessedDatasets.length, dispatch]);
 
   const handleSplitChange = async (newSplitSize) => {
+    dispatch(setSelectedModel('', ''));
     if (selectedDataset && selectedPreprocessedDataset) {
+      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
       dispatch(updateParameter(selectedDataset, selectedPreprocessedDataset, newSplitSize));
     }
-    dispatch(setSelectedModel('', ''));
   };
 
   const handleNNeighborsChange = (newNNeighbors) => {
-    dispatch(updateNNeighbors(newNNeighbors));
     dispatch(setSelectedModel('', ''));
+    if (selectedDataset && selectedPreprocessedDataset) {
+      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+      dispatch(updateNNeighbors(newNNeighbors));
+    }
   };
 
   const handleNameChange = (e) => {
     const newName = e.target.value;
-    dispatch(updateModelName(newName));
     dispatch(setSelectedModel('', ''));
+    if (selectedDataset && selectedPreprocessedDataset) {
+      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+      dispatch(updateModelName(newName));
+    }
   };
 
   const handleTrain = async () => {
