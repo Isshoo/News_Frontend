@@ -12,7 +12,14 @@ const ConfusionMatrix = ({ confusionMatrix }) => {
   const renderHeader = () => (
     <thead>
       <tr>
-        <th>True\Pred</th>
+        <th colSpan='2' rowSpan='2' className='label-header'>
+          Label
+        </th>
+        <th colSpan={defaultLabels.length} className='predicted-header'>
+          Predicted
+        </th>
+      </tr>
+      <tr>
         {defaultLabels.map((label) => (
           <th key={`col-${label}`}>{mapLabelResult(label)}</th>
         ))}
@@ -21,27 +28,37 @@ const ConfusionMatrix = ({ confusionMatrix }) => {
   );
 
   const renderBody = () => {
-    if (isEmpty) {
-      return defaultLabels.map((label, index) => (
-        <tr key={`row-${label}`}>
-          <th>{mapLabelResult(label)}</th>
-          {index === 0 && (
-            <td colSpan={defaultLabels.length} rowSpan={defaultLabels.length}>
-              <em>Confusion matrix is not available. please select a model first.</em>
-            </td>
-          )}
+    return (
+      <>
+        <tr>
+          <th rowSpan={defaultLabels.length + 1} className='actual-header'>
+            Actual
+          </th>
         </tr>
-      ));
-    }
-
-    return confusionMatrix.map((row, i) => (
-      <tr key={`row-${i}`}>
-        <th>{mapLabelResult(i)}</th>
-        {row.map((value, j) => (
-          <td key={`cell-${i}-${j}`}>{value}</td>
+        {defaultLabels.map((category, i) => (
+          <tr key={`row-${i}`}>
+            <th className='row-category'>{mapLabelResult(category)}</th>
+            {isEmpty ? (
+              i === 2 ? (
+                <td colSpan={defaultLabels.length} className='empty-cell'>
+                  <em>Confusion matrix is not available. Please select a model first.</em>
+                </td>
+              ) : (
+                // Create empty cells for other rows when in empty state
+                Array(defaultLabels.length)
+                  .fill(0)
+                  .map((_, j) => <td key={`empty-cell-${i}-${j}`} className='empty-cell'></td>)
+              )
+            ) : (
+              // When data is available, display actual values
+              (confusionMatrix[i] || Array(defaultLabels.length).fill(0)).map((value, j) => (
+                <td key={`cell-${i}-${j}`}>{value}</td>
+              ))
+            )}
+          </tr>
         ))}
-      </tr>
-    ));
+      </>
+    );
   };
 
   return (
@@ -49,12 +66,13 @@ const ConfusionMatrix = ({ confusionMatrix }) => {
       <h3>Confusion Matrix</h3>
       <table className='confusion-table'>
         <colgroup>
-          <col style={{ width: '25%' }} />
+          <col style={{ width: '5%' }} />
           <col style={{ width: '20%' }} />
-          <col style={{ width: '25%' }} />
-          <col style={{ width: '20%' }} />
-          <col style={{ width: '20%' }} />
-          <col style={{ width: '20%' }} />
+          <col style={{ width: '15%' }} />
+          <col style={{ width: '15%' }} />
+          <col style={{ width: '15%' }} />
+          <col style={{ width: '15%' }} />
+          <col style={{ width: '15%' }} />
         </colgroup>
         {renderHeader()}
         <tbody>{renderBody()}</tbody>

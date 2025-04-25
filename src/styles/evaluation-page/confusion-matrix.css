@@ -44,3 +44,24 @@
   background-color: var(--nav-bg);
   color: var(--header-text);
 }
+
+.confusion-table .label-header {
+  border-right: 1px solid #444;
+}
+.confusion-table .predicted-header {
+  border-bottom: 1px solid #444;
+}
+
+.confusion-table .actual-header {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  vertical-align: middle;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.confusion-table .empty-cell {
+  border: none;
+  background: transparent;
+}
