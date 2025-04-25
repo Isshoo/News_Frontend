@@ -202,6 +202,7 @@ const CsvClassifierPage = () => {
             handleDeleteRow={handleDeleteRow}
             setIsPopupOpen={handlePopup}
             totalData={csvData.length}
+            totalResultData={classificationResult.length}
             currentPage={csvPage}
             setCurrentPage={setCsvPage}
             rowsPerPage={rowsPerPage}

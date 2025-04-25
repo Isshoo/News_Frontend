@@ -70,7 +70,6 @@ const EvaluationPage = () => {
           <ConfusionMatrix confusionMatrix={confusionMatrix} />
           <ClassificationReport classificationReport={classificationReport} />
         </div>
-        <div className='evaluaton-footer'>Any message?</div>
         {showInfo && <PopupModalInfoModel onClose={() => setShowInfo(false)} />}
       </div>
     </Pages>

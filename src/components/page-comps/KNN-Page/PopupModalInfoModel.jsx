@@ -16,12 +16,6 @@ const PopupModalInfoModel = ({ onClose }) => {
           various metrics related to that document.
         </p>
         <p className='knn-info'>
-          <strong>True Label:</strong> The true label of the document.
-        </p>
-        <p className='knn-info'>
-          <strong>Predicted Label:</strong> The predicted label of the document.
-        </p>
-        <p className='knn-info'>
           <strong>Text:</strong> The text content of the document.
         </p>
         <p className='knn-info last'>

@@ -16,6 +16,8 @@
     gap: 1.25rem;
     width: 100%;
     align-items: start;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 .eval-info.last {

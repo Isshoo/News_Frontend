@@ -5,13 +5,10 @@ import KNNTable from './KNNTable';
 const KNNGroup = ({ group, index }) => {
   return (
     <>
-      <h3>Test Sample #{index + 1}</h3>
-      <p>
-        <strong>True Label:</strong> {group.true_label}
-      </p>
-      <p>
-        <strong>Predicted Label:</strong> {group.predicted_label}
-      </p>
+      <div className='knn-group-header'>
+        <h3>Test Sample #{index + 1}</h3>
+      </div>
+
       <p>
         <strong>Text:</strong> {group.test_text}
       </p>

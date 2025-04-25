@@ -55,7 +55,7 @@ const NavigationBar = () => {
                     className={`nav-button ${location.pathname === '/admin/home/c5' ? 'active' : ''}`}
                     to='/admin/home/c5'
                   >
-                    <p>{locale === 'EN' ? 'C5' : 'C5'}</p>
+                    <p>{locale === 'EN' ? 'C5.0' : 'C5.0'}</p>
                   </Link>
                 </li>
                 <li>&gt;</li>

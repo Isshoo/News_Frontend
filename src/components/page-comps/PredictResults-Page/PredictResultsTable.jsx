@@ -50,7 +50,7 @@ const PredictResultsTable = ({
         <td className='justify'>{item.text}</td>
         <td>{mapLabelResult(item.true_label)}</td>
         <td>{mapLabelResult(item.predicted_label)}</td>
-        <td>{item.predict_by}</td>
+        <td>{item.predict_by === 'KNN Top Label' ? 'K-Nearest Neighbors' : item.predict_by}</td>
       </tr>
     ));
   };
@@ -59,7 +59,7 @@ const PredictResultsTable = ({
     <div className='tfidf-table'>
       <div className='dataset-table-header'>
         <div className='dataset-select-upload'>
-          <h2>Predicted Results Table:</h2>
+          <h2>Results Table:</h2>
           <ModelSelect />
         </div>
         <div className='dataset-table-header-info'>

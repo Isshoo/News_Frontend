@@ -21,7 +21,7 @@ const TrainModelNavigation = () => {
     'Preprocessing',
     'Set Parameters',
     'TF-IDF',
-    'C5',
+    'C5.0',
     'KNN',
     'Results',
     'Evaluation',

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const KNNTable = ({ neighbors, index }) => {
   return (
     <div className='knn-table'>
-      <h3>Nearest Neighbors:</h3>
+      <h4>Nearest Neighbors:</h4>
       <table className='dataset-info-table'>
         <colgroup>
           <col style={{ width: '8%' }} />

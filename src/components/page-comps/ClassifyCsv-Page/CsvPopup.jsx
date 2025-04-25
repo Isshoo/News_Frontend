@@ -22,6 +22,7 @@ const CsvPopup = ({
   handleDeleteRow,
   setIsPopupOpen,
   totalData,
+  totalResultData,
   currentPage,
   setCurrentPage,
   rowsPerPage,
@@ -61,7 +62,7 @@ const CsvPopup = ({
             handleModelChange={handleModelChange}
             showFormattedDate={showFormattedDate}
           />
-          {totalData == 0 ? (
+          {totalResultData == 0 ? (
             ''
           ) : (
             <button className='csv-popup-overlay' onClick={() => setIsPopupOpen()}>
@@ -149,6 +150,7 @@ CsvPopup.propTypes = {
   handleDeleteRow: PropTypes.func.isRequired,
   setIsPopupOpen: PropTypes.func.isRequired,
   totalData: PropTypes.number.isRequired,
+  totalResultData: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
