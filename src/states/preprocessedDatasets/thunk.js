@@ -59,7 +59,7 @@ export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
   if (!response.error) {
     await dispatch(addPreprocessedDataset(response.data));
     dispatch(setSelectedModel('', ''));
-    await dispatch(asyncFetchPreprocessedDatasetDetail(response.data.id));
+    dispatch(asyncFetchPreprocessedDatasetDetail(response.data.id));
     Swal.fire({
       icon: 'success',
       title: 'Success!',

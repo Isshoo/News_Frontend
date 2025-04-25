@@ -39,7 +39,7 @@ const ClassificationResultTable = ({
             </td>
             <td>{row.Hybrid_C5_KNN || 'Unknown'}</td>
             <td>
-              {!row.DeepSeek || row.DeepSeek === 'Unknown' ? (
+              {!row.DeepSeek || row.DeepSeek === '-' ? (
                 <button
                   className='retry-button'
                   disabled={retryLoading}

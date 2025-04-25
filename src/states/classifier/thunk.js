@@ -37,6 +37,13 @@ export const classifyNews = (text) => async (dispatch, getState) => {
     dispatch(setLoading(false));
     return response;
   }
+  if (response.model_error !== '') {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: response.model_error || 'Failed to classify news.',
+    });
+  }
 
   dispatch(updateLastPrediction({
     preprocessed: response.Preprocessed_Text,
