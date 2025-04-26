@@ -56,12 +56,21 @@ const CsvPopup = ({
     <div className={totalData == 0 ? 'csv-popup no-data' : 'csv-popup'}>
       <div className='csv-popup-content'>
         <div className='csv-model-selector'>
-          <ModelSelect
-            models={models}
-            selectedModelId={selectedModelId}
-            handleModelChange={handleModelChange}
-            showFormattedDate={showFormattedDate}
-          />
+          <div className='model-select-container'>
+            <ModelSelect
+              models={models}
+              selectedModelId={selectedModelId}
+              handleModelChange={handleModelChange}
+              showFormattedDate={showFormattedDate}
+            />
+            <div className='deepseek-logo'>
+              <a href='https://github.com/deepseek-ai/DeepSeek-R1'>
+                <picture>
+                  <img src='../../../../public/icons8-deepseek-48.png' alt='DeepSeek Logo' />
+                </picture>
+              </a>
+            </div>
+          </div>
           {totalResultData == 0 ? (
             ''
           ) : (
