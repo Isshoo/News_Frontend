@@ -54,6 +54,7 @@ const CsvPopup = ({
 
   return (
     <div className={totalData == 0 ? 'csv-popup no-data' : 'csv-popup'}>
+      {totalData == 0 ? <h2>Or classify with csv?</h2> : ''}
       <div className='csv-popup-content'>
         <div className='csv-model-selector'>
           <div className='model-select-container'>

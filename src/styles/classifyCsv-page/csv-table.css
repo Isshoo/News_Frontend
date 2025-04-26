@@ -69,7 +69,7 @@
   color: var(--results-text);
   background-color: var(--background);
   font-size: 0.95rem;
-  vertical-align: top;
+  vertical-align: center;
   text-align: center;
   max-height: 94.5px; /* ~6 lines */
   overflow: hidden;

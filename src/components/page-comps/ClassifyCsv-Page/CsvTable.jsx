@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CsvTable = ({ csvData, handleEditCell, handleDeleteRow, startIndex, lastRowRef }) => (
+const CsvTable = ({ csvData = 1, handleEditCell, handleDeleteRow, startIndex, lastRowRef }) => (
   <div className='csv-table'>
     <table>
       <colgroup>

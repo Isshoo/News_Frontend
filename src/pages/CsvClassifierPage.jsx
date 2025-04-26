@@ -237,6 +237,7 @@ const CsvClassifierPage = () => {
           </button>
         </div>
       </div>
+      <p className='copyright'> &copy; Copyright Kelompok 5</p>
     </Pages>
   );
 };
