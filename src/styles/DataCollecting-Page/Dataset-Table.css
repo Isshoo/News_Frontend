@@ -121,3 +121,7 @@
   font-style: italic;
 }
 
+.dataset-table tbody tr td.center-text {
+  text-align: center;
+}
+

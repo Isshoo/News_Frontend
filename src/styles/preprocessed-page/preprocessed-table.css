@@ -53,6 +53,14 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.preprocess-table tbody td.center-text {
+  text-align: center;
+  margin: auto;
+}
+.preprocess-table .preprocessed-content-text.index.center-text {
+  text-align: center;
+}
+
 .preprocess-table .preprocessed-content-text.index {
   word-wrap: normal;
   text-align: left;

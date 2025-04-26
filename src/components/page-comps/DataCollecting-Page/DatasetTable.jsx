@@ -61,7 +61,7 @@ const DatasetTable = ({
                 <td className='clamp' title={row.contentSnippet}>
                   {row.contentSnippet}
                 </td>
-                <td>{mapLabelResult(row.topik)}</td>
+                <td className='center-text'>{mapLabelResult(row.topik)}</td>
               </tr>
             ))
           )}

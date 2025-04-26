@@ -25,9 +25,9 @@ const ClassificationResultTable = ({
       <thead>
         <tr>
           <th>No</th>
-          <th>Content Snippet</th>
-          <th>Hybrid Predicted</th>
-          <th>DeepSeek Predicted</th>
+          <th>Text</th>
+          <th>Hybrid Prediction</th>
+          <th>DeepSeek Prediction</th>
         </tr>
       </thead>
       <tbody>

@@ -146,7 +146,7 @@ const PreprocessTable = ({
                     )}
                   </td>
 
-                  <td>
+                  <td className='center-text'>
                     {isEditing ? (
                       <select
                         className='preprocessed-content-select'
@@ -160,7 +160,7 @@ const PreprocessTable = ({
                         ))}
                       </select>
                     ) : (
-                      <p className='preprocessed-content-text index'>
+                      <p className='preprocessed-content-text index center-text'>
                         {mapLabelResult(item.topik)}
                       </p>
                     )}
