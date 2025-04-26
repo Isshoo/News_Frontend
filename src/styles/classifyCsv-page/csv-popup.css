@@ -99,7 +99,7 @@
 .csv-popup-content {
   background: var(--form-background);
   color: var(--secondary-text);
-  padding: 0.25rem 1.5rem;
+  padding: 0rem 1.5rem;
   border-radius: 2rem;
     box-shadow: 
     0 2px 4px rgba(0, 0, 0, 0.04),     /* bayangan kecil, dekat elemen */
