@@ -5,6 +5,8 @@
   gap: 0.5rem;
   padding: 0.25rem 0;
   color: var(--primary-text);
+  position: relative;
+  z-index: 100;
 }
 
 .pagination button {

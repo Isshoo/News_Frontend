@@ -70,7 +70,7 @@ const DataCollectingPage = () => {
   };
 
   return (
-    <Pages>
+    <Pages className='data-collecting-page'>
       {isLoading && <Loading page='admin-home' />}
       {selectedDataset ? (
         <div className='dataset-container-selected'>

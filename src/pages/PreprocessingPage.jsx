@@ -235,13 +235,15 @@ const PreprocessingPage = () => {
         />
       )}
 
-      <PreprocessTable {...tableProps} />
+      <div className='preprocessing-body'>
+        <PreprocessTable {...tableProps} />
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={handleSetPage}
-      />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={handleSetPage}
+        />
+      </div>
 
       {selectedPreprocessedDataset === selectedDataset ? (
         <>
@@ -290,7 +292,7 @@ const PreprocessingPage = () => {
   );
 
   return (
-    <Pages>
+    <Pages className='preprocessing-page-cuy'>
       {isLoading && <Loading page='admin-home' />}
       {!selectedDataset
         ? renderNoDatasetSelected()
