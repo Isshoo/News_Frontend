@@ -114,9 +114,10 @@ const ClassifyInput = ({
             <button
               key={idx}
               type='button'
-              className='suggestion-item'
+              className={`suggestion-item item-${idx}`}
               onClick={() => handleSuggestionClick(sug)}
               disabled={loading}
+              title={sug}
             >
               {sug}
             </button>

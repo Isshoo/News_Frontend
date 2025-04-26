@@ -32,6 +32,22 @@
     opacity: 1;
 }
 
+.suggestion-item.item-0 {
+  border: 1px solid rgba(255, 158, 1, 0.378);
+}
+.suggestion-item.item-1 {
+  border: 1px solid rgba(255, 0, 255, 0.375);
+}
+.suggestion-item.item-2 {
+  border: 1px solid rgba(255, 0, 0, 0.235);
+}
+.suggestion-item.item-3 {
+  border: 1px solid rgba(0, 0, 255, 0.366);
+}
+.suggestion-item.item-4 {
+  border: 1px solid rgba(0, 255, 0, 0.422);
+}
+
 /* Optional: biar scroll bar tipis */
 .suggestion-box::-webkit-scrollbar {
   height: 6px;
