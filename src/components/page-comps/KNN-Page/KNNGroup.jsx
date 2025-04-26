@@ -6,7 +6,7 @@ const KNNGroup = ({ group, index }) => {
   return (
     <>
       <div className='knn-group-header'>
-        <h3>Test Sample #{index + 1}</h3>
+        <h3>Test Index #{index + 1}</h3>
       </div>
 
       <p>

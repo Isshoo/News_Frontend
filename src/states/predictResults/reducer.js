@@ -7,6 +7,9 @@ const initialState = {
   totalPages: 1,
   totalData: 0,
   limit: 10,
+  totalC5: 0,
+  totalKnn: 0,
+  predictBy: null,
 };
 
 const predictResultsReducer = (state = initialState, action) => {
@@ -19,6 +22,9 @@ const predictResultsReducer = (state = initialState, action) => {
       totalPages: action.payload.pagination.totalPages,
       totalData: action.payload.pagination.totalData,
       limit: action.payload.pagination.limit,
+      totalC5: action.payload.totalC5,
+      totalKnn: action.payload.totalKnn,
+      predictBy: action.payload.predictBy,
     };
   case RESET_PREDICT_RESULTS:
     return {

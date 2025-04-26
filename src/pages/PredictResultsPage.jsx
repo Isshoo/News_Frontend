@@ -15,9 +15,8 @@ const PredictResultsPage = () => {
   const [showInfo, setShowInfo] = React.useState(false);
 
   const modelId = useSelector((state) => state.models.selectedModelId);
-  const { data, totalPages, currentPage, limit, totalData } = useSelector(
-    (state) => state.predictResults
-  );
+  const { data, totalPages, currentPage, limit, totalData, totalC5, totalKnn, predictBy } =
+    useSelector((state) => state.predictResults);
 
   useEffect(() => {
     if (firstrun.current) {
@@ -46,8 +45,13 @@ const PredictResultsPage = () => {
 
   const handleSetPage = async (page) => {
     if (modelId) {
-      await dispatch(fetchPredictResults(modelId, page, limit));
+      await dispatch(fetchPredictResults(modelId, page, limit, predictBy));
     }
+  };
+
+  const handleFilterChange = async (e) => {
+    const selectedFilter = e.target.value;
+    await dispatch(fetchPredictResults(modelId, 1, limit, selectedFilter)); // Fetch filtered data
   };
 
   return (
@@ -58,9 +62,13 @@ const PredictResultsPage = () => {
         modelId={modelId}
         loading={loading}
         totalData={totalData}
+        totalC5={totalC5}
+        totalKnn={totalKnn}
         currentPage={currentPage}
         limit={limit}
         setShowInfo={setShowInfo}
+        handleFilterChange={handleFilterChange}
+        predictBy={predictBy}
       />
       <Pagination
         currentPage={currentPage}

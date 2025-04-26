@@ -9,9 +9,13 @@ const PredictResultsTable = ({
   loading,
   modelId,
   totalData,
+  totalC5,
+  totalKnn,
   currentPage,
   limit,
   setShowInfo,
+  predictBy,
+  handleFilterChange,
 }) => {
   const renderTableBody = () => {
     if (loading) {
@@ -50,7 +54,7 @@ const PredictResultsTable = ({
         <td className='justify'>{item.text}</td>
         <td>{mapLabelResult(item.true_label)}</td>
         <td>{mapLabelResult(item.predicted_label)}</td>
-        <td>{item.predict_by === 'KNN Top Label' ? 'K-Nearest Neighbors' : item.predict_by}</td>
+        <td>{item.predict_by}</td>
       </tr>
     ));
   };
@@ -63,9 +67,23 @@ const PredictResultsTable = ({
           <ModelSelect />
         </div>
         <div className='dataset-table-header-info'>
-          <p>
-            <strong>Total Data: {totalData}</strong>
+          <p className='total-data-predict'>
+            <strong>
+              Total Data:{' '}
+              {predictBy === 'c5' ? totalC5 : predictBy === 'knn' ? totalKnn : totalData}
+            </strong>
           </p>
+
+          <select
+            className='predict-by-filter'
+            value={predictBy || ''}
+            onChange={handleFilterChange}
+          >
+            <option value=''>All</option>
+            <option value='c5'>C5</option>
+            <option value='knn'>KNN</option>
+          </select>
+          <span></span>
           <button className='tfidf-icon' onClick={() => setShowInfo(true)}>
             <MdInfoOutline className='info-icon' />
           </button>
@@ -74,15 +92,15 @@ const PredictResultsTable = ({
 
       <table className='dataset-info-table'>
         <colgroup>
-          <col style={{ width: '5%' }} />
+          <col style={{ width: '6%' }} />
           <col style={{ width: '54%' }} />
           <col style={{ width: '14%' }} />
           <col style={{ width: '14%' }} />
-          <col style={{ width: '18%' }} />
+          <col style={{ width: '17%' }} />
         </colgroup>
         <thead>
           <tr>
-            <th>No</th>
+            <th>Index</th>
             <th>Text</th>
             <th>Actual Label</th>
             <th>Predicted Label</th>
@@ -100,9 +118,13 @@ PredictResultsTable.propTypes = {
   modelId: PropTypes.string.isRequired,
   loading: PropTypes.bool,
   totalData: PropTypes.number.isRequired,
+  totalC5: PropTypes.number.isRequired,
+  totalKnn: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
   setShowInfo: PropTypes.func.isRequired,
+  predictBy: PropTypes.string,
+  handleFilterChange: PropTypes.func.isRequired,
 };
 
 export default PredictResultsTable;
