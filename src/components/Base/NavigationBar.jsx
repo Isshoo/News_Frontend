@@ -92,7 +92,7 @@ const NavigationBar = () => {
       </LocaleConsumer>
     );
   }
-  if (location.pathname.startsWith('/user/home')) {
+  if (location.pathname.startsWith('/user/home') || location.pathname === '/') {
     return (
       <LocaleConsumer>
         {({ locale }) => {
@@ -101,7 +101,7 @@ const NavigationBar = () => {
               <ul className='navigation user-nav'>
                 <li>
                   <Link
-                    className={`nav-button user-nav ${location.pathname === '/user/home' || location.pathname === '/user/home/text' ? 'active' : ''}`}
+                    className={`nav-button user-nav ${location.pathname === '/user/home' || location.pathname === '/user/home/text' || location.pathname === '/' ? 'active' : ''}`}
                     to='/user/home/text'
                   >
                     <div className='nav-link-con'>

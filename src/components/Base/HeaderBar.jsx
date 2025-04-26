@@ -24,15 +24,20 @@ const HeaderBar = () => {
                   </h1>
                   <div className='header-buttons'>
                     <div>
-                      {location.pathname === '/' ? (
-                        ''
-                      ) : (
-                        <Link to='/'>
+                      {location.pathname === '/' || location.pathname.startsWith('/user') ? (
+                        <Link to='/admin/home'>
                           <button className='logout'>
-                            <p>{location.pathname.startsWith('/user') ? 'User' : 'Admin'}</p>{' '}
-                            <FiLogOut />
+                            <p>Admin</p> <FiLogOut />
                           </button>
                         </Link>
+                      ) : location.pathname.startsWith('/admin') ? (
+                        <Link to='/'>
+                          <button className='logout'>
+                            <p>User</p> <FiLogOut className='logout-rotate' />
+                          </button>
+                        </Link>
+                      ) : (
+                        ''
                       )}
                     </div>
                     <button

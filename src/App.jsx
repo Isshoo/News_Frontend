@@ -45,13 +45,18 @@ const App = () => {
           <div className='main'>
             {location.pathname.startsWith('/admin') && <SideBar />}
 
-            <main className={location.pathname.startsWith('/user') ? 'user-main' : ''}>
+            <main
+              className={
+                location.pathname.startsWith('/user') || location.pathname === '/'
+                  ? 'user-main'
+                  : ''
+              }
+            >
               <ScrollToTop />
-              {(location.pathname.startsWith('/user/home') ||
-                location.pathname.startsWith('/admin/home')) && <NavigationBar />}
+              <NavigationBar />
 
               <Routes>
-                <Route path='/' element={<LandingPage />} />
+                <Route path='/' element={<ClassifyPage />} />
                 <Route path='/user/home' element={<ClassifyPage />} />
                 <Route path='/user/home/text' element={<ClassifyPage />} />
                 <Route path='/user/home/csv' element={<CsvClassifierPage />} />

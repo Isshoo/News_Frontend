@@ -68,13 +68,16 @@ header {
     color: var(--secondary-text);
   }
 }
-
 .logout:hover {
   p,
   svg polyline,
   svg line {
     color: var(--logout-text-hover);
   }
+}
+
+.logout-rotate {
+  transform: rotate(180deg);
 }
 
 
