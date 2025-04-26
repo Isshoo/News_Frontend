@@ -3,6 +3,7 @@
 .model-select-container {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
 .modelDropdown {
@@ -13,7 +14,7 @@
   background-color: var(--select-model-background);
   transition: background-color 0.2s ease-in-out;
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
-  padding-inline: 0.4rem;
+  padding-inline: 0.75rem 0.5rem;
 }
 
 .modelDropdown:hover {
@@ -21,7 +22,7 @@
 }
 
 .modelSelect {
-  padding: 0.40rem 0.4rem 0.4rem 0.5rem;
+  padding: 0.40rem 0.4rem 0.4rem 0.1rem;
   background-color: transparent;
   border: none;
   outline: none;
@@ -39,9 +40,74 @@
   -moz-appearance: none; */
 }
 
+.modelLogo {
+  display: flex;
+}
+
+.modelLogo svg {
+  width: 22.5px;
+  height: 22.5px;
+  color: var(--form-label);
+}
+
 .modelSelect option {
   background-color: var(--select-model-background);
   color: var(--select-model-text);
   font-size: 1rem;
   padding: 0.5rem;
+}
+
+.deepseek-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deepseek-logo picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  padding: 0.35rem;
+  border: 1px solid var(--select-model-border);
+  background-color: var(--select-model-background);
+  transition: background-color 0.2s ease-in-out;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
+  position: relative;
+  cursor: pointer;
+}
+
+.deepseek-logo picture:hover {
+  background-color: var(--select-model-hover);
+}
+
+.deepseek-logo picture img {
+  width: 22.5px;
+  height: 22.5px;
+  color: var(--form-label);
+}
+
+.deepseek-logo picture:after {
+  content: "DeepSeek R1:70b";
+  position: absolute;
+  top: -1rem;
+  left: 2.7rem;
+  transform: translateX(-50%);
+  background-color: var(--add-btn-bg);
+  color: var(--add-icon);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  z-index: 1000;
+}
+
+.deepseek-logo picture:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-1.3rem);
 }

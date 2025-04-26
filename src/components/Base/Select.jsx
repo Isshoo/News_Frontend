@@ -1,11 +1,15 @@
 // Select.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown, Select as StyledSelect } from '../styled/Dropdown'; // pastikan file style bernama SelectStyles.js atau sesuaikan
+import { Dropdown, Select as StyledSelect } from '../styled/Dropdown';
+import { GiWorld } from 'react-icons/gi';
 
 const ModelSelect = ({ models, selectedModelId, handleModelChange, showFormattedDate }) => {
   return (
     <Dropdown className={`modelDropdown ${models.length === 0 ? 'disabled' : ''}`}>
+      <div className='modelLogo'>
+        <GiWorld />
+      </div>
       <StyledSelect
         className='modelSelect'
         value={selectedModelId || ''}

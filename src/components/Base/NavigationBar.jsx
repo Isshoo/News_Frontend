@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
 import { MdOutlineLeaderboard } from 'react-icons/md';
 import { GoHome } from 'react-icons/go';
+import { GrDocumentCsv } from 'react-icons/gr';
 
 const NavigationBar = () => {
   const location = useLocation();
@@ -116,7 +117,7 @@ const NavigationBar = () => {
                     to='/user/home/csv'
                   >
                     <div className='nav-link-con'>
-                      <MdOutlineLeaderboard className='nav-icon' />
+                      <GrDocumentCsv className='nav-icon csv' />
                       <p>{locale === 'EN' ? 'CSV Classifier' : 'Klasifikasi CSV'}</p>
                     </div>
                   </Link>

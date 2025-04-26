@@ -5,6 +5,7 @@ import { asyncFetchModels } from '../../states/models/thunk';
 import { setSelectedModel } from '../../states/models/action';
 import { setSelectedDataset } from '../../states/datasets/action';
 import { setSelectedPreprocessedDataset } from '../../states/preprocessedDatasets/action';
+import { GiWorld } from 'react-icons/gi';
 
 const ModelSelect = () => {
   const dispatch = useDispatch();
