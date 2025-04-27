@@ -16,9 +16,9 @@ const ClassificationReport = ({ classificationReport }) => {
       .map(([label, metrics], index) => (
         <tr key={index}>
           <th>{mapLabelResult(label)}</th>
-          <td>{metrics.precision.toFixed(2)}</td>
-          <td>{metrics.recall.toFixed(2)}</td>
-          <td>{metrics['f1-score'].toFixed(2)}</td>
+          <td>{metrics.precision.toFixed(2) * 100}%</td>
+          <td>{metrics.recall.toFixed(2) * 100}%</td>
+          <td>{metrics['f1-score'].toFixed(2) * 100}%</td>
         </tr>
       ));
   };
