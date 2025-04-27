@@ -81,7 +81,8 @@ export const setCsvLoading = (isLoading) => ({
   payload: isLoading,
 });
 
-export const setRetryLoading = (isLoading) => ({
+export const setRetryLoading = (index, isLoading) => ({
   type: 'SET_RETRY_LOADING',
-  payload: isLoading,
+  payload: { index, isLoading },
 });
+

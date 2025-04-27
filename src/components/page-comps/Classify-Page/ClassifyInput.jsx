@@ -80,7 +80,7 @@ const ClassifyInput = ({
             <div className='deepseek-logo'>
               <a href='https://github.com/deepseek-ai/DeepSeek-R1' target='_blank' rel='noreferrer'>
                 <picture>
-                  <img src='../../../../public/icons8-deepseek-48.png' alt='DeepSeek Logo' />
+                  <img src='../../../../icons8-deepseek-48.png' alt='DeepSeek Logo' />
                 </picture>
               </a>
             </div>

@@ -42,10 +42,10 @@ const ClassificationResultTable = ({
               {!row.DeepSeek || row.DeepSeek === '-' ? (
                 <button
                   className='retry-button'
-                  disabled={retryLoading}
+                  disabled={retryLoading[startIndex + index]}
                   onClick={() => classifySingleRow(startIndex + index, row.contentSnippet)}
                 >
-                  {retryLoading ? 'Retrying...' : 'Retry'}
+                  {retryLoading[startIndex + index] ? 'Retrying...' : 'Retry'}
                 </button>
               ) : (
                 row.DeepSeek
@@ -63,6 +63,6 @@ ClassificationResultTable.propTypes = {
   classificationResult: PropTypes.array.isRequired,
   classifySingleRow: PropTypes.func.isRequired,
   startIndex: PropTypes.number.isRequired,
-  retryLoading: PropTypes.bool,
+  retryLoading: PropTypes.object,
 };
 export default ClassificationResultTable;

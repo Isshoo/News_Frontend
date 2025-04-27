@@ -9,7 +9,7 @@ const initialState = {
   loading: false,
   classifyLoading: false,
   csvLoading: false,
-  retryLoading: false,
+  retryLoading: {},
   isPopupOpen: true,
 };
 
@@ -114,7 +114,14 @@ const classifierReducer = (state = initialState, action) => {
     return { ...state, csvLoading: action.payload };
 
   case 'SET_RETRY_LOADING':
-    return { ...state, retryLoading: action.payload };
+    return {
+      ...state,
+      retryLoading: {
+        ...state.retryLoading,
+        [action.payload.index]: action.payload.isLoading,
+      },
+    };
+
 
   default:
     return state;

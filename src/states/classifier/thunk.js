@@ -90,7 +90,7 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
 };
 
 export const classifyRowThunk = (index, contentSnippet) => async (dispatch, getState) => {
-  dispatch(setRetryLoading(true));
+  dispatch(setRetryLoading(index, true));
   const { selectedModelPath } = getState().models;
 
   const response = await predict({ text: contentSnippet, model_path: selectedModelPath });
@@ -100,11 +100,11 @@ export const classifyRowThunk = (index, contentSnippet) => async (dispatch, getS
       title: 'Error!',
       text: response.error || 'Failed to classify news.',
     });
-    dispatch(setRetryLoading(false));
+    dispatch(setRetryLoading(index, true));
     return response;
   }
   dispatch(updateClassificationRow(index, 'DeepSeek', response?.DeepSeek || 'Unknown'));
-  dispatch(setRetryLoading(false));
+  dispatch(setRetryLoading(index, true));
 
   return response;
 };
