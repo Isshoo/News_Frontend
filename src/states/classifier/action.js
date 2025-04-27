@@ -70,6 +70,17 @@ export const setLoading = (isLoading) => ({
   payload: isLoading,
 });
 
+export const setClassifyLoading = (isLoading) => ({
+  type: 'SET_CLASSIFY_LOADING',
+  payload: isLoading,
+});
+
+
+export const setCsvLoading = (isLoading) => ({
+  type: 'SET_CSV_LOADING',
+  payload: isLoading,
+});
+
 export const setRetryLoading = (isLoading) => ({
   type: 'SET_RETRY_LOADING',
   payload: isLoading,

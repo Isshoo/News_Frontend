@@ -26,7 +26,7 @@ const CsvClassifierPage = () => {
   const firstRun = useRef(true);
   const lastRowRef = useRef(null);
 
-  const { csvData, classificationResult, loading, isPopupOpen, retryLoading } = useSelector(
+  const { csvData, classificationResult, csvLoading, isPopupOpen, retryLoading } = useSelector(
     (state) => state.classifier
   );
   const { models, selectedModelId } = useSelector((state) => state.models);
@@ -196,7 +196,7 @@ const CsvClassifierPage = () => {
             handleFileUpload={handleFileUpload}
             handleAddRow={handleAddRow}
             classifyAllCsv={classifyAllCsv}
-            loading={loading}
+            loading={csvLoading}
             csvData={csvData}
             handleEditCell={handleEditCell}
             handleDeleteRow={handleDeleteRow}

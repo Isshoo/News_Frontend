@@ -7,6 +7,8 @@ const initialState = {
   csvData: [],
   classificationResult: [],
   loading: false,
+  classifyLoading: false,
+  csvLoading: false,
   retryLoading: false,
   isPopupOpen: true,
 };
@@ -104,6 +106,12 @@ const classifierReducer = (state = initialState, action) => {
 
   case 'SET_LOADING':
     return { ...state, loading: action.payload };
+
+  case 'SET_CLASSIFY_LOADING':
+    return { ...state, classifyLoading: action.payload };
+
+  case 'SET_CSV_LOADING':
+    return { ...state, csvLoading: action.payload };
 
   case 'SET_RETRY_LOADING':
     return { ...state, retryLoading: action.payload };

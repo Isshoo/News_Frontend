@@ -2,6 +2,8 @@
 
 import {
   setLoading,
+  setClassifyLoading,
+  setCsvLoading,
   setClassificationResult,
   addPrediction,
   addPredictionEntry,
@@ -24,6 +26,7 @@ export const classifyNews = (text) => async (dispatch, getState) => {
   }));
 
   dispatch(setLoading(true));
+  dispatch(setClassifyLoading(true));
 
   const { selectedModelPath } = getState().models;
   const response = await predict({ text, model_path: selectedModelPath });
@@ -35,6 +38,7 @@ export const classifyNews = (text) => async (dispatch, getState) => {
       text: response.error || 'Failed to classify news.',
     });
     dispatch(setLoading(false));
+    dispatch(setClassifyLoading(false));
     return response;
   }
   if (response.model_error !== '') {
@@ -45,13 +49,14 @@ export const classifyNews = (text) => async (dispatch, getState) => {
     });
   }
 
-  dispatch(updateLastPrediction({
+  await dispatch(updateLastPrediction({
     preprocessed: response.Preprocessed_Text,
     hybrid: response.Hybrid_C5_KNN,
     deepseek: response.DeepSeek,
   }));
 
   dispatch(setLoading(false));
+  dispatch(setClassifyLoading(false));
 
   return response;
 };
@@ -61,7 +66,7 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
   const { selectedModelPath } = getState().models;
   const { csvData } = getState().classifier;
 
-  dispatch(setLoading(true));
+  dispatch(setCsvLoading(true));
 
   const csvContent = csvData.map((row) => `"${row.contentSnippet}"`).join('\n');
   const csvBlob = new Blob([`"contentSnippet"\n${csvContent}`], { type: 'text/csv' });
@@ -74,11 +79,11 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
       title: 'Error!',
       text: response.error || 'Failed to classify CSV.',
     });
-    dispatch(setLoading(false));
+    dispatch(setCsvLoading(false));
     return response;
   }
   dispatch(setClassificationResult(response));
-  dispatch(setLoading(false));
+  dispatch(setCsvLoading(false));
 
   return response;
 

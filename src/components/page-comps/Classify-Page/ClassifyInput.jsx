@@ -38,9 +38,9 @@ const ClassifyInput = ({
     await predictNews(newText);
   };
 
-  const handleSuggestionClick = (suggestion) => {
+  const handleSuggestionClick = async (suggestion) => {
     setText(suggestion);
-    predictNews(suggestion);
+    await predictNews(suggestion);
   };
 
   return (
@@ -97,7 +97,7 @@ const ClassifyInput = ({
               </button>
             )}
             <button
-              className={text === '' ? 'disabled' : ''}
+              className={text === '' || loading ? 'disabled' : ''}
               type='button'
               onClick={handleSubmit}
               id='threadsSubmit'

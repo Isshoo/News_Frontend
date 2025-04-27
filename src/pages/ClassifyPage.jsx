@@ -17,10 +17,8 @@ const ClassifyPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
 
-  const { predictionResults, loading } = useSelector((state) => state.classifier);
+  const { predictionResults, loading, classifyLoading } = useSelector((state) => state.classifier);
   const { models, selectedModelId } = useSelector((state) => state.models);
-
-  const [classifyLoading, setClassifyLoading] = React.useState(false);
 
   const inputAtBottom = !!predictionResults?.length;
 
@@ -60,9 +58,7 @@ const ClassifyPage = () => {
       alert('Please enter a news text');
       return;
     }
-    setClassifyLoading(true);
     await dispatch(classifyNews(text));
-    setClassifyLoading(false);
   };
 
   return (
