@@ -3,9 +3,12 @@ import { getModels, deleteModel as deleteModelAPI, editModelName } from '../../u
 import { trainModel } from '../../utils/api/process';
 import { mapSplitResult } from '../../utils/helper';
 
-import Swal from 'sweetalert2';
 import { setSelectedDataset } from '../datasets/action';
 import { setSelectedPreprocessedDataset } from '../preprocessedDatasets/action';
+
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 
 export const asyncFetchModels = () => async (dispatch) => {
   dispatch(setLoading(true));
@@ -35,21 +38,35 @@ export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split
   dispatch(setTrainLoading(true));
 
   const response = await trainModel(rawDatasetId, preprocessedDatasetId, name, split_size, n_neighbors);
+
+  const currentPath = window.location.pathname;
+
   if (!response.error) {
     await dispatch(addModel(response));
     dispatch(setSelectedModel(response.id,  response.model_path));
-    Swal.fire({
-      icon: 'success',
-      title: 'Success!',
-      text: response.message || 'Model Trained Successfully.',
-    });
+
+    if (currentPath.includes('/admin/home/parameters')) {
+      // Kalau user masih di halaman /admin/models
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: response.message || 'Model Trained Successfully.',
+      });
+    } else {
+      // Kalau user udah pindah ke halaman lain
+      toast.success(response.message || 'Model Trained Successfully!');
+    }
   }
   else {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error!',
-      text: response.error || 'Failed to Train model.',
-    });
+    if (currentPath.includes('/admin/home/parameters')) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: response.error || 'Failed to Train model.',
+      });
+    } else {
+      toast.error(response.error || 'Failed to Train model.');
+    }
   }
   dispatch(setTrainLoading(false));
   return response;
