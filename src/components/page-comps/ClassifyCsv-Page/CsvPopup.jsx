@@ -65,7 +65,7 @@ const CsvPopup = ({
               showFormattedDate={showFormattedDate}
             />
             <div className='deepseek-logo'>
-              <a href='https://github.com/deepseek-ai/DeepSeek-R1'>
+              <a href='https://github.com/deepseek-ai/DeepSeek-R1' target='_blank' rel='noreferrer'>
                 <picture>
                   <img src='../../../../public/icons8-deepseek-48.png' alt='DeepSeek Logo' />
                 </picture>
