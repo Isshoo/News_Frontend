@@ -15,9 +15,13 @@ import {
   preprocessDataset as apiPreprocessDataset,
 } from '../../utils/api/preprocess';
 
-import Swal from 'sweetalert2';
 import { asyncFetchPreprocessedDatasetDetail } from '../preprocessedDatasetDetail/thunk';
 import { setSelectedModel } from '../models/action';
+
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
+import { setSelectedDataset } from '../datasets/action';
 
 export const asyncFetchAllPreprocessedDatasets = () => async (dispatch) => {
 
@@ -56,22 +60,37 @@ export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
   dispatch(setPreprocessLoading(true));
 
   const response = await apiPreprocessDataset(rawDatasetId);
+
+  const currentPath = window.location.pathname;
+
   if (!response.error) {
     await dispatch(addPreprocessedDataset(response.data));
+    dispatch(setSelectedDataset(rawDatasetId));
     dispatch(setSelectedModel('', ''));
     dispatch(asyncFetchPreprocessedDatasetDetail(response.data.id));
-    Swal.fire({
-      icon: 'success',
-      title: 'Success!',
-      text: response.message || 'Successfully Preprocess Raw Dataset.',
-    });
+    if (currentPath.includes('/admin/home/preprocessing')) {
+      // Kalau user masih di halaman /admin/models
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: response.message || 'Dataset Preprocessed Successfully!',
+      });
+    } else {
+      // Kalau user udah pindah ke halaman lain
+      toast.success(response.message || 'Dataset Preprocessed Successfully!');
+    }
+
   }
   else {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error!',
-      text: response.error || 'Failed to Preprocess Raw Dataset.',
-    });
+    if (currentPath.includes('/admin/home/preprocessing')) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: response.error || 'Failed to Preprocess Raw Dataset.',
+      });
+    } else {
+      toast.error(response.error || 'Failed to Preprocess Raw Dataset.');
+    }
   }
   dispatch(setPreprocessLoading(false));
   return response;
