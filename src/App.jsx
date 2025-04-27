@@ -25,6 +25,8 @@ import TrainModelNavigation from './components/Base/TrainModelNavigation';
 import SideBar from './components/Base/SideBar';
 import ScrollToTop from './components/Base/ScrollToTop';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [theme, themeContextValue] = useTheme();
@@ -76,6 +78,15 @@ const App = () => {
 
               {location.pathname.startsWith('/admin/home') && <TrainModelNavigation />}
             </main>
+            <ToastContainer
+              position='top-right'
+              autoClose={false}
+              hideProgressBar={true}
+              newestOnTop={false}
+              closeOnClick
+              pauseOnHover
+              theme='light'
+            />
           </div>
         </div>
       </ThemeProvider>

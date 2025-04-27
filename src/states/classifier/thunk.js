@@ -1,4 +1,5 @@
 // thunk
+import { toast } from 'react-toastify';
 
 import {
   setLoading,
@@ -74,15 +75,14 @@ export const classifyCsvThunk = () => async (dispatch, getState) => {
 
   const response = await predictCsv(csvFile, selectedModelPath);
   if (response.error) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error!',
-      text: response.error || 'Failed to classify CSV.',
-    });
+    toast.error(response.error || 'Failed to classify CSV.');
     dispatch(setCsvLoading(false));
     return response;
   }
   dispatch(setClassificationResult(response));
+  toast.success('CSV classification finished successfully!', {
+    position: 'top-right',
+  });
   dispatch(setCsvLoading(false));
 
   return response;
