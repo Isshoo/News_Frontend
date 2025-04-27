@@ -4,6 +4,8 @@ import { MdOutlineLeaderboard } from 'react-icons/md';
 import { GoHome } from 'react-icons/go';
 import { FiLogOut } from 'react-icons/fi';
 import { LocaleConsumer } from '../../contexts/LocaleContext';
+import { GrDocumentStore } from 'react-icons/gr';
+import { GiWorld } from 'react-icons/gi';
 
 const SideBar = () => {
   const location = useLocation();
@@ -52,7 +54,7 @@ const SideBar = () => {
                     className={`side-button ${location.pathname.startsWith('/admin/datasets') ? 'active' : ''}`}
                     to='/admin/datasets'
                   >
-                    <MdOutlineLeaderboard className='side-icon' />
+                    <GrDocumentStore className='side-icon datasets-icon' />
                     <p>{locale === 'EN' ? 'Datasets' : 'Kumpulan Data'}</p>
                   </Link>
                 </li>
@@ -61,7 +63,7 @@ const SideBar = () => {
                     className={`side-button ${location.pathname.startsWith('/admin/models') ? 'active' : ''}`}
                     to='/admin/models'
                   >
-                    <MdOutlineLeaderboard className='side-icon' />
+                    <GiWorld className='side-icon models-icon' />
                     <p>{locale === 'EN' ? 'Models' : 'Model'}</p>
                   </Link>
                 </li>

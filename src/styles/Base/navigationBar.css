@@ -67,10 +67,10 @@
   min-width: 160px;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  background-color: var(--add-btn-bg);
-  color: var(--add-icon);
+  background-color: var(--side-bg);
+  color: var(--side-text);
   cursor: pointer;
-  opacity: 0.8;
+  opacity: 0.7;
   border: 1px solid var(--nav-border);
   min-height: 41px;
   box-shadow: -2px 2px 1px 1px var(--add-btn-shadow);

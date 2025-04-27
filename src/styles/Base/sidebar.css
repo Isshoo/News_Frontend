@@ -68,6 +68,12 @@
 .side-icon {
   font-size: 1rem;
 }
+.side-icon.datasets-icon {
+  font-size: 0.8rem;
+}
+.side-icon.models-icon {
+  font-size: 0.95rem;
+}
 
 
 
