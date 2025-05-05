@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { mapLabelResult } from '../../../utils/helper';
 
 const AddDataPopup = ({
   newContent,
@@ -28,11 +29,11 @@ const AddDataPopup = ({
           />
           <select value={newTopic} onChange={(e) => setNewTopic(e.target.value)}>
             <option value='' disabled>
-              Pilih Topik
+              Select Topik
             </option>
             {labelOptions.map((label, i) => (
               <option key={i} value={label}>
-                {label}
+                {mapLabelResult(label)}
               </option>
             ))}
           </select>
