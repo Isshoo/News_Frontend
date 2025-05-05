@@ -1,3 +1,39 @@
+/* Buat item pertama menonjol di grid */
+.container-list-item .model-card:first-child {
+  /* grid-column: 1 / -1; 
+  border-left: 6px solid var(--submit-bg);
+  background: linear-gradient(to right, var(--main-bg) 0%, #1f293710 100%); */
+  
+  position: relative;
+  /* padding: 3rem 2rem 1.5rem; */
+}
+
+.container-list-item .model-card:first-child::before {
+  content: 'Latest Model';
+  position: absolute;
+  top: -0.5rem;
+  left: 20%;
+  transform: translateX(-50%);
+  background-color: var(--submit-bg);
+  color: var(--submit-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* 
+
+
+.container-list-item .model-card:first-child .model-body {
+  font-weight: 500;
+  font-size: 1rem;
+  max-width: 500px;
+}
+ */
+
+
 .model-card {
   border-left: 6px solid var(--submit-bg);
   border-bottom: 2px solid var(--submit-bg);
@@ -14,7 +50,6 @@
 
 .model-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
 .model-header {
