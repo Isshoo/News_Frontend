@@ -9,6 +9,7 @@ import {
   asyncUpdateModelName as editModelNameThunk,
 } from '../states/models/thunk';
 import { asyncFetchAllPreprocessedDatasets } from '../states/preprocessedDatasets/thunk';
+import { asyncFetchDatasets } from '../states/datasets/thunk';
 
 const ModelsPage = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,9 @@ const ModelsPage = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      await dispatch(fetchModels());
+      await dispatch(asyncFetchDatasets());
       await dispatch(asyncFetchAllPreprocessedDatasets());
+      await dispatch(fetchModels());
     };
     loadData();
     setTimeout(() => {
