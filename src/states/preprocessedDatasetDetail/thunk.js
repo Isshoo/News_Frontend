@@ -140,7 +140,7 @@ export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => as
       await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
       const { totalPages } = getState().preprocessedDatasetDetail;
       if (totalPages > 0 && totalPages > currentPage) {
-        await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
+        await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, limit));
         Swal.fire({
           icon: 'success',
           title: 'Success!',
@@ -148,7 +148,7 @@ export const asyncAddPreprocessedData = (datasetId, contentSnippet, topik) => as
         });
         return;
       }
-      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit));
+      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, limit));
       Swal.fire({
         icon: 'success',
         title: 'Success!',
