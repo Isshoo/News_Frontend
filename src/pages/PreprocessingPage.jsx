@@ -123,6 +123,7 @@ const PreprocessingPage = () => {
   };
 
   const handleAddData = async () => {
+    setEditingIndex(null);
     await dispatch(asyncAddPreprocessedData(selectedPreprocessedDataset, newContent, newTopic));
     setShowAddPopup(false);
     setNewContent('');
