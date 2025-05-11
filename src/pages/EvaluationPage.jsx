@@ -59,7 +59,7 @@ const EvaluationPage = () => {
           </div>
           <div className='dataset-table-header-info'>
             <p>
-              <strong>Accuracy: {accuracy.toFixed(2) * 100 || 0}%</strong>
+              <strong>Evaluation Accuracy: {accuracy.toFixed(2) * 100 || 0}%</strong>
             </p>
             <button className='tfidf-icon' onClick={() => setShowInfo(true)}>
               <MdInfoOutline className='info-icon' />

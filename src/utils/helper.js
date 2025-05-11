@@ -60,10 +60,14 @@ const mapLabelResult = (result) => {
 };
 const mapSplitResult = (result) => {
   const mapping = {
+    0.1: '90-10',
+    0.15: '85-15',
     0.2: '80-20',
     0.25: '75-25',
     0.3: '70-30',
+    0.35: '65-35',
     0.4: '60-40',
+    0.45: '55-45',
     0.5: '50-50',
   };
   return mapping[result] || result;

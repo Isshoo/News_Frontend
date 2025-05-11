@@ -10,6 +10,7 @@ const initialState = {
   totalC5: 0,
   totalKnn: 0,
   predictBy: null,
+  accuracy: 0,
 };
 
 const predictResultsReducer = (state = initialState, action) => {
@@ -25,6 +26,7 @@ const predictResultsReducer = (state = initialState, action) => {
       totalC5: action.payload.totalC5,
       totalKnn: action.payload.totalKnn,
       predictBy: action.payload.predictBy,
+      accuracy: action.payload.accuracy,
     };
   case RESET_PREDICT_RESULTS:
     return {

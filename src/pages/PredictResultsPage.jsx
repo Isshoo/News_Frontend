@@ -15,8 +15,17 @@ const PredictResultsPage = () => {
   const [showInfo, setShowInfo] = React.useState(false);
 
   const modelId = useSelector((state) => state.models.selectedModelId);
-  const { data, totalPages, currentPage, limit, totalData, totalC5, totalKnn, predictBy } =
-    useSelector((state) => state.predictResults);
+  const {
+    data,
+    totalPages,
+    currentPage,
+    limit,
+    totalData,
+    totalC5,
+    totalKnn,
+    predictBy,
+    accuracy,
+  } = useSelector((state) => state.predictResults);
 
   useEffect(() => {
     if (firstrun.current) {
@@ -69,6 +78,7 @@ const PredictResultsPage = () => {
         setShowInfo={setShowInfo}
         handleFilterChange={handleFilterChange}
         predictBy={predictBy}
+        accuracy={accuracy}
       />
       <Pagination
         currentPage={currentPage}

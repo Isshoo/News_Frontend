@@ -16,6 +16,7 @@ const PredictResultsTable = ({
   setShowInfo,
   predictBy,
   handleFilterChange,
+  accuracy,
 }) => {
   const renderTableBody = () => {
     if (loading) {
@@ -67,6 +68,9 @@ const PredictResultsTable = ({
           <ModelSelect />
         </div>
         <div className='dataset-table-header-info'>
+          <p>
+            <strong>Accuracy:</strong> {accuracy.toFixed(2) * 100 || 0}%
+          </p>
           <p className='total-data-predict'>
             <strong>
               Total Data:{' '}
@@ -125,6 +129,7 @@ PredictResultsTable.propTypes = {
   setShowInfo: PropTypes.func.isRequired,
   predictBy: PropTypes.string,
   handleFilterChange: PropTypes.func.isRequired,
+  accuracy: PropTypes.number.isRequired,
 };
 
 export default PredictResultsTable;

@@ -17,6 +17,7 @@ export const fetchPredictResults = (modelId, page = 1, limit = 10, predictBy = n
         totalC5: response.total_c5,
         totalKnn: response.total_knn,
         predictBy: response.predict_by || predictBy,
+        accuracy: response.accuracy,
       }));
     }
   } catch (error) {
