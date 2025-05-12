@@ -5,11 +5,20 @@ import PropTypes from 'prop-types';
 import { setSelectedModel } from '../../../states/models/action';
 import { setSelectedDataset } from '../../../states/datasets/action';
 import { setSelectedPreprocessedDataset } from '../../../states/preprocessedDatasets/action';
+import { mapLabelResult } from '../../../utils/helper';
 
 const DatasetItem = ({ dataset, onDelete, deletingId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id, name, total_data, topic_counts, upload_at } = dataset;
+
+  const topic_counts_template = {
+    ekonomi: 0,
+    gayahidup: 0,
+    hiburan: 0,
+    olahraga: 0,
+    teknologi: 0,
+  };
 
   const handleTrain = async () => {
     dispatch(setSelectedDataset(id));
@@ -29,14 +38,25 @@ const DatasetItem = ({ dataset, onDelete, deletingId }) => {
       </div>
 
       <div className='dataset-body'>
-        <div className='dataset-topics'>
-          {Object.entries(topic_counts).map(([topic, count]) => (
-            <div key={topic} className='topic-badge'>
-              <span className='topic-name'>{topic}</span>
-              <span className='topic-count'>{count}</span>
-            </div>
-          ))}
-        </div>
+        {Object.keys(topic_counts).length === 0 ? (
+          <div className='dataset-topics'>
+            {Object.entries(topic_counts_template).map(([topic, count]) => (
+              <div key={topic} className='topic-badge'>
+                <span className='topic-name'>{mapLabelResult(topic)}</span>
+                <span className='topic-count'>{count}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className='dataset-topics'>
+            {Object.entries(topic_counts).map(([topic, count]) => (
+              <div key={topic} className='topic-badge'>
+                <span className='topic-name'>{mapLabelResult(topic)}</span>
+                <span className='topic-count'>{count}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className='dataset-footer'>
