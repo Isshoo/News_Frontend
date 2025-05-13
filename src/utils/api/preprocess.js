@@ -107,5 +107,86 @@ export const addData = async (dataset_id, contentSnippet, topik) => {
   } catch (error) {
     return { error: 'Failed to add data.' };
   }
+};
 
+export const getPreprocessedData = async (page = 1, limit = 10, filter = 'all') => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/data?page=${page}&limit=${limit}&filter=${filter}`, {
+      method: 'GET',
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to get data.' };
+  }
+};
+
+export const addNewData = async (data) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/data`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to add data.' };
+  }
+};
+
+export const editNewData = async (index, data) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/data/${index}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to edit data.' };
+  }
+};
+
+export const deleteNewData = async (data) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/data`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to delete data.' };
+  }
+};
+
+export const preprocessNewData = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/process`, {
+      method: 'POST',
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to preprocess data.' };
+  }
+};
+
+export const markAsTrained = async (data) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/preprocessed/mark-trained`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to mark data as trained.' };
+  }
 };
