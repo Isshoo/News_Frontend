@@ -21,6 +21,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
     split_size,
     created_at,
     updated_at,
+    train_time,
     accuracy,
   } = model;
 
@@ -104,6 +105,15 @@ const ModelItem = ({ model, onDelete, onRename }) => {
             <div>
               <p className='model-sub-title'>Data Used</p>
               <p>: {total_data}</p>
+            </div>
+          </div>
+        </div>
+        <div className='model-section'>
+          <p className='model-section-title'>Evaluations</p>
+          <div className='model-section-details'>
+            <div>
+              <p className='model-sub-title'>Training Time</p>
+              <p>: {train_time.toFixed(2)}s</p>
             </div>
           </div>
         </div>
