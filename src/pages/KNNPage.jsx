@@ -23,13 +23,6 @@ const KNNPage = () => {
   const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
-    if (firstrun.current) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-      firstrun.current = false;
-      return;
-    }
     if (!selectedModelId) {
       dispatch(resetNeighbors());
       setTimeout(() => {

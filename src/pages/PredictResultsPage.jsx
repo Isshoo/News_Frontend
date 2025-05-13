@@ -28,13 +28,6 @@ const PredictResultsPage = () => {
   } = useSelector((state) => state.predictResults);
 
   useEffect(() => {
-    if (firstrun.current) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-      firstrun.current = false;
-      return;
-    }
     if (!modelId) {
       dispatch(resetPredictResults());
       setTimeout(() => {

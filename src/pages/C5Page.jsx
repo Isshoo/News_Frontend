@@ -20,13 +20,6 @@ const C5Page = () => {
   );
 
   useEffect(() => {
-    if (firstrun.current) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-      firstrun.current = false;
-      return;
-    }
     if (!modelId) {
       dispatch(resetC5Stats());
       setTimeout(() => {

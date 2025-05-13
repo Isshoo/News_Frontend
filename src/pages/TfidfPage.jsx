@@ -20,13 +20,6 @@ const TfidfPage = () => {
   );
 
   useEffect(() => {
-    if (firstrun.current) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-      firstrun.current = false;
-      return;
-    }
     if (!modelId) {
       dispatch(resetTfidfStats());
       setTimeout(() => {

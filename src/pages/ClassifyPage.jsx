@@ -31,10 +31,10 @@ const ClassifyPage = () => {
   ];
 
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-      dispatch(asyncFetchModels());
-    }
+    const loadData = async () => {
+      await dispatch(asyncFetchModels());
+    };
+    loadData();
   }, [dispatch]);
 
   const chatRef = useRef(null);

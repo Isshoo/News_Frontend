@@ -24,13 +24,6 @@ const EvaluationPage = () => {
   const [showInfo, setShowInfo] = React.useState(false);
 
   useEffect(() => {
-    if (firstrun.current) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-      firstrun.current = false;
-      return;
-    }
     if (!selectedModelId) {
       dispatch(resetEvaluation());
       setTimeout(() => {

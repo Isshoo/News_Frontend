@@ -46,10 +46,10 @@ const CsvClassifierPage = () => {
   const resultTotalPages = Math.ceil(classificationResult.length / rowsPerPage);
 
   useEffect(() => {
-    if (firstRun.current) {
-      firstRun.current = false;
-      dispatch(asyncFetchModels());
-    }
+    const loadData = async () => {
+      await dispatch(asyncFetchModels());
+    };
+    loadData();
   }, [dispatch]);
 
   useEffect(() => {
