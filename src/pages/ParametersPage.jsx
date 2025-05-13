@@ -20,16 +20,27 @@ import TopicSummaryTable from '../components/page-comps/Parameters-Page/TopicSum
 import Swal from 'sweetalert2';
 import ModelSelect from '../components/Base/ModelSelect';
 import Loading from '../components/Base/LoadingBar';
+import { asyncFetchAllPreprocessedDatasets } from '../states/preprocessedDatasets/thunk';
+import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
 
 const ParametersPage = () => {
   const dispatch = useDispatch();
   const firstrun = useRef(true);
 
   const { selectedDataset } = useSelector((state) => state.datasets);
-  const { selectedPreprocessedDataset, preprocessedDatasets } = useSelector(
+  const { selectedPreprocessedDataset, allPreprocessedDatasets } = useSelector(
     (state) => state.preprocessedDatasets
   );
-  const { totalData, topicCounts } = useSelector((state) => state.preprocessedDatasetDetail);
+  const {
+    data = [],
+    totalPages = 1,
+    currentPage = 1,
+    limit = 10,
+    totalData = 0,
+    filter = 'all',
+    fullStats = {},
+    topicCounts = {},
+  } = useSelector((state) => state.preprocessedDatasetDetail);
   const { selectedModelId, trainLoading } = useSelector((state) => state.models);
   const { name } = useSelector((state) => state.modelDetail);
   const {
@@ -42,7 +53,7 @@ const ParametersPage = () => {
   } = useSelector((state) => state.parameter);
 
   const [isLoading, setIsLoading] = React.useState(true);
-  const noDataset = !selectedDataset || !selectedPreprocessedDataset;
+  const noDataset = fullStats.total_all === 0;
 
   useEffect(() => {
     if (firstrun.current) {
@@ -52,61 +63,81 @@ const ParametersPage = () => {
       firstrun.current = false;
       return;
     }
-    if (selectedModelId && selectedPreprocessedDataset) {
+    const loadDataset = async () => {
+      if (!allPreprocessedDatasets.length) {
+        const response = await dispatch(asyncFetchAllPreprocessedDatasets());
+        // cari dataset dengan id default
+        const defaultDataset = response.find((dataset) => dataset.id === 'default');
+        if (defaultDataset) {
+          dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
+          await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'all'));
+        } else {
+          dispatch(setSelectedPreprocessedDataset(''));
+          dispatch(resetPreprocessedDatasetDetail());
+        }
+      } else {
+        // cari dataset dengan id default
+        const defaultDataset = allPreprocessedDatasets.find((dataset) => dataset.id === 'default');
+        if (defaultDataset) {
+          if (defaultDataset.id !== selectedPreprocessedDataset) {
+            dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
+            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'all'));
+          } else {
+            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'all'));
+          }
+        } else {
+          dispatch(setSelectedPreprocessedDataset(''));
+          dispatch(resetPreprocessedDatasetDetail());
+        }
+      }
+    };
+
+    if (selectedModelId) {
       const loadData = async () => {
-        await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
         await dispatch(asyncFetchModelDetail(selectedModelId));
         await dispatch(fetchParameters(selectedModelId));
       };
+      loadDataset();
       loadData();
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
       return;
     }
-    if (preprocessedDatasets.length > 0 && selectedPreprocessedDataset) {
+    if (allPreprocessedDatasets.length > 0 && selectedPreprocessedDataset) {
       const loadData = async () => {
         dispatch(resetParameter());
         dispatch(resetModelDetail());
-        await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
       };
+      loadDataset();
       loadData();
       setTimeout(() => {
         setIsLoading(false);
       }, 1000);
       return;
     }
-    dispatch(resetPreprocessedDatasetDetail());
+    loadDataset();
     dispatch(resetModelDetail());
     dispatch(resetParameter());
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  }, [selectedModelId, selectedPreprocessedDataset, preprocessedDatasets.length, dispatch]);
+  }, [selectedModelId, selectedPreprocessedDataset, allPreprocessedDatasets, dispatch]);
 
   const handleSplitChange = async (newSplitSize) => {
     dispatch(setSelectedModel('', ''));
-    if (selectedDataset && selectedPreprocessedDataset) {
-      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
-      dispatch(updateParameter(selectedDataset, selectedPreprocessedDataset, newSplitSize));
-    }
+    dispatch(updateParameter('default', 'default', newSplitSize));
   };
 
   const handleNNeighborsChange = (newNNeighbors) => {
     dispatch(setSelectedModel('', ''));
-    if (selectedDataset && selectedPreprocessedDataset) {
-      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
-      dispatch(updateNNeighbors(newNNeighbors));
-    }
+    dispatch(updateNNeighbors(newNNeighbors));
   };
 
   const handleNameChange = (e) => {
     const newName = e.target.value;
     dispatch(setSelectedModel('', ''));
-    if (selectedDataset && selectedPreprocessedDataset) {
-      dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
-      dispatch(updateModelName(newName));
-    }
+    dispatch(updateModelName(newName));
   };
 
   const handleTrain = async () => {
@@ -119,9 +150,7 @@ const ParametersPage = () => {
       });
       return;
     }
-    await dispatch(
-      asyncTrainModel(selectedDataset, selectedPreprocessedDataset, name, splitSize, nNeighbors)
-    );
+    await dispatch(asyncTrainModel('default', 'default', name, splitSize, nNeighbors));
   };
 
   return (
@@ -133,13 +162,23 @@ const ParametersPage = () => {
             <h2>Parameters:</h2>
             <ModelSelect />
           </div>
-          <div className='dataset-table-header-info'></div>
+          <div className='dataset-table-header-info'>
+            <p>
+              <strong>Old Data:</strong> {fullStats?.total_old || 0}
+            </p>
+            <p>
+              <strong> New Data:</strong> {fullStats?.total_new || 0}
+            </p>
+          </div>
         </div>
         <div className='parameters-container-section'>
           <div className='parameters-upper'>
             <div className='parameters-upper-left'>
               <div className='form-section'>
-                <ParameterInfo totalData={totalData || 0} topicCounts={topicCounts || {}} />
+                <ParameterInfo
+                  totalData={fullStats?.total_all || 0}
+                  topicCounts={fullStats?.topic_counts_all || {}}
+                />
               </div>
             </div>
 

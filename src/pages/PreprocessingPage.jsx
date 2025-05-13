@@ -29,6 +29,7 @@ import { FaPlus } from 'react-icons/fa';
 import { MdCopyAll } from 'react-icons/md';
 import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
 import Loading from '../components/Base/LoadingBar';
+import { div } from 'framer-motion/client';
 
 const PreprocessingPage = () => {
   const dispatch = useDispatch();
@@ -43,12 +44,12 @@ const PreprocessingPage = () => {
   } = useSelector((state) => state.preprocessedDatasets);
 
   const {
-    data = null,
+    data = [],
     totalPages = 1,
     currentPage = 1,
     limit = 10,
     totalData = 0,
-    filter = 'all',
+    filter = 'new',
     fullStats = {},
     topicCounts = {},
   } = useSelector((state) => state.preprocessedDatasetDetail);
@@ -73,7 +74,7 @@ const PreprocessingPage = () => {
         const defaultDataset = response.find((dataset) => dataset.id === 'default');
         if (defaultDataset) {
           dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
-          await dispatch(asyncFetchPreprocessedDatasetDetail());
+          await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'new'));
         } else {
           dispatch(setSelectedPreprocessedDataset(''));
           dispatch(resetPreprocessedDatasetDetail());
@@ -84,9 +85,9 @@ const PreprocessingPage = () => {
         if (defaultDataset) {
           if (defaultDataset.id !== selectedPreprocessedDataset) {
             dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
-            await dispatch(asyncFetchPreprocessedDatasetDetail());
+            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'new'));
           } else {
-            await dispatch(asyncFetchPreprocessedDatasetDetail());
+            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'new'));
           }
         } else {
           dispatch(setSelectedPreprocessedDataset(''));
@@ -154,7 +155,7 @@ const PreprocessingPage = () => {
   };
 
   const handleSetPage = async (page) => {
-    await dispatch(asyncFetchPreprocessedDatasetDetail(page, limit));
+    await dispatch(asyncFetchPreprocessedDatasetDetail(page, limit, filter));
   };
 
   const renderNoDatasetSelected = () => (
@@ -270,7 +271,7 @@ const PreprocessingPage = () => {
       <div className='preprocessing-body'>
         <PreprocessTable {...tableProps} />
 
-        {filter === 'new' && fullStats.total_unprocessed > 0 ? (
+        {(filter === 'new' && fullStats.total_unprocessed > 0) || totalData === 0 ? (
           ''
         ) : (
           <Pagination

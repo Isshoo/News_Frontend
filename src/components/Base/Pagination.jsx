@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { FaAngleDoubleLeft, FaAngleLeft, FaAngleRight, FaAngleDoubleRight } from 'react-icons/fa';
 
 const Pagination = ({ currentPage, totalPages, setCurrentPage }) => {
+  if (totalPages === 0) {
+    return '';
+  }
   return (
     <div className='pagination'>
       <button disabled={currentPage === 1} onClick={() => setCurrentPage(1)}>

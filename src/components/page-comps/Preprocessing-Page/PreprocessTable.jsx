@@ -98,7 +98,7 @@ const PreprocessTable = ({
               {data.length === 0 ? (
                 <tr>
                   <td colSpan={filter === 'old' ? 4 : 5} style={{ textAlign: 'center' }}>
-                    No data available, please select a preprocessed dataset first.
+                    No data available, please add a new data from Collecting Page.
                   </td>
                 </tr>
               ) : (

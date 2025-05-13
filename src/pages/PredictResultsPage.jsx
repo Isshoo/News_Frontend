@@ -80,11 +80,15 @@ const PredictResultsPage = () => {
         predictBy={predictBy}
         accuracy={accuracy}
       />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={handleSetPage}
-      />
+      {totalData === 0 ? (
+        ''
+      ) : (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={handleSetPage}
+        />
+      )}
 
       {showInfo && <PopupModalInfoModel onClose={() => setShowInfo(false)} />}
     </Pages>

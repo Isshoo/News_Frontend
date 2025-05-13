@@ -102,7 +102,9 @@ const ModelItem = ({ model, onDelete, onRename }) => {
               <p>: {mapSplitResult(split_size)}</p>
             </div>
             <div>
-              <p className='model-sub-title'>n_neighbors</p>
+              <p className='model-sub-title'>
+                <i>k</i> neighbors
+              </p>
               <p>: {n_neighbors}</p>
             </div>
           </div>
@@ -111,12 +113,8 @@ const ModelItem = ({ model, onDelete, onRename }) => {
           <p className='model-section-title'>Datasets</p>
           <div className='model-section-details'>
             <div>
-              <p className='model-sub-title'>Raw</p>
-              <p>: {rawDatasetName}</p>
-            </div>
-            <div>
-              <p className='model-sub-title'>Preprocessed</p>
-              <p>: {preprocessedDatasetName}</p>
+              <p className='model-sub-title'>Data Used</p>
+              <p>: {total_data}</p>
             </div>
           </div>
         </div>
