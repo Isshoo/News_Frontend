@@ -63,7 +63,7 @@ const CsvClassifierPage = () => {
     if (csvPage > totalPages) {
       setCsvPage(Math.max(1, totalPages));
     }
-  }, [csvData.length]);
+  }, [csvData, rowsPerPage, csvPage]);
 
   useEffect(() => {
     if (lastRowRef.current) {
