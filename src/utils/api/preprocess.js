@@ -109,7 +109,7 @@ export const addData = async (dataset_id, contentSnippet, topik) => {
   }
 };
 
-export const getPreprocessedData = async (page = 1, limit = 10, filter = 'all') => {
+export const getPreprocessedData = async (page = 1, limit = 10, filter = 'new') => {
   try {
     const response = await fetch(`${BASE_URL}/dataset/preprocessed/data?page=${page}&limit=${limit}&filter=${filter}`, {
       method: 'GET',

@@ -12,11 +12,12 @@
   content: 'Latest Model';
   position: absolute;
   top: -0.5rem;
-  left: 20%;
+  left: 50%;
   transform: translateX(-50%);
-  background-color: var(--submit-bg);
-  color: var(--submit-text);
-  font-size: 0.75rem;
+  background-color: var(--submit-text);
+  color: var(--submit-bg);
+  border: 1px solid var(--submit-bg);
+  font-size: 0.9rem;
   font-weight: 700;
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
@@ -39,12 +40,13 @@
   border-bottom: 2px solid var(--submit-bg);
   background-color: var(--main-bg);
   border-radius: 16px;
-  padding: 1.5rem;
+  padding-block: 2.5rem 2rem;
+  padding-inline: 1.75rem;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
   transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   color: var(--primary-text);
 }
 

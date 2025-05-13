@@ -140,14 +140,14 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset, setShowAddPopup, 
   // CASE: No selectedDataset or file, show default full form
   return (
     <form
-      className={`upload-box ${dragActive ? 'active' : ''}`}
+      className={`upload-box blanks ${dragActive ? 'active' : ''}`}
       onSubmit={handleSubmit}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
       onDrop={handleDrop}
     >
-      <label className='upload-area'>
+      <label className='upload-area blanks'>
         <FaCloudArrowUp className='cloud-icon' />
         <p className='upload-title'>Drag and drop CSV file here</p>
         <p className='upload-or'>or</p>

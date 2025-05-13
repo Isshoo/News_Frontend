@@ -8,6 +8,7 @@ import Loading from '../components/Base/LoadingBar';
 import DatasetItem from '../components/page-comps/Datasets-Page/DatasetItem';
 
 import Swal from 'sweetalert2';
+import { setDatasets } from '../states/datasets/action';
 
 const DatasetsPage = () => {
   const firstRun = useRef(true);
@@ -15,6 +16,14 @@ const DatasetsPage = () => {
   const { datasets } = useSelector((state) => state.datasets);
   const [isLoading, setIsloading] = React.useState(true);
   const [deletingId, setDeletingId] = React.useState(null);
+
+  // buat dataset dengan id default selalu menjadi urutan pertama
+  const defaultDataset = datasets.find((dataset) => dataset.id === 'default');
+  const updatedDatasets = [...datasets];
+  if (defaultDataset) {
+    updatedDatasets.splice(datasets.indexOf(defaultDataset), 1);
+    updatedDatasets.unshift(defaultDataset);
+  }
 
   useEffect(() => {
     const loadDatasets = async () => {
@@ -50,7 +59,7 @@ const DatasetsPage = () => {
             <p>No datasets available.</p>
           ) : (
             <div className='datasets container-list-item'>
-              {datasets.map((dataset) => (
+              {updatedDatasets.map((dataset) => (
                 <DatasetItem
                   key={dataset.id}
                   dataset={dataset}

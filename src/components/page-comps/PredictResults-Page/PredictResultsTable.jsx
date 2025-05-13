@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ModelSelect from '../../Base/ModelSelect';
-import { MdInfoOutline } from 'react-icons/md';
+import { MdDelete, MdInfoOutline } from 'react-icons/md';
+// history icon
+import { MdHistory } from 'react-icons/md';
 import { mapLabelResult } from '../../../utils/helper';
+import { useNavigate } from 'react-router-dom';
 
 const PredictResultsTable = ({
   data,
@@ -18,6 +21,11 @@ const PredictResultsTable = ({
   handleFilterChange,
   accuracy,
 }) => {
+  const navigate = useNavigate();
+
+  const handleGoToModels = () => {
+    navigate('/admin/models');
+  };
   const renderTableBody = () => {
     if (loading) {
       return (
@@ -66,10 +74,15 @@ const PredictResultsTable = ({
         <div className='dataset-select-upload'>
           <h2>Results Table:</h2>
           <ModelSelect />
+          <div className='dataset-table-header-info'>
+            <button className='preprocess-delete' onClick={handleGoToModels}>
+              <MdHistory className='delete-icon' />
+            </button>
+          </div>
         </div>
         <div className='dataset-table-header-info'>
           <p>
-            <strong>Accuracy:</strong> {accuracy.toFixed(2) * 100 || 0}%
+            <strong>Accuracy: {accuracy.toFixed(2) * 100 || 0}%</strong>
           </p>
           <p className='total-data-predict'>
             <strong>

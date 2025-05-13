@@ -31,16 +31,7 @@ const ParametersPage = () => {
   const { selectedPreprocessedDataset, allPreprocessedDatasets } = useSelector(
     (state) => state.preprocessedDatasets
   );
-  const {
-    data = [],
-    totalPages = 1,
-    currentPage = 1,
-    limit = 10,
-    totalData = 0,
-    filter = 'all',
-    fullStats = {},
-    topicCounts = {},
-  } = useSelector((state) => state.preprocessedDatasetDetail);
+  const { fullStats = {}, filter } = useSelector((state) => state.preprocessedDatasetDetail);
   const { selectedModelId, trainLoading } = useSelector((state) => state.models);
   const { name } = useSelector((state) => state.modelDetail);
   const {
@@ -53,7 +44,7 @@ const ParametersPage = () => {
   } = useSelector((state) => state.parameter);
 
   const [isLoading, setIsLoading] = React.useState(true);
-  const noDataset = fullStats.total_all === 0;
+  const noDataset = fullStats.total_all === 0 || !fullStats.total_all;
 
   useEffect(() => {
     if (firstrun.current) {
@@ -70,7 +61,7 @@ const ParametersPage = () => {
         const defaultDataset = response.find((dataset) => dataset.id === 'default');
         if (defaultDataset) {
           dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
-          await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'all'));
+          await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, filter));
         } else {
           dispatch(setSelectedPreprocessedDataset(''));
           dispatch(resetPreprocessedDatasetDetail());
@@ -81,9 +72,9 @@ const ParametersPage = () => {
         if (defaultDataset) {
           if (defaultDataset.id !== selectedPreprocessedDataset) {
             dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
-            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'all'));
+            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, filter));
           } else {
-            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'all'));
+            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, filter));
           }
         } else {
           dispatch(setSelectedPreprocessedDataset(''));
@@ -122,21 +113,18 @@ const ParametersPage = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  }, [selectedModelId, selectedPreprocessedDataset, allPreprocessedDatasets, dispatch]);
+  }, [selectedModelId, selectedPreprocessedDataset, allPreprocessedDatasets, filter, dispatch]);
 
   const handleSplitChange = async (newSplitSize) => {
-    dispatch(setSelectedModel('', ''));
     dispatch(updateParameter('default', 'default', newSplitSize));
   };
 
   const handleNNeighborsChange = (newNNeighbors) => {
-    dispatch(setSelectedModel('', ''));
     dispatch(updateNNeighbors(newNNeighbors));
   };
 
   const handleNameChange = (e) => {
     const newName = e.target.value;
-    dispatch(setSelectedModel('', ''));
     dispatch(updateModelName(newName));
   };
 
@@ -160,7 +148,7 @@ const ParametersPage = () => {
         <div className='dataset-table-header'>
           <div className='dataset-select-upload'>
             <h2>Parameters:</h2>
-            <ModelSelect />
+            {/* <ModelSelect /> */}
           </div>
           <div className='dataset-table-header-info'>
             <p>

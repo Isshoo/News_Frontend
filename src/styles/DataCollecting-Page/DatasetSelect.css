@@ -42,3 +42,7 @@
   border-color: #0077ff;
   outline: none;
 }
+
+.dataset-select .dataset-select-option.defaultselect {
+  color: #0077ff;
+}

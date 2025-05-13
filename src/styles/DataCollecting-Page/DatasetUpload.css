@@ -55,6 +55,9 @@
   margin: 0 auto;
   position: relative;
 }
+.upload-box.blanks {
+  margin: 0 auto 2rem;
+}
 
 .upload-box.active {
   background-color: #f0f8ff;

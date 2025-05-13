@@ -30,10 +30,12 @@ import { MdCopyAll } from 'react-icons/md';
 import { resetPreprocessedDatasetDetail } from '../states/preprocessedDatasetDetail/action';
 import Loading from '../components/Base/LoadingBar';
 import { div } from 'framer-motion/client';
+import { useNavigate } from 'react-router-dom';
 
 const PreprocessingPage = () => {
   const dispatch = useDispatch();
   const firstRun = useRef(true);
+  const navigate = useNavigate();
 
   const { selectedDataset, datasets } = useSelector((state) => state.datasets);
   const {
@@ -74,7 +76,7 @@ const PreprocessingPage = () => {
         const defaultDataset = response.find((dataset) => dataset.id === 'default');
         if (defaultDataset) {
           dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
-          await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'new'));
+          await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, filter));
         } else {
           dispatch(setSelectedPreprocessedDataset(''));
           dispatch(resetPreprocessedDatasetDetail());
@@ -85,9 +87,9 @@ const PreprocessingPage = () => {
         if (defaultDataset) {
           if (defaultDataset.id !== selectedPreprocessedDataset) {
             dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
-            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'new'));
+            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, filter));
           } else {
-            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, 'new'));
+            await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, filter));
           }
         } else {
           dispatch(setSelectedPreprocessedDataset(''));
@@ -102,7 +104,7 @@ const PreprocessingPage = () => {
       }, 1000);
       firstRun.current = false;
     }
-  }, [dispatch, allPreprocessedDatasets, selectedPreprocessedDataset]);
+  }, [dispatch, allPreprocessedDatasets, selectedPreprocessedDataset, filter]);
 
   const handlePreprocess = async () => {
     await dispatch(asyncPreprocessRawDataset(selectedDataset));
@@ -158,6 +160,10 @@ const PreprocessingPage = () => {
     await dispatch(asyncFetchPreprocessedDatasetDetail(page, limit, filter));
   };
 
+  const handleGoToCollect = () => {
+    navigate('/admin/home/data-collecting');
+  };
+
   const renderNoDatasetSelected = () => (
     <>
       <div className='parameters-header'>
@@ -167,11 +173,12 @@ const PreprocessingPage = () => {
         <div className='no-preprocessed-dataset'>
           <h3 className='no-preprocessed-dataset-title'>Preprocessed Dataset Not Available</h3>
           <p className='no-preprocessed-dataset-text'>
-            You can make a new preprocessed dataset by clicking the button below.
+            You can make a new preprocessed dataset by uploading a new dataset in the Collecting
+            Page.
           </p>
           <button
             className='preprocess-btn'
-            onClick={handlePreprocess}
+            onClick={handleGoToCollect}
             disabled={preprocessLoading}
             style={{ cursor: preprocessLoading ? 'not-allowed' : 'pointer' }}
             title={
@@ -180,7 +187,7 @@ const PreprocessingPage = () => {
                 : 'Create preprocess dataset'
             }
           >
-            {preprocessLoading ? 'Creating...' : 'Create'}
+            {preprocessLoading ? 'Creating...' : 'Go to Collecting Page'}
           </button>
           <div className='upload-note-container'>
             <p className='upload-note'>
@@ -205,7 +212,7 @@ const PreprocessingPage = () => {
             {fullStats.total_unprocessed} New Data Has Not Preprocessed Yet
           </h3>
           <p className='no-preprocessed-dataset-text'>
-            You can preprocess the raw dataset by clicking the button below.
+            You can preprocess the data by clicking the button below.
           </p>
           <button
             className='preprocess-btn'

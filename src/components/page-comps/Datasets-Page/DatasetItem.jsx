@@ -10,7 +10,7 @@ import { mapLabelResult } from '../../../utils/helper';
 const DatasetItem = ({ dataset, onDelete, deletingId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id, name, total_data, topic_counts, upload_at } = dataset;
+  const { id, name, total_data, topic_counts, upload_at, updated_at } = dataset;
 
   const topic_counts_template = {
     ekonomi: 0,
@@ -32,7 +32,10 @@ const DatasetItem = ({ dataset, onDelete, deletingId }) => {
       <div className='dataset-header'>
         <div>
           <h3 className='dataset-title'>{name}</h3>
-          <p className='dataset-date'>Uploaded on {new Date(upload_at).toLocaleDateString()}</p>
+          <p className='dataset-date'>
+            {id === 'default' ? 'Created on ' : 'Uploaded on '}
+            {new Date(upload_at).toLocaleDateString()}
+          </p>
         </div>
         <div className='dataset-count'>{total_data} entries</div>
       </div>
@@ -59,15 +62,20 @@ const DatasetItem = ({ dataset, onDelete, deletingId }) => {
         )}
       </div>
 
+      {id === 'default' && (
+        <p className='dataset-update'>Updated at {new Date(updated_at).toLocaleDateString()}</p>
+      )}
+
       <div className='dataset-footer'>
-        {id !== 'default-stemming' && (
+        {id !== 'default' ? (
           <button className='btn-delete' onClick={() => onDelete(id)} disabled={deletingId === id}>
             {deletingId === id ? 'Deleting...' : 'Delete'}
           </button>
+        ) : (
+          <button className='btn-train' onClick={handleTrain}>
+            Train
+          </button>
         )}
-        <button className='btn-train' onClick={handleTrain}>
-          Train
-        </button>
       </div>
     </div>
   );
@@ -80,6 +88,7 @@ DatasetItem.propTypes = {
     total_data: PropTypes.number.isRequired,
     topic_counts: PropTypes.object.isRequired,
     upload_at: PropTypes.string.isRequired,
+    updated_at: PropTypes.string.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   deletingId: PropTypes.string,

@@ -52,8 +52,16 @@ const DatasetSelect = ({ datasets, selectedDataset, handleDatasetSelection }) =>
               Select a dataset
             </option>
             {datasets.map((dataset) => (
-              <option className='dataset-select-option' key={dataset.id} value={dataset.id}>
-                {dataset.name}
+              <option
+                className={
+                  dataset.name === 'default'
+                    ? 'dataset-select-option defaultselect'
+                    : 'dataset-select-option'
+                }
+                key={dataset.id}
+                value={dataset.id}
+              >
+                {dataset.name === 'default' ? 'Default (Base Dataset)' : dataset.name}
               </option>
             ))}
           </>

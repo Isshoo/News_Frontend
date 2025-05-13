@@ -19,8 +19,6 @@ const ModelsPage = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      await dispatch(asyncFetchDatasets());
-      await dispatch(asyncFetchAllPreprocessedDatasets());
       await dispatch(fetchModels());
     };
     loadData();

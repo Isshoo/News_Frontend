@@ -24,17 +24,6 @@ const ModelItem = ({ model, onDelete, onRename }) => {
     accuracy,
   } = model;
 
-  const { datasets } = useSelector((state) => state.datasets);
-  const { allPreprocessedDatasets } = useSelector((state) => state.preprocessedDatasets);
-
-  const dataset = datasets.find((dataset) => dataset.id === raw_dataset_id);
-  const preprocessedDataset = allPreprocessedDatasets.find(
-    (dataset) => dataset.id === preprocessed_dataset_id
-  );
-
-  const rawDatasetName = dataset ? dataset.name : 'N/A';
-  const preprocessedDatasetName = preprocessedDataset ? preprocessedDataset.name : 'N/A';
-
   const [newName, setNewName] = useState(name);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -88,7 +77,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
               {name}
             </h3>
           )}
-          <p className='model-date'>Updated on {new Date(updated_at).toLocaleDateString()}</p>
+          <p className='model-date'>Created At {new Date(created_at).toLocaleDateString()}</p>
         </div>
         <div className='model-accuracy'>{accuracy.toFixed(2) * 100}%</div>
       </div>
@@ -118,7 +107,7 @@ const ModelItem = ({ model, onDelete, onRename }) => {
             </div>
           </div>
         </div>
-        <p className='model-created'>Created on {new Date(created_at).toLocaleDateString()}</p>
+        {/* <p className='model-created'>Created on {new Date(created_at).toLocaleDateString()}</p> */}
       </div>
 
       <div className='model-footer'>

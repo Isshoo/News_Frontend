@@ -19,6 +19,7 @@ const initialState = {
   limit: 10,
   fullStats: {},
   loadingDetail: false,
+  filter: 'new'
 };
 
 const preprocessedDatasetDetailReducer = (state = initialState, action) => {

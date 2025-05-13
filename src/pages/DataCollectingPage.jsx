@@ -38,10 +38,15 @@ const DataCollectingPage = () => {
 
   useEffect(() => {
     const initialFetch = async () => {
-      await dispatch(asyncFetchDatasets());
+      const response = await dispatch(asyncFetchDatasets());
+      const defaultDataset = response.find((dataset) => dataset.id === 'default');
       if (selectedDataset) {
         await dispatch(asyncFetchDatasetDetail(selectedDataset));
+      } else if (defaultDataset) {
+        dispatch(setSelectedDataset(defaultDataset.id));
+        await dispatch(asyncFetchDatasetDetail(defaultDataset.id));
       } else {
+        dispatch(setSelectedDataset(''));
         dispatch(resetDatasetDetail());
       }
     };

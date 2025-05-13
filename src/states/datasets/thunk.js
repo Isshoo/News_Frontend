@@ -40,9 +40,10 @@ export const asyncUploadDataset = (file) => async (dispatch) => {
 
   if (result.dataset) {
     await dispatch(addDataset(result.dataset));
+    await dispatch(asyncFetchDatasets());
     dispatch(setSelectedPreprocessedDataset(result.dataset.id));
     dispatch(setSelectedModel('', ''));
-    dispatch(asyncFetchDatasetDetail(result.dataset.id));
+    await dispatch(asyncFetchDatasetDetail(result.dataset.id));
     Swal.fire({
       icon: 'success',
       title: 'Upload Success',
