@@ -43,3 +43,59 @@ export const deleteDataset = async (datasetId) => {
     return { error: 'Failed to delete dataset.' };
   }
 };
+
+export const addDatas = async (datasetId, data) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/${datasetId}/data`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to add data.' };
+  }
+};
+
+export const deleteDatas = async (datasetId, data) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/${datasetId}/data`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        console.log(`Upload progress: ${percentCompleted}%`);
+      }
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to delete dataset.' };
+  }
+};
+
+export const getHistory = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/history`, {
+      method: 'GET',
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to update data.' };
+  }
+};
+
+export const getHistoryById = async (datasetId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/dataset/${datasetId}/history}`, {
+      method: 'GET',
+    });
+    return await response.json();
+  } catch (error) {
+    return { error: 'Failed to update data.' };
+  }
+};
