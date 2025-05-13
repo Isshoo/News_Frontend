@@ -97,10 +97,13 @@ const PreprocessingPage = () => {
         }
       }
     };
-    loadData();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    if (firstRun.current) {
+      loadData();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      firstRun.current = false;
+    }
   }, [dispatch, allPreprocessedDatasets, selectedPreprocessedDataset, filter]);
 
   const handlePreprocess = async () => {

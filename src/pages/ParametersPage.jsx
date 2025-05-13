@@ -47,6 +47,13 @@ const ParametersPage = () => {
   const noDataset = fullStats.total_all === 0 || !fullStats.total_all;
 
   useEffect(() => {
+    if (firstrun.current) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      firstrun.current = false;
+      return;
+    }
     const loadDataset = async () => {
       if (!allPreprocessedDatasets.length) {
         const response = await dispatch(asyncFetchAllPreprocessedDatasets());

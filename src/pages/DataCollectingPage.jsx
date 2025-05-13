@@ -51,10 +51,13 @@ const DataCollectingPage = () => {
       }
     };
 
-    initialFetch();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    if (firstRun.current) {
+      initialFetch();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      firstRun.current = false;
+    }
   }, [dispatch, selectedDataset]);
 
   const handleUpload = async (file) => {
