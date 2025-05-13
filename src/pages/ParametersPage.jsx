@@ -12,7 +12,7 @@ import { updateNNeighbors, resetParameter } from '../states/parameter/action';
 import { setSelectedModel } from '../states/models/action';
 
 import Pages from '../components/styled/Pages';
-import ParameterInfo from '../components/page-comps/Parameters-Page/parameterInfo';
+import ParameterInfo from '../components/page-comps/Parameters-Page/ParameterInfo';
 import TrainButton from '../components/page-comps/Parameters-Page/TrainButton';
 import ModelConfigForm from '../components/page-comps/Parameters-Page/ModelConfigForm';
 import TopicSummaryTable from '../components/page-comps/Parameters-Page/TopicSummaryTable';
