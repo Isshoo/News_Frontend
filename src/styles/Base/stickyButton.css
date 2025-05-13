@@ -5,6 +5,10 @@
   position: sticky;
   bottom: 2rem;
 }
+.dataset-open-upload.add-data{
+  bottom: 6rem;
+  margin-bottom: 0.5rem;
+}
 
 .open-upload-btn {
   background-color: var(--add-btn-bg);
@@ -23,6 +27,10 @@
   svg path {
     color: var(--add-btn-bg);
   }
+}
+
+.open-upload-btn.add-preprocess-data {
+  margin-right: 0.5rem;
 }
 
 .open-upload-btn svg {

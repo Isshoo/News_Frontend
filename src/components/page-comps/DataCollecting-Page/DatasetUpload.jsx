@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FaCloudArrowUp } from 'react-icons/fa6';
+import { FaCloudArrowUp, FaPlus } from 'react-icons/fa6';
 import { FaTimes } from 'react-icons/fa';
 
-const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
+const DatasetUpload = ({ onUpload, uploading, selectedDataset, setShowAddPopup, showAddPopup }) => {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -46,6 +46,16 @@ const DatasetUpload = ({ onUpload, uploading, selectedDataset }) => {
     return (
       <>
         <div className='dataset-open-upload'>
+          {selectedDataset === 'default' && (
+            <button
+              type='button'
+              className='open-upload-btn add-preprocess-data'
+              onClick={() => setShowAddPopup(!showAddPopup)}
+            >
+              <FaPlus />
+            </button>
+          )}
+
           <button type='button' className='open-upload-btn' onClick={() => setShowModal(true)}>
             <FaCloudArrowUp />
           </button>
@@ -171,6 +181,8 @@ DatasetUpload.propTypes = {
   onUpload: PropTypes.func.isRequired,
   uploading: PropTypes.bool.isRequired,
   selectedDataset: PropTypes.string,
+  setShowAddPopup: PropTypes.func,
+  showAddPopup: PropTypes.bool,
 };
 
 export default DatasetUpload;

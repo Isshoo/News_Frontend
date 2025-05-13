@@ -81,11 +81,11 @@ export const asyncDeleteData = (datasetId, arrayContentSnippet) => async (dispat
   }
 };
 
-export const asyncAddPreprocessedData = (datasetId, arrayObjek) => async (dispatch, getState) => {
+export const asyncAddData = (datasetId, arrayObjek) => async (dispatch, getState) => {
   try {
     // cek untuk di array jika ada item yang contentSnippet atau topik kosong
-    const { contentSnippet, topik } = arrayObjek.find((item) => !item.contentSnippet || !item.topik);
-    if (contentSnippet || topik) {
+    const emptyObject = arrayObjek.find((item) => !item.contentSnippet || !item.topik);
+    if (emptyObject) {
       Swal.fire({
         icon: 'warning',
         title: 'Empty Fields',
@@ -96,9 +96,9 @@ export const asyncAddPreprocessedData = (datasetId, arrayObjek) => async (dispat
 
     const response = await addDatas(datasetId, arrayObjek); // API call
     if (!response.error) {
-      const { limit, currentPage } = getState().DatasetDetail;
+      const { limit, currentPage } = getState().datasetDetail;
       await dispatch(asyncFetchDatasetDetail(datasetId, currentPage, limit)); // Refresh data
-      const { totalPages } = getState().DatasetDetail;
+      const { totalPages } = getState().datasetDetail;
       if (totalPages > 0 && totalPages > currentPage) {
         await dispatch(asyncFetchDatasetDetail(datasetId, 1, limit));
         Swal.fire({

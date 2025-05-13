@@ -7,18 +7,24 @@ import DatasetTable from '../components/page-comps/DataCollecting-Page/DatasetTa
 import PopupModalInfo from '../components/page-comps/DataCollecting-Page/PopupModalInfo';
 import Pagination from '../components/Base/Pagination';
 import { DatasetSelect } from '../components/Base/Select';
-import { asyncFetchDatasetDetail } from '../states/datasetDetail/thunk';
+import { asyncAddData, asyncFetchDatasetDetail } from '../states/datasetDetail/thunk';
 import { asyncFetchDatasets, asyncUploadDataset } from '../states/datasets/thunk';
 import { setSelectedDataset } from '../states/datasets/action';
 import { setSelectedModel } from '../states/models/action';
 import { setSelectedPreprocessedDataset } from '../states/preprocessedDatasets/action';
 import { resetDatasetDetail } from '../states/datasetDetail/action';
+import AddDataPopup from '../components/page-comps/Preprocessing-Page/AddDataPopup';
+import { FaPlus } from 'react-icons/fa6';
 
 const DataCollectingPage = () => {
   const firstRun = useRef(true);
   const dispatch = useDispatch();
   const [showInfo, setShowInfo] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [showAddPopup, setShowAddPopup] = useState(false);
+  const [newContent, setNewContent] = useState('');
+  const [newTopic, setNewTopic] = useState('');
 
   const { datasets, selectedDataset, isUploading } = useSelector((state) => state.datasets);
   const {
@@ -63,6 +69,20 @@ const DataCollectingPage = () => {
     dispatch(asyncFetchDatasetDetail(selectedId, 1, 10));
   };
 
+  const handleAddData = async () => {
+    const arrayObjek = [
+      {
+        contentSnippet: newContent,
+        topik: newTopic,
+      },
+    ];
+    await dispatch(asyncAddData(selectedDataset, arrayObjek));
+    setShowAddPopup(false);
+    setNewContent('');
+    setNewTopic('');
+    await dispatch(asyncFetchDatasetDetail(selectedDataset));
+  };
+
   const handleSetPage = (page) => {
     if (selectedDataset) {
       dispatch(asyncFetchDatasetDetail(selectedDataset, page, limit));
@@ -100,10 +120,24 @@ const DataCollectingPage = () => {
               setCurrentPage={handleSetPage}
             />
           </div>
+          <>
+            {showAddPopup && (
+              <AddDataPopup
+                newContent={newContent}
+                setNewContent={setNewContent}
+                newTopic={newTopic}
+                setNewTopic={setNewTopic}
+                handleAddData={handleAddData}
+                setShowAddPopup={setShowAddPopup}
+              />
+            )}
+          </>
           <DatasetUpload
             onUpload={handleUpload}
             uploading={isUploading}
             selectedDataset={selectedDataset}
+            setShowAddPopup={setShowAddPopup}
+            showAddPopup={showAddPopup}
           />
         </div>
       ) : (
