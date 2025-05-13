@@ -5,6 +5,7 @@ import {
   asyncPreprocessRawDataset,
   asyncCreatePreprocessedCopy,
   asyncDeletePreprocessedDataset,
+  asyncFetchAllPreprocessedDatasets,
 } from '../states/preprocessedDatasets/thunk';
 import {
   asyncFetchPreprocessedDatasetDetail,
@@ -34,16 +35,21 @@ const PreprocessingPage = () => {
   const firstRun = useRef(true);
 
   const { selectedDataset, datasets } = useSelector((state) => state.datasets);
-  const { selectedPreprocessedDataset, preprocessedDatasets, preprocessLoading } = useSelector(
-    (state) => state.preprocessedDatasets
-  );
+  const {
+    allPreprocessedDatasets,
+    selectedPreprocessedDataset,
+    preprocessedDatasets,
+    preprocessLoading,
+  } = useSelector((state) => state.preprocessedDatasets);
 
   const {
-    data = [],
+    data = null,
     totalPages = 1,
     currentPage = 1,
     limit = 10,
     totalData = 0,
+    filter = 'all',
+    fullStats = {},
     topicCounts = {},
   } = useSelector((state) => state.preprocessedDatasetDetail);
 
@@ -60,20 +66,32 @@ const PreprocessingPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!selectedDataset) {
-      dispatch(resetPreprocessedDatasetDetail());
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-      return;
-    }
-
     const loadData = async () => {
-      await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
-      if (selectedPreprocessedDataset) {
-        await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset));
+      if (!allPreprocessedDatasets.length) {
+        const response = await dispatch(asyncFetchAllPreprocessedDatasets());
+        // cari dataset dengan id default
+        const defaultDataset = response.find((dataset) => dataset.id === 'default');
+        if (defaultDataset) {
+          dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
+          await dispatch(asyncFetchPreprocessedDatasetDetail());
+        } else {
+          dispatch(setSelectedPreprocessedDataset(''));
+          dispatch(resetPreprocessedDatasetDetail());
+        }
       } else {
-        dispatch(resetPreprocessedDatasetDetail());
+        // cari dataset dengan id default
+        const defaultDataset = allPreprocessedDatasets.find((dataset) => dataset.id === 'default');
+        if (defaultDataset) {
+          if (defaultDataset.id !== selectedPreprocessedDataset) {
+            dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
+            await dispatch(asyncFetchPreprocessedDatasetDetail());
+          } else {
+            await dispatch(asyncFetchPreprocessedDatasetDetail());
+          }
+        } else {
+          dispatch(setSelectedPreprocessedDataset(''));
+          dispatch(resetPreprocessedDatasetDetail());
+        }
       }
     };
     if (firstRun.current) {
@@ -83,7 +101,7 @@ const PreprocessingPage = () => {
       }, 1000);
       firstRun.current = false;
     }
-  }, [dispatch, selectedDataset, selectedPreprocessedDataset]);
+  }, [dispatch, allPreprocessedDatasets, selectedPreprocessedDataset]);
 
   const handlePreprocess = async () => {
     await dispatch(asyncPreprocessRawDataset(selectedDataset));
@@ -102,24 +120,13 @@ const PreprocessingPage = () => {
   };
 
   const handleSave = async (index) => {
-    await dispatch(
-      asyncUpdatePreprocessedData(
-        selectedPreprocessedDataset,
-        index,
-        newLabel,
-        newPreprocessedContent
-      )
-    );
+    await dispatch(asyncUpdatePreprocessedData(index, newLabel, newPreprocessedContent));
     setEditingIndex(null);
-    await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
   };
 
   const handleDelete = async (index) => {
     setEditingIndex(null);
-    const result = await dispatch(asyncDeletePreprocessedData(selectedPreprocessedDataset, index));
-    if (!result?.canceled) {
-      await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
-    }
+    await dispatch(asyncDeletePreprocessedData(index));
   };
 
   const handleAddData = async () => {
@@ -131,12 +138,11 @@ const PreprocessingPage = () => {
     await dispatch(asyncFetchPreprocessedDatasets(selectedDataset));
   };
 
-  const handleDatasetSelection = async (event) => {
-    const datasetId = event.target.value;
-    if (datasetId === selectedPreprocessedDataset) return;
-    dispatch(setSelectedPreprocessedDataset(datasetId));
+  const handleFilterSelection = async (event) => {
+    const newFilter = event.target.value;
+    if (newFilter === filter) return;
     dispatch(setSelectedModel('', ''));
-    await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, 1, 10));
+    await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, newFilter));
   };
 
   const handleDeleteDataset = async () => {
@@ -148,50 +154,55 @@ const PreprocessingPage = () => {
   };
 
   const handleSetPage = async (page) => {
-    if (selectedPreprocessedDataset) {
-      await dispatch(asyncFetchPreprocessedDatasetDetail(selectedPreprocessedDataset, page, limit));
-    }
-  };
-
-  const tableProps = {
-    dataset: data,
-    editingIndex,
-    newLabel,
-    setNewLabel,
-    handleEdit,
-    newPreprocessedContent,
-    setNewPreprocessedContent,
-    handleSave,
-    handleDelete,
-    preprocessedDatasetId: selectedPreprocessedDataset,
-    rawDatasetId: selectedDataset,
-    preprocessedDatasets,
-    selectedPreprocessedDataset,
-    handleDatasetSelection,
-    totalData,
-    setShowInfo,
-    handleDeleteDataset,
+    await dispatch(asyncFetchPreprocessedDatasetDetail(page, limit));
   };
 
   const renderNoDatasetSelected = () => (
-    <>
-      <PreprocessTable {...tableProps} />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={handleSetPage}
-      />
-    </>
-  );
-
-  const renderNoPreprocessedDataset = () => (
     <>
       <div className='parameters-header'>
         <h2 className='parameters-title'>Preprocessed Dataset</h2>
       </div>
       <div className='upload-area'>
         <div className='no-preprocessed-dataset'>
-          <h3 className='no-preprocessed-dataset-title'>Dataset Has Not Preprocessed Yet</h3>
+          <h3 className='no-preprocessed-dataset-title'>Preprocessed Dataset Not Available</h3>
+          <p className='no-preprocessed-dataset-text'>
+            You can make a new preprocessed dataset by clicking the button below.
+          </p>
+          <button
+            className='preprocess-btn'
+            onClick={handlePreprocess}
+            disabled={preprocessLoading}
+            style={{ cursor: preprocessLoading ? 'not-allowed' : 'pointer' }}
+            title={
+              preprocessLoading
+                ? 'Creating in progress. Please wait a few minutes.'
+                : 'Create preprocess dataset'
+            }
+          >
+            {preprocessLoading ? 'Creating...' : 'Create'}
+          </button>
+          <div className='upload-note-container'>
+            <p className='upload-note'>
+              <strong>Note: </strong>
+            </p>
+            <p className='upload-note'>
+              Preprocessing is the process of transforming raw data into a format suitable for
+              analysis. It will takes a various techniques to clean and prepare the data, such as{' '}
+              <strong>Case Folding, Cleansing, Tokenizing, Stopword Removal, and Stemming</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  const renderNoPreprocessedDataset = () => (
+    <div className='preprocessedNew-container'>
+      <div className='upload-area'>
+        <div className='no-preprocessed-dataset'>
+          <h3 className='no-preprocessed-dataset-title'>
+            {fullStats.total_unprocessed} New Data Has Not Preprocessed Yet
+          </h3>
           <p className='no-preprocessed-dataset-text'>
             You can preprocess the raw dataset by clicking the button below.
           </p>
@@ -220,8 +231,28 @@ const PreprocessingPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
+
+  const tableProps = {
+    data,
+    allPreprocessedDatasets,
+    selectedPreprocessedDataset,
+    editingIndex,
+    newLabel,
+    setNewLabel,
+    handleEdit,
+    newPreprocessedContent,
+    setNewPreprocessedContent,
+    handleSave,
+    handleDelete,
+    filter,
+    handleFilterSelection,
+    totalData,
+    setShowInfo,
+    renderNoPreprocessedDataset,
+    fullStats,
+  };
 
   const renderPreprocessedDatasetContent = () => (
     <>
@@ -230,23 +261,27 @@ const PreprocessingPage = () => {
           onClose={() => setShowInfo(false)}
           totalData={totalData}
           topicCounts={topicCounts}
-          datasets={datasets}
-          preprocessedDatasets={preprocessedDatasets}
+          preprocessedDatasets={allPreprocessedDatasets}
           selectedDataset={selectedPreprocessedDataset}
+          fullStats={fullStats}
         />
       )}
 
       <div className='preprocessing-body'>
         <PreprocessTable {...tableProps} />
 
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={handleSetPage}
-        />
+        {filter === 'new' && fullStats.total_unprocessed > 0 ? (
+          ''
+        ) : (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={handleSetPage}
+          />
+        )}
       </div>
 
-      {selectedPreprocessedDataset === selectedDataset ? (
+      {/* {selectedPreprocessedDataset === selectedDataset ? (
         <>
           <div className='dataset-open-upload'>
             <button
@@ -288,18 +323,16 @@ const PreprocessingPage = () => {
             />
           )}
         </>
-      )}
+      )} */}
     </>
   );
 
   return (
     <Pages className='preprocessing-page-cuy'>
       {isLoading && <Loading page='admin-home' />}
-      {!selectedDataset
+      {allPreprocessedDatasets.length === 0
         ? renderNoDatasetSelected()
-        : preprocessedDatasets.length === 0
-          ? renderNoPreprocessedDataset()
-          : renderPreprocessedDatasetContent()}
+        : renderPreprocessedDatasetContent()}
     </Pages>
   );
 };

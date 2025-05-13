@@ -6,10 +6,11 @@ export const ADD_PREPROCESSED_DATA_ROW = 'ADD_PREPROCESSED_DATA_ROW';
 export const SET_PREPROCESSED_DATASET_DETAIL_LOADING = 'SET_PREPROCESSED_DATASET_DETAIL_LOADING';
 export const SET_PREPROCESSED_DATASET_PAGE = 'SET_PREPROCESSED_DATASET_PAGE';
 export const SET_PREPROCESSED_DATASET_LIMIT = 'SET_PREPROCESSED_DATASET_LIMIT';
+export const SET_PREPROCESSED_DATASET_FILTER = 'SET_PREPROCESSED_DATASET_FILTER';
 
-export const setPreprocessedDatasetDetail = ({ data, totalData, topicCounts, totalPages }) => ({
+export const setPreprocessedDatasetDetail = ({ data, totalData, topicCounts, totalPages, fullStats }) => ({
   type: SET_PREPROCESSED_DATASET_DETAIL,
-  payload: { data, totalData, topicCounts, totalPages },
+  payload: { data, totalData, topicCounts, totalPages, fullStats },
 });
 
 export const resetPreprocessedDatasetDetail = () => ({
@@ -50,4 +51,9 @@ export const setPreprocessedDatasetPage = (page) => ({
 export const setPreprocessedDatasetLimit = (limit) => ({
   type: SET_PREPROCESSED_DATASET_LIMIT,
   payload: limit,
+});
+
+export const setPreprocessedDatasetFilter = (filter) => ({
+  type: SET_PREPROCESSED_DATASET_FILTER,
+  payload: filter,
 });

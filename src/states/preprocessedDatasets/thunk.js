@@ -13,6 +13,7 @@ import {
   createPreprocessedCopy as apiCreatePreprocessedCopy,
   deletePreprocessedDataset as apiDeletePreprocessedDataset,
   preprocessDataset as apiPreprocessDataset,
+  preprocessNewData
 } from '../../utils/api/preprocess';
 
 import { asyncFetchPreprocessedDatasetDetail } from '../preprocessedDatasetDetail/thunk';
@@ -43,7 +44,7 @@ export const asyncFetchPreprocessedDatasets = (rawDatasetId) => async (dispatch)
   return response;
 };
 
-export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
+export const asyncPreprocessRawDataset = () => async (dispatch) => {
   const confirm = await Swal.fire({
     title: 'Continue Preprocessing Dataset?',
     text: 'It will takes a few minutes to preprocess',
@@ -59,15 +60,12 @@ export const asyncPreprocessRawDataset = (rawDatasetId) => async (dispatch) => {
 
   dispatch(setPreprocessLoading(true));
 
-  const response = await apiPreprocessDataset(rawDatasetId);
+  const response = await preprocessNewData();
 
   const currentPath = window.location.pathname;
 
   if (!response.error) {
-    await dispatch(addPreprocessedDataset(response.data));
-    dispatch(setSelectedDataset(rawDatasetId));
-    dispatch(setSelectedModel('', ''));
-    dispatch(asyncFetchPreprocessedDatasetDetail(response.data.id));
+    await dispatch(asyncFetchPreprocessedDatasetDetail());
     if (currentPath.includes('/admin/home/preprocessing')) {
       // Kalau user masih di halaman /admin/models
       Swal.fire({

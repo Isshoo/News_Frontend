@@ -2,6 +2,7 @@ import {
   setPreprocessedDatasetDetail,
   setPreprocessedDatasetPage,
   setPreprocessedDatasetLimit,
+  setPreprocessedDatasetFilter
 } from './action';
 
 import {
@@ -9,25 +10,33 @@ import {
   updatePreprocessedData,
   deleteData,
   addData,
+  getPreprocessedData,
+  addNewData,
+  editNewData,
+  deleteNewData,
+  preprocessNewData,
+  markAsTrained
 } from '../../utils/api/preprocess';
 
 import Swal from 'sweetalert2';
 
-export const asyncFetchPreprocessedDatasetDetail = (datasetId, page = 1, limit = 10) => async (dispatch) => {
-  const result = await fetchPreprocessedDataset(datasetId, page, limit);
+export const asyncFetchPreprocessedDatasetDetail = (page = 1, limit = 10, filter = 'new') => async (dispatch) => {
+  const result = await getPreprocessedData(page, limit, filter);
   if (!result.error) {
     await dispatch(setPreprocessedDatasetDetail({
       data: result.data,
       totalData: result.total_data,
       topicCounts: result.topic_counts,
       totalPages: result.total_pages,
+      fullStats: result.stats
     }));
     await dispatch(setPreprocessedDatasetPage(page));
     await dispatch(setPreprocessedDatasetLimit(limit));
+    await dispatch(setPreprocessedDatasetFilter(filter));
   }
 };
 
-export const asyncUpdatePreprocessedData = (datasetId, index, newLabel, newPreprocessedContent) => async (dispatch, getState) => {
+export const asyncUpdatePreprocessedData = (index, newLabel, newPreprocessedContent) => async (dispatch, getState) => {
   try {
     // cek jika kosong
     if (!newLabel || !newPreprocessedContent) {
@@ -49,10 +58,14 @@ export const asyncUpdatePreprocessedData = (datasetId, index, newLabel, newPrepr
       return;
     }
     // jika ada perubahan, lanjutkan dengan update
-    const result = await updatePreprocessedData(datasetId, index, newLabel, newPreprocessedContent); // API call
+    const newData = {
+      topik: newLabel,
+      contentSnippet: newPreprocessedContent
+    };
+    const result = await editNewData(index, newData); // API call
     if (!result.error) {
       const { limit, currentPage } = getState().preprocessedDatasetDetail;
-      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+      await dispatch(asyncFetchPreprocessedDatasetDetail(currentPage, limit)); // Refresh data
       Swal.fire({
         icon: 'success',
         title: 'Success!',
@@ -71,7 +84,7 @@ export const asyncUpdatePreprocessedData = (datasetId, index, newLabel, newPrepr
   }
 };
 
-export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch, getState) => {
+export const asyncDeletePreprocessedData = (index) => async (dispatch, getState) => {
   try {
     const confirm = await Swal.fire({
       title: 'Delete Preprocessed Data?',
@@ -86,12 +99,14 @@ export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch
 
     if (!confirm.isConfirmed) return { canceled: true };
 
-    const result = await deleteData(datasetId, index); // API call
+    const indexes = [index];
+
+    const result = await deleteNewData(indexes); // API call
 
     if (!result.error) {
       const  NowCurrentPage = getState().preprocessedDatasetDetail.currentPage;
       const { limit, currentPage } = getState().preprocessedDatasetDetail;
-      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, currentPage, limit)); // Refresh data
+      await dispatch(asyncFetchPreprocessedDatasetDetail(currentPage, limit)); // Refresh data
       const { totalPages } = getState().preprocessedDatasetDetail;
       if (totalPages > 0 && NowCurrentPage > totalPages) {
         Swal.fire({
@@ -99,22 +114,22 @@ export const asyncDeletePreprocessedData = (datasetId, index) => async (dispatch
           title: 'Success!',
           text: result.message || `Successfully deleted the preprocessed data in index ${  index  }.`,
         });
-        await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, totalPages, limit));
+        await dispatch(asyncFetchPreprocessedDatasetDetail(totalPages, limit));
         return;
       }
 
       Swal.fire({
         icon: 'success',
         title: 'Success!',
-        text: result.message || `Successfully deleted the preprocessed data in index ${  index  }.`,
+        text: result.message || 'Successfully deleted the preprocessed data.',
       });
-      await dispatch(asyncFetchPreprocessedDatasetDetail(datasetId, NowCurrentPage, limit)); // Refresh data
+      await dispatch(asyncFetchPreprocessedDatasetDetail(NowCurrentPage, limit)); // Refresh data
     }
     else {
       Swal.fire({
         icon: 'error',
         title: 'Error!',
-        text: result.error || `Failed to delete the preprocessed data in index ${  index  }.`,
+        text: result.error || 'Failed to delete the preprocessed data.',
       });
     }
 

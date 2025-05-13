@@ -7,6 +7,7 @@ import {
   SET_PREPROCESSED_DATASET_DETAIL_LOADING,
   SET_PREPROCESSED_DATASET_PAGE,
   SET_PREPROCESSED_DATASET_LIMIT,
+  SET_PREPROCESSED_DATASET_FILTER
 } from './action';
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   totalPages: 1,
   currentPage: 1,
   limit: 10,
+  fullStats: {},
   loadingDetail: false,
 };
 
@@ -28,6 +30,7 @@ const preprocessedDatasetDetailReducer = (state = initialState, action) => {
       totalData: action.payload.totalData,
       topicCounts: action.payload.topicCounts,
       totalPages: action.payload.totalPages,
+      fullStats: action.payload.fullStats
     };
   case RESET_PREPROCESSED_DATASET_DETAIL:
     return { ...initialState };
@@ -69,6 +72,11 @@ const preprocessedDatasetDetailReducer = (state = initialState, action) => {
     return {
       ...state,
       limit: action.payload,
+    };
+  case SET_PREPROCESSED_DATASET_FILTER:
+    return {
+      ...state,
+      filter: action.payload,
     };
   default:
     return state;

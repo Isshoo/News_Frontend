@@ -80,11 +80,12 @@ const PreprocessedDatasetSelect = ({ datasets, selectedDataset, handleDatasetSel
         ) : (
           <>
             <option className='dataset-select-option' value='' disabled>
-              Select a dataset
+              Filters
             </option>
             {datasets.map((dataset) => (
-              <option className='dataset-select-option' key={dataset.id} value={dataset.id}>
-                {dataset.name}
+              <option className='dataset-select-option' key={dataset} value={dataset}>
+                {/* jadi capitalize */}
+                {dataset.charAt(0).toUpperCase() + dataset.slice(1)}
               </option>
             ))}
           </>
