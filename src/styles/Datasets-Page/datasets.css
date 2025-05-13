@@ -1,5 +1,5 @@
 .container-list-item .dataset-card:first-child::before {
-  content: 'Base Dataset';
+  content: "Base Dataset";
   position: absolute;
   top: -0.5rem;
   right: 50%;
@@ -11,7 +11,7 @@
   font-weight: 700;
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .dataset-card {

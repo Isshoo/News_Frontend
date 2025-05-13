@@ -10,6 +10,6 @@
 }
 
 .dataset-table-header-info .preprocess-delete::after {
-  content: 'See all models history';
+  content: "See all models history";
   left: 3rem;
 }

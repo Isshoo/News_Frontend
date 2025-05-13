@@ -1,11 +1,11 @@
-.dataset-open-upload{
+.dataset-open-upload {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   position: sticky;
   bottom: 2rem;
 }
-.dataset-open-upload.add-data{
+.dataset-open-upload.add-data {
   bottom: 6rem;
   margin-bottom: 0.5rem;
 }
@@ -67,17 +67,16 @@
 }
 
 .open-upload-btn.copy-preprocess::after {
-    content: 'Copy to make new dataset that can be edited';
-    left: -4rem;
-    top: -2rem;
-    font-size: 0.80rem;
-    white-space: wrap;
-    min-width: 180px;
+  content: "Copy to make new dataset that can be edited";
+  left: -4rem;
+  top: -2rem;
+  font-size: 0.8rem;
+  white-space: wrap;
+  min-width: 180px;
 }
 .open-upload-btn.add-preprocess-data::after {
-    content: 'Add New Data';
-    left: -1.5rem;
-    font-size: 0.80rem;
-    padding: 0.25rem 0.5rem;
+  content: "Add New Data";
+  left: -1.5rem;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
 }
-

@@ -44,14 +44,13 @@
 }
 
 .preprocess-table tbody td {
-  padding: 0.70rem 0.65rem;
+  padding: 0.7rem 0.65rem;
   border-bottom: 1px solid var(--form-border);
   color: var(--primary-text);
   background-color: var(--background);
   vertical-align: top;
   text-align: left;
   font-size: 0.87rem;
-  
 }
 
 .preprocess-table tbody tr:nth-child(even) td {
@@ -61,7 +60,9 @@
 .preprocess-table tbody tr:hover td {
   background-color: var(--nav-bg-hover);
   color: var(--secondary-text);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .preprocess-table tbody td.center-text {
@@ -86,7 +87,6 @@
   padding: 0 0.25rem;
   text-align: justify;
   word-wrap: break-word;
-
 }
 .preprocess-table .preprocessed-content-input {
   width: 100%;
@@ -112,8 +112,6 @@
   color: var(--submit-text);
   cursor: pointer;
   font-size: 0.87rem;
-  
-
 }
 
 .preprocess-table .preprocessed-content-select:hover {
@@ -130,7 +128,7 @@
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
-  font-size: 0.80rem;
+  font-size: 0.8rem;
   transition: background-color 0.3s ease;
 }
 

@@ -156,12 +156,16 @@
   transition: background-color 0.3s ease;
   font-weight: 600;
   box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 .TrainButton button:hover {
-    background-color: var(--add-icon);
+  background-color: var(--add-icon);
   box-shadow: -2px 2px 5px 5px var(--add-btn-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   color: var(--add-btn-bg);
 }
 

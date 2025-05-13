@@ -67,13 +67,11 @@
   --select-model-border: #374151;
   --select-model-hover: #2a2f3c;
 
-
   --add-btn-bg: #ffffff;
   --add-btn-bg-hover: #101217;
   --add-btn-shadow: rgba(125, 125, 125, 0.305);
   --add-icon: #101217;
   --add-icon-hover: #ffffff;
-
 
   --dataset-info: "Dataset Information";
   --upload-new-dataset-info: "Upload New Dataset";

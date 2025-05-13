@@ -3,13 +3,13 @@
   /* grid-column: 1 / -1; 
   border-left: 6px solid var(--submit-bg);
   background: linear-gradient(to right, var(--main-bg) 0%, #1f293710 100%); */
-  
+
   position: relative;
   /* padding: 3rem 2rem 1.5rem; */
 }
 
 .container-list-item .model-card:first-child::before {
-  content: 'Latest Model';
+  content: "Latest Model";
   position: absolute;
   top: -0.5rem;
   left: 50%;
@@ -21,7 +21,7 @@
   font-weight: 700;
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* 
@@ -33,7 +33,6 @@
   max-width: 500px;
 }
  */
-
 
 .model-card {
   border-left: 6px solid var(--submit-bg);
@@ -147,7 +146,7 @@
   gap: 0.75rem;
   margin-top: 0.5rem;
 }
-.model-footer button{
+.model-footer button {
   padding: 0.5rem 1.2rem;
   border-radius: 10px;
   border: none;

@@ -18,7 +18,7 @@
   padding-bottom: 0.5rem;
   color: var(--results-text);
 }
-.csv-result-table-info h2{
+.csv-result-table-info h2 {
   font-size: 1.5rem;
   color: var(--results-text);
 }
@@ -95,9 +95,10 @@
 .csv-result-table tbody tr:hover td {
   background-color: var(--nav-bg-hover);
   color: var(--secondary-text);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
-
 
 .csv-table td input[type="text"] {
   width: 100%;
@@ -107,7 +108,6 @@
   background-color: var(--background);
   color: var(--results-text);
 }
-
 
 .csv-table tbody tr,
 .csv-result-table tbody tr {

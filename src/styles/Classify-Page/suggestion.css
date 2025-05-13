@@ -13,7 +13,7 @@
 .suggestion-item {
   display: inline-block;
   max-width: 120px; /* atur agar tetap kecil */
-  padding: 0.40rem 0.7rem;
+  padding: 0.4rem 0.7rem;
   border-radius: 2rem;
   background-color: var(--select-model-background);
   font-size: 0.75rem;
@@ -29,7 +29,7 @@
 }
 
 .suggestion-item:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .suggestion-item.item-0 {

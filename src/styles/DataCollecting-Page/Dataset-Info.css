@@ -43,9 +43,8 @@
 }
 
 .data-info {
-    margin: 0.125rem;
+  margin: 0.125rem;
 }
-
 
 .popup-modal-dataset-info h2 {
   font-size: 1.5rem;
@@ -92,7 +91,6 @@
   text-align: left;
   max-height: 94.5px;
   overflow: hidden;
-  
 }
 
 .dataset-info-table tbody tr:nth-child(even) td,
@@ -101,10 +99,12 @@
 }
 
 .dataset-info-table tbody tr:hover td,
-.dataset-info-table tfoot tr:hover td{
+.dataset-info-table tfoot tr:hover td {
   background-color: var(--nav-bg-hover);
   color: var(--secondary-text);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .dataset-info-table tbody tr td[colspan] {

@@ -9,10 +9,10 @@
   text-align: center;
   padding: 2rem;
   position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: -10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -10;
   gap: 1.5rem;
 }
 
@@ -45,12 +45,16 @@
   transition: background-color 0.3s ease;
   font-weight: 600;
   box-shadow: -1px 1px 5px 3px var(--add-btn-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .landing-buttons button:hover {
   background-color: var(--add-icon);
   box-shadow: -2px 2px 5px 5px var(--add-btn-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   color: var(--add-btn-bg);
 }

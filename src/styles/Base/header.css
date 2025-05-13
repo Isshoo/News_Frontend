@@ -1,5 +1,3 @@
-
-
 header {
   width: 100%;
   transition: background-color 0.3s ease;
@@ -79,9 +77,6 @@ header {
 .logout-rotate {
   transform: rotate(180deg);
 }
-
-
-
 
 @media screen and (max-width: 900px) {
 }
