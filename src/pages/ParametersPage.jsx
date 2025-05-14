@@ -47,17 +47,9 @@ const ParametersPage = () => {
   const noDataset = fullStats.total_all === 0 || !fullStats.total_all;
 
   useEffect(() => {
-    if (firstrun.current) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-      firstrun.current = false;
-      return;
-    }
     const loadDataset = async () => {
       if (!allPreprocessedDatasets.length) {
         const response = await dispatch(asyncFetchAllPreprocessedDatasets());
-        // cari dataset dengan id default
         const defaultDataset = response.find((dataset) => dataset.id === 'default');
         if (defaultDataset) {
           dispatch(setSelectedPreprocessedDataset(defaultDataset.id));
@@ -67,7 +59,6 @@ const ParametersPage = () => {
           dispatch(resetPreprocessedDatasetDetail());
         }
       } else {
-        // cari dataset dengan id default
         const defaultDataset = allPreprocessedDatasets.find((dataset) => dataset.id === 'default');
         if (defaultDataset) {
           if (defaultDataset.id !== selectedPreprocessedDataset) {
@@ -83,37 +74,31 @@ const ParametersPage = () => {
       }
     };
 
-    if (selectedModelId) {
-      const loadData = async () => {
-        await dispatch(asyncFetchModelDetail(selectedModelId));
-        await dispatch(fetchParameters(selectedModelId));
-      };
-      loadDataset();
-      loadData();
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-      return;
-    }
-    if (allPreprocessedDatasets.length > 0 && selectedPreprocessedDataset) {
-      const loadData = async () => {
-        dispatch(resetParameter());
-        dispatch(resetModelDetail());
-      };
-      loadDataset();
-      loadData();
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-      return;
-    }
-    loadDataset();
-    dispatch(resetModelDetail());
-    dispatch(resetParameter());
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, [selectedModelId, selectedPreprocessedDataset, allPreprocessedDatasets, filter, dispatch]);
+    const loadModel = async () => {
+      await dispatch(asyncFetchModelDetail(selectedModelId));
+      await dispatch(fetchParameters(selectedModelId));
+    };
+
+    const resetState = () => {
+      dispatch(resetModelDetail());
+      dispatch(resetParameter());
+    };
+
+    const runEffect = async () => {
+      if (firstrun.current) {
+        firstrun.current = false;
+        await loadDataset();
+        if (selectedModelId) {
+          await loadModel();
+        } else {
+          resetState();
+        }
+        setTimeout(() => setIsLoading(false), 1000);
+      }
+    };
+
+    runEffect();
+  }, [dispatch, selectedModelId, allPreprocessedDatasets, selectedPreprocessedDataset, filter]);
 
   const handleSplitChange = async (newSplitSize) => {
     dispatch(updateParameter('default', 'default', newSplitSize));
