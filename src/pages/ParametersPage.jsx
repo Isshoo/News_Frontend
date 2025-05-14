@@ -85,15 +85,20 @@ const ParametersPage = () => {
     };
 
     const runEffect = async () => {
-      if (firstrun.current) {
-        firstrun.current = false;
-        await loadDataset();
-        if (selectedModelId) {
-          await loadModel();
-        } else {
-          resetState();
+      try {
+        if (firstrun.current) {
+          firstrun.current = false;
+          await loadDataset();
+          if (selectedModelId) {
+            await loadModel();
+          } else {
+            resetState();
+          }
         }
-        setTimeout(() => setIsLoading(false), 1000);
+      } catch (error) {
+        console.error('Error during initialization:', error);
+      } finally {
+        setTimeout(() => setIsLoading(false), 1000); // Pasti dijalankan, baik sukses atau gagal
       }
     };
 
