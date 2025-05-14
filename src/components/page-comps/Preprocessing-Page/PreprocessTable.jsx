@@ -23,6 +23,9 @@ const PreprocessTable = ({
   setShowInfo,
   renderNoPreprocessedDataset,
   fullStats,
+  currentPage,
+  limit,
+  totalPages,
 }) => {
   const labelOptions = ['ekonomi', 'gayahidup', 'hiburan', 'olahraga', 'teknologi'];
   const filters = ['new', 'old'];
@@ -86,7 +89,7 @@ const PreprocessTable = ({
 
             <thead>
               <tr>
-                <th>ID</th>
+                <th>No</th>
                 <th>Original Content</th>
                 <th>Preprocessed Content</th>
                 <th>Topic</th>
@@ -106,13 +109,15 @@ const PreprocessTable = ({
                 </tr>
               ) : (
                 <>
-                  {data.map((item) => {
+                  {data.map((item, index) => {
                     const isEditing = editingIndex === item.index;
 
                     return (
                       <tr key={item.index}>
                         <td className='numbering'>
-                          <p className='preprocessed-content-text index'>{item.index + 1}</p>
+                          <p className='preprocessed-content-text index'>
+                            {(currentPage - 1) * limit + index + 1}
+                          </p>
                         </td>
 
                         <td title={item.contentSnippet}>
@@ -211,6 +216,9 @@ PreprocessTable.propTypes = {
   setShowInfo: PropTypes.func.isRequired,
   renderNoPreprocessedDataset: PropTypes.func.isRequired,
   fullStats: PropTypes.object.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  limit: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
 };
 
 export default PreprocessTable;

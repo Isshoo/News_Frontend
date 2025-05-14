@@ -260,6 +260,9 @@ const PreprocessingPage = () => {
     setShowInfo,
     renderNoPreprocessedDataset,
     fullStats,
+    currentPage,
+    limit,
+    totalPages,
   };
 
   const renderPreprocessedDatasetContent = () => (
