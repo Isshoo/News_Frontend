@@ -65,6 +65,10 @@
     color 0.3s ease;
 }
 
+.preprocess-table tbody tr td[colspan] {
+  text-align: center;
+  font-style: italic;
+}
 .preprocess-table tbody td.center-text {
   text-align: center;
   margin: auto;

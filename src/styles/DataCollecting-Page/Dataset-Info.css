@@ -109,6 +109,5 @@
 
 .dataset-info-table tbody tr td[colspan] {
   text-align: center;
-  color: var(--notfound-text);
   font-style: italic;
 }
