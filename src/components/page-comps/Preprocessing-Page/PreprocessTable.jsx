@@ -97,7 +97,10 @@ const PreprocessTable = ({
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan={filter === 'old' ? 4 : 5} style={{ textAlign: 'center' }}>
+                  <td
+                    colSpan={filter === 'old' ? 4 : 5}
+                    style={{ textAlign: 'center', fonstStyle: 'italic' }}
+                  >
                     No data available, please add a new data from Collecting Page.
                   </td>
                 </tr>
