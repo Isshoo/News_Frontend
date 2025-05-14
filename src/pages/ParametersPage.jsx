@@ -124,6 +124,7 @@ const ParametersPage = () => {
       return;
     }
     await dispatch(asyncTrainModel('default', 'default', name, splitSize, nNeighbors));
+    await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, filter));
   };
 
   return (
