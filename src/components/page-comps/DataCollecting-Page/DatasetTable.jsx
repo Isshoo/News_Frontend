@@ -52,7 +52,7 @@ const DatasetTable = ({
         <tbody>
           {data.length === 0 ? (
             <tr>
-              <td colSpan='3'>No data available.</td>
+              <td colSpan='3'>No data available, please add a new data or upload a dataset</td>
             </tr>
           ) : (
             data.map((row, index) => (
