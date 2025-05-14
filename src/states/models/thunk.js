@@ -9,6 +9,7 @@ import { setSelectedPreprocessedDataset } from '../preprocessedDatasets/action';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import { asyncFetchPreprocessedDatasetDetail } from '../preprocessedDatasetDetail/thunk';
 
 export const asyncFetchModels = () => async (dispatch) => {
   dispatch(setLoading(true));
@@ -20,7 +21,7 @@ export const asyncFetchModels = () => async (dispatch) => {
   return response;
 };
 
-export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split_size, n_neighbors) => async (dispatch) => {
+export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split_size, n_neighbors, filter) => async (dispatch) => {
   // bertanya apakah benar-benar ingin melatih model dengan parameter tersebut? menggunakan bahasa inggris
   const confirm = await Swal.fire({
     title: 'Train model using these parameters?',
@@ -44,6 +45,7 @@ export const asyncTrainModel = (rawDatasetId, preprocessedDatasetId, name, split
   if (!response.error) {
     await dispatch(addModel(response));
     dispatch(setSelectedModel(response.id,  response.model_path));
+    await dispatch(asyncFetchPreprocessedDatasetDetail(1, 10, filter));
 
     if (currentPath.includes('/admin/home/parameters')) {
       // Kalau user masih di halaman /admin/models
