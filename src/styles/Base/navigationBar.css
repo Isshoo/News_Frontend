@@ -28,6 +28,7 @@
 .navigation li {
   display: flex;
   align-items: center;
+  color: var(--nav-text);
 }
 
 .nav-button {
