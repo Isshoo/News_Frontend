@@ -14,7 +14,7 @@
 
 .classification-report h3 {
   font-size: 1.2rem;
-  color: var(--primary-text);
+  color: var(--bw-text);
 }
 
 .report-table {
@@ -38,10 +38,16 @@
   border: 1px solid var(--form-border);
   padding: 0.5rem 0.75rem;
   text-align: center;
+  color: var(--bw-text);
   font-size: 0.9rem;
 }
 
 .report-table thead {
+  background-color: var(--nav-bg);
+  color: var(--header-text);
+}
+
+.report-table thead tr th {
   background-color: var(--nav-bg);
   color: var(--header-text);
 }
