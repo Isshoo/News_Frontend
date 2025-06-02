@@ -103,8 +103,8 @@
 
 .dataset-info-table tbody tr:hover td,
 .dataset-info-table tfoot tr:hover td {
-  background-color: var(--nav-bg-hover);
-  color: var(--secondary-text);
+  background-color: var(--tbody-bg-hover);
+  color: var(--wb-text);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;

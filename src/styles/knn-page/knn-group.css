@@ -32,9 +32,11 @@
   font-size: 1.25rem;
   border-bottom: 2px solid var(--form-border);
   padding-bottom: 0.25rem;
+  color: var(--bw-text);
 }
 
 .knn-group p {
   margin: 0.25rem 0;
   font-size: 0.95rem;
+  color: var(--bw-text);
 }

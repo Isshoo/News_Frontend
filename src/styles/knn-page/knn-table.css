@@ -1,6 +1,6 @@
 .knn-table {
   background-color: var(--main-bg);
-  color: var(--primary-text);
+  color: var(--bw-text);
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: background-color 0.3s ease;
