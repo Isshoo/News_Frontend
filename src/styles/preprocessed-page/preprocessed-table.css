@@ -18,7 +18,7 @@
 
 .preprocess-table h2 {
   font-size: 1.5rem;
-  color: var(--primary-text);
+  color: var(--bw-text);
 }
 
 .preprocess-table table {
@@ -46,7 +46,7 @@
 .preprocess-table tbody td {
   padding: 0.7rem 0.65rem;
   border-bottom: 1px solid var(--form-border);
-  color: var(--primary-text);
+  color: var(--bw-text);
   background-color: var(--background);
   vertical-align: top;
   text-align: left;
@@ -58,8 +58,8 @@
 }
 
 .preprocess-table tbody tr:hover td {
-  background-color: var(--nav-bg-hover);
-  color: var(--secondary-text);
+  background-color: var(--tbody-bg-hover);
+  color: var(--wb-text);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
@@ -120,14 +120,14 @@
 
 .preprocess-table .preprocessed-content-select:hover {
   background-color: var(--submit-text);
-  color: var(--primary-text);
+  color: var(--bw-text);
 }
 
 .preprocess-table .preprocess-action-button {
   margin-right: 0.4rem;
   margin-bottom: 0.4rem;
   padding: 0.4rem 0.75rem;
-  background-color: var(--submit-bg);
+  background-color: var(--primary-text);
   color: var(--secondary-text);
   border: none;
   border-radius: 0.4rem;
@@ -137,8 +137,8 @@
 }
 
 .preprocess-table .preprocess-action-button:hover {
-  background-color: var(--submit-text);
-  color: var(--primary-text);
+  background-color: var(--table-button-hover);
+  color: var(--bw-text);
 }
 
 .preprocess-table .preprocess-action-button:active {

@@ -12,6 +12,7 @@
   /* table */
   --tbody-bg: #212631;
   --tbody-bg-hover: #fff;
+  --table-button-hover: #0a0e15;
 
   /* Layout Backgrounds */
   --background: #0a0e15;
@@ -100,6 +101,7 @@
   /* table */
   --tbody-bg: #212631;
   --tbody-bg-hover: #0a0e15;
+  --table-button-hover: #93a7ff;
 
   /* Layout Backgrounds */
   --background: #f4f4f5;

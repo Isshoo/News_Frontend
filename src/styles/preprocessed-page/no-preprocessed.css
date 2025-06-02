@@ -13,12 +13,14 @@
 .no-preprocessed-dataset-title {
   font-size: 1.4rem;
   margin-bottom: 0.75rem;
+  color: var(--bw-text);
 }
 
 .no-preprocessed-dataset-text {
   font-size: 1rem;
   margin-bottom: 1.25rem;
   opacity: 0.85;
+  color: var(--bw-text);
 }
 
 .preprocess-btn {
