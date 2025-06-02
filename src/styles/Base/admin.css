@@ -24,6 +24,9 @@
   display: flex;
   flex-direction: column;
 }
+.admins-page p {
+  color: var(--bw-text);
+}
 
 .container-list-item {
   display: grid;

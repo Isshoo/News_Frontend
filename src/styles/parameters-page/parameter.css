@@ -24,6 +24,7 @@
 
 .parameters-title {
   font-size: 1.5rem;
+  color: var(--bw-text);
 }
 
 .parameters-container-section {
