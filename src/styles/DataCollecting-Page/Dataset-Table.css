@@ -20,6 +20,9 @@
   align-items: center;
   gap: 0.75rem;
 }
+.dataset-table-header-info p strong {
+  color: var(--bw-text);
+}
 
 .dataset-table-header-info button {
   display: flex;
@@ -31,10 +34,9 @@
 .dataset-table-header-info button svg {
   width: 1.2rem;
   height: 1.2rem;
-  color: var(--primary-text);
+  color: var(--bw-text);
 }
 .dataset-table-header-info button svg:hover {
-  color: #000;
   transition: color 0.3s ease;
 }
 
@@ -66,7 +68,7 @@
 
 .dataset-table-header h2 {
   font-size: 1.5rem;
-  color: var(--primary-text);
+  color: var(--bw-text);
 }
 
 .dataset-table table {
@@ -94,7 +96,7 @@
 .dataset-table tbody td {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--form-border);
-  color: var(--primary-text);
+  color: var(--bw-text);
   background-color: var(--background);
   font-size: 0.87rem;
   vertical-align: top;
@@ -107,8 +109,8 @@
 }
 
 .dataset-table tbody tr:hover td {
-  background-color: var(--nav-bg-hover);
-  color: var(--secondary-text);
+  background-color: var(--tbody-bg-hover);
+  color: var(--wb-text);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;

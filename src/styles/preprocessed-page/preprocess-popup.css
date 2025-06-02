@@ -21,7 +21,7 @@
   max-width: 500px;
   border: 1px solid #444;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  color: var(--primary-text);
+  color: var(--bw-text);
 }
 
 /* Header */
@@ -35,7 +35,7 @@
 .popup-close {
   background: none;
   border: none;
-  color: var(--secondary-text);
+  color: var(--bw-text);
   font-size: 1.25rem;
   cursor: pointer;
 }
@@ -54,11 +54,15 @@
   border-radius: 8px;
   border: 1px solid #555;
   background-color: var(--background);
-  color: var(--primary-text);
+  color: var(--bw-text);
   font-size: 0.95rem;
 }
 .popup-body select {
   cursor: pointer;
+
+}
+.popup-body select option:disabled {
+  opacity: 0.5;
 }
 
 /* Buttons */
@@ -88,7 +92,7 @@
 
 .popup-btn.primary {
   background-color: var(--submit-bg);
-  color: var(--secondary-text);
+  color: var(--wb-text);
 }
 
 .popup-btn:not(.primary) {
@@ -96,5 +100,6 @@
   color: var(--secondary-text);
 }
 .popup-btn:not(.primary):hover {
+  color: var(--wb-text);
   background-color: var(--submit-bg);
 }

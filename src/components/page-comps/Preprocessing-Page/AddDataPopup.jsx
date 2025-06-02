@@ -16,9 +16,6 @@ const AddDataPopup = ({
       <div className='popup-box'>
         <div className='popup-header'>
           <h3>Add New Data</h3>
-          <button className='popup-close' onClick={() => setShowAddPopup(false)}>
-            ✕
-          </button>
         </div>
         <div className='popup-body'>
           <input
@@ -28,7 +25,7 @@ const AddDataPopup = ({
             onChange={(e) => setNewContent(e.target.value)}
           />
           <select value={newTopic} onChange={(e) => setNewTopic(e.target.value)}>
-            <option value='' disabled>
+            <option value='' disabled className='select-placeholder'>
               Select Topik
             </option>
             {labelOptions.map((label, i) => (

@@ -4,6 +4,12 @@
   --secondary-text: #ffffff;
   --notfound-text: #fff;
   --results-text: #ffffff;
+  --bw-text: #ffffff;
+  --wb-text: #212631;
+
+  /* table */
+  --tbody-bg: #212631;
+  --tbody-bg-hover: #fff;
 
   /* Layout Backgrounds */
   --background: #0a0e15;
@@ -84,6 +90,12 @@
   --secondary-text: #ffffff;
   --notfound-text: #212631;
   --results-text: #212631;
+  --bw-text: #212631;
+  --wb-text: #fff;
+
+  /* table */
+  --tbody-bg: #212631;
+  --tbody-bg-hover: #0a0e15;
 
   /* Layout Backgrounds */
   --background: #f4f4f5;
