@@ -1,7 +1,7 @@
 .predict-by-filter {
   font-size: 1rem;
-  background-color: var(--form-background);
-  color: var(--primary-text);
+  background-color: var(--main-bg);
+  color: var(--bw-text);
   outline: none;
   border: none;
   border-bottom: 1px solid #444;
@@ -10,7 +10,7 @@
 
 .predict-by-filter:hover {
   background-color: var(--form-hover);
-  border-bottom: 1px solid var(--primary-text);
+  border-bottom: 1px solid var(--bw-text);
   box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
 }
 
