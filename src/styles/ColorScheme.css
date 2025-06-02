@@ -6,6 +6,8 @@
   --results-text: #ffffff;
   --bw-text: #ffffff;
   --wb-text: #212631;
+  --box-shadow: rgba(255, 255, 255, 0.1);
+  --upload-bg: #212631;
 
   /* table */
   --tbody-bg: #212631;
@@ -92,6 +94,8 @@
   --results-text: #212631;
   --bw-text: #212631;
   --wb-text: #fff;
+  --box-shadow: rgba(0, 0, 0, 0.2);
+  --upload-bg: #fafafa;
 
   /* table */
   --tbody-bg: #212631;

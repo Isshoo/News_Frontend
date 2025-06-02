@@ -24,13 +24,13 @@
 }
 
 .modal-content {
-  background: #fff;
+  background: var(--form-background);
   padding: 2rem;
   border-radius: 10px;
   max-width: 500px;
   width: 90%;
   position: relative;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 25px var(--box-shadow);
 }
 
 /* Tombol close modal */
@@ -49,7 +49,7 @@
   border: 2px dashed #ccc;
   border-radius: 1rem;
   text-align: center;
-  background-color: #fafafa;
+  background-color: var(--upload-bg);
   transition: background-color 0.3s ease;
   max-width: 500px;
   margin: 0 auto;
@@ -77,12 +77,13 @@
   height: 80px;
   margin-bottom: 1rem;
   opacity: 0.8;
+  color: var(--bw-text);
 }
 
 .upload-title {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
+  color: var(--bw-text);
   margin-bottom: 0.5rem;
 }
 
