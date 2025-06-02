@@ -13,6 +13,9 @@
   padding-inline: 32px;
   height: 79px;
 }
+.page-header h2 {
+  color: var(--bw-text);
+}
 
 .admins-page {
   width: 100%;
