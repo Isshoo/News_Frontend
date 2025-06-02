@@ -20,6 +20,7 @@
   align-items: center;
   gap: 0.75rem;
 }
+.dataset-table-header-info p,
 .dataset-table-header-info p strong {
   color: var(--bw-text);
 }

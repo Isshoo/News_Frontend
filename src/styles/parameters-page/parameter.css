@@ -71,6 +71,7 @@
   border-bottom: 2px solid var(--form-border);
   margin-bottom: 0.2rem;
   padding-bottom: 0.25rem;
+  color: var(--bw-text);
 }
 
 .form-section.lower-left {
@@ -119,13 +120,16 @@
   font-size: 0.9rem;
   color: var(--form-label);
 }
+.form-group label i {
+  color: var(--form-label);
+}
 
 .form-group input {
   padding: 0.5rem 0.5rem;
   border-radius: 0.5rem;
   border: 1px solid var(--form-border);
   background-color: var(--form-background);
-  color: var(--form-text);
+  color: var(--bw-text);
   transition: border-color 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
