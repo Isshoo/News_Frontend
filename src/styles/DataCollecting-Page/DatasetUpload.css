@@ -30,7 +30,7 @@
   max-width: 500px;
   width: 90%;
   position: relative;
-  box-shadow: 0 10px 25px var(--box-shadow);
+  border: 1px solid #444;
 }
 
 /* Tombol close modal */

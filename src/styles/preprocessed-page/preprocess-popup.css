@@ -59,7 +59,6 @@
 }
 .popup-body select {
   cursor: pointer;
-
 }
 .popup-body select option:disabled {
   opacity: 0.5;
