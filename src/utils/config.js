@@ -1,4 +1,7 @@
-const BASE_URL = 'http://127.0.0.1:8000';
+/* eslint-disable quotes */
+/* eslint-disable no-undef */
+// ambil dari .env
+const BASE_URL = process.env.BASE_URL || "http://127.0.0.1:8000";
 
 const _fetchWithAuth = async (url, options = {}) => {
   return fetch(url, {
@@ -11,16 +14,11 @@ const _fetchWithAuth = async (url, options = {}) => {
 };
 
 const putAccessToken = (token) => {
-  localStorage.setItem('accessToken', token);
+  localStorage.setItem("accessToken", token);
 };
 
 const getAccessToken = () => {
-  return localStorage.getItem('accessToken');
+  return localStorage.getItem("accessToken");
 };
 
-export {
-  BASE_URL,
-  _fetchWithAuth,
-  putAccessToken,
-  getAccessToken
-};
+export { BASE_URL, _fetchWithAuth, putAccessToken, getAccessToken };
